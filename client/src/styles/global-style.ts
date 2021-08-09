@@ -1,14 +1,9 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, css } from 'styled-components';
 import { reset } from 'styled-reset';
 import { media } from './theme';
 
 export const GlobalStyle = createGlobalStyle`
     ${reset}
-    @mixin flex-center {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
     :focus {
         outline: none;
         border: none;
@@ -37,4 +32,15 @@ export const GlobalStyle = createGlobalStyle`
             display: none;
         }
     }
+`;
+
+export const flexCenter = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const shadow = css`
+  box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.1),
+    0 0.4rem 2rem rgba(0, 0, 0, 0.1);
 `;
