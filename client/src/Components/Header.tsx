@@ -4,6 +4,7 @@ import React from "react";
 import styled from "styled-components";
 import Input from "./Input";
 import Menu from "./Menu";
+import { ETLink } from "@/Router";
 
 const Header = () => {
   const searchValue = useInput("");
@@ -17,7 +18,10 @@ const Header = () => {
         background: "#fff",
       }}
     >
-      <Nav>로그인 회원가입</Nav>
+      <Nav>
+        <ETLink to='/signin'>로그인</ETLink>
+        <ETLink to='/signup'>회원가입</ETLink>
+      </Nav>
       <Wrapper>
         <Menu />
         <img
