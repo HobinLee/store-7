@@ -1,14 +1,22 @@
-import useInput from '@/hooks/useInput';
-import { flexCenter, shadow } from '@/styles/global-style';
-import React from 'react';
-import styled from 'styled-components';
-import Input from './Input';
-import Menu from './Menu';
+import useInput from "@/hooks/useInput";
+import { flexCenter, shadow } from "@/styles/global-style";
+import React from "react";
+import styled from "styled-components";
+import Input from "./Input";
+import Menu from "./Menu";
 
 const Header = () => {
-  const searchValue = useInput('');
+  const searchValue = useInput("");
   return (
-    <div>
+    <div
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100%",
+        background: "#fff",
+      }}
+    >
       <Nav>로그인 회원가입</Nav>
       <Wrapper>
         <Menu />
@@ -50,9 +58,9 @@ const Wrapper = styled.div`
   height: 10rem;
   .input-box {
     ${flexCenter}
-    border: 0.3rem solid ${({ theme }) => theme.color.blue};
+    border: 0.3rem solid ${({ theme }) => theme.color.primary1};
     &__select {
-      border-right: 0.1rem solid ${({ theme }) => theme.color.blue};
+      border-right: 0.1rem solid ${({ theme }) => theme.color.primary1};
       padding: 0 1.5rem;
       width: 8rem;
     }
