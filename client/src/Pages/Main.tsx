@@ -10,30 +10,30 @@ const MainPage = () => {
       <Header />
       <div className="banner" />
       <div className="contents">
-        <div className="contents__content">
-          <div className="contents__content--title">잘나가요</div>
-          <div className="contents__content--items">
+        <Content>
+          <div className="title">잘나가요</div>
+          <div className="items">
             {[0, 0, 0, 0].map((i) => (
-              <div className="contents__content--items__item">{i}</div>
+              <div className="items__item">{i}</div>
             ))}
           </div>
-        </div>
-        <div className="contents__content">
-          <div className="contents__content--title">잘나가요</div>
-          <div className="contents__content--items">
+        </Content>
+        <Content>
+          <div className="title">잘나가요</div>
+          <div className="items">
             {[0, 0, 0, 0].map((i) => (
-              <div className="contents__content--items__item">{i}</div>
+              <div className="items__item">{i}</div>
             ))}
           </div>
-        </div>
-        <div className="contents__content">
-          <div className="contents__content--title">잘나가요</div>
-          <div className="contents__content--items">
-            {[0, 0, 0, 0].map((i) => (
-              <div className="contents__content--items__item">{i}</div>
+        </Content>
+        <Content>
+          <div className="title">잘나가요</div>
+          <div className="items">
+            {[0, 0, 0, 0].map((i, idx) => (
+              <div className="items__item">{i}</div>
             ))}
           </div>
-        </div>
+        </Content>
       </div>
       <Footer />
     </Wrapper>
@@ -51,28 +51,29 @@ const Wrapper = styled(PageWrapper)`
     ${flexCenter}
     flex-direction: column;
     width: 100%;
-    &__content {
-      ${flexCenter}
-      flex-direction: column;
-      width: 100%;
-      padding: 5rem 10rem;
-      box-sizing: border-box;
-      &--title {
-        width: 100%;
-        font-size: 2rem;
-      }
-      &--items {
-        ${flexCenter}
-        margin-top: 2rem;
-        justify-content: space-between;
-        width: 100%;
-        grid-template-columns: repeat(4, 1fr);
-        &__item {
-          width: 25rem;
-          height: 30rem;
-          background-color: lightgray;
-        }
-      }
+  }
+`;
+
+const Content = styled.div`
+  ${flexCenter}
+  flex-direction: column;
+  width: 100%;
+  padding: 5rem 10rem;
+  box-sizing: border-box;
+  .title {
+    width: 100%;
+    font-size: 2rem;
+  }
+  .items {
+    ${flexCenter}
+    margin-top: 2rem;
+    justify-content: space-between;
+    width: 100%;
+    grid-template-columns: repeat(4, 1fr);
+    &__item {
+      width: 25rem;
+      height: 30rem;
+      background-color: lightgray;
     }
   }
 `;

@@ -1,4 +1,5 @@
 import useInput from "@/hooks/useInput";
+import { ETLink } from "@/Router";
 import { flexCenter, shadow } from "@/styles/global-style";
 import React from "react";
 import styled from "styled-components";
@@ -20,10 +21,12 @@ const Header = () => {
       <Nav>로그인 회원가입</Nav>
       <Wrapper>
         <Menu />
-        <img
-          width="200"
-          src="https://store.baemin.com/data/skin/front/udweb_C/img/banner/7d4c23c41296ae46ffff9e8da1350b37_56349.png"
-        />
+        <ETLink to="/">
+          <img
+            width="200"
+            src="https://store.baemin.com/data/skin/front/udweb_C/img/banner/7d4c23c41296ae46ffff9e8da1350b37_56349.png"
+          />
+        </ETLink>
         <div className="input-box">
           <div className="input-box__select">전체</div>
           <Search

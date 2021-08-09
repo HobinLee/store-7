@@ -1,6 +1,7 @@
 import { flexCenter, shadow } from "@/styles/global-style";
 import React, { useState } from "react";
 import styled from "styled-components";
+import { ETLink } from "@/Router";
 
 const Menu = () => {
   const [isMenuOpened, setIsMenuOpened] = useState(false);
@@ -19,10 +20,12 @@ const Menu = () => {
       />
       {isMenuOpened && (
         <MenuList>
-          {[0, 0, 0, 0, 0, 0, 0].map((i) => (
-            <div key={i.toString()} className="menu">
-              asdf
-            </div>
+          {[0, 0, 0, 0, 0, 0, 0].map((i, idx) => (
+            <ETLink to={`/category/${idx}`}>
+              <div key={i.toString()} className="menu">
+                asdf
+              </div>
+            </ETLink>
           ))}
         </MenuList>
       )}
