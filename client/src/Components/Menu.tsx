@@ -27,6 +27,7 @@ const Menu = () => {
 };
 
 const Wrapper = styled.div`
+  cursor: pointer;
   position: relative;
   width: 10rem;
   height: 10rem;
@@ -36,6 +37,7 @@ const Wrapper = styled.div`
 const MenuList = styled.div`
   ${flexCenter}
   ${shadow}
+  background-color: #fff;
   position: absolute;
   left: 0;
   top: 10rem;

@@ -8,7 +8,15 @@ import Menu from './Menu';
 const Header = () => {
   const searchValue = useInput('');
   return (
-    <div>
+    <div
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        background: 'white',
+      }}
+    >
       <Nav>로그인 회원가입</Nav>
       <Wrapper>
         <Menu />
