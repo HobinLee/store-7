@@ -1,7 +1,8 @@
-import Header from '@/Components/Header';
-import { flexCenter } from '@/styles/global-style';
-import React from 'react';
-import styled from 'styled-components';
+import Header from "@/Components/Header";
+import { PageWrapper } from "@/shared/styled";
+import { flexCenter } from "@/styles/global-style";
+import React from "react";
+import styled from "styled-components";
 
 const MainPage = () => {
   return (
@@ -39,14 +40,12 @@ const MainPage = () => {
   );
 };
 
-const Wrapper = styled.div`
-  width: 100%;
-  margin-top: 15rem;
+const Wrapper = styled(PageWrapper)`
   .banner {
     margin-top: 0.5rem;
     width: 100%;
     height: 35rem;
-    background-color: ${({ theme }) => theme.color.blue};
+    background-color: ${({ theme }) => theme.color.primary1};
   }
   .contents {
     ${flexCenter}
