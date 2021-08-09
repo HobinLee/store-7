@@ -6,9 +6,15 @@ const App = () => {
   return (
     <div>
       <ETRouter>
-        <ETRoute path='/' exact component={MainPage}></ETRoute>
-        <ETRoute path='/login' exact component={Login}></ETRoute>
-        <ETRoute path='/about' exact component={About}></ETRoute>
+        <ETRoute path='/' exact={true}>
+          <MainPage />
+        </ETRoute>
+        <ETRoute path='/login' exact={true}>
+          <Login />
+        </ETRoute>
+        <ETRoute path='/about' exact={true}>
+          <About />
+        </ETRoute>
       </ETRouter>
       <Navigator />
     </div>

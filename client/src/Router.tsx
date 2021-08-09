@@ -6,12 +6,6 @@ type RouterContextPropsType = {
   location: string
 }
 
-type RouteType = {
-  exact?: boolean;
-  path?: string;
-  component: JSXElementConstructor<unknown>;
-}
-
 const DEFAULT_LOCATION = '/';
 
 const RouterContext = createContext<RouterContextPropsType>({ location: DEFAULT_LOCATION });
@@ -46,13 +40,13 @@ export const ETRouter = ({ children }) => {
   );
 }
 
-export const ETRoute = ({ exact, path, component: Component }: RouteType) => {
+export const ETRoute = ({ exact, path, children }) => {
   const { location } = useContext(RouterContext);
 
   if (exact) {
-    return path === location ? <Component /> : null;
+    return path === location ? children : null;
   } else {
-    return path.match(location) ? <Component /> : null;
+    return path.match(location) ? children : null;
   }
 }
 
