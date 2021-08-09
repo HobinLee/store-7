@@ -1,9 +1,14 @@
-import { createContext, JSXElementConstructor } from "react";
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, createContext, ReactElement } from 'react';
 import styled from 'styled-components';
 
 type RouterContextPropsType = {
   location: string
+}
+
+type RouteType = {
+  exact?: boolean;
+  path: string;
+  children: ReactElement<unknown>;
 }
 
 const DEFAULT_LOCATION = '/';
@@ -40,7 +45,7 @@ export const ETRouter = ({ children }) => {
   );
 }
 
-export const ETRoute = ({ exact, path, children }) => {
+export const ETRoute = ({ exact, path, children }: RouteType) => {
   const { location } = useContext(RouterContext);
 
   if (exact) {
