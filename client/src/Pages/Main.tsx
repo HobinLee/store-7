@@ -4,6 +4,37 @@ import { flexCenter, textLarge } from "@/styles/global-style";
 import React from "react";
 import styled from "styled-components";
 import { ETLink } from "@/Router";
+import Item from "@/Components/Item";
+
+const sample = [
+  {
+    id: 1,
+    discountRate: 40,
+    tags: ["new", "sale"],
+    title: "타이틀",
+    price: 10000,
+  },
+  {
+    id: 2,
+    discountRate: 20,
+    tags: ["new", "green", "sale"],
+    title: "타이틀2",
+    price: 260000,
+  },
+  {
+    id: 3,
+    tags: ["green"],
+    title: "타이틀3",
+    price: 10000,
+  },
+  {
+    id: 4,
+    discountRate: 50,
+    tags: ["sale"],
+    title: "타이틀4",
+    price: 100000,
+  },
+];
 
 const MainPage = () => {
   return (
@@ -14,15 +45,8 @@ const MainPage = () => {
         <Content>
           <div className="title">잘나가요</div>
           <div className="items">
-            {[0, 0, 0, 0].map((i, idx) => (
-              <ETLink to={`/detail/${idx}`}>
-                <img
-                  src={
-                    "https://store.baemin.com/data/goods/19/11/48/237/237_detail_058.png"
-                  }
-                  className="items__item"
-                />
-              </ETLink>
+            {sample.map((item) => (
+              <Item {...item} />
             ))}
           </div>
         </Content>
@@ -84,9 +108,7 @@ const Content = styled.div`
     ${textLarge}
   }
   .items {
-    ${flexCenter}
-    overflow-x: scroll;
-    flex: 1;
+    display: flex;
     margin-top: 2rem;
     gap: 1rem;
     justify-content: space-between;
