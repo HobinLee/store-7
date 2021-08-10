@@ -1,3 +1,4 @@
+import Button from "@/Components/Button";
 import Header from "@/Components/Header";
 import { PageWrapper } from "@/shared/styled";
 import { flexCenter } from "@/styles/global-style";
@@ -27,9 +28,9 @@ const DetailPage = () => {
             </div>
 
             <div className="buttons">
-              <div>찜</div>
-              <div>장바구니</div>
-              <div>바로 구매</div>
+              <Button>찜</Button>
+              <Button>장바구니</Button>
+              <Button primary>바로 구매</Button>
             </div>
           </Info>
         </InfoBox>
@@ -102,12 +103,6 @@ const Info = styled.div`
     width: 100%;
     justify-content: flex-end;
     gap: 1rem;
-    div {
-      cursor: pointer;
-      font-size: 2rem;
-      padding: 1.5rem 3rem;
-      border: 0.1rem solid black;
-    }
   }
 `;
 

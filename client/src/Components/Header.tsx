@@ -74,7 +74,7 @@ const Wrapper = styled.div`
 
 const Search = styled(Input)`
   border: none;
-  padding: 1rem;
+  padding: 1rem 1.5rem;
   width: 30rem;
   font-size: 1.6rem;
   text-align: left;
