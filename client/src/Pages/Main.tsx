@@ -1,6 +1,6 @@
 import Header from "@/Components/Header";
 import { PageWrapper } from "@/shared/styled";
-import { flexCenter } from "@/styles/global-style";
+import { flexCenter, textLarge } from "@/styles/global-style";
 import React from "react";
 import styled from "styled-components";
 
@@ -62,7 +62,7 @@ const Content = styled.div`
   box-sizing: border-box;
   .title {
     width: 100%;
-    font-size: 2rem;
+    ${textLarge}
   }
   .items {
     ${flexCenter}

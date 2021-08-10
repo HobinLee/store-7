@@ -1,5 +1,5 @@
 import { PageWrapper } from "@/shared/styled";
-import { flexCenter } from "@/styles/global-style";
+import { flexCenter, textMedium, textXLarge } from "@/styles/global-style";
 import React from "react";
 import styled from "styled-components";
 import Header from "@/Components/Header";
@@ -77,12 +77,12 @@ const Process = styled.div`
   width: 100%;
   justify-content: space-between;
   .title {
-    font-size: 3rem;
+    ${textXLarge}
   }
   .process {
     ${flexCenter}
+    ${textMedium}
     gap: 2rem;
-    font-size: 1.5rem;
   }
 `;
 

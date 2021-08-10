@@ -1,7 +1,7 @@
 import Button from "@/Components/Button";
 import Header from "@/Components/Header";
 import { PageWrapper } from "@/shared/styled";
-import { flexCenter } from "@/styles/global-style";
+import { flexCenter, textMedium, textXLarge } from "@/styles/global-style";
 import React from "react";
 import styled from "styled-components";
 
@@ -82,7 +82,7 @@ const Info = styled.div`
   align-items: flex-start;
   justify-content: space-between;
   .title {
-    font-size: 3rem;
+    ${textXLarge}
   }
   .list {
     margin-top: 5rem;
@@ -90,7 +90,7 @@ const Info = styled.div`
       ${flexCenter}
       justify-content: flex-start;
       margin-top: 2rem;
-      font-size: 1.5rem;
+      ${textMedium}
       &--title {
       }
       &--content {
@@ -111,7 +111,7 @@ const Tab = styled.div`
   div {
     cursor: pointer;
     padding: 2rem;
-    font-size: 1.4rem;
+    ${textMedium}
   }
 `;
 

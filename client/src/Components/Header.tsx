@@ -1,7 +1,12 @@
 import useInput from "@/hooks/useInput";
 import { ETLink } from "@/Router";
 import { DropdownWrapper, DropdownItem } from "@/shared/styled";
-import { flexCenter, shadow } from "@/styles/global-style";
+import {
+  flexCenter,
+  shadow,
+  textMedium,
+  textSmall,
+} from "@/styles/global-style";
 import React, { useState } from "react";
 import styled from "styled-components";
 import Input from "./Input";
@@ -71,7 +76,7 @@ const TopWrapper = styled.div`
 `;
 
 const Nav = styled.div`
-  font-size: 1.2rem;
+  ${textSmall}
   text-align: end;
   width: 100%;
   padding: 1.5rem;
@@ -81,10 +86,10 @@ const Nav = styled.div`
 const Wrapper = styled.div`
   ${flexCenter}
   ${shadow}
+  ${textMedium}
   padding: 0 10rem;
   box-sizing: border-box;
   justify-content: space-around;
-  font-size: 1.6rem;
   width: 100%;
   height: 10rem;
   .input-box {
@@ -102,10 +107,10 @@ const Wrapper = styled.div`
 `;
 
 const Search = styled(Input)`
+  ${textMedium}
   border: none;
   padding: 1rem 1.5rem;
   width: 30rem;
-  font-size: 1.6rem;
   text-align: left;
 `;
 

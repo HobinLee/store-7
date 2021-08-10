@@ -45,3 +45,20 @@ export const shadow = css`
   box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.1),
     0 0.4rem 2rem rgba(0, 0, 0, 0.1);
 `;
+
+export const textXLarge = css`
+  font-size: 3rem;
+  font-weight: 700;
+`;
+export const textLarge = css`
+  font-size: 2rem;
+  font-weight: 700;
+`;
+export const textMedium = css`
+  font-size: 1.6rem;
+  font-weight: 500;
+`;
+export const textSmall = css`
+  font-size: 1.2rem;
+  font-weight: 400;
+`;
