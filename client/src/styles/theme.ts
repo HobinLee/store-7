@@ -1,4 +1,23 @@
-import { DefaultTheme } from "styled-components";
+import { css, DefaultTheme } from "styled-components";
+
+const font = {
+  small: css`
+    font-size: 1.2rem;
+    font-weight: 400;
+  `,
+  medium: css`
+    font-size: 1.6rem;
+    font-weight: 500;
+  `,
+  large: css`
+    font-size: 2rem;
+    font-weight: 700;
+  `,
+  xlarge: css`
+    font-size: 3rem;
+    font-weight: 700;
+  `,
+};
 
 export const light: DefaultTheme = {
   color: {
@@ -16,6 +35,7 @@ export const light: DefaultTheme = {
     primary3: "#219a95",
     red: "#f45452",
   },
+  font,
 };
 export const dark: DefaultTheme = {
   color: {
@@ -33,6 +53,7 @@ export const dark: DefaultTheme = {
     primary3: "#16de8e",
     red: "#f13734",
   },
+  font,
 };
 
 const customMediaQuery = (maxWidth: number): string =>

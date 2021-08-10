@@ -1,4 +1,5 @@
 import "styled-components";
+import { css } from "styled-components";
 
 declare module "styled-components" {
   export interface DefaultTheme {
@@ -16,6 +17,12 @@ declare module "styled-components" {
       primary2: string;
       primary3: string;
       red: string;
+    };
+    font: {
+      small: css;
+      medium: css;
+      large: css;
+      xlarge: css;
     };
   }
 }
