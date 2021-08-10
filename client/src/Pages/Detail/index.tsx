@@ -76,21 +76,24 @@ const DetailPage = () => {
         <Scroll yOffset={yOffset}>
           <Tab yOffset={yOffset}>
             {tabs.map((tab) => (
-              <TabA
-                onClick={() => handleSelectTab(tab.id)}
-                id={tab.id}
-                href={`#${tab.id}`}
-                isSelected={selectedTab === tab.id}
-              >
-                {tab.title}
-              </TabA>
+              <a href={`#${tab.id}`}>
+                <TabA
+                  onClick={() => handleSelectTab(tab.id)}
+                  isSelected={selectedTab === tab.id}
+                >
+                  {tab.title}
+                </TabA>
+              </a>
             ))}
           </Tab>
 
           <div className="bottom-wrapper">
             <div className="scroll">
               {tabs.map((tab) => (
-                <div id={tab.id}>{tab.title}</div>
+                <ScrollPage>
+                  <div id={tab.id} />
+                  {tab.title}
+                </ScrollPage>
               ))}
             </div>
           </div>
@@ -170,11 +173,6 @@ const Scroll = styled.div<{ yOffset: number }>`
       width: 100%;
       overflow-y: scroll;
       margin-top: ${({ yOffset }) => yOffset > topHeight && "5rem"};
-      div {
-        width: 100%;
-        height: 100rem;
-        background: lightgray;
-      }
     }
   }
 
@@ -208,10 +206,10 @@ const Tab = styled.div<{ yOffset: number }>`
   position: ${({ yOffset }) => (yOffset > topHeight ? "fixed" : "absolute")};
   top: ${({ yOffset }) => yOffset > topHeight && "14.2rem"};
   background: ${({ theme }) => theme.color.background};
-  z-index: 0;
+  z-index: 1;
 `;
 
-const TabA = styled.a<{ isSelected: boolean }>`
+const TabA = styled.div<{ isSelected: boolean }>`
   cursor: pointer;
   padding: 2rem 4rem;
   ${({ theme }) => theme.font.medium}
@@ -219,6 +217,16 @@ const TabA = styled.a<{ isSelected: boolean }>`
     isSelected ? theme.color.primary1 : "transparent"};
   color: ${({ isSelected, theme }) =>
     isSelected ? theme.color.primary1 : theme.color.title_active};
+`;
+
+const ScrollPage = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100rem;
+  div {
+    position: absolute;
+    top: -23rem;
+  }
 `;
 
 export default DetailPage;

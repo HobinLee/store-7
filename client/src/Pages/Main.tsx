@@ -122,10 +122,4 @@ const Content = styled.div`
   }
 `;
 
-const Footer = styled.div`
-  width: 100%;
-  height: 30rem;
-  background-color: lightgray;
-`;
-
 export default MainPage;
