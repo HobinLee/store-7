@@ -39,7 +39,7 @@ const SignupPage = () => {
               <input></input>
               <input type="checkbox" id="maillingFl" name="maillingFl" value="y" aria-invalid="false">
               </input>
-              <label for="maillingFl" class="check_s on">(선택)마케팅 및 이벤트 정보 메일 수신에 동의합니다.</label>
+              
             </div>
           </InfoRow>
           <InfoRow essential title="휴대폰 번호">
@@ -47,7 +47,7 @@ const SignupPage = () => {
             <input></input>
             <input type="checkbox" id="maillingFl" name="maillingFl" value="y" aria-invalid="false">
               </input>
-              <label for="maillingFl" class="check_s on">(선택)마케팅 및 이벤트 정보 메일 수신에 동의합니다.</label>
+              
             </div>
             
           </InfoRow>
