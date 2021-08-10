@@ -1,6 +1,6 @@
 import Header from "@/Components/Header";
 import { ETLink } from "@/Router";
-import { PageWrapper } from "@/shared/styled";
+import { PageWrapper, Contents } from "@/shared/styled";
 import { flexCenter, textMedium } from "@/styles/global-style";
 import React from "react";
 import styled from "styled-components";
@@ -9,7 +9,7 @@ const CategoryPage = () => {
   return (
     <Wrapper>
       <Header />
-      <div className="contents">
+      <Contents>
         <Filter>
           <div className="total">총 233개</div>
           <div className="buttons">
@@ -23,28 +23,30 @@ const CategoryPage = () => {
         <div className="items">
           {new Array(30).fill(1).map((i, idx) => (
             <ETLink to={`/detail/${idx}`}>
-              <div className="items__item">{i}</div>
+              <img
+                src={
+                  "https://store.baemin.com/data/goods/19/11/48/237/237_detail_058.png"
+                }
+                className="items__item"
+              />
             </ETLink>
           ))}
         </div>
-      </div>
+      </Contents>
     </Wrapper>
   );
 };
 
 const Wrapper = styled(PageWrapper)`
-  .contents {
-    padding: 0 20rem;
-    .items {
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      &__item {
-        width: 27rem;
-        height: 30rem;
-        background-color: lightgray;
-        margin: 0.5rem;
-      }
+  .items {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    &__item {
+      width: 27rem;
+      height: 30rem;
+      background-color: lightgray;
+      margin: 0.5rem;
     }
   }
 `;

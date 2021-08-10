@@ -35,21 +35,10 @@ module.exports = (env) => {
         {
           test: /\.svg$/,
           use: [
+            "@svgr/webpack",
             {
-              loader: "@svgr/webpack",
               options: {
-                svgoConfig: {
-                  plugins: [
-                    {
-                      // Enable figma's wrong mask-type attribute work
-                      removeRasterImages: false,
-                      removeStyleElement: false,
-                      removeUnknownsAndDefaults: false,
-                      // Enable svgr's svg to fill the size
-                      removeViewBox: false,
-                    },
-                  ],
-                },
+                svgo: false,
               },
             },
           ],

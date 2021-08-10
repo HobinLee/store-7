@@ -25,6 +25,7 @@ const Input = ({
     value={value}
     onChange={onChange}
     type={type}
+    autoComplete="off"
   />
 );
 

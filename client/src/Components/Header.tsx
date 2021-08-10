@@ -7,7 +7,7 @@ import {
   textMedium,
   textSmall,
 } from "@/styles/global-style";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Input from "./Input";
 import Menu from "./Menu";
@@ -25,6 +25,15 @@ const Header = () => {
     setCategory(val);
   };
 
+  const [isSearchBoxOpened, setIsSearchBoxOpened] = useState(false);
+  const handleSearchBoxOpen = () => {
+    setIsSearchBoxOpened(!isSearchBoxOpened);
+  };
+
+  useEffect(() => {
+    console.log(searchValue.value);
+  }, [searchValue]);
+
   return (
     <TopWrapper>
       <Nav>로그인 회원가입</Nav>
@@ -36,6 +45,7 @@ const Header = () => {
             src="https://store.baemin.com/data/skin/front/udweb_C/img/banner/7d4c23c41296ae46ffff9e8da1350b37_56349.png"
           />
         </ETLink>
+
         <div className="input-box">
           <div onClick={handleMenuOpen} className="input-box__select">
             {category}
@@ -52,12 +62,16 @@ const Header = () => {
               </DropdownWrapper>
             )}
           </div>
-          <Search
-            placeholder="검색어를 입력해주세요."
-            value={searchValue.value}
-            onChange={searchValue.onChange}
-          />
+          <div style={{ position: "relative" }} onClick={handleSearchBoxOpen}>
+            <Search
+              placeholder="검색어를 입력해주세요."
+              value={searchValue.value}
+              onChange={searchValue.onChange}
+            />
+            {isSearchBoxOpened && <SearchBox>최근검색어</SearchBox>}
+          </div>
         </div>
+
         <div>마이페이지</div>
         <ETLink to="/cart">
           <div>장바구니</div>
@@ -68,6 +82,7 @@ const Header = () => {
 };
 
 const TopWrapper = styled.div`
+  ${shadow}
   position: fixed;
   top: 0;
   left: 0;
@@ -81,17 +96,23 @@ const Nav = styled.div`
   width: 100%;
   padding: 1.5rem;
   box-sizing: border-box;
+  background: ${({ theme }) => theme.color.primary2};
+`;
+
+const SearchBox = styled.div`
+  position: absolute;
+  background: #fff;
 `;
 
 const Wrapper = styled.div`
   ${flexCenter}
-  ${shadow}
   ${textMedium}
-  padding: 0 10rem;
   box-sizing: border-box;
-  justify-content: space-around;
-  width: 100%;
+  justify-content: space-between;
+  max-width: 120rem;
+  margin: auto;
   height: 10rem;
+  padding: 0 5rem;
   .input-box {
     ${flexCenter}
     border: 0.3rem solid ${({ theme }) => theme.color.primary1};

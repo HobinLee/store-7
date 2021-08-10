@@ -1,28 +1,28 @@
 import Header from "@/Components/Header";
-import { PageWrapper } from "@/shared/styled";
+import { PageWrapper, Contents } from "@/shared/styled";
 import { flexCenter, textLarge } from "@/styles/global-style";
 import React from "react";
 import styled from "styled-components";
+import { ETLink } from "@/Router";
 
 const MainPage = () => {
   return (
     <Wrapper>
       <Header />
       <div className="banner" />
-      <div className="contents">
+      <Contents style={{ padding: "10rem 5rem" }}>
         <Content>
           <div className="title">잘나가요</div>
           <div className="items">
-            {[0, 0, 0, 0].map((i) => (
-              <div className="items__item">{i}</div>
-            ))}
-          </div>
-        </Content>
-        <Content>
-          <div className="title">잘나가요</div>
-          <div className="items">
-            {[0, 0, 0, 0].map((i) => (
-              <div className="items__item">{i}</div>
+            {[0, 0, 0, 0].map((i, idx) => (
+              <ETLink to={`/detail/${idx}`}>
+                <img
+                  src={
+                    "https://store.baemin.com/data/goods/19/11/48/237/237_detail_058.png"
+                  }
+                  className="items__item"
+                />
+              </ETLink>
             ))}
           </div>
         </Content>
@@ -30,11 +30,33 @@ const MainPage = () => {
           <div className="title">잘나가요</div>
           <div className="items">
             {[0, 0, 0, 0].map((i, idx) => (
-              <div className="items__item">{i}</div>
+              <ETLink to={`/detail/${idx}`}>
+                <img
+                  src={
+                    "https://store.baemin.com/data/goods/19/11/48/237/237_detail_058.png"
+                  }
+                  className="items__item"
+                />
+              </ETLink>
             ))}
           </div>
         </Content>
-      </div>
+        <Content>
+          <div className="title">잘나가요</div>
+          <div className="items">
+            {[0, 0, 0, 0].map((i, idx) => (
+              <ETLink to={`/detail/${idx}`}>
+                <img
+                  src={
+                    "https://store.baemin.com/data/goods/19/11/48/237/237_detail_058.png"
+                  }
+                  className="items__item"
+                />
+              </ETLink>
+            ))}
+          </div>
+        </Content>
+      </Contents>
       <Footer />
     </Wrapper>
   );
@@ -47,31 +69,30 @@ const Wrapper = styled(PageWrapper)`
     height: 35rem;
     background-color: ${({ theme }) => theme.color.primary1};
   }
-  .contents {
-    ${flexCenter}
-    flex-direction: column;
-    width: 100%;
-  }
 `;
 
 const Content = styled.div`
   ${flexCenter}
   flex-direction: column;
   width: 100%;
-  padding: 5rem 10rem;
   box-sizing: border-box;
+  & + & {
+    margin-top: 10rem;
+  }
   .title {
     width: 100%;
     ${textLarge}
   }
   .items {
     ${flexCenter}
+    overflow-x: scroll;
+    flex: 1;
     margin-top: 2rem;
+    gap: 1rem;
     justify-content: space-between;
     width: 100%;
-    grid-template-columns: repeat(4, 1fr);
     &__item {
-      width: 25rem;
+      flex: 0.4;
       height: 30rem;
       background-color: lightgray;
     }
