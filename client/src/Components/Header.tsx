@@ -1,7 +1,7 @@
 import useInput from "@/hooks/useInput";
 import { ETLink } from "@/Router";
 import { DropdownWrapper, DropdownItem } from "@/shared/styled";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Input from "./Input";
 import Menu from "./Menu";
@@ -23,10 +23,6 @@ const Header = () => {
   const handleSearchBoxOpen = () => {
     setIsSearchBoxOpened(!isSearchBoxOpened);
   };
-
-  useEffect(() => {
-    console.log(searchValue.value);
-  }, [searchValue]);
 
   return (
     <TopWrapper>

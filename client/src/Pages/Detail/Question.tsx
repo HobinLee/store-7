@@ -31,7 +31,7 @@ const questions: QuestionType[] = [
   },
 ];
 
-const ReviewList = (review: QuestionType) => {
+const QuestionList = (question: QuestionType) => {
   const [isContentOpened, setIsContentOpened] = useState(false);
   const handleContentOpen = () => {
     setIsContentOpened(!isContentOpened);
@@ -40,16 +40,17 @@ const ReviewList = (review: QuestionType) => {
   return (
     <ListWrapper>
       <div className="list">
-        <div className="list__rate">O O O O O</div>
+        <div className="list__id">{question.id}</div>
         <div onClick={handleContentOpen} className="list__content">
-          {review.content}
+          {question.title}
         </div>
-        <div className="list__author">{review.author}</div>
-        <div className="list__date">{review.date}</div>
+        <div className="list__author">{question.author}</div>
+        <div className="list__date">{question.date}</div>
+        <div className="list__state">{question.state}</div>
       </div>
 
       {isContentOpened && (
-        <div className="content-detail">{review.content}</div>
+        <div className="content-detail">{question.content}</div>
       )}
     </ListWrapper>
   );
@@ -62,8 +63,8 @@ const Question = () => {
         상품문의
         <Button primary>상품문의 글쓰기</Button>
       </div>
-      {questions.map((review) => (
-        <ReviewList {...review} />
+      {questions.map((question) => (
+        <QuestionList {...question} />
       ))}
     </Wrapper>
   );
@@ -87,8 +88,8 @@ const ListWrapper = styled.div`
     flex: 1;
     padding: 1.5rem 2rem;
     border-bottom: 0.1rem solid ${({ theme }) => theme.color.line};
-    &__rate {
-      flex: 0.2;
+    &__id {
+      flex: 0.1;
     }
     &__content {
       cursor: pointer;
@@ -99,6 +100,9 @@ const ListWrapper = styled.div`
       flex: 0.1;
     }
     &__date {
+      flex: 0.1;
+    }
+    &__state {
       flex: 0.1;
     }
   }

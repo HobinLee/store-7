@@ -2,31 +2,32 @@ import Header from "@/Components/Header";
 import OptionBox from "./OptionBox";
 import useInput from "@/hooks/useInput";
 import { PageWrapper, Contents } from "@/shared/styled";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import Review from "./Review";
 import Question from "./Question";
 import Footer from "@/Components/Footer";
-import { DeliveryQuide, ExchangeGuide } from "./Guide";
+import Guide from "./Guide";
 
 const topHeight = 645;
+const bottomHeight = 800;
 
 const Blank = styled.div`
   width: 100%;
-  height: 100rem;
+  height: 200rem;
   background: lightgray;
 `;
 
 const tabs = [
   { id: "first", title: "상품상세정보", component: <Blank /> },
-  { id: "secone", title: "배송안내", component: <Blank /> },
-  { id: "third", title: "교환 및 반품안내", component: <Blank /> },
-  { id: "fourth", title: "상품후기", component: <Review /> },
-  { id: "fifth", title: "상품문의", component: <Question /> },
+  { id: "seconed", title: "배송/교환/반품 안내", component: <Guide /> },
+  { id: "third", title: "상품후기", component: <Review /> },
+  { id: "fourth", title: "상품문의", component: <Question /> },
 ];
 
 const DetailPage = () => {
   const [yOffset, setYOffset] = useState(0);
+  const [isOptionBoxShown, setIsOptionBoxShown] = useState(false);
 
   const numValue = useInput("1");
   const handleClickNumVal = (val: 1 | -1) => {
@@ -46,7 +47,24 @@ const DetailPage = () => {
   useEffect(() => {
     addEventListener("scroll", () => {
       setYOffset(window.pageYOffset);
+      if (window.pageYOffset > topHeight) {
+        setIsOptionBoxShown(true);
+        const scrollTop =
+          (document.documentElement && document.documentElement.scrollTop) ||
+          document.body.scrollTop;
+        if (
+          document.body.scrollHeight - window.innerHeight - scrollTop <
+          bottomHeight
+        ) {
+          setIsOptionBoxShown(false);
+        } else {
+          setIsOptionBoxShown(true);
+        }
+      } else {
+        setIsOptionBoxShown(false);
+      }
     });
+
     return () => {
       removeEventListener("scroll", () => {
         setYOffset(window.pageYOffset);
@@ -108,7 +126,7 @@ const DetailPage = () => {
             </div>
           </div>
 
-          {yOffset > topHeight && (
+          {isOptionBoxShown && (
             <div className="option-box">
               <OptionBox {...{ numValue, handleClickNumVal }} />
             </div>
@@ -233,7 +251,7 @@ const TabA = styled.div<{ isSelected: boolean }>`
 const ScrollPage = styled.div`
   position: relative;
   width: 100%;
-  margin: 5rem 0;
+  margin: 10rem 0;
   .link {
     position: absolute;
     top: -23rem;
