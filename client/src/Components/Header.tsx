@@ -1,13 +1,25 @@
 import useInput from "@/hooks/useInput";
 import { ETLink } from "@/Router";
+import { DropdownWrapper, DropdownItem } from "@/shared/styled";
 import { flexCenter, shadow } from "@/styles/global-style";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Input from "./Input";
 import Menu from "./Menu";
 
 const Header = () => {
   const searchValue = useInput("");
+
+  const [isMenuOpened, setIsMenuOpened] = useState(false);
+  const handleMenuOpen = () => {
+    setIsMenuOpened(!isMenuOpened);
+  };
+
+  const [category, setCategory] = useState("전체");
+  const handleCategory = (val: string) => {
+    setCategory(val);
+  };
+
   return (
     <TopWrapper>
       <Nav>로그인 회원가입</Nav>
@@ -20,7 +32,21 @@ const Header = () => {
           />
         </ETLink>
         <div className="input-box">
-          <div className="input-box__select">전체</div>
+          <div onClick={handleMenuOpen} className="input-box__select">
+            {category}
+            {isMenuOpened && (
+              <DropdownWrapper style={{ left: 0, top: "3rem" }}>
+                {[0, 0, 0, 0, 0, 0, 0].map((i, idx) => (
+                  <DropdownItem
+                    onClick={() => handleCategory("asdf")}
+                    key={i.toString()}
+                  >
+                    asdf
+                  </DropdownItem>
+                ))}
+              </DropdownWrapper>
+            )}
+          </div>
           <Search
             placeholder="검색어를 입력해주세요."
             value={searchValue.value}
@@ -65,9 +91,12 @@ const Wrapper = styled.div`
     ${flexCenter}
     border: 0.3rem solid ${({ theme }) => theme.color.primary1};
     &__select {
+      position: relative;
       border-right: 0.1rem solid ${({ theme }) => theme.color.primary1};
       padding: 0 1.5rem;
-      width: 8rem;
+      width: 11rem;
+      box-sizing: border-box;
+      height: 100%;
     }
   }
 `;
