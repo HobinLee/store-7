@@ -15,6 +15,10 @@ export const GlobalStyle = createGlobalStyle`
         overflow-x: hidden;
         color: ${({ theme }) => theme.color.title_active};
     }
+    a{
+        text-decoration: none;
+        color: ${({ theme }) => theme.color.title_active};
+    }
     .no-scroll-bar::-webkit-scrollbar {
         display: none;
     }
