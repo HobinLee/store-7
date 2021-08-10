@@ -2,17 +2,27 @@ import Header from "@/Components/Header";
 import OptionBox from "./OptionBox";
 import useInput from "@/hooks/useInput";
 import { PageWrapper, Contents } from "@/shared/styled";
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import Review from "./Review";
+import Question from "./Question";
+import Footer from "@/Components/Footer";
+import { DeliveryQuide, ExchangeGuide } from "./Guide";
 
 const topHeight = 645;
 
+const Blank = styled.div`
+  width: 100%;
+  height: 100rem;
+  background: lightgray;
+`;
+
 const tabs = [
-  { id: "first", title: "상품상세정보" },
-  { id: "secone", title: "배송안내" },
-  { id: "third", title: "교환 및 반품안내" },
-  { id: "fourth", title: "상품후기" },
-  { id: "fifth", title: "상품문의" },
+  { id: "first", title: "상품상세정보", component: <Blank /> },
+  { id: "secone", title: "배송안내", component: <Blank /> },
+  { id: "third", title: "교환 및 반품안내", component: <Blank /> },
+  { id: "fourth", title: "상품후기", component: <Review /> },
+  { id: "fifth", title: "상품문의", component: <Question /> },
 ];
 
 const DetailPage = () => {
@@ -91,8 +101,8 @@ const DetailPage = () => {
             <div className="scroll">
               {tabs.map((tab) => (
                 <ScrollPage>
-                  <div id={tab.id} />
-                  {tab.title}
+                  <div className="link" id={tab.id} />
+                  {tab.component}
                 </ScrollPage>
               ))}
             </div>
@@ -105,6 +115,7 @@ const DetailPage = () => {
           )}
         </Scroll>
       </Contents>
+      <Footer />
     </Wrapper>
   );
 };
@@ -222,8 +233,8 @@ const TabA = styled.div<{ isSelected: boolean }>`
 const ScrollPage = styled.div`
   position: relative;
   width: 100%;
-  height: 100rem;
-  div {
+  margin: 5rem 0;
+  .link {
     position: absolute;
     top: -23rem;
   }

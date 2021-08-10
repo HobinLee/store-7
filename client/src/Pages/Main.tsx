@@ -4,6 +4,7 @@ import React from "react";
 import styled from "styled-components";
 import { ETLink } from "@/Router";
 import Item from "@/Components/Item";
+import Footer from "@/Components/Footer";
 
 const sample = [
   {
