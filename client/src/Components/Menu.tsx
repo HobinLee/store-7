@@ -9,6 +9,9 @@ const Menu = () => {
     setIsMenuOpened(val);
   };
 
+  const [isMenuhover, setIsMenuHover] = useState(false);
+  const handleMenuHover = (val: boolean) => {};
+
   return (
     <Wrapper
       onMouseEnter={() => handleMenuOpen(true)}
@@ -43,7 +46,7 @@ const Wrapper = styled.div`
 const MenuList = styled.div`
   ${flexCenter}
   ${shadow}
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.color.background};
   position: absolute;
   left: 1rem;
   top: 10rem;
@@ -52,6 +55,9 @@ const MenuList = styled.div`
     width: 10rem;
     box-sizing: border-box;
     padding: 0.8rem 1rem;
+    &:hover {
+      background: lightgray;
+    }
   }
 `;
 

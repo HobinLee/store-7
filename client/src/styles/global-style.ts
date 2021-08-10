@@ -1,6 +1,6 @@
-import { createGlobalStyle, css } from 'styled-components';
-import { reset } from 'styled-reset';
-import { media } from './theme';
+import { createGlobalStyle, css } from "styled-components";
+import { reset } from "styled-reset";
+import { media } from "./theme";
 
 export const GlobalStyle = createGlobalStyle`
     ${reset}
@@ -13,6 +13,7 @@ export const GlobalStyle = createGlobalStyle`
         font-family: Noto Sans KR, Apple SD Gothic Neo, sans-serif;
         font-display: fallback;
         overflow-x: hidden;
+        color: ${({ theme }) => theme.color.title_active};
     }
     .no-scroll-bar::-webkit-scrollbar {
         display: none;

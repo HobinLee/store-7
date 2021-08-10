@@ -9,15 +9,7 @@ import Menu from "./Menu";
 const Header = () => {
   const searchValue = useInput("");
   return (
-    <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100%",
-        background: "#fff",
-      }}
-    >
+    <TopWrapper>
       <Nav>로그인 회원가입</Nav>
       <Wrapper>
         <Menu />
@@ -36,11 +28,21 @@ const Header = () => {
           />
         </div>
         <div>마이페이지</div>
-        <div>장바구니</div>
+        <ETLink to="/cart">
+          <div>장바구니</div>
+        </ETLink>
       </Wrapper>
-    </div>
+    </TopWrapper>
   );
 };
+
+const TopWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: ${({ theme }) => theme.color.background};
+`;
 
 const Nav = styled.div`
   font-size: 1.2rem;
