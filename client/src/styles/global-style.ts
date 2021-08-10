@@ -1,6 +1,6 @@
-import { createGlobalStyle, css } from 'styled-components';
-import { reset } from 'styled-reset';
-import { media } from './theme';
+import { createGlobalStyle, css } from "styled-components";
+import { reset } from "styled-reset";
+import { media } from "./theme";
 
 export const GlobalStyle = createGlobalStyle`
     ${reset}
@@ -13,6 +13,7 @@ export const GlobalStyle = createGlobalStyle`
         font-family: Noto Sans KR, Apple SD Gothic Neo, sans-serif;
         font-display: fallback;
         overflow-x: hidden;
+        color: ${({ theme }) => theme.color.title_active};
     }
     .no-scroll-bar::-webkit-scrollbar {
         display: none;
@@ -43,4 +44,21 @@ export const flexCenter = css`
 export const shadow = css`
   box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.1),
     0 0.4rem 2rem rgba(0, 0, 0, 0.1);
+`;
+
+export const textXLarge = css`
+  font-size: 3rem;
+  font-weight: 700;
+`;
+export const textLarge = css`
+  font-size: 2rem;
+  font-weight: 700;
+`;
+export const textMedium = css`
+  font-size: 1.6rem;
+  font-weight: 500;
+`;
+export const textSmall = css`
+  font-size: 1.2rem;
+  font-weight: 400;
 `;

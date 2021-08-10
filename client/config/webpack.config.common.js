@@ -25,7 +25,7 @@ module.exports = (env) => {
           loader: "babel-loader",
         },
         {
-          test: /\.(png|jpe?g|gif|woff|woff2|ttf|svg|ico)$/i,
+          test: /\.(png|jpe?g|gif|woff|woff2|ttf|ico)$/i,
           use: [
             {
               loader: "file-loader",
@@ -33,27 +33,12 @@ module.exports = (env) => {
           ],
         },
         {
-          test: /\.css$/i,
-          use: ["style-loader", "css-loader"],
-        },
-        {
           test: /\.svg$/,
           use: [
             {
               loader: "@svgr/webpack",
               options: {
-                svgoConfig: {
-                  plugins: [
-                    {
-                      // Enable figma's wrong mask-type attribute work
-                      removeRasterImages: false,
-                      removeStyleElement: false,
-                      removeUnknownsAndDefaults: false,
-                      // Enable svgr's svg to fill the size
-                      removeViewBox: false,
-                    },
-                  ],
-                },
+                svgo: false,
               },
             },
           ],

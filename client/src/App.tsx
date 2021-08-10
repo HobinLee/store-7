@@ -1,32 +1,61 @@
-import React from 'react';
-import MainPage from '@/Pages/Main';
-import { ETLink, ETRouter, ETRoute } from './Router';
+import React, { useState } from "react";
+import MainPage from "@/Pages/Main";
+import { ETLink, ETRouter, ETRoute } from "./Router";
+import CategoryPage from "./Pages/Category";
+import DetailPage from "./Pages/Detail";
+import CartPage from "./Pages/Cart";
+import { light, dark } from "./styles/theme";
+import { ThemeProvider } from "styled-components";
+import { GlobalStyle } from "./styles/global-style";
 
 const App = () => {
+  const [themeMode, setThemeMode] = useState("light");
+  const theme = themeMode === "light" ? light : dark;
+  const toggleTheme = () =>
+    setThemeMode(themeMode === "light" ? "dark" : "light");
+
   return (
-    <div>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+
+      <button
+        style={{ position: "fixed", left: 0, top: 0, zIndex: 100 }}
+        onClick={toggleTheme}
+      >
+        toggle mode
+      </button>
+
       <ETRouter>
-        <ETRoute path='/' exact>
+        <ETRoute path="/" exact>
           <MainPage />
         </ETRoute>
-        <ETRoute path='/login' exact>
+        <ETRoute path="/login" exact>
           <Login />
         </ETRoute>
-        <ETRoute path='/about' exact>
+        <ETRoute path="/about" exact>
           <About />
+        </ETRoute>
+        <ETRoute path="/cart" exact>
+          <CartPage />
+        </ETRoute>
+        <ETRoute path="/category">
+          <CategoryPage />
+        </ETRoute>
+        <ETRoute path="/detail">
+          <DetailPage />
         </ETRoute>
       </ETRouter>
       <Navigator />
-    </div>
+    </ThemeProvider>
   );
 };
 
 function Navigator() {
   return (
     <>
-      <ETLink to='/'>home</ETLink>
-      <ETLink to='login'>login</ETLink>
-      <ETLink to='about'>about</ETLink>
+      <ETLink to="/">home</ETLink>
+      <ETLink to="login">login</ETLink>
+      <ETLink to="about">about</ETLink>
     </>
   );
 }
