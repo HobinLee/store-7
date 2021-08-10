@@ -3,10 +3,28 @@ import { reset } from "styled-reset";
 import { media } from "./theme";
 
 export const GlobalStyle = createGlobalStyle`
-    ${reset}
-    :focus {
-        outline: none;
-        border: none;
+  ${reset}
+  :focus {
+    outline: none;
+    border: none;
+  }
+  html{
+    font-size: 10px;
+    font-family: Noto Sans KR, Apple SD Gothic Neo, sans-serif;
+    font-display: fallback;
+    overflow-x: hidden;
+  }
+  .no-scroll-bar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scroll-bar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .mobile__only {
+    display: none;
+    ${media.mobile} {
+      display: block;
     }
     html{
         font-size: 10px;
@@ -33,6 +51,10 @@ export const GlobalStyle = createGlobalStyle`
             display: none;
         }
     }
+  }
+  button {
+    cursor: pointer;
+  }
 `;
 
 export const flexCenter = css`

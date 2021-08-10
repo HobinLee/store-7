@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import MainPage from "@/Pages/Main";
 import { ETLink, ETRouter, ETRoute } from "./Router";
+import MainPage from "@/Pages/Main";
+import SignupPage from '@/Pages/Signup';
+import LoginPage from '@/Pages/Login';
 import CategoryPage from "./Pages/Category";
 import DetailPage from "./Pages/Detail";
 import CartPage from "./Pages/Cart";
@@ -32,8 +34,11 @@ const App = () => {
         <ETRoute path="/login" exact>
           <Login />
         </ETRoute>
-        <ETRoute path="/about" exact>
-          <About />
+        <ETRoute path='/signin' exact={true}>
+          <LoginPage />
+        </ETRoute>
+        <ETRoute path='/signup' exact={true}>
+          <SignupPage />
         </ETRoute>
         <ETRoute path="/cart" exact>
           <CartPage />
@@ -45,7 +50,6 @@ const App = () => {
           <DetailPage />
         </ETRoute>
       </ETRouter>
-      <Navigator />
     </ThemeProvider>
   );
 };
