@@ -1,7 +1,6 @@
 import Header from "@/Components/Header";
 import { ETLink } from "@/Router";
 import { PageWrapper, Contents } from "@/shared/styled";
-import { flexCenter, textMedium } from "@/styles/global-style";
 import React from "react";
 import styled from "styled-components";
 
@@ -52,14 +51,14 @@ const Wrapper = styled(PageWrapper)`
 `;
 
 const Filter = styled.div`
-  ${flexCenter}
-  ${textMedium}
+  ${({ theme }) => theme.flexCenter}
+  ${({ theme }) => theme.font.medium}
   justify-content: space-between;
   padding: 3rem 0;
   .total {
   }
   .buttons {
-    ${flexCenter}
+    ${({ theme }) => theme.flexCenter}
     &__btn {
       cursor: pointer;
       padding: 0 2rem;

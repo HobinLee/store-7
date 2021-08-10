@@ -1,12 +1,6 @@
 import useInput from "@/hooks/useInput";
 import { ETLink } from "@/Router";
 import { DropdownWrapper, DropdownItem } from "@/shared/styled";
-import {
-  flexCenter,
-  shadow,
-  textMedium,
-  textSmall,
-} from "@/styles/global-style";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Input from "./Input";
@@ -82,7 +76,7 @@ const Header = () => {
 };
 
 const TopWrapper = styled.div`
-  ${shadow}
+  ${({ theme }) => theme.shadow}
   position: fixed;
   top: 0;
   left: 0;
@@ -92,7 +86,7 @@ const TopWrapper = styled.div`
 `;
 
 const Nav = styled.div`
-  ${textSmall}
+  ${({ theme }) => theme.font.small}
   text-align: end;
   width: 100%;
   padding: 1.5rem;
@@ -106,8 +100,8 @@ const SearchBox = styled.div`
 `;
 
 const Wrapper = styled.div`
-  ${flexCenter}
-  ${textMedium}
+  ${({ theme }) => theme.flexCenter}
+  ${({ theme }) => theme.font.medium}
   box-sizing: border-box;
   justify-content: space-between;
   max-width: 120rem;
@@ -115,7 +109,7 @@ const Wrapper = styled.div`
   height: 10rem;
   padding: 0 5rem;
   .input-box {
-    ${flexCenter}
+    ${({ theme }) => theme.flexCenter}
     border: 0.3rem solid ${({ theme }) => theme.color.primary1};
     &__select {
       position: relative;
@@ -129,7 +123,7 @@ const Wrapper = styled.div`
 `;
 
 const Search = styled(Input)`
-  ${textMedium}
+  ${({ theme }) => theme.font.medium}
   border: none;
   padding: 1rem 1.5rem;
   width: 30rem;

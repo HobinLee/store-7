@@ -1,6 +1,5 @@
 import Header from "@/Components/Header";
 import { PageWrapper, Contents } from "@/shared/styled";
-import { flexCenter, textLarge } from "@/styles/global-style";
 import React from "react";
 import styled from "styled-components";
 import { ETLink } from "@/Router";
@@ -96,7 +95,7 @@ const Wrapper = styled(PageWrapper)`
 `;
 
 const Content = styled.div`
-  ${flexCenter}
+  ${({ theme }) => theme.flexCenter}
   flex-direction: column;
   width: 100%;
   box-sizing: border-box;
@@ -105,10 +104,12 @@ const Content = styled.div`
   }
   .title {
     width: 100%;
-    ${textLarge}
+    ${({ theme }) => theme.font.large}
   }
   .items {
-    display: flex;
+    ${({ theme }) => theme.flexCenter}
+    overflow-x: scroll;
+    flex: 1;
     margin-top: 2rem;
     gap: 1rem;
     justify-content: space-between;

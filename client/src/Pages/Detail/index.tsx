@@ -2,14 +2,10 @@ import Header from "@/Components/Header";
 import OptionBox from "./OptionBox";
 import useInput from "@/hooks/useInput";
 import { PageWrapper, Contents } from "@/shared/styled";
-import {
-  flexCenter,
-  textMedium,
-  textXLarge,
-  textLarge,
-} from "@/styles/global-style";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+
+const topHeight = 645;
 
 const tabs = [
   { id: "first", title: "상품상세정보" },
@@ -99,7 +95,7 @@ const DetailPage = () => {
             </div>
           </div>
 
-          {yOffset > 645 && (
+          {yOffset > topHeight && (
             <div className="option-box">
               <OptionBox {...{ numValue, handleClickNumVal }} />
             </div>
@@ -112,14 +108,14 @@ const DetailPage = () => {
 
 const Wrapper = styled(PageWrapper)`
   .contents {
-    ${flexCenter}
+    ${({ theme }) => theme.flexCenter}
     flex-direction: column;
     width: 100%;
   }
 `;
 
 const InfoBox = styled.div`
-  ${flexCenter}
+  ${({ theme }) => theme.flexCenter}
   margin-top: 5rem;
   width: 100%;
   height: 50rem;
@@ -134,7 +130,7 @@ const InfoBox = styled.div`
 `;
 
 const Info = styled.div`
-  ${flexCenter}
+  ${({ theme }) => theme.flexCenter}
   flex-direction: column;
   width: 50rem;
   height: 100%;
@@ -144,20 +140,20 @@ const Info = styled.div`
     width: 100%;
   }
   .title {
-    ${textXLarge}
+    ${({ theme }) => theme.font.xlarge}
   }
   .list {
     &__item {
-      ${flexCenter}
+      ${({ theme }) => theme.flexCenter}
       justify-content: flex-start;
       margin-top: 2rem;
-      ${textMedium}
+      ${({ theme }) => theme.font.medium}
       &--title {
       }
       &--content {
         margin-left: 3rem;
         &.price {
-          ${textLarge}
+          ${({ theme }) => theme.font.large}
         }
       }
     }
@@ -168,12 +164,12 @@ const Scroll = styled.div<{ yOffset: number }>`
   width: 100%;
   margin-top: 10rem;
   .bottom-wrapper {
-    ${flexCenter}
+    ${({ theme }) => theme.flexCenter}
     .scroll {
       margin-top: 7rem;
       width: 100%;
       overflow-y: scroll;
-      margin-top: ${({ yOffset }) => yOffset > 645 && "5rem"};
+      margin-top: ${({ yOffset }) => yOffset > topHeight && "5rem"};
       div {
         width: 100%;
         height: 100rem;
@@ -205,12 +201,12 @@ const Scroll = styled.div<{ yOffset: number }>`
 `;
 
 const Tab = styled.div<{ yOffset: number }>`
-  ${flexCenter}
+  ${({ theme }) => theme.flexCenter}
   position: relative;
   width: 100%;
   left: 0;
-  position: ${({ yOffset }) => (yOffset > 645 ? "fixed" : "absolute")};
-  top: ${({ yOffset }) => yOffset > 645 && "14.2rem"};
+  position: ${({ yOffset }) => (yOffset > topHeight ? "fixed" : "absolute")};
+  top: ${({ yOffset }) => yOffset > topHeight && "14.2rem"};
   background: ${({ theme }) => theme.color.background};
   z-index: 0;
 `;
@@ -218,7 +214,7 @@ const Tab = styled.div<{ yOffset: number }>`
 const TabA = styled.a<{ isSelected: boolean }>`
   cursor: pointer;
   padding: 2rem 4rem;
-  ${textMedium}
+  ${({ theme }) => theme.font.medium}
   border-bottom: 0.3rem solid ${({ isSelected, theme }) =>
     isSelected ? theme.color.primary1 : "transparent"};
   color: ${({ isSelected, theme }) =>

@@ -1,4 +1,3 @@
-import { flexCenter, shadow } from "@/styles/global-style";
 import styled from "styled-components";
 
 export const PageWrapper = styled.div`
@@ -7,7 +6,7 @@ export const PageWrapper = styled.div`
 `;
 
 export const Contents = styled.div`
-  ${flexCenter}
+  ${({ theme }) => theme.flexCenter}
   flex-direction: column;
   margin: auto;
   max-width: 120rem;
@@ -17,8 +16,8 @@ export const Contents = styled.div`
 `;
 
 export const DropdownWrapper = styled.div`
-  ${flexCenter}
-  ${shadow}
+  ${({ theme }) => theme.flexCenter}
+  ${({ theme }) => theme.shadow}
   background-color: ${({ theme }) => theme.color.background};
   position: absolute;
   flex-direction: column;
