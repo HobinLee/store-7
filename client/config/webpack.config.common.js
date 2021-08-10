@@ -25,7 +25,7 @@ module.exports = (env) => {
           loader: "babel-loader",
         },
         {
-          test: /\.(png|jpe?g|gif|woff|woff2|ttf|svg|ico)$/i,
+          test: /\.(png|jpe?g|gif|woff|woff2|ttf|ico)$/i,
           use: [
             {
               loader: "file-loader",
@@ -35,8 +35,8 @@ module.exports = (env) => {
         {
           test: /\.svg$/,
           use: [
-            "@svgr/webpack",
             {
+              loader: "@svgr/webpack",
               options: {
                 svgo: false,
               },
