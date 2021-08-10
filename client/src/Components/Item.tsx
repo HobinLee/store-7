@@ -2,8 +2,6 @@ import { ETLink } from "@/Router";
 import React from "react";
 import styled, { css } from "styled-components";
 
-const sampleTags = ["new", "sale"];
-
 type ItemType = {
   id: number;
   discountRate?: number;
@@ -82,11 +80,10 @@ const ItemWrapper = styled.div`
     }
   }
 `;
-type tagType = {
-  background: string;
-};
 
-const Tag = styled.div<tagType>`
+const Tag = styled.div<{
+  background: string;
+}>`
   ${({ theme }) => css`
     ${theme.font.medium}
   `};
