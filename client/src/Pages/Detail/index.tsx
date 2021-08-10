@@ -1,6 +1,5 @@
-import Button from "@/Components/Button";
 import Header from "@/Components/Header";
-import Input from "@/Components/Input";
+import OptionBox from "./OptionBox";
 import useInput from "@/hooks/useInput";
 import { PageWrapper, Contents } from "@/shared/styled";
 import {
@@ -11,38 +10,6 @@ import {
 } from "@/styles/global-style";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-
-const OptionBox = ({ numValue, handleClickNumVal }) => (
-  <div>
-    <div className="select-option">
-      <div>으아아아악</div>
-      <div className="select-option__right">
-        <div className="num-input">
-          <NumInput value={numValue.value} onChange={numValue.onChange} />
-          <div>
-            <button type="button" onClick={() => handleClickNumVal(1)}>
-              .
-            </button>
-            <button type="button" onClick={() => handleClickNumVal(-1)}>
-              .
-            </button>
-          </div>
-        </div>
-        10,000원
-      </div>
-    </div>
-
-    <div className="total-price">
-      <div>총 합계금액</div>10,000원
-    </div>
-
-    <div className="buttons">
-      <Button>찜</Button>
-      <Button>장바구니</Button>
-      <Button primary>바로 구매</Button>
-    </div>
-  </div>
-);
 
 const tabs = [
   { id: "first", title: "상품상세정보" },
@@ -149,51 +116,6 @@ const Wrapper = styled(PageWrapper)`
     flex-direction: column;
     width: 100%;
   }
-  .buttons {
-    ${flexCenter}
-    width: 100%;
-    justify-content: flex-end;
-    gap: 1rem;
-  }
-  .select-option {
-    ${flexCenter}
-    ${textMedium}
-    justify-content: space-around;
-    margin-top: 5rem;
-    background: ${({ theme }) => theme.color.background};
-    width: 100%;
-    padding: 1.5rem 0;
-    &__right {
-      ${flexCenter}
-      gap: 2rem;
-      .num-input {
-        ${flexCenter}
-        div {
-          ${flexCenter}
-          flex-direction: column;
-          button {
-            cursor: pointer;
-            border: none;
-            background: ${({ theme }) => theme.color.primary2};
-          }
-        }
-      }
-    }
-  }
-  .total-price {
-    ${flexCenter}
-    ${textXLarge}
-    justify-content: space-between;
-    padding: 2.25rem 0;
-    border-top: 0.1rem solid ${({ theme }) => theme.color.line};
-    width: 100%;
-    margin-top: 10rem;
-    color: ${({ theme }) => theme.color.primary1};
-    & > * {
-      ${textMedium}
-      color: ${({ theme }) => theme.color.title_active};
-    }
-  }
 `;
 
 const InfoBox = styled.div`
@@ -240,12 +162,6 @@ const Info = styled.div`
       }
     }
   }
-`;
-
-const NumInput = styled(Input)`
-  width: 3rem;
-  text-align: center;
-  padding: 1rem;
 `;
 
 const Scroll = styled.div<{ yOffset: number }>`
