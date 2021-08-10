@@ -87,6 +87,7 @@ const TopWrapper = styled.div`
   top: 0;
   left: 0;
   width: 100%;
+  z-index: 10;
   background: ${({ theme }) => theme.color.background};
 `;
 
