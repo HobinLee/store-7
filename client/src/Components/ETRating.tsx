@@ -9,12 +9,18 @@ export enum RATING_KIND {
 }
 
 export interface ETRatingProps {
-  value: number;
+  value?: number;
   size?: "small" | "medium" | "large";
   className?: string;
+  readOnly?: boolean;
 }
 
-const ETRating = ({ value = 0, size = "large", className }: ETRatingProps) => {
+const ETRating = ({
+  value = 0,
+  size = "large",
+  className,
+  readOnly = false,
+}: ETRatingProps) => {
   const CustomRating = withStyles({
     iconFilled: {
       color: light.color.primary1,
@@ -23,7 +29,12 @@ const ETRating = ({ value = 0, size = "large", className }: ETRatingProps) => {
 
   return (
     <div {...{ className }}>
-      <CustomRating defaultValue={value} precision={0.1} readOnly size={size} />
+      <CustomRating
+        defaultValue={value}
+        precision={0.1}
+        readOnly={readOnly}
+        size={size}
+      />
     </div>
   );
 };

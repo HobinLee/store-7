@@ -1,4 +1,4 @@
-import { createGlobalStyle, css } from "styled-components";
+import { createGlobalStyle } from "styled-components";
 import { reset } from "styled-reset";
 import { media } from "./theme";
 
@@ -30,6 +30,16 @@ export const GlobalStyle = createGlobalStyle`
         textarea {
             border: none;
             resize: none;
+        }
+        input[type="file"] {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip:rect(0,0,0,0);
+            border: 0;
         }
     }
     

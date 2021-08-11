@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 export default (defaultValue: string) => {
   const [value, setValue] = useState(defaultValue);
 
-  const onChange = ({ target }: { target: HTMLInputElement }) => {
+  const onChange = ({
+    target,
+  }: {
+    target: HTMLInputElement | HTMLTextAreaElement;
+  }) => {
     const { value } = target;
     setValue(value);
   };
