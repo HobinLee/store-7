@@ -2,7 +2,8 @@ import Header from "@/Components/Header";
 import { PageWrapper, Contents } from "@/shared/styled";
 import React from "react";
 import styled from "styled-components";
-import { ETLink } from "@/Router";
+import Banner, { ItemType } from "./Banner";
+import BannerImg from "@/assets/banner1.gif";
 import Item from "@/Components/Item";
 import Footer from "@/Components/Footer";
 
@@ -36,11 +37,20 @@ const sample = [
   },
 ];
 
+const banner1: ItemType = {
+  brief: "다시 돌아온 플리츠마마x배민 콜라보!",
+  title: "플리츠마마X배달의민족. 텀블러백",
+  src: BannerImg,
+  id: 1,
+};
+
+const list: ItemType[] = [banner1];
+
 const MainPage = () => {
   return (
     <Wrapper>
       <Header />
-      <div className="banner" />
+      <Banner items={list} />
       <Contents style={{ padding: "10rem 5rem" }}>
         <Content>
           <div className="title">잘나가요</div>
@@ -53,30 +63,16 @@ const MainPage = () => {
         <Content>
           <div className="title">잘나가요</div>
           <div className="items">
-            {[0, 0, 0, 0].map((i, idx) => (
-              <ETLink to={`/detail/${idx}`}>
-                <img
-                  src={
-                    "https://store.baemin.com/data/goods/19/11/48/237/237_detail_058.png"
-                  }
-                  className="items__item"
-                />
-              </ETLink>
+            {sample.map((item) => (
+              <Item {...item} />
             ))}
           </div>
         </Content>
         <Content>
           <div className="title">잘나가요</div>
           <div className="items">
-            {[0, 0, 0, 0].map((i, idx) => (
-              <ETLink to={`/detail/${idx}`}>
-                <img
-                  src={
-                    "https://store.baemin.com/data/goods/19/11/48/237/237_detail_058.png"
-                  }
-                  className="items__item"
-                />
-              </ETLink>
+            {sample.map((item) => (
+              <Item {...item} />
             ))}
           </div>
         </Content>
@@ -87,12 +83,7 @@ const MainPage = () => {
 };
 
 const Wrapper = styled(PageWrapper)`
-  .banner {
-    margin-top: 0.5rem;
-    width: 100%;
-    height: 35rem;
-    background-color: ${({ theme }) => theme.color.primary1};
-  }
+  margin-top: 20rem;
 `;
 
 const Content = styled.div`
@@ -108,9 +99,7 @@ const Content = styled.div`
     ${({ theme }) => theme.font.large}
   }
   .items {
-    ${({ theme }) => theme.flexCenter}
-    overflow-x: scroll;
-    flex: 1;
+    display: flex;
     margin-top: 2rem;
     gap: 1rem;
     justify-content: space-between;

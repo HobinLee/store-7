@@ -27,7 +27,7 @@ export const ETRouter = ({ children }) => {
   const [location, setLocation] = useState(window.location.pathname);
   const history = window.history;
 
-  const handleLocation = () => {
+  const setCurrentLocation = () => {
     setLocation(window.location.pathname);
   };
 
@@ -35,8 +35,8 @@ export const ETRouter = ({ children }) => {
     window.addEventListener("pushstate", (e: any) => {
       const path = e.detail.pathname;
 
-      history.pushState({}, "", path);
-      handleLocation();
+      history.pushState({}, '', path);
+      setCurrentLocation();
     });
 
     window.addEventListener("popstate", (e: any) => {});
@@ -56,12 +56,16 @@ export const ETRouter = ({ children }) => {
 export const ETRoute = ({ exact, path, children }: RouteType) => {
   const { location } = useContext(RouterContext);
 
-  if (exact) {
-    return path === location ? children : null;
-  } else {
-    return location.match(path) ? children : null;
+  const checkPath = (): boolean => {
+    if (exact)  {
+      return path === location;
+    } else {
+      return location.match(path)?.index === 0;
+    }
   }
-};
+
+  return checkPath() ? children : null;
+}
 
 export const ETLink = ({ to, children }) => {
   const dispatchRouteEvent = () => {
