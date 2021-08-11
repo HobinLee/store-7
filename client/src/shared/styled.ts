@@ -1,8 +1,10 @@
 import styled from "styled-components";
 
 export const PageWrapper = styled.div`
+  position: relative;
   width: 100%;
-  margin-top: 15rem;
+  margin-top: 25rem;
+  padding-bottom: 30rem;
 `;
 
 export const Contents = styled.div`

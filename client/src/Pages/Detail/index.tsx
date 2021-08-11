@@ -2,7 +2,7 @@ import Header from "@/Components/Header";
 import OptionBox from "./OptionBox";
 import useInput from "@/hooks/useInput";
 import { PageWrapper, Contents } from "@/shared/styled";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Review from "./Review";
 import Question from "./Question";
@@ -10,7 +10,6 @@ import Footer from "@/Components/Footer";
 import Guide from "./Guide";
 
 const topHeight = 645;
-const bottomHeight = 800;
 
 const Blank = styled.div`
   width: 100%;
@@ -27,7 +26,6 @@ const tabs = [
 
 const DetailPage = () => {
   const [yOffset, setYOffset] = useState(0);
-  const [isOptionBoxShown, setIsOptionBoxShown] = useState(false);
 
   const numValue = useInput("1");
   const handleClickNumVal = (val: 1 | -1) => {
@@ -47,22 +45,6 @@ const DetailPage = () => {
   useEffect(() => {
     addEventListener("scroll", () => {
       setYOffset(window.pageYOffset);
-      if (window.pageYOffset > topHeight) {
-        setIsOptionBoxShown(true);
-        const scrollTop =
-          (document.documentElement && document.documentElement.scrollTop) ||
-          document.body.scrollTop;
-        if (
-          document.body.scrollHeight - window.innerHeight - scrollTop <
-          bottomHeight
-        ) {
-          setIsOptionBoxShown(false);
-        } else {
-          setIsOptionBoxShown(true);
-        }
-      } else {
-        setIsOptionBoxShown(false);
-      }
     });
 
     return () => {
@@ -78,9 +60,7 @@ const DetailPage = () => {
       <Contents>
         <InfoBox>
           <img
-            src={
-              "https://store.baemin.com/data/goods/19/11/48/237/237_detail_058.png"
-            }
+            src="https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg"
             className="thumbnail"
           />
           <Info>
@@ -126,7 +106,7 @@ const DetailPage = () => {
             </div>
           </div>
 
-          {isOptionBoxShown && (
+          {yOffset > topHeight && (
             <div className="option-box">
               <OptionBox {...{ numValue, handleClickNumVal }} />
             </div>
@@ -194,6 +174,8 @@ const Info = styled.div`
 
 const Scroll = styled.div<{ yOffset: number }>`
   width: 100%;
+  padding-right: 25rem;
+  box-sizing: border-box;
   margin-top: 10rem;
   .bottom-wrapper {
     ${({ theme }) => theme.flexCenter}
