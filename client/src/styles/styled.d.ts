@@ -24,5 +24,7 @@ declare module "styled-components" {
       large: css;
       xlarge: css;
     };
+    flexCenter: css;
+    shadow: css;
   }
 }

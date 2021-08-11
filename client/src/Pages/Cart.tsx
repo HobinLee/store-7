@@ -1,5 +1,4 @@
 import { PageWrapper } from "@/shared/styled";
-import { flexCenter, textMedium, textXLarge } from "@/styles/global-style";
 import React from "react";
 import styled from "styled-components";
 import Header from "@/Components/Header";
@@ -63,43 +62,43 @@ const CartPage = () => {
 
 const Wrapper = styled(PageWrapper)`
   .contents {
-    ${flexCenter}
+    ${({ theme }) => theme.flexCenter}
     flex-direction: column;
     padding: 0 10rem;
   }
 `;
 
 const Process = styled.div`
-  ${flexCenter}
+  ${({ theme }) => theme.flexCenter}
   margin-top: 5rem;
   padding: 2rem 0;
   border-bottom: 0.1rem solid black;
   width: 100%;
   justify-content: space-between;
   .title {
-    ${textXLarge}
+    ${({ theme }) => theme.font.xlarge}
   }
   .process {
-    ${flexCenter}
-    ${textMedium}
+    ${({ theme }) => theme.flexCenter}
+    ${({ theme }) => theme.font.medium}
     gap: 2rem;
   }
 `;
 
 const List = styled.div`
-  ${flexCenter}
+  ${({ theme }) => theme.flexCenter}
   flex-direction: column;
   width: 100%;
   .header,
   .item {
-    ${flexCenter}
+    ${({ theme }) => theme.flexCenter}
     width: 100%;
     flex: 1;
   }
 `;
 
 const Result = styled.div`
-  ${flexCenter}
+  ${({ theme }) => theme.flexCenter}
   padding: 2rem;
   border: 0.3rem solid ${({ theme }) => theme.color.primary1};
   width: 100%;

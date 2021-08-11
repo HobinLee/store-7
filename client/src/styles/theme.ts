@@ -19,6 +19,17 @@ const font = {
   `,
 };
 
+const flexCenter = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const shadow = css`
+  box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.1),
+    0 0.4rem 2rem rgba(0, 0, 0, 0.1);
+`;
+
 export const light: DefaultTheme = {
   color: {
     title_active: "#1e2222",
@@ -36,6 +47,8 @@ export const light: DefaultTheme = {
     red: "#f45452",
   },
   font,
+  flexCenter,
+  shadow,
 };
 export const dark: DefaultTheme = {
   color: {
@@ -54,6 +67,8 @@ export const dark: DefaultTheme = {
     red: "#f13734",
   },
   font,
+  flexCenter,
+  shadow,
 };
 
 const customMediaQuery = (maxWidth: number): string =>

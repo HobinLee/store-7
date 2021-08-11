@@ -2,7 +2,6 @@ import Button from "@/Components/Button";
 import Input from "@/Components/Input";
 import React from "react";
 import styled from "styled-components";
-import { flexCenter, textMedium, textXLarge } from "@/styles/global-style";
 
 const OptionBox = ({ numValue, handleClickNumVal }) => (
   <Wrapper>
@@ -40,20 +39,20 @@ export default OptionBox;
 
 const Wrapper = styled.div`
   .select-option {
-    ${flexCenter}
-    ${textMedium}
+    ${({ theme }) => theme.flexCenter}
+    ${({ theme }) => theme.font.medium}
     justify-content: space-around;
     margin-top: 5rem;
     background: ${({ theme }) => theme.color.background};
     width: 100%;
     padding: 1.5rem 0;
     &__right {
-      ${flexCenter}
+      ${({ theme }) => theme.flexCenter}
       gap: 2rem;
       .num-input {
-        ${flexCenter}
+        ${({ theme }) => theme.flexCenter}
         div {
-          ${flexCenter}
+          ${({ theme }) => theme.flexCenter}
           flex-direction: column;
           button {
             cursor: pointer;
@@ -65,8 +64,8 @@ const Wrapper = styled.div`
     }
   }
   .total-price {
-    ${flexCenter}
-    ${textXLarge}
+    ${({ theme }) => theme.flexCenter}
+    ${({ theme }) => theme.font.xlarge}
     justify-content: space-between;
     padding: 2.25rem 0;
     border-top: 0.1rem solid ${({ theme }) => theme.color.line};
@@ -74,12 +73,12 @@ const Wrapper = styled.div`
     margin-top: 10rem;
     color: ${({ theme }) => theme.color.primary1};
     & > * {
-      ${textMedium}
+      ${({ theme }) => theme.font.medium}
       color: ${({ theme }) => theme.color.title_active};
     }
   }
   .buttons {
-    ${flexCenter}
+    ${({ theme }) => theme.flexCenter}
     width: 100%;
     justify-content: flex-end;
     gap: 1rem;
