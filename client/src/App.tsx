@@ -5,6 +5,7 @@ import { ETLink, ETRouter, ETRoute } from "./Router";
 import CategoryPage from "./Pages/Category";
 import DetailPage from "./Pages/Detail";
 import CartPage from "./Pages/Cart";
+import MyPage from "./Pages/MyPage";
 import { light, dark } from "./styles/theme";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "./styles/global-style";
@@ -45,6 +46,9 @@ const App = () => {
         </ETRoute>
         <ETRoute path="/detail">
           <DetailPage />
+        </ETRoute>
+        <ETRoute path="/myPage">
+          <MyPage />
         </ETRoute>
       </ETRouter>
       <Navigator />
