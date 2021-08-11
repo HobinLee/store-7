@@ -30,9 +30,15 @@ const Container = styled.button<{ primary: boolean }>`
   border: 0.1rem solid ${({ primary, theme }) => !primary && theme.color.line};
   border-radius: 1rem;
   color: ${({ primary, theme }) =>
-    primary ? "#fff" : theme.color.title_active};
+    primary ? theme.color.white : theme.color.title_active};
   background: ${({ primary, theme }) =>
     primary ? theme.color.primary1 : "#fff"};
+  opacity: 1;
+  transition: opacity 0.5s;
+
+  &:disabled {
+    opacity: 0.3;
+  }
 `;
 
 export default Button;
