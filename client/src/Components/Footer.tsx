@@ -6,6 +6,9 @@ const Footer = () => {
 };
 
 const Wrapper = styled.div`
+  position: absolute;
+  left: 0;
+  bottom: 0;
   width: 100%;
   height: 30rem;
   background-color: lightgray;

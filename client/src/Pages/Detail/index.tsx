@@ -10,7 +10,6 @@ import Footer from "@/Components/Footer";
 import Guide from "./Guide";
 
 const topHeight = 645;
-const bottomHeight = 800;
 
 const Blank = styled.div`
   width: 100%;
@@ -27,7 +26,6 @@ const tabs = [
 
 const DetailPage = () => {
   const [yOffset, setYOffset] = useState(0);
-  const [isOptionBoxShown, setIsOptionBoxShown] = useState(false);
 
   const numValue = useInput("1");
   const handleClickNumVal = (val: 1 | -1) => {
@@ -47,22 +45,6 @@ const DetailPage = () => {
   useEffect(() => {
     addEventListener("scroll", () => {
       setYOffset(window.pageYOffset);
-      if (window.pageYOffset > topHeight) {
-        setIsOptionBoxShown(true);
-        const scrollTop =
-          (document.documentElement && document.documentElement.scrollTop) ||
-          document.body.scrollTop;
-        if (
-          document.body.scrollHeight - window.innerHeight - scrollTop <
-          bottomHeight
-        ) {
-          setIsOptionBoxShown(false);
-        } else {
-          setIsOptionBoxShown(true);
-        }
-      } else {
-        setIsOptionBoxShown(false);
-      }
     });
 
     return () => {
@@ -124,7 +106,7 @@ const DetailPage = () => {
             </div>
           </div>
 
-          {isOptionBoxShown && (
+          {yOffset > topHeight && (
             <div className="option-box">
               <OptionBox {...{ numValue, handleClickNumVal }} />
             </div>
@@ -192,6 +174,8 @@ const Info = styled.div`
 
 const Scroll = styled.div<{ yOffset: number }>`
   width: 100%;
+  padding-right: 25rem;
+  box-sizing: border-box;
   margin-top: 10rem;
   .bottom-wrapper {
     ${({ theme }) => theme.flexCenter}
