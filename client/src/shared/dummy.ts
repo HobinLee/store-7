@@ -1,3 +1,4 @@
+import { CategoryType } from "@/Components/Header/Menu";
 import dayjs from "dayjs";
 import { QuestionListType, ReviewListType } from "./type";
 
@@ -174,3 +175,156 @@ export const wishlistSample = {
   ths: ["상품명/옵션", "상품금액/수량", " 합계"],
   ratio: [6, 1, 1],
 };
+
+export const categories: CategoryType[] = [
+  {
+    title: "전체",
+  },
+  {
+    title: "문구",
+    subCategories: [
+      {
+        title: "펜",
+      },
+      {
+        title: "공책",
+      },
+    ],
+  },
+  {
+    title: "리빙",
+    subCategories: [
+      {
+        title: "가방",
+      },
+      {
+        title: "그립톡",
+      },
+      {
+        title: "레터링시트지",
+      },
+      {
+        title: "돗자리",
+      },
+      {
+        title: "기타",
+      },
+    ],
+  },
+  {
+    title: "책",
+    subCategories: [
+      {
+        title: "매거진",
+      },
+      {
+        title: "소설",
+      },
+      {
+        title: "교양용",
+      },
+      {
+        title: "전문가용",
+      },
+      {
+        title: "기타",
+      },
+    ],
+  },
+  {
+    title: "배민그린",
+    subCategories: [
+      {
+        title: "가방",
+      },
+      {
+        title: "문구",
+      },
+      {
+        title: "리빙",
+      },
+      {
+        title: "기타",
+      },
+    ],
+  },
+  {
+    title: "ㅋㅋ에디션",
+    subCategories: [
+      {
+        title: "양말",
+      },
+      {
+        title: "슬리퍼",
+      },
+      {
+        title: "핸드폰 액세서리",
+      },
+      {
+        title: "옷",
+      },
+      {
+        title: "기타",
+      },
+    ],
+  },
+  {
+    title: "을지로에디션",
+    subCategories: [
+      {
+        title: "뱃지",
+      },
+      {
+        title: "엽서",
+      },
+      {
+        title: "리빙",
+      },
+      {
+        title: "기타",
+      },
+    ],
+  },
+  {
+    title: "배달이친구들",
+    subCategories: [
+      {
+        title: "포스터",
+      },
+      {
+        title: "피규어",
+      },
+      {
+        title: "기타",
+      },
+    ],
+  },
+  {
+    title: "선물세트",
+    subCategories: [
+      {
+        title: "문구",
+      },
+      {
+        title: "리빙",
+      },
+      {
+        title: "기타",
+      },
+    ],
+  },
+  {
+    title: "콜라보레이션",
+    subCategories: [
+      {
+        title: "업사이클링",
+      },
+      {
+        title: "세븐일레븐",
+      },
+      {
+        title: "넛때문이야",
+      },
+    ],
+  },
+];
