@@ -15,7 +15,6 @@ const Header = () => {
     <TopWrapper>
       <Nav>로그인 회원가입</Nav>
       <Wrapper>
-        <Menu />
         <ETLink to="/">
           <img
             width="200"
@@ -28,6 +27,7 @@ const Header = () => {
           <div>장바구니</div>
         </ETLink>
       </Wrapper>
+      <Menu />
     </TopWrapper>
   );
 };
