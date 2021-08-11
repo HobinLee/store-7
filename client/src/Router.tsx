@@ -31,7 +31,6 @@ const RouterContext = createContext<RouterContextPropsType>({
 
 export const ETRouter = ({ children }): ReactElement => {
   const [location, setLocation] = useState(window.location.pathname);
-  const history = window.history;
 
   const setCurrentLocation = () => {
     setLocation(window.location.pathname);
@@ -40,7 +39,7 @@ export const ETRouter = ({ children }): ReactElement => {
   const handlePushState = (e: HistoryEvent) => {
     const path = e.detail.pathname;
 
-    history.pushState({}, "", path);
+    window.history.pushState({}, "", path);
     setCurrentLocation();
   };
 
@@ -75,7 +74,7 @@ export const ETRoute = ({ exact, path, children }: RouteType) => {
 };
 
 export const ETLink = ({ to, children }) => {
-  const dispatchRouteEvent = () => {
+  const handleClickLink = () => {
     const routeEvent = new CustomEvent("pushstate", {
       detail: {
         pathname: to,
@@ -85,9 +84,9 @@ export const ETLink = ({ to, children }) => {
     window.dispatchEvent(routeEvent);
   };
 
-  return <LinkATag onClick={dispatchRouteEvent}>{children}</LinkATag>;
+  return <LinkWrapper onClick={handleClickLink}>{children}</LinkWrapper>;
 };
 
-const LinkATag = styled.a`
+const LinkWrapper = styled.a`
   cursor: pointer;
 `;
