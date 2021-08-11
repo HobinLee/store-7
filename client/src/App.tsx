@@ -11,6 +11,7 @@ import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "./styles/global-style";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
+import SignupPage from "./Pages/Signup";
 
 const App = () => {
   const [themeMode, setThemeMode] = useState("light");
@@ -43,6 +44,9 @@ const App = () => {
         </ETRoute>
         <ETRoute path="/category">
           <CategoryPage />
+        </ETRoute>
+        <ETRoute path="/signup">
+          <SignupPage />
         </ETRoute>
         <ETRoute path="/detail">
           <DetailPage />

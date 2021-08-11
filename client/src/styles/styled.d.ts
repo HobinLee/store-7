@@ -29,5 +29,10 @@ declare module "styled-components" {
     };
     flexCenter: css;
     shadow: css;
+    borderRadius: {
+      small: css;
+      medium: css;
+      large: css;
+    };
   }
 }
