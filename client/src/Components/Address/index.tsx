@@ -2,7 +2,7 @@ import React, { MouseEventHandler, ReactChild } from "react";
 import styled from "styled-components";
 import PopupPostcode, { PostcodeType } from "./Popup";
 import useInput from "@/hooks/useInput";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ModalWrapper from "../ModalWrapper";
 
 export type AddressType = {
@@ -30,19 +30,16 @@ const Address = ({ onChangeAddress }) => {
     setPopup(false);
   };
 
-  const handleChangeDetail = ({
-    target,
-  }: {
-    target: HTMLInputElement | HTMLTextAreaElement;
-  }) => {
+  const handleChangeDetail = () => {
     const addressData: AddressType = {
       postcode: address,
-      detailAddress: target.value,
+      detailAddress: addressDetail.value,
     };
 
-    addressDetail.onChange({ target });
     onChangeAddress(addressData);
   };
+
+  useEffect(handleChangeDetail, [address, addressDetail.value]);
 
   return (
     <AddressWrapper>
@@ -58,7 +55,7 @@ const Address = ({ onChangeAddress }) => {
         placeholder="상세주소 입력"
         value={addressDetail.value}
         disabled={!address.address}
-        onChange={handleChangeDetail}
+        onChange={addressDetail.onChange}
       />
       {isPopupOpen && (
         <ModalWrapper closeModal={handleClosePopup}>
