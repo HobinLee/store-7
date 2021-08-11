@@ -1,4 +1,3 @@
-import { textLarge } from "@/styles/global-style";
 import React, { MouseEventHandler, ReactChild } from "react";
 import styled from "styled-components";
 
@@ -25,7 +24,7 @@ const Button = ({
 );
 
 const Container = styled.button<{ primary: boolean }>`
-  ${textLarge}
+  ${({ theme }) => theme.font.large}
   cursor: pointer;
   padding: 1.5rem 3rem;
   border: 0.1rem solid ${({ primary, theme }) => !primary && theme.color.line};

@@ -2,25 +2,32 @@ import Header from "@/Components/Header";
 import OptionBox from "./OptionBox";
 import useInput from "@/hooks/useInput";
 import { PageWrapper, Contents } from "@/shared/styled";
-import {
-  flexCenter,
-  textMedium,
-  textXLarge,
-  textLarge,
-} from "@/styles/global-style";
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
+import Review from "./Review";
+import Question from "./Question";
+import Footer from "@/Components/Footer";
+import Guide from "./Guide";
+
+const topHeight = 645;
+const bottomHeight = 800;
+
+const Blank = styled.div`
+  width: 100%;
+  height: 200rem;
+  background: lightgray;
+`;
 
 const tabs = [
-  { id: "first", title: "상품상세정보" },
-  { id: "secone", title: "배송안내" },
-  { id: "third", title: "교환 및 반품안내" },
-  { id: "fourth", title: "상품후기" },
-  { id: "fifth", title: "상품문의" },
+  { id: "first", title: "상품상세정보", component: <Blank /> },
+  { id: "seconed", title: "배송/교환/반품 안내", component: <Guide /> },
+  { id: "third", title: "상품후기", component: <Review /> },
+  { id: "fourth", title: "상품문의", component: <Question /> },
 ];
 
 const DetailPage = () => {
   const [yOffset, setYOffset] = useState(0);
+  const [isOptionBoxShown, setIsOptionBoxShown] = useState(false);
 
   const numValue = useInput("1");
   const handleClickNumVal = (val: 1 | -1) => {
@@ -40,7 +47,24 @@ const DetailPage = () => {
   useEffect(() => {
     addEventListener("scroll", () => {
       setYOffset(window.pageYOffset);
+      if (window.pageYOffset > topHeight) {
+        setIsOptionBoxShown(true);
+        const scrollTop =
+          (document.documentElement && document.documentElement.scrollTop) ||
+          document.body.scrollTop;
+        if (
+          document.body.scrollHeight - window.innerHeight - scrollTop <
+          bottomHeight
+        ) {
+          setIsOptionBoxShown(false);
+        } else {
+          setIsOptionBoxShown(true);
+        }
+      } else {
+        setIsOptionBoxShown(false);
+      }
     });
+
     return () => {
       removeEventListener("scroll", () => {
         setYOffset(window.pageYOffset);
@@ -80,46 +104,50 @@ const DetailPage = () => {
         <Scroll yOffset={yOffset}>
           <Tab yOffset={yOffset}>
             {tabs.map((tab) => (
-              <TabA
-                onClick={() => handleSelectTab(tab.id)}
-                id={tab.id}
-                href={`#${tab.id}`}
-                isSelected={selectedTab === tab.id}
-              >
-                {tab.title}
-              </TabA>
+              <a href={`#${tab.id}`}>
+                <TabA
+                  onClick={() => handleSelectTab(tab.id)}
+                  isSelected={selectedTab === tab.id}
+                >
+                  {tab.title}
+                </TabA>
+              </a>
             ))}
           </Tab>
 
           <div className="bottom-wrapper">
             <div className="scroll">
               {tabs.map((tab) => (
-                <div id={tab.id}>{tab.title}</div>
+                <ScrollPage>
+                  <div className="link" id={tab.id} />
+                  {tab.component}
+                </ScrollPage>
               ))}
             </div>
           </div>
 
-          {yOffset > 645 && (
+          {isOptionBoxShown && (
             <div className="option-box">
               <OptionBox {...{ numValue, handleClickNumVal }} />
             </div>
           )}
         </Scroll>
       </Contents>
+      <Footer />
     </Wrapper>
   );
 };
 
 const Wrapper = styled(PageWrapper)`
   .contents {
-    ${flexCenter}
+    ${({ theme }) => theme.flexCenter}
     flex-direction: column;
     width: 100%;
   }
 `;
 
 const InfoBox = styled.div`
-  ${flexCenter}
+  ${({ theme }) => theme.flexCenter}
   margin-top: 5rem;
   width: 100%;
   height: 50rem;
@@ -134,7 +162,7 @@ const InfoBox = styled.div`
 `;
 
 const Info = styled.div`
-  ${flexCenter}
+  ${({ theme }) => theme.flexCenter}
   flex-direction: column;
   width: 50rem;
   height: 100%;
@@ -144,20 +172,20 @@ const Info = styled.div`
     width: 100%;
   }
   .title {
-    ${textXLarge}
+    ${({ theme }) => theme.font.xlarge}
   }
   .list {
     &__item {
-      ${flexCenter}
+      ${({ theme }) => theme.flexCenter}
       justify-content: flex-start;
       margin-top: 2rem;
-      ${textMedium}
+      ${({ theme }) => theme.font.medium}
       &--title {
       }
       &--content {
         margin-left: 3rem;
         &.price {
-          ${textLarge}
+          ${({ theme }) => theme.font.large}
         }
       }
     }
@@ -168,17 +196,12 @@ const Scroll = styled.div<{ yOffset: number }>`
   width: 100%;
   margin-top: 10rem;
   .bottom-wrapper {
-    ${flexCenter}
+    ${({ theme }) => theme.flexCenter}
     .scroll {
       margin-top: 7rem;
       width: 100%;
       overflow-y: scroll;
-      margin-top: ${({ yOffset }) => yOffset > 645 && "5rem"};
-      div {
-        width: 100%;
-        height: 100rem;
-        background: lightgray;
-      }
+      margin-top: ${({ yOffset }) => yOffset > topHeight && "5rem"};
     }
   }
 
@@ -205,24 +228,34 @@ const Scroll = styled.div<{ yOffset: number }>`
 `;
 
 const Tab = styled.div<{ yOffset: number }>`
-  ${flexCenter}
+  ${({ theme }) => theme.flexCenter}
   position: relative;
   width: 100%;
   left: 0;
-  position: ${({ yOffset }) => (yOffset > 645 ? "fixed" : "absolute")};
-  top: ${({ yOffset }) => yOffset > 645 && "14.2rem"};
+  position: ${({ yOffset }) => (yOffset > topHeight ? "fixed" : "absolute")};
+  top: ${({ yOffset }) => yOffset > topHeight && "14.2rem"};
   background: ${({ theme }) => theme.color.background};
-  z-index: 0;
+  z-index: 1;
 `;
 
-const TabA = styled.a<{ isSelected: boolean }>`
+const TabA = styled.div<{ isSelected: boolean }>`
   cursor: pointer;
   padding: 2rem 4rem;
-  ${textMedium}
+  ${({ theme }) => theme.font.medium}
   border-bottom: 0.3rem solid ${({ isSelected, theme }) =>
     isSelected ? theme.color.primary1 : "transparent"};
   color: ${({ isSelected, theme }) =>
     isSelected ? theme.color.primary1 : theme.color.title_active};
+`;
+
+const ScrollPage = styled.div`
+  position: relative;
+  width: 100%;
+  margin: 10rem 0;
+  .link {
+    position: absolute;
+    top: -23rem;
+  }
 `;
 
 export default DetailPage;

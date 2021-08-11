@@ -1,12 +1,11 @@
 import Header from "@/Components/Header";
 import { PageWrapper, Contents } from "@/shared/styled";
-import { flexCenter, textLarge, textMedium, textXLarge } from "@/styles/global-style";
 import React from "react";
 import styled from "styled-components";
-import { ETLink } from "@/Router";
 import Banner, { ItemType } from "./Banner";
 import BannerImg from "@/assets/banner1.gif";
 import Item from "@/Components/Item";
+import Footer from "@/Components/Footer";
 
 const sample = [
   {
@@ -39,11 +38,11 @@ const sample = [
 ];
 
 const banner1: ItemType = {
-  brief: '다시 돌아온 플리츠마마x배민 콜라보!',
-  title: '플리츠마마X배달의민족. 텀블러백',
+  brief: "다시 돌아온 플리츠마마x배민 콜라보!",
+  title: "플리츠마마X배달의민족. 텀블러백",
   src: BannerImg,
-  id: 1
-}
+  id: 1,
+};
 
 const list: ItemType[] = [banner1];
 
@@ -51,7 +50,7 @@ const MainPage = () => {
   return (
     <Wrapper>
       <Header />
-      <Banner items={list}/>
+      <Banner items={list} />
       <Contents style={{ padding: "10rem 5rem" }}>
         <Content>
           <div className="title">잘나가요</div>
@@ -84,11 +83,11 @@ const MainPage = () => {
 };
 
 const Wrapper = styled(PageWrapper)`
-margin-top: 20rem;
-`
+  margin-top: 20rem;
+`;
 
 const Content = styled.div`
-  ${flexCenter}
+  ${({ theme }) => theme.flexCenter}
   flex-direction: column;
   width: 100%;
   box-sizing: border-box;
@@ -97,7 +96,7 @@ const Content = styled.div`
   }
   .title {
     width: 100%;
-    ${textLarge}
+    ${({ theme }) => theme.font.large}
   }
   .items {
     display: flex;
@@ -111,12 +110,6 @@ const Content = styled.div`
       background-color: lightgray;
     }
   }
-`;
-
-const Footer = styled.div`
-  width: 100%;
-  height: 30rem;
-  background-color: lightgray;
 `;
 
 export default MainPage;
