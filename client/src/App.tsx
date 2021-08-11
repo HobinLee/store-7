@@ -7,12 +7,16 @@ import CartPage from "./Pages/Cart";
 import { light, dark } from "./styles/theme";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "./styles/global-style";
+import dayjs from "dayjs";
+import "dayjs/locale/ko";
 
 const App = () => {
   const [themeMode, setThemeMode] = useState("light");
   const theme = themeMode === "light" ? light : dark;
   const toggleTheme = () =>
     setThemeMode(themeMode === "light" ? "dark" : "light");
+
+  dayjs.locale("ko");
 
   return (
     <ThemeProvider theme={theme}>

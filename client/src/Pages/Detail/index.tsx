@@ -2,7 +2,7 @@ import Header from "@/Components/Header";
 import OptionBox from "./OptionBox";
 import useInput from "@/hooks/useInput";
 import { PageWrapper, Contents } from "@/shared/styled";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Review from "./Review";
 import Question from "./Question";
@@ -78,9 +78,7 @@ const DetailPage = () => {
       <Contents>
         <InfoBox>
           <img
-            src={
-              "https://store.baemin.com/data/goods/19/11/48/237/237_detail_058.png"
-            }
+            src="https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg"
             className="thumbnail"
           />
           <Info>

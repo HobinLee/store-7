@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import dayjs from "dayjs";
 import Button from "@/Components/Button";
+import ETRating from "@/Components/Rating";
 
 type ReviewType = {
   id: number;
@@ -37,7 +38,9 @@ const ReviewList = (review: ReviewType) => {
   return (
     <ListWrapper>
       <div className="list">
-        <div className="list__rate">O O O O O</div>
+        <div className="list__rate">
+          <ETRating value={3} />
+        </div>
         <div onClick={handleContentOpen} className="list__content">
           {review.content}
         </div>
@@ -56,7 +59,9 @@ const Review = () => {
   return (
     <Wrapper>
       <div className="header">
-        상품후기
+        <div>
+          상품후기 <span className="header__total">143</span>
+        </div>
         <Button primary>상품후기 글쓰기</Button>
       </div>
       {reviews.map((review) => (
@@ -73,6 +78,10 @@ const Wrapper = styled.div`
     justify-content: space-between;
     padding: 2rem 0;
     border-bottom: 0.1rem solid ${({ theme }) => theme.color.grey1};
+    &__total {
+      ${({ theme }) => theme.font.large}
+      color: ${({ theme }) => theme.color.primary1}
+    }
   }
 `;
 
