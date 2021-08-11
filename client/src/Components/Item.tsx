@@ -11,7 +11,7 @@ type ItemType = {
 };
 const Item = ({ id, discountRate = 0, tags = [], title, price }: ItemType) => {
   return (
-    <ETLink to={`/${id}`}>
+    <ETLink to={`/detail/${id}`}>
       <ItemWrapper>
         <div className="image-box">
           <img src="https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg" />

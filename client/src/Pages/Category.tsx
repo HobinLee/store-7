@@ -1,8 +1,66 @@
 import Header from "@/Components/Header";
-import { ETLink } from "@/Router";
 import { PageWrapper, Contents } from "@/shared/styled";
 import React from "react";
 import styled from "styled-components";
+import Item from "@/Components/Item";
+import Footer from "@/Components/Footer";
+
+const sample = [
+  {
+    id: 1,
+    discountRate: 40,
+    tags: ["new", "sale"],
+    title: "타이틀",
+    price: 10000,
+  },
+  {
+    id: 2,
+    discountRate: 20,
+    tags: ["new", "green", "sale"],
+    title: "타이틀2",
+    price: 260000,
+  },
+  {
+    id: 3,
+    tags: ["green"],
+    title: "타이틀3",
+    price: 10000,
+  },
+  {
+    id: 4,
+    discountRate: 50,
+    tags: ["sale"],
+    title: "타이틀4",
+    price: 100000,
+  },
+  {
+    id: 5,
+    discountRate: 40,
+    tags: ["new", "sale"],
+    title: "타이틀",
+    price: 10000,
+  },
+  {
+    id: 6,
+    discountRate: 20,
+    tags: ["new", "green", "sale"],
+    title: "타이틀2",
+    price: 260000,
+  },
+  {
+    id: 7,
+    tags: ["green"],
+    title: "타이틀3",
+    price: 10000,
+  },
+  {
+    id: 8,
+    discountRate: 50,
+    tags: ["sale"],
+    title: "타이틀4",
+    price: 100000,
+  },
+];
 
 const CategoryPage = () => {
   return (
@@ -20,18 +78,12 @@ const CategoryPage = () => {
           </div>
         </Filter>
         <div className="items">
-          {new Array(30).fill(1).map((i, idx) => (
-            <ETLink to={`/detail/${idx}`}>
-              <img
-                src={
-                  "https://store.baemin.com/data/goods/19/11/48/237/237_detail_058.png"
-                }
-                className="items__item"
-              />
-            </ETLink>
+          {sample.map((item) => (
+            <Item {...item} />
           ))}
         </div>
       </Contents>
+      <Footer />
     </Wrapper>
   );
 };
