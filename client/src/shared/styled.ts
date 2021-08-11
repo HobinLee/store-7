@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { LINE_LINK } from "@/assets/";
 
 export const PageWrapper = styled.div`
   position: relative;
@@ -33,4 +34,11 @@ export const DropdownItem = styled.div`
   &:hover {
     background: lightgray;
   }
+`;
+
+export const SignatureLine = styled.div<{ type: string }>`
+  width: 100%;
+  height: 3rem;
+  background: url(${({ type }) => LINE_LINK[type]}) no-repeat;
+  background-size: contain;
 `;

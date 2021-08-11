@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { sampleMypage } from "@/shared/dummy";
-import { LINE } from "@/styles/lineLink";
+import { SignatureLine } from "@/shared/styled";
 
 const Sidebar = () => {
   const handleClickItem = (path) => () => {
@@ -10,8 +10,6 @@ const Sidebar = () => {
 
   return (
     <SidebarWrpper>
-      <SignatureLine type="short1" />
-      <h4>마이페이지</h4>
       <SidebarContent>
         <SignatureLine type="short2" />
         <p>쇼핑정보</p>
@@ -39,8 +37,8 @@ const Sidebar = () => {
 };
 
 const SidebarWrpper = styled.div`
-  margin-right: 3rem;
-  width: 23rem;
+  margin-right: 5rem;
+  width: 40rem;
   & > h4 {
     ${({ theme }) => theme.font.large}
     margin-bottom: 6rem;
@@ -63,12 +61,6 @@ const SidebarContent = styled.div`
       color: black;
     }
   }
-`;
-
-const SignatureLine = styled.div<{ type: string }>`
-  width: 100%;
-  height: 2rem;
-  background: url(${({ type }) => LINE[type]}) no-repeat;
 `;
 
 export default Sidebar;

@@ -1,4 +1,4 @@
-export const LINE = {
+export const LINE_LINK = {
   short1:
     "https://user-images.githubusercontent.com/41738385/129030888-2ae07e79-d490-406e-aad1-6961baccddde.png",
   short2:
