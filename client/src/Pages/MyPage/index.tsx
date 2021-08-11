@@ -1,5 +1,5 @@
 import Header from "@/Components/Header";
-import { PageWrapper } from "@/shared/styled";
+import { PageWrapper, Contents } from "@/shared/styled";
 import React from "react";
 import styled from "styled-components";
 import Table from "./Table";
@@ -13,61 +13,67 @@ const MyPage = () => {
   return (
     <MyPageWrapper>
       <Header />
-      <Container>
-        <Sidebar />
-        <Content>
-          <ContentHeader />
-          <ContentBody />
-        </Content>
-      </Container>
+      <Contents>
+        <ContentHeader />
+        <ContentBody>
+          <Sidebar />
+          <Content />
+        </ContentBody>
+      </Contents>
     </MyPageWrapper>
   );
 };
 
 const MyPageWrapper = styled(PageWrapper)``;
 
-const Container = styled.div`
-  padding-top: 5rem;
-  margin: 0 auto;
-  width: 110rem;
+const ContentBody = styled.div`
   display: flex;
-`;
-
-const Content = styled.div`
-  flex: 1;
 `;
 
 const ContentHeader = () => {
   return (
     <ContentHeaderWrapper>
       <div className="greeting">반가워요,</div>
-      <p>홍영준님의</p>
-      <p>회원등급은 일반회원그룹 입니다.</p>
+      <p>
+        <span>홍영준</span> 님의
+      </p>
+      <p>
+        회원등급은 <span>일반회원</span>입니다.
+      </p>
     </ContentHeaderWrapper>
   );
 };
 
 const ContentHeaderWrapper = styled.div`
+  width: 100%;
+  margin-bottom: 8rem;
+
   .greeting {
     font-size: 4rem;
     font-weight: bold;
     margin: 2.5rem 0;
   }
+
   p {
     font-size: 1.7rem;
     line-height: 1.7rem;
+    span {
+      ${({ theme }) => theme.font.large}
+    }
   }
+
   p + p {
     margin-top: 1rem;
   }
 `;
 
-const ContentBody = () => {
+const Content = () => {
   return (
     <ContentBodyWrapper>
       <Section
         title="찜리스트"
         descrition="최근 30일 내에 진행중인 주문정보입니다."
+        lineType="long1"
       >
         <Table
           checker
@@ -94,6 +100,7 @@ const ContentBody = () => {
       <Section
         title="진행 중인 주문"
         descrition="최근 30일 내에 진행중인 주문정보입니다."
+        lineType="long2"
       >
         <Table ths={["상품명/옵션", "상품금액/수량	", "합계"]} ratio={[6, 2, 1]}>
           <tr>
@@ -111,6 +118,7 @@ const ContentBody = () => {
       <Section
         title="최근 주문 정보"
         descrition="최근 30일 내에 주문하신 내역입니다."
+        lineType="long3"
       >
         <Table
           ths={[
@@ -131,7 +139,11 @@ const ContentBody = () => {
           </tr>
         </Table>
       </Section>
-      <Section title="최근 본 상품" descrition="ET님께서 본 최근 상품입니다.">
+      <Section
+        title="최근 본 상품"
+        descrition="ET님께서 본 최근 상품입니다."
+        lineType="long2"
+      >
         <ItemList>
           {sampleMain.map((item) => (
             <li key={item.id}>
