@@ -124,7 +124,7 @@ const ContentBody = () => {
     <ContentBodyWrapper>
       <Table
         checker
-        ths={["상품명/옵션", "상품금액/수량	", "합계"]}
+        ths={["상품명/옵션", "상품금액/수량", "합계"]}
         ratio={[6, 2, 1]}
       >
         <tr>

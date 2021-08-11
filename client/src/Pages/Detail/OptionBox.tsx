@@ -34,7 +34,9 @@ const OptionBox = ({ numValue, handleClickNumVal }) => {
       <div className="buttons">
         <Button>찜</Button>
         <Button onClick={() => setIsCartAlertShown(true)}>장바구니</Button>
-        <Button primary>바로 구매</Button>
+        <Button onClick={() => (window.location.href = "/order")} primary>
+          바로 구매
+        </Button>
       </div>
 
       {isCartAlertShown && (
