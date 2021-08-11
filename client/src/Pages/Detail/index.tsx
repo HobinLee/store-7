@@ -9,7 +9,7 @@ import Question from "./Question";
 import Footer from "@/Components/Footer";
 import Guide from "./Guide";
 
-const topHeight = 645;
+const topHeight = 700;
 
 const Blank = styled.div`
   width: 100%;
@@ -56,7 +56,23 @@ const DetailPage = () => {
 
   return (
     <Wrapper>
-      <Header />
+      <Header>
+        {yOffset > topHeight && (
+          <FixedTab yOffset={yOffset}>
+            {tabs.map((tab) => (
+              <a href={`#${tab.id}`}>
+                <TabA
+                  onClick={() => handleSelectTab(tab.id)}
+                  isSelected={selectedTab === tab.id}
+                >
+                  {tab.title}
+                </TabA>
+              </a>
+            ))}
+          </FixedTab>
+        )}
+      </Header>
+
       <Contents>
         <InfoBox>
           <img
@@ -124,6 +140,9 @@ const Wrapper = styled(PageWrapper)`
     flex-direction: column;
     width: 100%;
   }
+  .header-wrapper {
+    position: relative;
+  }
 `;
 
 const InfoBox = styled.div`
@@ -180,10 +199,9 @@ const Scroll = styled.div<{ yOffset: number }>`
   .bottom-wrapper {
     ${({ theme }) => theme.flexCenter}
     .scroll {
-      margin-top: 7rem;
+      margin-top: 10rem;
       width: 100%;
       overflow-y: scroll;
-      margin-top: ${({ yOffset }) => yOffset > topHeight && "5rem"};
     }
   }
 
@@ -211,13 +229,15 @@ const Scroll = styled.div<{ yOffset: number }>`
 
 const Tab = styled.div<{ yOffset: number }>`
   ${({ theme }) => theme.flexCenter}
-  position: relative;
   width: 100%;
   left: 0;
-  position: ${({ yOffset }) => (yOffset > topHeight ? "fixed" : "absolute")};
-  top: ${({ yOffset }) => yOffset > topHeight && "14.2rem"};
+  position: absolute;
   background: ${({ theme }) => theme.color.background};
   z-index: 1;
+`;
+
+const FixedTab = styled(Tab)`
+  position: fixed;
 `;
 
 const TabA = styled.div<{ isSelected: boolean }>`

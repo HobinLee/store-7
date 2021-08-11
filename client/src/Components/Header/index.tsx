@@ -1,35 +1,37 @@
 import { ETLink } from "@/Router";
 import LogoImg from "@/assets/logo.png";
-import React, { useEffect, useState } from "react";
+import React, { ReactChild, useEffect, useState } from "react";
 import styled from "styled-components";
 import SearchBar from "./Search";
 import Menu from "./Menu";
 
-const Header = () => {
+const Header = ({ children }: { children?: ReactChild }) => {
   const [isLogined, setIsLogined] = useState(false);
   const handleLogin = () => {
     setIsLogined(!isLogined);
-  }
+  };
 
   return (
     <TopWrapper>
       <Nav>로그인 회원가입</Nav>
       <Wrapper>
         <ETLink to="/">
-          <img
-            width="200"
-            src={LogoImg}
-          />
+          <img width="200" src={LogoImg} />
         </ETLink>
         <SearchBar />
         <div className="header__buttons">
-          {isLogined ? <ETLink to="/mypage">마이페이지</ETLink> : <ETLink to="/login">로그인</ETLink>}
+          {isLogined ? (
+            <ETLink to="/mypage">마이페이지</ETLink>
+          ) : (
+            <ETLink to="/login">로그인</ETLink>
+          )}
           <ETLink to="/cart">
             <div>장바구니</div>
           </ETLink>
         </div>
       </Wrapper>
       <Menu />
+      {children ?? ""}
     </TopWrapper>
   );
 };
@@ -47,8 +49,8 @@ const TopWrapper = styled.div`
     display: flex;
     flex-direction: row;
     gap: 5rem;
-    
-    a:hover{
+
+    a:hover {
       font-weight: bolder;
       color: ${({ theme }) => theme.color.primary1};
     }
@@ -56,7 +58,7 @@ const TopWrapper = styled.div`
 `;
 
 const Nav = styled.div`
-  ${({theme}) => theme.font.small}
+  ${({ theme }) => theme.font.small}
   text-align: end;
   width: 100%;
   padding: 1.5rem;
@@ -65,8 +67,8 @@ const Nav = styled.div`
 `;
 
 const Wrapper = styled.div`
-  ${({theme}) => theme.flexCenter}
-  ${({theme}) => theme.font.medium}
+  ${({ theme }) => theme.flexCenter}
+  ${({ theme }) => theme.font.medium}
   box-sizing: border-box;
   justify-content: space-between;
   max-width: 120rem;
@@ -74,6 +76,5 @@ const Wrapper = styled.div`
   height: 10rem;
   padding: 0 5rem;
 `;
-
 
 export default Header;
