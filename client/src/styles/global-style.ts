@@ -14,11 +14,25 @@ export const GlobalStyle = createGlobalStyle`
         font-display: fallback;
         overflow-x: hidden;
         color: ${({ theme }) => theme.color.title_active};
+        a{
+            text-decoration: none;
+            color: ${({ theme }) => theme.color.title_active};
+        }
+        input,
+        button,
+        textarea {
+            background: none;
+            border: none;
+            &:focus {
+                outline: none;
+            }
+        }
+        textarea {
+            border: none;
+            resize: none;
+        }
     }
-    a{
-        text-decoration: none;
-        color: ${({ theme }) => theme.color.title_active};
-    }
+    
     .no-scroll-bar::-webkit-scrollbar {
         display: none;
     }
