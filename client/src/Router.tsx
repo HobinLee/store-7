@@ -17,29 +17,35 @@ type RouteType = {
   children: ReactElement<unknown>;
 };
 
+interface HistoryEvent extends Event {
+  detail: {
+    pathname: string;
+  };
+}
+
 const DEFAULT_LOCATION = "/";
 
 const RouterContext = createContext<RouterContextPropsType>({
   location: DEFAULT_LOCATION,
 });
 
-export const ETRouter = ({ children }) => {
+export const ETRouter = ({ children }): ReactElement => {
   const [location, setLocation] = useState(window.location.pathname);
-  const history = window.history;
 
   const setCurrentLocation = () => {
     setLocation(window.location.pathname);
   };
 
+  const handlePushState = (e: HistoryEvent) => {
+    const path = e.detail.pathname;
+
+    window.history.pushState({}, "", path);
+    setCurrentLocation();
+  };
+
   const addEvents = () => {
-    window.addEventListener("pushstate", (e: any) => {
-      const path = e.detail.pathname;
-
-      history.pushState({}, '', path);
-      setCurrentLocation();
-    });
-
-    window.addEventListener("popstate", (e: any) => {});
+    window.addEventListener("pushstate", handlePushState);
+    window.addEventListener("popstate", setCurrentLocation);
   };
 
   useEffect(() => {
@@ -57,18 +63,18 @@ export const ETRoute = ({ exact, path, children }: RouteType) => {
   const { location } = useContext(RouterContext);
 
   const checkPath = (): boolean => {
-    if (exact)  {
+    if (exact) {
       return path === location;
     } else {
       return location.match(path)?.index === 0;
     }
-  }
+  };
 
   return checkPath() ? children : null;
-}
+};
 
 export const ETLink = ({ to, children }) => {
-  const dispatchRouteEvent = () => {
+  const handleClickLink = () => {
     const routeEvent = new CustomEvent("pushstate", {
       detail: {
         pathname: to,
@@ -78,9 +84,9 @@ export const ETLink = ({ to, children }) => {
     window.dispatchEvent(routeEvent);
   };
 
-  return <LinkATag onClick={dispatchRouteEvent}>{children}</LinkATag>;
+  return <LinkWrapper onClick={handleClickLink}>{children}</LinkWrapper>;
 };
 
-const LinkATag = styled.a`
+const LinkWrapper = styled.a`
   cursor: pointer;
 `;
