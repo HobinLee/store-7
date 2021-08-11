@@ -89,7 +89,6 @@ const MainPage = () => {
 };
 
 const Wrapper = styled(PageWrapper)`
-  margin-top: 18rem;
 `
 
 const Content = styled.div`

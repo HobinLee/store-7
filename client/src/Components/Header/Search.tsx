@@ -64,7 +64,6 @@ const Search = () => {
     const newList: string[] = [ ...searchList, keyword ];
 
     setSearchList(newList);
-    console.log(newList);
     localStorage.setItem(LS_SEARCH, JSON.stringify(newList));
   }
   
