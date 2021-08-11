@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const dotenv = require("dotenv-webpack");
+const forkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 module.exports = (env) => {
   return {
@@ -52,6 +53,7 @@ module.exports = (env) => {
       new dotenv({
         path: env.production ? "./env/.env" : "./env/dev.env",
       }),
+      new forkTsCheckerWebpackPlugin(),
     ],
   };
 };
