@@ -53,28 +53,34 @@ const MainPage = () => {
       <Banner items={list} />
       <Contents style={{ padding: "10rem 5rem" }}>
         <Content>
-          <div className="title">잘나가요</div>
-          <div className="items">
+          <div className="title">잘나가는</div>
+          <ul className="items">
             {sample.map((item) => (
-              <Item {...item} />
+              <li key={item.id}>
+                <Item {...item} />
+              </li>
             ))}
-          </div>
+          </ul>
         </Content>
         <Content>
           <div className="title">잘나가요</div>
-          <div className="items">
+          <ul className="items">
             {sample.map((item) => (
-              <Item {...item} />
+              <li key={item.id}>
+                <Item {...item} />
+              </li>
             ))}
-          </div>
+          </ul>
         </Content>
         <Content>
           <div className="title">잘나가요</div>
-          <div className="items">
+          <ul className="items">
             {sample.map((item) => (
-              <Item {...item} />
+              <li key={item.id}>
+                <Item {...item} />
+              </li>
             ))}
-          </div>
+          </ul>
         </Content>
       </Contents>
       <Footer />
@@ -83,8 +89,8 @@ const MainPage = () => {
 };
 
 const Wrapper = styled(PageWrapper)`
-  margin-top: 20rem;
-`;
+  margin-top: 18rem;
+`
 
 const Content = styled.div`
   ${({ theme }) => theme.flexCenter}
@@ -107,7 +113,7 @@ const Content = styled.div`
     &__item {
       flex: 0.4;
       height: 30rem;
-      background-color: lightgray;
+      background: lightgray;
     }
   }
 `;

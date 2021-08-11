@@ -1,4 +1,3 @@
-import { textMedium, textXLarge } from "@/styles/global-style";
 import React from "react";
 import styled from "styled-components";
 import { ETLink } from "@/Router";
@@ -36,8 +35,8 @@ const Banner = ({ items }: BannerPropsType) => {
 const BannerWrapper = styled.div`
   margin: 0 auto;
   max-width: 110rem;
-  height: 40em;
-  padding: 5rem;
+  height: 40rem;
+  padding: 0 5rem;
 
   .banner-content{
     width: 100%;
@@ -45,16 +44,13 @@ const BannerWrapper = styled.div`
     position: relative;
     border-radius: 2rem;
     overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    ${({theme}) => theme.flexCenter}
   }
   
   a {
     width: 100%;
     height: 100%;
-    display: flex;
-    justify-content: center;
+    ${({theme}) => theme.flexCenter}
   }
 
   .banner__info-wrapper {
@@ -76,14 +72,14 @@ const BannerWrapper = styled.div`
   }
 
   .banner__title {
-    ${textXLarge}
+    ${({theme}) => theme.font.xlarge}
     margin-bottom: 1rem;
     text-align: right;
   }
 
   .banner__brief {
     width: 100%;
-    ${textMedium}
+    ${({theme}) => theme.font.medium}
     text-align: right;
   }
 
@@ -98,8 +94,8 @@ const BannerWrapper = styled.div`
     border: 1px solid white;
     border-radius: 0.5rem;
     transition: background-color 0.5s;
-    background-color: none;
-    ${textMedium}
+    background: none;
+    ${({theme}) => theme.font.medium}
   }
 
   &:hover{
@@ -110,7 +106,7 @@ const BannerWrapper = styled.div`
     .banner__button {
       font-weight: bolder;
       border: 1px solid ${({ theme }) => theme.color.primary1};
-      background-color: ${({ theme }) => theme.color.primary1};
+      background: ${({ theme }) => theme.color.primary1};
     }
   }
   
