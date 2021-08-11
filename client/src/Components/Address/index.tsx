@@ -68,21 +68,19 @@ const Address = ({ onChangeAddress }) => {
 
 export default Address;
 
-const borderRadius = `border-radius: 0.5rem;`;
-
 const AddressWrapper = styled.div`
   width: 100%;
   max-width: 50rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  ${({ theme }) => theme.borderRadius.small}
 
   input {
     box-sizing: border-box;
     width: 100%;
     height: 4rem;
     padding: 1rem 1.5rem;
-    ${borderRadius}
     ${({ theme }) => theme.font.medium}
     border: 1px solid ${({ theme }) => theme.color.light_grey2};
 
@@ -121,7 +119,7 @@ const AddressWrapper = styled.div`
     color: ${({ theme }) => theme.color.primary1};
     background: none;
     border: 1px solid ${({ theme }) => theme.color.primary1};
-    ${borderRadius}
+    ${({ theme }) => theme.borderRadius.small}
     transition: background-color 0.5s;
     cursor: pointer;
 

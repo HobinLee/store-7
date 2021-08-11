@@ -30,6 +30,18 @@ const shadow = css`
     0 0.4rem 2rem rgba(0, 0, 0, 0.1);
 `;
 
+const borderRadius = {
+  small: css`
+    border-radius: 0.5rem;
+  `,
+  medium: css`
+    border-radius: 1rem;
+  `,
+  large: css`
+    border-radius: 2rem;
+  `,
+};
+
 export const light: DefaultTheme = {
   color: {
     title_active: "#1e2222",
@@ -52,6 +64,7 @@ export const light: DefaultTheme = {
   font,
   flexCenter,
   shadow,
+  borderRadius,
 };
 export const dark: DefaultTheme = {
   color: {
@@ -75,6 +88,7 @@ export const dark: DefaultTheme = {
   font,
   flexCenter,
   shadow,
+  borderRadius,
 };
 
 const customMediaQuery = (maxWidth: number): string =>
