@@ -1,47 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import dayjs from "dayjs";
 import Button from "@/Components/Button";
 import ETProgress from "@/Components/ETProgress";
 import ReviewBox from "./ReviewBox";
 import { ReviewListType } from "@/shared/type";
 import { useState } from "react";
 import ReviewModal from "./ReviewModal";
-
-const reviews: ReviewListType = {
-  totalCount: 3,
-  averageRate: 3.5,
-  rates: [
-    { rate: 5, count: 0 },
-    { rate: 4, count: 1 },
-    { rate: 3, count: 2 },
-    { rate: 2, count: 0 },
-    { rate: 1, count: 0 },
-  ],
-  reviews: [
-    {
-      id: 0,
-      rate: 3,
-      content: "조아유",
-      author: "우아한개발자",
-      date: dayjs(new Date()).format("YYYY.MM.DD"),
-    },
-    {
-      id: 1,
-      rate: 3,
-      content: "흠",
-      author: "우아한개발자",
-      date: dayjs(new Date()).format("YYYY.MM.DD"),
-    },
-    {
-      id: 3,
-      rate: 4,
-      content: "와",
-      author: "우아한개발자",
-      date: dayjs(new Date()).format("YYYY.MM.DD"),
-    },
-  ],
-};
+import { reviews } from "@/shared/dummy";
 
 const Review = () => {
   const [isModalOpened, setIsModalOpened] = useState(false);
