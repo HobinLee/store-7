@@ -1,1 +1,8 @@
-export { default as Hamburger } from "./hamburger.svg";
+import hamburger from "./hamburger.svg";
+import banner1 from "./banner1.gif";
+import banner2 from "./banner2.gif";
+import banner3 from "./banner3.gif";
+import logo from "./logo.png";
+import MenuIcon from "./menu.svg";
+
+export { hamburger, banner1, banner2, banner3, logo, MenuIcon };
