@@ -12,14 +12,14 @@ const Table = ({
   ths,
   ratio,
   checker = false,
-  children: inputChildren,
+  children: inputedChildren,
 }: TableType) => {
   // 체크 기능은 이후 isChecked라는 값이 애초에 들어있을건지 협의 후 만들기!
 
   const entire = ratio.reduce((acc, curr) => acc + curr, 0);
   const children = checker
-    ? appendCheckerToChildren(inputChildren)
-    : inputChildren;
+    ? appendCheckerToChildren(inputedChildren)
+    : inputedChildren;
 
   return (
     <TableWrapper>
