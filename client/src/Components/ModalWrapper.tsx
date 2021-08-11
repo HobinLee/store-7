@@ -4,18 +4,28 @@ import { Close } from "@/assets/";
 import { ReactChild } from "react";
 
 type ReviewModalType = {
-  closeModal: Function;
+  closeModal?: Function;
   children: ReactChild;
   title?: string;
+  className?: string;
+  hideCloseBtn?: boolean;
 };
 
-const ModalWrapper = ({ closeModal, children, title }: ReviewModalType) => {
+const ModalWrapper = ({
+  closeModal,
+  children,
+  title,
+  className,
+  hideCloseBtn = false,
+}: ReviewModalType) => {
   return (
     <>
       <Wrapper>
-        <Modal>
+        <Modal className={className}>
           <div className="header">{title}</div>
-          <Close onClick={closeModal} className="close-btn" />
+          {!hideCloseBtn && (
+            <Close onClick={closeModal} className="close-btn" />
+          )}
           {children}
         </Modal>
       </Wrapper>

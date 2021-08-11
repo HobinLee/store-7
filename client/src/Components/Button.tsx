@@ -27,14 +27,21 @@ const Container = styled.button<{ primary: boolean }>`
   ${({ theme }) => theme.font.large}
   cursor: pointer;
   padding: 1.5rem 3rem;
-  border: 0.1rem solid ${({ primary, theme }) => !primary && theme.color.line};
+  border: 0.1rem solid
+    ${({ primary, theme }) => (primary ? "none" : theme.color.line)};
   border-radius: 1rem;
+  box-sizing: border-box;
   color: ${({ primary, theme }) =>
     primary ? theme.color.white : theme.color.title_active};
   background: ${({ primary, theme }) =>
     primary ? theme.color.primary1 : "#fff"};
   opacity: 1;
   transition: opacity 0.5s;
+
+  &:hover {
+    background: ${({ primary, theme }) =>
+      primary ? theme.color.primary3 : theme.color.background};
+  }
 
   &:disabled {
     opacity: 0.3;
