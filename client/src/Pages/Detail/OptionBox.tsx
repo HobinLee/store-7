@@ -1,39 +1,68 @@
 import Button from "@/Components/Button";
 import Input from "@/Components/Input";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import ModalWrapper from "@/Components/ModalWrapper";
 
-const OptionBox = ({ numValue, handleClickNumVal }) => (
-  <Wrapper>
-    <div className="select-option">
-      <div>으아아아악</div>
-      <div className="select-option__right">
-        <div className="num-input">
-          <NumInput value={numValue.value} onChange={numValue.onChange} />
-          <div>
-            <button type="button" onClick={() => handleClickNumVal(1)}>
-              .
-            </button>
-            <button type="button" onClick={() => handleClickNumVal(-1)}>
-              .
-            </button>
+const OptionBox = ({ numValue, handleClickNumVal }) => {
+  const [isCartAlertShown, setIsCartAlertShown] = useState(false);
+
+  return (
+    <Wrapper>
+      <div className="select-option">
+        <div>으아아아악</div>
+        <div className="select-option__right">
+          <div className="num-input">
+            <NumInput value={numValue.value} onChange={numValue.onChange} />
+            <div>
+              <button type="button" onClick={() => handleClickNumVal(1)}>
+                .
+              </button>
+              <button type="button" onClick={() => handleClickNumVal(-1)}>
+                .
+              </button>
+            </div>
           </div>
+          10,000원
         </div>
-        10,000원
       </div>
-    </div>
 
-    <div className="total-price">
-      <div>총 합계금액</div>10,000원
-    </div>
+      <div className="total-price">
+        <div>총 합계금액</div>10,000원
+      </div>
 
-    <div className="buttons">
-      <Button>찜</Button>
-      <Button>장바구니</Button>
-      <Button primary>바로 구매</Button>
-    </div>
-  </Wrapper>
-);
+      <div className="buttons">
+        <Button>찜</Button>
+        <Button onClick={() => setIsCartAlertShown(true)}>장바구니</Button>
+        <Button primary>바로 구매</Button>
+      </div>
+
+      {isCartAlertShown && (
+        <ModalWrapper
+          title="장바구니에 상품을 담았습니다"
+          className="alert"
+          hideCloseBtn
+        >
+          <>
+            <Button
+              className="alert__button"
+              primary
+              onClick={() => (window.location.href = "/cart")}
+            >
+              장바구니 보러가기
+            </Button>
+            <Button
+              className="alert__button"
+              onClick={() => setIsCartAlertShown(false)}
+            >
+              쇼핑 계속하기
+            </Button>
+          </>
+        </ModalWrapper>
+      )}
+    </Wrapper>
+  );
+};
 
 export default OptionBox;
 
@@ -82,6 +111,13 @@ const Wrapper = styled.div`
     width: 100%;
     justify-content: flex-end;
     gap: 1rem;
+  }
+  .alert {
+    width: auto;
+    &__button {
+      width: 100%;
+      margin-top: 2rem;
+    }
   }
 `;
 
