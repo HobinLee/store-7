@@ -1,117 +1,69 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import dayjs from "dayjs";
 import Button from "@/Components/Button";
+import { QuestionListType } from "@/shared/type";
+import QuestionBox from "./QuestionBox";
 
-type QuestionType = {
-  id: number;
-  title: string;
-  content: string;
-  author: string;
-  date: string;
-  state: string;
-};
-
-const questions: QuestionType[] = [
-  {
-    id: 0,
-    title: "조아유",
-    content: "조아유",
-    author: "우아한개발자",
-    date: dayjs(new Date()).format("YYYY.MM.DD"),
-    state: "답변완료",
-  },
-  {
-    id: 1,
-    title: "조아유",
-    content: "조아유",
-    author: "우아한개발자",
-    date: dayjs(new Date()).format("YYYY.MM.DD"),
-    state: "답변완료",
-  },
-];
-
-const QuestionList = (question: QuestionType) => {
-  const [isContentOpened, setIsContentOpened] = useState(false);
-  const handleContentOpen = () => {
-    setIsContentOpened(!isContentOpened);
-  };
-
-  return (
-    <ListWrapper>
-      <div className="list">
-        <div className="list__id">{question.id}</div>
-        <div onClick={handleContentOpen} className="list__content">
-          {question.title}
-        </div>
-        <div className="list__author">{question.author}</div>
-        <div className="list__date">{question.date}</div>
-        <div className="list__state">{question.state}</div>
-      </div>
-
-      {isContentOpened && (
-        <div className="content-detail">{question.content}</div>
-      )}
-    </ListWrapper>
-  );
+const questions: QuestionListType = {
+  totalCount: 2,
+  questions: [
+    {
+      id: 0,
+      question: {
+        author: "우아한개발자",
+        content: "점심 뭐드셨어여",
+        date: new Date(),
+      },
+    },
+    {
+      id: 1,
+      question: {
+        author: "우아한개발자",
+        content: `방금 배송 받아서 풀어봤는데, 검수하고 보내신 것 맞나요?
+        기다렸던 상품이라 서둘러 뜯었는데, 오염이 잔뜩 뭍어있는거 보고 완전 속상했어요
+        다른 상품에도 조금씩 뭍은건 닦으니 지워져서 그냥 사용하려고 하는데,
+        중 사이즈 1개는 닦아도 오염이 남아있어요
+        찝찝해서 교환신청합니다`,
+        date: new Date(),
+      },
+      answer: {
+        content: `안녕하세요 고객님
+        불편을 드려 죄송합니다
+        아래 방법 참고하시어 접수 부탁드립니다.
+        [카톡접수]
+        카카오톡>친구추가>올리빙 검색후
+        사이트.성함.사진첨부접수요청`,
+        date: new Date(),
+      },
+    },
+  ],
 };
 
 const Question = () => {
   return (
     <Wrapper>
-      <div className="header">
-        상품문의
-        <Button primary>상품문의 글쓰기</Button>
-      </div>
-      {questions.map((question) => (
-        <QuestionList {...question} />
+      <Header>
+        <div>
+          상품문의 <span className="total">{questions.totalCount}</span>
+        </div>
+        <Button primary>문의하기</Button>
+      </Header>
+      {questions.questions.map((question) => (
+        <QuestionBox {...question} />
       ))}
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div`
-  .header {
-    ${({ theme }) => theme.flexCenter}
-    ${({ theme }) => theme.font.xlarge}
-    justify-content: space-between;
-    padding: 2rem 0;
-    border-bottom: 0.1rem solid ${({ theme }) => theme.color.grey1};
-  }
-`;
+const Wrapper = styled.div``;
 
-const ListWrapper = styled.div`
-  ${({ theme }) => theme.font.small}
-  .list {
-    ${({ theme }) => theme.flexCenter}
-    text-align: center;
-    flex: 1;
-    padding: 1.5rem 2rem;
-    border-bottom: 0.1rem solid ${({ theme }) => theme.color.line};
-    &__id {
-      flex: 0.1;
-    }
-    &__content {
-      cursor: pointer;
-      flex: 0.6;
-      text-align: start;
-    }
-    &__author {
-      flex: 0.1;
-    }
-    &__date {
-      flex: 0.1;
-    }
-    &__state {
-      flex: 0.1;
-    }
-  }
-  .content-detail {
-    background-color: ${({ theme }) => theme.color.background};
-    border-bottom: 0.1rem solid ${({ theme }) => theme.color.line};
-    padding: 1.5rem;
-    height: 8rem;
-    padding-left: 23.2rem;
+const Header = styled.div`
+  ${({ theme }) => theme.flexCenter};
+  ${({ theme }) => theme.font.xlarge};
+  align-items: flex-end;
+  justify-content: space-between;
+  .total {
+    color: ${({ theme }) => theme.color.primary1};
   }
 `;
 

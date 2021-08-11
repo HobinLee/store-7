@@ -121,8 +121,7 @@ const Header = styled.div`
     margin-top: 3rem;
   }
   .total {
-    ${({ theme }) => theme.font.large}
-    color: ${({ theme }) => theme.color.primary1}
+    color: ${({ theme }) => theme.color.primary1};
   }
 `;
 
