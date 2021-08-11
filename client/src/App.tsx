@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import MainPage from "@/Pages/Main";
 import LoginPage from "@/Pages/Login";
-import { ETLink, ETRouter, ETRoute } from "./Router";
+import { ETRouter, ETRoute } from "./Router";
 import CategoryPage from "./Pages/Category";
 import DetailPage from "./Pages/Detail";
 import CartPage from "./Pages/Cart";

@@ -4,10 +4,7 @@ import { media } from "./theme";
 
 export const GlobalStyle = createGlobalStyle`
     ${reset}
-    :focus {
-        outline: none;
-        border: none;
-    }
+    
     html{
         font-size: 10px;
         font-family: Noto Sans KR, Apple SD Gothic Neo, sans-serif;
@@ -18,15 +15,26 @@ export const GlobalStyle = createGlobalStyle`
             text-decoration: none;
             color: ${({ theme }) => theme.color.title_active};
         }
-        input,
         button,
+        input,
+        optgroup,
+        select,
         textarea {
+            color: inherit;
+            font: inherit;
+            margin: 0;
             background: none;
             border: none;
+        }
+        
+        input,
+        textarea {
             &:focus {
                 outline: none;
+                border: none;
             }
         }
+
         textarea {
             border: none;
             resize: none;
