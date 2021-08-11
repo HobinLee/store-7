@@ -69,7 +69,7 @@ const Container = styled.div`
     margin-bottom: -0.5rem;
     :first-child {
       margin-right: 2.5rem;
-      color: ${({ theme }) => theme.color.line};
+      color: ${({ theme }) => theme.color.grey1};
     }
     :last-child {
       margin-left: 1rem;

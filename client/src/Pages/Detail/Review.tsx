@@ -1,24 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import dayjs from "dayjs";
 import Button from "@/Components/Button";
-import ETRating from "@/Components/ETRating";
 import ETProgress from "@/Components/ETProgress";
-
-type ReviewListType = {
-  totalCount: number;
-  averageRate: number;
-  rates: { rate: number; count: number }[];
-  reviews: ReviewType[];
-};
-
-type ReviewType = {
-  id: number;
-  rate: number;
-  content: string;
-  author: string;
-  date: string;
-};
+import ReviewBox from "./ReviewBox";
+import { ReviewListType } from "@/shared/type";
 
 const reviews: ReviewListType = {
   totalCount: 3,
@@ -53,32 +39,6 @@ const reviews: ReviewListType = {
       date: dayjs(new Date()).format("YYYY.MM.DD"),
     },
   ],
-};
-
-const ReviewList = (review: ReviewType) => {
-  const [isContentOpened, setIsContentOpened] = useState(false);
-  const handleContentOpen = () => {
-    setIsContentOpened(!isContentOpened);
-  };
-
-  return (
-    <ListWrapper>
-      <div className="list">
-        <div className="list__rate">
-          <ETRating value={3} />
-        </div>
-        <div onClick={handleContentOpen} className="list__content">
-          {review.content}
-        </div>
-        <div className="list__author">{review.author}</div>
-        <div className="list__date">{review.date}</div>
-      </div>
-
-      {isContentOpened && (
-        <div className="content-detail">{review.content}</div>
-      )}
-    </ListWrapper>
-  );
 };
 
 const Review = () => {
@@ -128,7 +88,7 @@ const Review = () => {
       </Filter>
 
       {reviews.reviews.map((review) => (
-        <ReviewList {...review} />
+        <ReviewBox {...review} />
       ))}
     </Wrapper>
   );
@@ -150,7 +110,7 @@ const Header = styled.div`
     gap: 4rem;
   }
   .progress {
-    background-color: ${({ theme }) => theme.color.off_white};
+    background-color: ${({ theme }) => theme.color.background};
     padding: 2rem 2.5rem;
     border-radius: 1rem;
   }
@@ -199,38 +159,6 @@ const Filter = styled.div`
     padding: 1.5rem 2rem;
     background-color: ${({ theme }) => theme.color.background};
     border-radius: 0.8rem;
-  }
-`;
-
-const ListWrapper = styled.div`
-  ${({ theme }) => theme.font.small}
-  .list {
-    ${({ theme }) => theme.flexCenter}
-    text-align: center;
-    flex: 1;
-    padding: 1.5rem 2rem;
-    border-bottom: 0.1rem solid ${({ theme }) => theme.color.line};
-    &__rate {
-      flex: 0.2;
-    }
-    &__content {
-      cursor: pointer;
-      flex: 0.6;
-      text-align: start;
-    }
-    &__author {
-      flex: 0.1;
-    }
-    &__date {
-      flex: 0.1;
-    }
-  }
-  .content-detail {
-    background-color: ${({ theme }) => theme.color.background};
-    border-bottom: 0.1rem solid ${({ theme }) => theme.color.line};
-    padding: 1.5rem;
-    height: 8rem;
-    padding-left: 23.2rem;
   }
 `;
 
