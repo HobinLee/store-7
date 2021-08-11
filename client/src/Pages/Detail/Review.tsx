@@ -3,9 +3,22 @@ import styled from "styled-components";
 import Button from "@/Components/Button";
 import ETProgress from "@/Components/ETProgress";
 import ReviewBox from "./ReviewBox";
+import { ReviewListType } from "@/shared/type";
+import { useState } from "react";
+import ReviewModal from "./ReviewModal";
 import { reviews } from "@/shared/dummy";
 
 const Review = () => {
+  const [isModalOpened, setIsModalOpened] = useState(false);
+  const handleModalOpen = (val: boolean) => {
+    if (!val) {
+      const submit = window.confirm(
+        "작성하고 있던 내용이 유실됩니다. 정말 다른 페이지로 이동하시겠어요?"
+      );
+      if (submit) setIsModalOpened(val);
+    } else setIsModalOpened(val);
+  };
+
   return (
     <Wrapper>
       <Header>
@@ -36,7 +49,9 @@ const Review = () => {
           </div>
         </div>
 
-        <Button primary>후기쓰기</Button>
+        <Button onClick={() => handleModalOpen(true)} primary>
+          후기쓰기
+        </Button>
       </Header>
 
       <Filter>
@@ -54,6 +69,8 @@ const Review = () => {
       {reviews.reviews.map((review) => (
         <ReviewBox {...review} />
       ))}
+
+      {isModalOpened && <ReviewModal {...{ handleModalOpen }} />}
     </Wrapper>
   );
 };
