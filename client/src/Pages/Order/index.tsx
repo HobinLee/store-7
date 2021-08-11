@@ -3,10 +3,16 @@ import React from "react";
 import styled from "styled-components";
 import Header from "@/Components/Header";
 import Footer from "@/Components/Footer";
-import Table from "./MyPage/Table";
+import Table from "@/Pages/MyPage/Table";
 import OrderBox from "./OrderBox";
+import Input from "@/Components/Input";
+import useInput from "@/hooks/useInput";
 
 const OrderPage = () => {
+  const nameValue = useInput("");
+  const emailValue = useInput("");
+  const phoneValue = useInput("");
+
   return (
     <Wrapper>
       <Header>
@@ -40,17 +46,41 @@ const OrderPage = () => {
 
           <Info>
             <div className="label">주문자</div>
-            <div>
+            <div className="info-input">
               <label>이름</label>
-              <input />
+              <Input
+                className="order-input"
+                value={nameValue.value}
+                onChange={nameValue.onChange}
+              />
             </div>
-            <div>
+            <div className="info-input">
               <label>이메일</label>
-              <input />
+              <Input
+                className="order-input"
+                value={emailValue.value}
+                onChange={emailValue.onChange}
+              />
+              @
+              <select className="order-input">
+                <option>naver.com</option>
+                <option>naver.com</option>
+                <option>naver.com</option>
+                <option>직접 입력</option>
+              </select>
             </div>
-            <div>
+            <div className="info-input">
               <label>휴대전화</label>
-              <input />
+              <select className="order-input">
+                <option>010</option>
+                <option>010</option>
+                <option>010</option>
+              </select>
+              <Input
+                className="order-input"
+                value={phoneValue.value}
+                onChange={phoneValue.onChange}
+              />
             </div>
           </Info>
 
@@ -61,7 +91,11 @@ const OrderPage = () => {
             <div>
               <div>집</div>
               <div>서울 강남구 선릉로76길 33 (대치동) 대치파인빌, 101호</div>
-              <div>배송시 요청사항</div>
+              <select className="order-input">
+                <option>배송시 요청사항을 선택해주세요.</option>
+                <option>부재시 문 앞에 놓아주세요.</option>
+                <option>배송전에 미리 연락주세요.</option>
+              </select>
             </div>
           </Info>
 
@@ -81,6 +115,24 @@ const Wrapper = styled(PageWrapper)`
     ${({ theme }) => theme.flexCenter}
     flex-direction: column;
     padding: 0 10rem;
+  }
+  select {
+    cursor: pointer;
+  }
+  .order-input {
+    border: 0.1rem solid ${({ theme }) => theme.color.line};
+    padding: 0.8rem 1rem;
+    border-radius: 0.5rem;
+  }
+  .info-input {
+    ${({ theme }) => theme.flexCenter};
+    justify-content: start;
+    :not(:first-child) {
+      margin-top: 2rem;
+    }
+    label {
+      width: 7rem;
+    }
   }
 `;
 

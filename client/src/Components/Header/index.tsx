@@ -13,7 +13,6 @@ const Header = ({ children }: { children?: ReactChild }) => {
 
   return (
     <TopWrapper>
-      <Nav>로그인 회원가입</Nav>
       <Wrapper>
         <ETLink to="/">
           <img width="200" src={LogoImg} />
@@ -21,7 +20,10 @@ const Header = ({ children }: { children?: ReactChild }) => {
         <SearchBar />
         <div className="header__buttons">
           {isLogined ? (
-            <ETLink to="/mypage">마이페이지</ETLink>
+            <>
+              <ETLink to="/mypage">마이페이지</ETLink>
+              <ETLink to="/collection">찜</ETLink>
+            </>
           ) : (
             <ETLink to="/login">로그인</ETLink>
           )}
@@ -55,15 +57,6 @@ const TopWrapper = styled.div`
       color: ${({ theme }) => theme.color.primary1};
     }
   }
-`;
-
-const Nav = styled.div`
-  ${({ theme }) => theme.font.small}
-  text-align: end;
-  width: 100%;
-  padding: 1.5rem;
-  box-sizing: border-box;
-  background: ${({ theme }) => theme.color.primary2};
 `;
 
 const Wrapper = styled.div`

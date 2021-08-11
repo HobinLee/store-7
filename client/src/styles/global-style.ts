@@ -28,10 +28,11 @@ export const GlobalStyle = createGlobalStyle`
         }
         
         input,
+        button,
+        select,
         textarea {
             &:focus {
                 outline: none;
-                border: none;
             }
         }
 
