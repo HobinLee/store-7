@@ -1,6 +1,6 @@
-import { createGlobalStyle, css } from 'styled-components';
-import { reset } from 'styled-reset';
-import { media } from './theme';
+import { createGlobalStyle, css } from "styled-components";
+import { reset } from "styled-reset";
+import { media } from "./theme";
 
 export const GlobalStyle = createGlobalStyle`
     ${reset}
@@ -13,7 +13,26 @@ export const GlobalStyle = createGlobalStyle`
         font-family: Noto Sans KR, Apple SD Gothic Neo, sans-serif;
         font-display: fallback;
         overflow-x: hidden;
+        color: ${({ theme }) => theme.color.title_active};
+        a{
+            text-decoration: none;
+            color: ${({ theme }) => theme.color.title_active};
+        }
+        input,
+        button,
+        textarea {
+            background: none;
+            border: none;
+            &:focus {
+                outline: none;
+            }
+        }
+        textarea {
+            border: none;
+            resize: none;
+        }
     }
+    
     .no-scroll-bar::-webkit-scrollbar {
         display: none;
     }
@@ -32,15 +51,4 @@ export const GlobalStyle = createGlobalStyle`
             display: none;
         }
     }
-`;
-
-export const flexCenter = css`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const shadow = css`
-  box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.1),
-    0 0.4rem 2rem rgba(0, 0, 0, 0.1);
 `;

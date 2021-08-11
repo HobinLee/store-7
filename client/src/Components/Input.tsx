@@ -1,5 +1,5 @@
-import React, { ChangeEventHandler } from 'react';
-import styled from 'styled-components';
+import React, { ChangeEventHandler } from "react";
+import styled from "styled-components";
 
 type InputType = {
   placeholder?: string;
@@ -15,7 +15,7 @@ const Input = ({
   required = true,
   value,
   onChange,
-  type = 'text',
+  type = "text",
   className,
 }: InputType) => (
   <Container
@@ -25,14 +25,12 @@ const Input = ({
     value={value}
     onChange={onChange}
     type={type}
+    autoComplete="off"
   />
 );
 
 const Container = styled.input`
-  font-size: 12px;
-  padding: 0px 15px;
-  border: 0px solid black;
-  border-bottom-width: 1px;
+  border: none;
 `;
 
 export default Input;
