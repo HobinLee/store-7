@@ -6,36 +6,7 @@ import Banner, { ItemType } from "./Banner";
 import BannerImg from "@/assets/banner1.gif";
 import Item from "@/Components/Item";
 import Footer from "@/Components/Footer";
-
-const sample = [
-  {
-    id: 1,
-    discountRate: 40,
-    tags: ["new", "sale"],
-    title: "타이틀",
-    price: 10000,
-  },
-  {
-    id: 2,
-    discountRate: 20,
-    tags: ["new", "green", "sale"],
-    title: "타이틀2",
-    price: 260000,
-  },
-  {
-    id: 3,
-    tags: ["green"],
-    title: "타이틀3",
-    price: 10000,
-  },
-  {
-    id: 4,
-    discountRate: 50,
-    tags: ["sale"],
-    title: "타이틀4",
-    price: 100000,
-  },
-];
+import { sampleMain } from "@/shared/dummy";
 
 const banner1: ItemType = {
   brief: "다시 돌아온 플리츠마마x배민 콜라보!",
@@ -55,7 +26,7 @@ const MainPage = () => {
         <Content>
           <div className="title">잘나가는</div>
           <ul className="items">
-            {sample.map((item) => (
+            {sampleMain.map((item) => (
               <li key={item.id}>
                 <Item {...item} />
               </li>
@@ -65,7 +36,7 @@ const MainPage = () => {
         <Content>
           <div className="title">잘나가요</div>
           <ul className="items">
-            {sample.map((item) => (
+            {sampleMain.map((item) => (
               <li key={item.id}>
                 <Item {...item} />
               </li>
@@ -75,7 +46,7 @@ const MainPage = () => {
         <Content>
           <div className="title">잘나가요</div>
           <ul className="items">
-            {sample.map((item) => (
+            {sampleMain.map((item) => (
               <li key={item.id}>
                 <Item {...item} />
               </li>
@@ -88,8 +59,7 @@ const MainPage = () => {
   );
 };
 
-const Wrapper = styled(PageWrapper)`
-`
+const Wrapper = styled(PageWrapper)``;
 
 const Content = styled.div`
   ${({ theme }) => theme.flexCenter}

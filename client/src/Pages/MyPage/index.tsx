@@ -3,7 +3,7 @@ import { PageWrapper } from "@/shared/styled";
 import React from "react";
 import styled from "styled-components";
 import Table from "./Table";
-import { DUMMY } from "./dummy";
+import { sampleMypage } from "../../shared/dummy";
 
 const MyPage = () => {
   return (
@@ -40,7 +40,7 @@ const Sidebar = () => {
       <SidebarContent>
         <p>쇼핑정보</p>
         <ul>
-          {DUMMY.shopping.map(({ itemTitle, path }, i) => (
+          {sampleMypage.shopping.map(({ itemTitle, path }, i) => (
             <li key={i} onClick={handleClickItem(path)}>
               {itemTitle}
             </li>
@@ -50,7 +50,7 @@ const Sidebar = () => {
       <SidebarContent>
         <p>회원정보</p>
         <ul>
-          {DUMMY.userInfo.map(({ itemTitle, path }, i) => (
+          {sampleMypage.userInfo.map(({ itemTitle, path }, i) => (
             <li key={i} onClick={handleClickItem(path)}>
               {itemTitle}
             </li>
