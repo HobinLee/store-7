@@ -49,11 +49,21 @@ const Table = ({
 const TableWrapper = styled.table`
   border-top: 1px solid black;
   width: 100%;
+
   ${({ theme }) => theme.font.small}
   th {
     padding: 1rem 0;
     background: ${({ theme }) => theme.color.background};
     border-bottom: 1px solid ${({ theme }) => theme.color.line};
+  }
+  tbody {
+    td {
+      padding: 2rem 0;
+      vertical-align: middle;
+    }
+    tr {
+      border-bottom: 1px solid ${({ theme }) => theme.color.line};
+    }
   }
 `;
 
