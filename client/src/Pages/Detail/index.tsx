@@ -39,6 +39,7 @@ const DetailPage = () => {
 
   const [selectedTab, setSelectedTab] = useState("first");
   const handleSelectTab = (val: string) => {
+    window.scrollTo({ top: topHeight + 1, behavior: "smooth" });
     setSelectedTab(val);
   };
 
@@ -60,14 +61,12 @@ const DetailPage = () => {
         {yOffset > topHeight && (
           <FixedTab yOffset={yOffset}>
             {tabs.map((tab) => (
-              <a href={`#${tab.id}`}>
-                <TabA
-                  onClick={() => handleSelectTab(tab.id)}
-                  isSelected={selectedTab === tab.id}
-                >
-                  {tab.title}
-                </TabA>
-              </a>
+              <TabA
+                onClick={() => handleSelectTab(tab.id)}
+                isSelected={selectedTab === tab.id}
+              >
+                {tab.title}
+              </TabA>
             ))}
           </FixedTab>
         )}
@@ -97,32 +96,25 @@ const DetailPage = () => {
           </Info>
         </InfoBox>
 
-        <Scroll yOffset={yOffset}>
+        <Scroll {...{ selectedTab, yOffset }}>
           <Tab yOffset={yOffset}>
             {tabs.map((tab) => (
-              <a href={`#${tab.id}`}>
-                <TabA
-                  onClick={() => handleSelectTab(tab.id)}
-                  isSelected={selectedTab === tab.id}
-                >
-                  {tab.title}
-                </TabA>
-              </a>
+              <TabA
+                onClick={() => handleSelectTab(tab.id)}
+                isSelected={selectedTab === tab.id}
+              >
+                {tab.title}
+              </TabA>
             ))}
           </Tab>
 
           <div className="bottom-wrapper">
-            <div className="scroll">
-              {tabs.map((tab) => (
-                <ScrollPage>
-                  <div className="link" id={tab.id} />
-                  {tab.component}
-                </ScrollPage>
-              ))}
-            </div>
+            {tabs.map((tab) => (
+              <TabPage>{tab.id === selectedTab && tab.component}</TabPage>
+            ))}
           </div>
 
-          {yOffset > topHeight && (
+          {yOffset > topHeight && selectedTab === "first" && (
             <div className="option-box">
               <OptionBox {...{ numValue, handleClickNumVal }} />
             </div>
@@ -191,18 +183,14 @@ const Info = styled.div`
   }
 `;
 
-const Scroll = styled.div<{ yOffset: number }>`
+const Scroll = styled.div<{ yOffset: number; selectedTab: string }>`
   width: 100%;
-  padding-right: 25rem;
+  padding-right: ${({ selectedTab }) => selectedTab === "first" && "25rem"};
   box-sizing: border-box;
   margin-top: 10rem;
   .bottom-wrapper {
-    ${({ theme }) => theme.flexCenter}
-    .scroll {
-      margin-top: 10rem;
-      width: 100%;
-      overflow-y: scroll;
-    }
+    width: 100%;
+    overflow-y: scroll;
   }
 
   .option-box {
@@ -250,14 +238,10 @@ const TabA = styled.div<{ isSelected: boolean }>`
     isSelected ? theme.color.primary1 : theme.color.title_active};
 `;
 
-const ScrollPage = styled.div`
+const TabPage = styled.div`
   position: relative;
   width: 100%;
-  margin: 10rem 0;
-  .link {
-    position: absolute;
-    top: -23rem;
-  }
+  padding: 2rem 0;
 `;
 
 export default DetailPage;
