@@ -51,19 +51,8 @@ const App = () => {
           <MyPage />
         </ETRoute>
       </ETRouter>
-      <Navigator />
     </ThemeProvider>
   );
 };
-
-function Navigator() {
-  return (
-    <>
-      <ETLink to="/">home</ETLink>
-      <ETLink to="login">login</ETLink>
-      <ETLink to="about">about</ETLink>
-    </>
-  );
-}
 
 export default App;

@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Button from "@/Components/Button";
 import ETProgress from "@/Components/ETProgress";
 import ReviewBox from "./ReviewBox";
-import { ReviewListType } from "@/shared/type";
 import { useState } from "react";
 import ReviewModal from "./ReviewModal";
 import { reviews } from "@/shared/dummy";
@@ -20,7 +19,7 @@ const Review = () => {
   };
 
   return (
-    <Wrapper>
+    <div>
       <Header>
         <div className="left">
           <div>
@@ -71,20 +70,13 @@ const Review = () => {
       ))}
 
       {isModalOpened && <ReviewModal {...{ handleModalOpen }} />}
-    </Wrapper>
+    </div>
   );
 };
-
-const Wrapper = styled.div`
-  .header {
-    ${({ theme }) => theme.flexCenter}
-  }
-`;
 
 const Header = styled.div`
   ${({ theme }) => theme.flexCenter};
   ${({ theme }) => theme.font.xlarge};
-  align-items: flex-end;
   justify-content: space-between;
   .left {
     ${({ theme }) => theme.flexCenter};

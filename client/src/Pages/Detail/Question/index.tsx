@@ -18,7 +18,7 @@ const Question = () => {
   };
 
   return (
-    <Wrapper>
+    <div>
       <Header>
         <div>
           상품문의 <span className="total">{questions.totalCount}</span>
@@ -33,16 +33,13 @@ const Question = () => {
       ))}
 
       {isModalOpened && <QuestionModal {...{ handleModalOpen }} />}
-    </Wrapper>
+    </div>
   );
 };
-
-const Wrapper = styled.div``;
 
 const Header = styled.div`
   ${({ theme }) => theme.flexCenter};
   ${({ theme }) => theme.font.xlarge};
-  align-items: flex-end;
   justify-content: space-between;
   .total {
     color: ${({ theme }) => theme.color.primary1};
