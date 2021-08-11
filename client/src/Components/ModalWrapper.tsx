@@ -54,31 +54,6 @@ const Modal = styled.div`
     margin: 1rem;
     color: ${({ theme }) => theme.color.primary1};
   }
-  form {
-    ${({ theme }) => theme.flexCenter};
-    flex-direction: column;
-    width: 100%;
-    .content {
-      margin-top: 4rem;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      &__label {
-        ${({ theme }) => theme.font.medium};
-      }
-    }
-    .upload-btn {
-      ${({ theme }) => theme.font.large}
-      width: 100%;
-      cursor: pointer;
-      padding: 1.5rem 3rem;
-      border: 0.1rem solid ${({ theme }) => theme.color.line};
-      border-radius: 1rem;
-      box-sizing: border-box;
-      text-align: center;
-    }
-  }
 `;
 
 const Background = styled.div`

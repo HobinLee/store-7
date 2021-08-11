@@ -9,11 +9,8 @@ const ReviewModal = ({ handleModalOpen }) => {
   const reviewVal = useInput("");
 
   return (
-    <Wrapper
-      title="후기작성"
-      closeModal={(e: React.MouseEvent) => handleModalOpen(e, false)}
-    >
-      <form>
+    <ModalWrapper title="후기작성" closeModal={() => handleModalOpen(false)}>
+      <Wrapper>
         <div className="content">
           <div className="content__label">별점 평가</div>
           <ETRating />
@@ -37,71 +34,34 @@ const ReviewModal = ({ handleModalOpen }) => {
         </div>
 
         <SubmitBtn primary>완료</SubmitBtn>
-      </form>
-    </Wrapper>
+      </Wrapper>
+    </ModalWrapper>
   );
 };
 
-const Wrapper = styled(ModalWrapper)`
-  .header {
-    ${({ theme }) => theme.font.large};
-    margin: 1rem;
-    color: ${({ theme }) => theme.color.primary1};
-  }
-  form {
-    ${({ theme }) => theme.flexCenter};
-    flex-direction: column;
+const Wrapper = styled.form`
+  ${({ theme }) => theme.flexCenter};
+  flex-direction: column;
+  width: 100%;
+  .content {
+    margin-top: 4rem;
     width: 100%;
-    .content {
-      margin-top: 4rem;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      &__label {
-        ${({ theme }) => theme.font.medium};
-      }
-    }
-    .upload-btn {
-      ${({ theme }) => theme.font.large}
-      width: 100%;
-      cursor: pointer;
-      padding: 1.5rem 3rem;
-      border: 0.1rem solid ${({ theme }) => theme.color.line};
-      border-radius: 1rem;
-      box-sizing: border-box;
-      text-align: center;
-    }
-  }
-  .header {
-    ${({ theme }) => theme.font.large};
-    margin: 1rem;
-    color: ${({ theme }) => theme.color.primary1};
-  }
-  form {
-    ${({ theme }) => theme.flexCenter};
+    display: flex;
     flex-direction: column;
+    gap: 1rem;
+    &__label {
+      ${({ theme }) => theme.font.medium};
+    }
+  }
+  .upload-btn {
+    ${({ theme }) => theme.font.large}
     width: 100%;
-    .content {
-      margin-top: 4rem;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      &__label {
-        ${({ theme }) => theme.font.medium};
-      }
-    }
-    .upload-btn {
-      ${({ theme }) => theme.font.large}
-      width: 100%;
-      cursor: pointer;
-      padding: 1.5rem 3rem;
-      border: 0.1rem solid ${({ theme }) => theme.color.line};
-      border-radius: 1rem;
-      box-sizing: border-box;
-      text-align: center;
-    }
+    cursor: pointer;
+    padding: 1.5rem 3rem;
+    border: 0.1rem solid ${({ theme }) => theme.color.line};
+    border-radius: 1rem;
+    box-sizing: border-box;
+    text-align: center;
   }
 `;
 

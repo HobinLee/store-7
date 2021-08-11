@@ -45,8 +45,7 @@ const reviews: ReviewListType = {
 
 const Review = () => {
   const [isModalOpened, setIsModalOpened] = useState(false);
-  const handleModalOpen = (e: React.MouseEvent, val: boolean) => {
-    e.stopPropagation();
+  const handleModalOpen = (val: boolean) => {
     if (!val) {
       const submit = window.confirm(
         "작성하고 있던 내용이 유실됩니다. 정말 다른 페이지로 이동하시겠어요?"
@@ -85,7 +84,7 @@ const Review = () => {
           </div>
         </div>
 
-        <Button onClick={(e) => handleModalOpen(e, true)} primary>
+        <Button onClick={() => handleModalOpen(true)} primary>
           후기쓰기
         </Button>
       </Header>
