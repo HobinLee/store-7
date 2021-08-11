@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { getSiblingIndex } from "@/utils/node";
+import { ETLink } from "@/Router";
 
 type CategoryType = {
   title: string,
@@ -131,7 +132,7 @@ const Menu = () => {
   const handleMouseMove = (e) => {
     if(!checkChangeCategory(e)) return;
 
-    const currentIndex = getSiblingIndex(e.target as HTMLElement);
+    const currentIndex = getSiblingIndex(e.target.closest('LI') as HTMLElement);
     setCurrentCategory(currentIndex);
   }
 
@@ -140,14 +141,18 @@ const Menu = () => {
       <MainCategoryWrapper onMouseMove={handleMouseMove}>
         {categories.map((category: CategoryType, idx: number) =>
         <li key={idx} className={currentCategoryIndex === idx ? 'selected' : ''}>
-          {category.title}
+          <ETLink key={idx} to={`/category?main_id=${idx}`}>
+            {category.title}
+          </ETLink>
         </li>)}
       </MainCategoryWrapper>
       <SubCategoryWrapper>
         {categories[currentCategoryIndex].subCategories?.map(
           (category: CategoryType, idx: number) =>
           <li key={idx}>
-            {category.title}
+            <ETLink key={idx} to={`/category?main_id=${currentCategoryIndex}&sub_id=${idx}`}>
+              {category.title}
+            </ETLink>
           </li>
         )}
       </SubCategoryWrapper>
@@ -169,6 +174,7 @@ const Wrapper = styled.div`
   ${({ theme }) => theme.font.medium}
 
   ul {
+    width: 100%;
     padding: 0.5rem 0;
   }
 
@@ -183,22 +189,22 @@ const Wrapper = styled.div`
 `;
 
 const MainCategoryWrapper = styled.ul`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
+    display: flex;
+    flex-direction: row;
 
   .selected {
     font-weight: bolder;
-    color: ${({ theme }) => theme.color.primary1};
+    a {
+      color: ${({ theme }) => theme.color.primary1};
+    }
   }
 `
 
 const SubCategoryWrapper = styled.ul`
-  width: 100%;
   display: flex;
-  flex-direction: row;
   justify-content: center;
+  flex-direction: row;
   ${({ theme }) => theme.font.small}
 
   li {

@@ -22,10 +22,12 @@ const Header = () => {
           />
         </ETLink>
         <SearchBar />
-        {isLogined ? <ETLink to="/mypage">마이페이지</ETLink> : <a onClick={handleLogin}>로그인</a>}
-        <ETLink to="/cart">
-          <div>장바구니</div>
-        </ETLink>
+        <div className="header__buttons">
+          {isLogined ? <ETLink to="/mypage">마이페이지</ETLink> : <ETLink to="/login">로그인</ETLink>}
+          <ETLink to="/cart">
+            <div>장바구니</div>
+          </ETLink>
+        </div>
       </Wrapper>
       <Menu />
     </TopWrapper>
@@ -40,6 +42,17 @@ const TopWrapper = styled.div`
   width: 100%;
   z-index: 10;
   background: ${({ theme }) => theme.color.white};
+
+  .header__buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 5rem;
+    
+    a:hover{
+      font-weight: bolder;
+      color: ${({ theme }) => theme.color.primary1};
+    }
+  }
 `;
 
 const Nav = styled.div`
