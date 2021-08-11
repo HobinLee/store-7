@@ -2,46 +2,8 @@ import Header from "@/Components/Header";
 import { PageWrapper } from "@/shared/styled";
 import React from "react";
 import styled from "styled-components";
-import MainPage from "./Main";
-
-const DUMMY = {
-  shopping: [
-    { itemTitle: "주문목록/배송조회", path: "itemlist" },
-    { itemTitle: "찜리스트", path: "wishlist" },
-  ],
-  userInfo: [
-    { itemTitle: "회원정보 변경", path: "changeUserInfo" },
-    { itemTitle: "나의 상품문의", path: "question" },
-    { itemTitle: "나의 상품후기", path: "review" },
-  ],
-  tableHeader: {
-    order: [
-      { head: "날짜/주문번호", flex: 1 },
-      { head: "상품명/옵션", flex: 7 },
-      { head: "상품금액/수량", flex: 1 },
-      { head: "주문상태", flex: 1 },
-      { head: "확인/리뷰", flex: 1 },
-    ],
-    wish: [
-      { head: "체크", flex: 1 },
-      { head: "상품명/옵션", flex: 7 },
-      { head: "상품금액/수량", flex: 1 },
-      { head: "합계", flex: 1 },
-    ],
-    question: [
-      { head: "문의날짜", flex: 1 },
-      { head: "카테고리", flex: 7 },
-      { head: "제목", flex: 1 },
-      { head: "문의상태", flex: 1 },
-    ],
-    review: [
-      { head: "번호", flex: 1 },
-      { head: "제목", flex: 7 },
-      { head: "날짜", flex: 1 },
-      { head: "작성자", flex: 1 },
-    ],
-  },
-};
+import Table from "./Table";
+import { DUMMY } from "./dummy";
 
 const MyPage = () => {
   return (
@@ -71,6 +33,7 @@ const Sidebar = () => {
   const handleClickItem = (path) => () => {
     console.log(`${path}로 변경!`);
   };
+
   return (
     <SidebarWrpper>
       <h4>마이페이지</h4>
@@ -159,30 +122,26 @@ const ContentHeaderWrapper = styled.div`
 const ContentBody = () => {
   return (
     <ContentBodyWrapper>
-      <Table type="order" />
+      <Table
+        checker
+        ths={["상품명/옵션", "상품금액/수량	", "합계"]}
+        ratio={[6, 2, 1]}
+      >
+        <tr>
+          <td>test</td>
+          <td>2</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>test2</td>
+          <td>2</td>
+          <td>3</td>
+        </tr>
+      </Table>
     </ContentBodyWrapper>
   );
 };
 
 const ContentBodyWrapper = styled.div``;
 
-type TableType = {
-  type: string;
-  list?: any;
-};
-
-const Table = ({ type, list }: TableType) => {
-  const array = DUMMY.tableHeader[type];
-  return <TableWrapper header={array}></TableWrapper>;
-};
-
-type TableWrapperType = {
-  header: any;
-};
-
-const TableWrapper = styled.div<TableWrapperType>`
-  display: grid;
-  grid-template-columns: ${({ header }) =>
-    header.map(({ flex }) => `${flex}fr `).join("")};
-`;
 export default MyPage;

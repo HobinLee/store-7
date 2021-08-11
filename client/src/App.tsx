@@ -7,6 +7,7 @@ import CartPage from "./Pages/Cart";
 import { light, dark } from "./styles/theme";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "./styles/global-style";
+import MyPage from "./Pages/MyPage";
 
 const App = () => {
   const [themeMode, setThemeMode] = useState("light");
@@ -43,6 +44,9 @@ const App = () => {
         </ETRoute>
         <ETRoute path="/detail">
           <DetailPage />
+        </ETRoute>
+        <ETRoute path="/myPage">
+          <MyPage />
         </ETRoute>
       </ETRouter>
       <Navigator />
