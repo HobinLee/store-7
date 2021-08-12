@@ -8,6 +8,7 @@ import Review from "./Review";
 import Question from "./Question";
 import Footer from "@/Components/Footer";
 import Guide from "./Guide";
+import ZoomModal from "./ZoomModal";
 
 const topHeight = 740;
 
@@ -18,7 +19,19 @@ const Blank = styled.div`
 `;
 
 const tabs = [
-  { id: "first", title: "상품상세정보", component: <Blank /> },
+  {
+    id: "first",
+    title: "상품상세정보",
+    component: (
+      <div>
+        <img src="https://store.baemin.com/data/editor/goods/0ad3730867ef81ba.jpg" />
+        <img src="https://store.baemin.com/data/editor/goods/e4a9757b5cc7aef8.jpg" />
+        <img src="https://store.baemin.com/data/editor/goods/b01bbb58754c2618.jpg" />
+        <img src="https://store.baemin.com/data/editor/goods/5e6c219626c3db38.jpg" />{" "}
+        <img src="https://store.baemin.com/data/editor/goods/796fde10dfdfd685.jpg" />{" "}
+      </div>
+    ),
+  },
   { id: "seconed", title: "배송/교환/반품 안내", component: <Guide /> },
   { id: "third", title: "상품후기", component: <Review /> },
   { id: "fourth", title: "상품문의", component: <Question /> },
@@ -41,6 +54,11 @@ const DetailPage = () => {
   const handleSelectTab = (val: string) => {
     window.scrollTo({ top: topHeight + 1, behavior: "smooth" });
     setSelectedTab(val);
+  };
+
+  const [isZoomOpened, setIsZoomOpened] = useState(false);
+  const handleZoomOpen = () => {
+    setIsZoomOpened(!isZoomOpened);
   };
 
   useEffect(() => {
@@ -74,10 +92,15 @@ const DetailPage = () => {
 
       <Contents>
         <InfoBox>
-          <img
-            src="https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg"
-            className="thumbnail"
-          />
+          <div onClick={handleZoomOpen} className="img-box">
+            <img
+              id="image"
+              src="https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg"
+              className="thumbnail"
+            />
+            {isZoomOpened && <ZoomLens id="zoom-lens" />}
+            {isZoomOpened && <ZoomModal />}
+          </div>
           <Info>
             <div className="title">으아아아악</div>
 
@@ -137,6 +160,13 @@ const Wrapper = styled(PageWrapper)`
   }
 `;
 
+const ZoomLens = styled.div`
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  width: 15rem;
+  height: 15rem;
+`;
+
 const InfoBox = styled.div`
   ${({ theme }) => theme.flexCenter}
   margin-top: 5rem;
@@ -149,6 +179,10 @@ const InfoBox = styled.div`
     height: 100%;
     object-fit: cover;
     background-color: lightgray;
+  }
+  .img-box {
+    cursor: zoom-in;
+    position: relative;
   }
 `;
 
