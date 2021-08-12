@@ -35,5 +35,11 @@ declare module "styled-components" {
       medium: css;
       large: css;
     };
+    tags: {
+      new: css;
+      best: css;
+      sale: css;
+      green: css;
+    };
   }
 }
