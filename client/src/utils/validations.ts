@@ -11,6 +11,7 @@ export const VALIDATION_ERR_MSG = {
   INVALID_PW: "올바른 비밀번호 형식이 아닙니다",
   INVALID_CONFIRM: "비밀번호가 서로 다릅니다",
   INVALID_NAME: "이름을 작성해 주세요",
+  INVALID_ADDRESS_NAME: "배송지명 작성해 주세요",
   INVALID_PHONE: "올바른 양식이 아닙니다",
 };
 

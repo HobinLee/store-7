@@ -118,10 +118,10 @@ const SignupPage = () => {
         </InputSection>
         <div className="signup__buttons">
           <ETLink to="/">
-            <Button>취소</Button>
+            <Button size="large">취소</Button>
           </ETLink>
 
-          <Button type="submit" primary disabled={!isSubmittable}>
+          <Button type="submit" size="large" primary disabled={!isSubmittable}>
             회원가입
           </Button>
         </div>
@@ -158,9 +158,6 @@ const SignupForm = styled.form`
     flex-direction: row;
     gap: 5rem;
 
-    button {
-      width: 100%;
-    }
     a {
       width: 100%;
     }
