@@ -1,5 +1,5 @@
 import Header from "@/Components/Header";
-import { PageWrapper, Contents } from "@/shared/styled";
+import { PageWrapper, Contents, ItemList } from "@/shared/styled";
 import React from "react";
 import styled from "styled-components";
 import Banner, { ItemType } from "./Banner";
@@ -25,33 +25,33 @@ const MainPage = () => {
       <Contents style={{ padding: "10rem 5rem" }}>
         <Content>
           <div className="title">잘나가는</div>
-          <ul className="items">
+          <ItemList>
             {sampleMain.map((item) => (
               <li key={item.id}>
                 <Item {...item} />
               </li>
             ))}
-          </ul>
+          </ItemList>
         </Content>
         <Content>
           <div className="title">잘나가요</div>
-          <ul className="items">
+          <ItemList>
             {sampleMain.map((item) => (
               <li key={item.id}>
                 <Item {...item} />
               </li>
             ))}
-          </ul>
+          </ItemList>
         </Content>
         <Content>
           <div className="title">잘나가요</div>
-          <ul className="items">
+          <ItemList>
             {sampleMain.map((item) => (
               <li key={item.id}>
                 <Item {...item} />
               </li>
             ))}
-          </ul>
+          </ItemList>
         </Content>
       </Contents>
       <Footer />
@@ -72,18 +72,6 @@ const Content = styled.div`
   .title {
     width: 100%;
     ${({ theme }) => theme.font.large}
-  }
-  .items {
-    display: flex;
-    margin-top: 2rem;
-    gap: 1rem;
-    justify-content: space-between;
-    width: 100%;
-    &__item {
-      flex: 0.4;
-      height: 30rem;
-      background: lightgray;
-    }
   }
 `;
 

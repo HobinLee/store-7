@@ -42,3 +42,14 @@ export const SignatureLine = styled.div<{ type: string }>`
   background: url(${({ type }) => LINE_LINK[type]}) no-repeat;
   background-size: contain;
 `;
+
+export const ItemList = styled.ul`
+  display: flex;
+  margin-top: 2rem;
+  gap: 1rem;
+  justify-content: space-between;
+  width: 100%;
+  & > * {
+    flex: 1;
+  }
+`;
