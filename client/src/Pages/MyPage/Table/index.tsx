@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import SignatureLine from "@/Components/SignatureLine";
+import { ReactElement } from "react";
 
 type TableType = {
   ths: string[];
   ratio: number[];
   checker?: boolean;
-  children: JSX.Element | JSX.Element[];
+  children: React.ReactNode | React.ReactNode[];
 };
 
 const Table = ({
@@ -43,7 +44,7 @@ const Table = ({
         </tr>
         <tr>
           <td colSpan={ratio.length + 1}>
-            <SignatureLine type="long2" height="0.5" />
+            <SignatureLine type="long2" height="0.5" opacity="1" />
           </td>
         </tr>
       </thead>
@@ -63,6 +64,7 @@ const TableWrapper = styled.table`
     td {
       padding: 2rem 0;
       vertical-align: middle;
+      text-align: center;
     }
   }
 `;

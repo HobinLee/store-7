@@ -8,6 +8,70 @@ import Table from "../Table";
 import { ItemList } from "@/shared/styled";
 import { sampleMain } from "@/shared/dummy";
 import TableFrom from "../Table/tableForm";
+import { recent } from "@/shared/dummy";
+
+type RecontOrderRowType = {
+  date: string;
+  number: string;
+  url: string;
+  title: string;
+  price: number;
+  status: string;
+  count: number;
+  reviewID: number;
+};
+
+const RecentOrderRow = ({
+  date,
+  number,
+  url,
+  title,
+  price,
+  count,
+  status,
+  reviewID,
+}: RecontOrderRowType) => {
+  const statusStyle = status === "completed" ? { color: "#2ac1bc" } : {};
+  const statusStr = {
+    shipping: "배송 중",
+    completed: "배송 완료",
+    return: "교환/환불 중",
+  };
+  return (
+    <tr>
+      <td>
+        <TableFrom.Order orderDate={date} orderNumber={number} />
+      </td>
+      <td>
+        <TableFrom.ProductOption url={url} title={title} />
+      </td>
+      <td>
+        {price} / {count}
+      </td>
+      <td style={statusStyle}>{statusStr[status]}</td>
+      <td>{reviewID ? "작성완료" : <ReviewBox />}</td>
+    </tr>
+  );
+};
+const ReviewBox = () => {
+  return (
+    <ReviewBoxWrapper>
+      <div>미작성</div>
+      <button>작성하기</button>
+    </ReviewBoxWrapper>
+  );
+};
+const ReviewBoxWrapper = styled.div`
+  & > button {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.5rem 0;
+    background: black;
+    color: white;
+    cursor: pointer;
+    ${({ theme }) => theme.borderRadius.small};
+  }
+`;
 
 const Content = () => {
   return (
@@ -17,38 +81,7 @@ const Content = () => {
         descrition="최근 30일 내에 진행중인 주문정보입니다."
         lineType="long1"
       >
-        <Table ths={["상품명/옵션", "상품금액/수량	", "합계"]} ratio={[6, 2, 1]}>
-          <tr>
-            <td>
-              <TableFrom.ProductOption
-                url="https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg"
-                title="아 11시 30분에 했던 걸 날려먹어서 다시 하고 있네 하하 인생은 도전보단 안전이다 내일 점심 저녁 다 맛있는거 머거야지 데모 영상은 뭐 그냥 뚝딱 찍자"
-              />
-            </td>
-            <td>2</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>
-              <TableFrom.ProductOption
-                url="https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg"
-                title="테스트 2"
-              />
-            </td>
-            <td>2</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>
-              <TableFrom.ProductOption
-                url="https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg"
-                title="테스트 3"
-              />
-            </td>
-            <td>2</td>
-            <td>3</td>
-          </tr>
-        </Table>
+        <div></div>
       </Section>
       <Section
         title="최근 주문 정보"
@@ -63,15 +96,11 @@ const Content = () => {
             "주문상태",
             "확인리뷰",
           ]}
-          ratio={[1, 2, 1, 1, 1]}
+          ratio={[1, 3, 1, 0.5, 0.5]}
         >
-          <tr>
-            <td>test 1</td>
-            <td>test 2</td>
-            <td>test 3</td>
-            <td>test 4</td>
-            <td>test 5</td>
-          </tr>
+          {recent.map((re) => (
+            <RecentOrderRow {...re} />
+          ))}
         </Table>
       </Section>
       <Section

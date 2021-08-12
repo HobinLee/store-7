@@ -104,7 +104,7 @@ const ItemWrapper = styled.div`
     margin-top: 1.5rem;
     padding: 0 1rem;
     &__title {
-      ${({ theme }) => theme.font.large};
+      ${({ theme }) => theme.font.medium};
       font-weight: 500;
       margin-bottom: 1rem;
       line-height: 1.4em;
