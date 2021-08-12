@@ -27,6 +27,9 @@ const Header = ({ children }: { children?: ReactChild }) => {
           ) : (
             <ETLink to="/login">로그인</ETLink>
           )}
+          <ETLink to="/mypage">
+            <div>마이페이지</div>
+          </ETLink>
           <ETLink to="/cart">
             <div>장바구니</div>
           </ETLink>
