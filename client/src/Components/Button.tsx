@@ -26,8 +26,7 @@ const Button = ({
 );
 
 const Container = styled.button<{ primary: boolean; size: string }>`
-  ${({ theme, size }) =>
-    size === "small" ? theme.font.small : theme.font.large};
+  ${({ theme, size }) => theme.font[size]};
   ${({ theme, size }) =>
     size === "small" ? theme.borderRadius.small : theme.borderRadius.medium};
   border: 0.1rem solid
