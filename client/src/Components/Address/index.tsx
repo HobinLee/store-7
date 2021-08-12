@@ -1,14 +1,10 @@
 import React, { MouseEventHandler, ReactChild } from "react";
 import styled from "styled-components";
-import PopupPostcode, { PostcodeType } from "./Popup";
+import PopupPostcode from "./Popup";
 import useInput from "@/hooks/useInput";
 import { useState, useEffect } from "react";
 import ModalWrapper from "../ModalWrapper";
-
-export type AddressType = {
-  postcode: PostcodeType;
-  detailAddress: string;
-};
+import { AddressType, PostcodeType } from "@/shared/type";
 
 export type ChangeAddressHandler = (address: AddressType) => {};
 

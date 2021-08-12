@@ -1,7 +1,8 @@
 import { PageWrapper } from "@/shared/styled";
 import React from "react";
 import styled from "styled-components";
-import Address, { AddressType } from "@/Components/Address";
+import Address from "@/Components/Address";
+import { AddressType } from "@/shared/type";
 
 const SignupPage = () => {
   const handleChangeAddress = (address: AddressType) => {

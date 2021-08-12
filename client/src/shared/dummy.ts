@@ -1,6 +1,6 @@
 import { CategoryType } from "@/Components/Header/Menu";
 import dayjs from "dayjs";
-import { QuestionListType, ReviewListType } from "./type";
+import { QuestionListType, ReviewListType, User } from "./type";
 
 export const sampleMypage = {
   shopping: [
@@ -12,6 +12,34 @@ export const sampleMypage = {
     { itemTitle: "나의 상품문의", path: "question" },
     { itemTitle: "나의 상품후기", path: "review" },
   ],
+};
+
+export const sampleUser: User = {
+  name: "이정민",
+  phone: "010-4632-6807",
+  email: "ljm991108@gmail.com",
+  image: "",
+  addresses: [
+    {
+      id: 0,
+      name: "집",
+      detailAddress: "서울 강남구 선릉로76길 33 (대치동) 대치파인빌, 101호",
+      postcode: {
+        postcode: 10101,
+        address: "서울 강남구 선릉로76길 33 (대치동) 대치파인빌, 101호",
+      },
+    },
+    {
+      id: 1,
+      name: "회사",
+      detailAddress: "우아한형제들 작은집",
+      postcode: {
+        postcode: 10101,
+        address: "서울 강남구 선릉로76길 33 (대치동) 대치파인빌, 101호",
+      },
+    },
+  ],
+  defaultDestinationId: 0,
 };
 
 export const questions: QuestionListType = {
@@ -326,5 +354,38 @@ export const categories: CategoryType[] = [
         title: "넛때문이야",
       },
     ],
+  },
+];
+
+export const buyItems = [
+  {
+    name: "1+1 IH 인덕션/스마트 프라이팬 궁중팬 균일가 골라담기",
+    num: 1,
+    price: 10000,
+    delivery: 2500,
+  },
+  {
+    name: "1+1 IH 인덕션/스마트 프라이팬 궁중팬 균일가 골라담기",
+    num: 1,
+    price: 10000,
+    delivery: 2500,
+  },
+  {
+    name: "1+1 IH 인덕션/스마트 프라이팬 궁중팬 균일가 골라담기",
+    num: 1,
+    price: 10000,
+    delivery: 2500,
+  },
+  {
+    name: "1+1 IH 인덕션/스마트 프라이팬 궁중팬 균일가 골라담기",
+    num: 1,
+    price: 10000,
+    delivery: 2500,
+  },
+  {
+    name: "1+1 IH 인덕션/스마트 프라이팬 궁중팬 균일가 골라담기",
+    num: 1,
+    price: 10000,
+    delivery: 2500,
   },
 ];

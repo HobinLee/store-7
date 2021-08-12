@@ -28,3 +28,24 @@ export type QuestionListType = {
   totalCount: number;
   questions: QuestionType[];
 };
+
+export type User = {
+  name: string;
+  phone: string;
+  email: string;
+  image: string;
+  addresses: AddressType[];
+  defaultDestinationId: number;
+};
+
+export type AddressType = {
+  id?: number;
+  name?: string;
+  detailAddress: string;
+  postcode: PostcodeType;
+};
+
+export type PostcodeType = {
+  postcode?: number;
+  address?: string;
+};
