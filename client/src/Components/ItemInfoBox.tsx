@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import Checkbox from "./Checkbox";
 
 const ItemInfoBox = ({ name, num, price, delivery }) => {
   return (
     <Wrapper>
       <div className="info">
-        <input type="checkbox" />
+        <Checkbox />
         <img src="" />
         <div>
           <div className="info__name">{name}</div>
@@ -31,6 +32,7 @@ const Wrapper = styled.div`
   box-sizing: border-box;
   .info {
     display: flex;
+    align-items: flex-start;
     gap: 2rem;
     &__name {
       ${({ theme }) => theme.font.large};

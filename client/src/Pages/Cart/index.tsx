@@ -7,6 +7,7 @@ import ItemInfoBox from "@/Components/ItemInfoBox";
 import CartBox from "./CartBox";
 import { buyItems } from "@/shared/dummy";
 import { Arrow } from "@/assets";
+import Checkbox from "@/Components/Checkbox";
 
 const CartPage = () => {
   return (
@@ -25,7 +26,7 @@ const CartPage = () => {
         <Content>
           <div className="items">
             <div>
-              <input type="checkbox" /> 모두선택
+              <Checkbox label="모두선택" />
             </div>
             {buyItems.map((i) => (
               <ItemInfoBox {...i} />
@@ -64,7 +65,6 @@ const Content = styled.div`
   width: 100%;
   gap: 3rem;
   .items {
-    ${({ theme }) => theme.font.medium};
     padding-bottom: 5rem;
     display: flex;
     flex-direction: column;

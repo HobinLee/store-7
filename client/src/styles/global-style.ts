@@ -50,6 +50,10 @@ export const GlobalStyle = createGlobalStyle`
       clip: rect(0, 0, 0, 0);
       border: 0;
     }
+
+    input[type="checkbox"]{
+        all: unset;
+    }
   }
 
   .no-scroll-bar::-webkit-scrollbar {

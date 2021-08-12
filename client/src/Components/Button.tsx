@@ -26,19 +26,18 @@ const Button = ({
 );
 
 const Container = styled.button<{ primary: boolean; size: string }>`
+  ${({ theme, size }) => theme.font[size]};
   ${({ theme, size }) =>
-    size === "small" ? theme.font.small : theme.font.large}
-  padding: ${({ size }) => (size === "small" ? "1rem 1.5rem" : " 1.5rem 3rem")};
-  border-radius: ${({ size }) => (size === "small" ? "0.5rem" : "1rem")};
-
-  cursor: pointer;
+    size === "small" ? theme.borderRadius.small : theme.borderRadius.medium};
   border: 0.1rem solid
     ${({ primary, theme }) => (primary ? "none" : theme.color.line)};
-  box-sizing: border-box;
   color: ${({ primary, theme }) =>
     primary ? theme.color.white : theme.color.title_active};
   background: ${({ primary, theme }) =>
     primary ? theme.color.primary1 : "#fff"};
+  padding: ${({ size }) => (size === "small" ? "1rem 1.5rem" : " 1.5rem 3rem")};
+  cursor: pointer;
+  box-sizing: border-box;
   opacity: 1;
   transition: opacity 0.5s;
 
@@ -50,7 +49,9 @@ const Container = styled.button<{ primary: boolean; size: string }>`
   }
 
   &:disabled {
-    opacity: 0.3;
+    cursor: default;
+    background: ${({ primary, theme }) =>
+      primary ? theme.color.primary2 : theme.color.background};
   }
 `;
 

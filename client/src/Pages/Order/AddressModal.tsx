@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Address from "@/Components/Address";
 import ModalWrapper from "@/Components/ModalWrapper";
 import { useState } from "react";
 import AddressBox from "./AddressBox";
@@ -8,6 +7,7 @@ import { sampleUser } from "@/shared/dummy";
 import { AddressType } from "@/shared/type";
 import Button from "@/Components/Button";
 import { Back } from "@/assets";
+import AddressForm from "./AddressForm";
 
 const AddressModal = ({ closeModal }) => {
   const handleChangeAddress = (address: AddressType) => {
@@ -26,28 +26,24 @@ const AddressModal = ({ closeModal }) => {
         {page !== "select" && (
           <Back className="back-btn" onClick={() => setPage("select")} />
         )}
-        <Contents>
-          {page === "select" ? (
-            sampleUser.addresses.map((address) => (
-              <AddressBox {...{ setPage, address }} user={sampleUser} />
-            ))
-          ) : (
-            <div>
-              <Address onChangeAddress={handleChangeAddress} />
-            </div>
-          )}
-        </Contents>
 
-        <div className="add-btn">
-          <Button
-            primary
-            size="large"
-            className="add-btn"
-            onClick={() => setPage("add")}
-          >
-            배송지 추가
-          </Button>
-        </div>
+        {page === "select" ? (
+          <Contents>
+            {sampleUser.addresses.map((address) => (
+              <AddressBox {...{ setPage, address }} user={sampleUser} />
+            ))}
+          </Contents>
+        ) : (
+          <AddressForm />
+        )}
+
+        {page === "select" && (
+          <div className="add-btn">
+            <Button primary size="large" onClick={() => setPage("add")}>
+              배송지 추가
+            </Button>
+          </div>
+        )}
       </>
     </Wrapper>
   );
@@ -56,11 +52,12 @@ const AddressModal = ({ closeModal }) => {
 const Wrapper = styled(ModalWrapper)`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  justify-content: flex-start;
   width: 40rem;
-  height: 62.5rem;
+  height: 68rem;
   padding: 0;
-  padding-top: 1.7rem;
+  padding-top: 2rem;
+  overflow-y: hidden;
   .add-btn {
     padding: 2rem;
     width: 100%;
@@ -80,7 +77,6 @@ const Contents = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  height: 45rem;
   gap: 1rem;
   background: ${({ theme }) => theme.color.background};
   overflow-y: scroll;

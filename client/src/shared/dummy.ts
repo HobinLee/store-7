@@ -47,6 +47,15 @@ export const sampleUser: UserType = {
         address: "서울 강남구 선릉로76길 33 (대치동) 대치파인빌, 101호",
       },
     },
+    {
+      id: 1,
+      name: "회사",
+      detailAddress: "우아한형제들 작은집",
+      postcode: {
+        postcode: 10101,
+        address: "서울 강남구 선릉로76길 33 (대치동) 대치파인빌, 101호",
+      },
+    },
   ],
   defaultDestinationId: 0,
 };
