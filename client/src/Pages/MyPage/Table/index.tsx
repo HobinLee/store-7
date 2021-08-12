@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import SignatureLine from "@/Components/SignatureLine";
 
 type TableType = {
   ths: string[];
@@ -40,6 +41,11 @@ const Table = ({
             <th>{th}</th>
           ))}
         </tr>
+        <tr>
+          <td colspan={ratio.length + 1}>
+            <SignatureLine type="long2" height="0.5" />
+          </td>
+        </tr>
       </thead>
       <tbody>{children}</tbody>
     </TableWrapper>
@@ -47,22 +53,16 @@ const Table = ({
 };
 
 const TableWrapper = styled.table`
-  border-top: 1px solid black;
   width: 100%;
 
   ${({ theme }) => theme.font.small}
   th {
     padding: 1rem 0;
-    background: ${({ theme }) => theme.color.background};
-    border-bottom: 1px solid ${({ theme }) => theme.color.line};
   }
   tbody {
     td {
       padding: 2rem 0;
       vertical-align: middle;
-    }
-    tr {
-      border-bottom: 1px solid ${({ theme }) => theme.color.line};
     }
   }
 `;

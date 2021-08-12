@@ -8,6 +8,7 @@ import { sampleMain } from "@/shared/dummy";
 import Item from "@/Components/Item";
 import tableForm from "./tableForm";
 import Sidebar from "./Sidebar";
+import { Brush1 } from "@/assets/";
 
 const MyPage = () => {
   return (
@@ -75,27 +76,13 @@ const Content = () => {
         descrition="최근 30일 내에 진행중인 주문정보입니다."
         lineType="long1"
       >
-        <Table
-          checker
-          ths={["상품명/옵션", "상품금액/수량	", "합계"]}
-          ratio={[6, 2, 1]}
-        >
-          <tr>
-            <td>
-              <tableForm.ProductOption
-                url="https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg"
-                title="플리츠마마x배달으민족. 텀블러백"
-              />
-            </td>
-            <td>2</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>test2</td>
-            <td>2</td>
-            <td>3</td>
-          </tr>
-        </Table>
+        <ItemList>
+          {sampleMain.map((item) => (
+            <li key={item.id}>
+              <Item {...item} />
+            </li>
+          ))}
+        </ItemList>
       </Section>
       <Section
         title="진행 중인 주문"

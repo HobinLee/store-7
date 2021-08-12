@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { SignatureLine } from "@/shared/styled";
+import SignatureLine from "@/Components/SignatureLine";
 
 type SectionType = {
   title: string;
