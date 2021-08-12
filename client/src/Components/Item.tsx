@@ -1,7 +1,8 @@
+import React, { useState } from "react";
 import { ETLink } from "@/Router";
-import React from "react";
 import styled, { css } from "styled-components";
 import MagnifiedImage from "./MagnifiedImage";
+import { Wish, BookMark } from "@/assets/";
 
 type ItemType = {
   id: number;
@@ -9,13 +10,55 @@ type ItemType = {
   tags?: string[];
   title: string;
   price: number;
+  isWish: boolean;
 };
 
-const Item = ({ id, discountRate = 0, tags = [], title, price }: ItemType) => {
+const Item = ({
+  id,
+  discountRate = 0,
+  tags = [],
+  title,
+  price,
+  isWish,
+}: ItemType) => {
+  const ToggleWish = (id: number, boolean: boolean) => {
+    //TODO: 서버 좋아요 변경
+    console.log(`${id} 아이템 wish를 ${boolean}으로`);
+    setIsWish(boolean);
+  };
+  const [isWishState, setIsWish] = useState(isWish);
+
   return (
     <ETLink to={`/detail/${id}`}>
       <ItemWrapper>
-        <MagnifiedImage src="https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg" />
+        <div className="thumbnail">
+          <MagnifiedImage src="https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg" />
+          <div className="thumbnail__tags">
+            {tags.map((tag) => (
+              <Tag tag={tag}>{tag}</Tag>
+            ))}
+          </div>
+          <div className="thumbnail__wish">
+            {isWishState ? (
+              <Wish
+                opacity="1"
+                fill="#2ac1bc"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  ToggleWish(id, false);
+                }}
+              />
+            ) : (
+              <Wish
+                fill="white"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  ToggleWish(id, true);
+                }}
+              />
+            )}
+          </div>
+        </div>
         <div className="info">
           <div className="info__title">{title}</div>
           {discountRate !== 0 && (
@@ -28,23 +71,33 @@ const Item = ({ id, discountRate = 0, tags = [], title, price }: ItemType) => {
             {getCurrentPrice(price, discountRate)}
           </div>
         </div>
-        <div className="tags">
-          {tags.map((tag) => (
-            <Tag tag={tag}>{tag}</Tag>
-          ))}
-        </div>
       </ItemWrapper>
     </ETLink>
   );
 };
 
 const ItemWrapper = styled.div`
-  position: relative;
-  .tags {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    display: flex;
+  .thumbnail {
+    position: relative;
+    &__tags {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      display: flex;
+    }
+    &__wish {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+
+      & > svg:hover {
+        fill: #2ac1bc;
+        opacity: 1;
+      }
+      & > svg:active {
+        transform: scale(1.1);
+      }
+    }
   }
 
   .info {
