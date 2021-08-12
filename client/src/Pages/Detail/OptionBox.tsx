@@ -3,10 +3,12 @@ import Input from "@/Components/Input";
 import React, { useState } from "react";
 import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
+import { Triangle } from "@/assets";
 
 const OptionBox = ({ numValue, handleClickNumVal }) => {
   const [isCartAlertShown, setIsCartAlertShown] = useState(false);
 
+  console.log(numValue);
   return (
     <Wrapper>
       <div className="select-option">
@@ -16,10 +18,10 @@ const OptionBox = ({ numValue, handleClickNumVal }) => {
             <NumInput value={numValue.value} onChange={numValue.onChange} />
             <div>
               <button type="button" onClick={() => handleClickNumVal(1)}>
-                .
+                <Triangle className="num-input__up" />
               </button>
               <button type="button" onClick={() => handleClickNumVal(-1)}>
-                .
+                <Triangle className="num-input__down" />
               </button>
             </div>
           </div>
@@ -28,7 +30,8 @@ const OptionBox = ({ numValue, handleClickNumVal }) => {
       </div>
 
       <div className="total-price">
-        <div>총 합계금액</div>10,000원
+        <div>총 합계금액</div>
+        {(10000 * parseInt(numValue.value)).toLocaleString()}원
       </div>
 
       <div className="buttons">
@@ -86,10 +89,22 @@ const Wrapper = styled.div`
           ${({ theme }) => theme.flexCenter}
           flex-direction: column;
           button {
+            ${({ theme }) => theme.flexCenter};
             cursor: pointer;
+            width: 1.6rem;
+            height: 1.6rem;
             border: none;
+            padding: 0.4rem;
             background: ${({ theme }) => theme.color.primary2};
           }
+        }
+        &__up {
+          transform: rotate(-90deg);
+          fill: white;
+        }
+        &__down {
+          transform: rotate(90deg);
+          fill: white;
         }
       }
     }
