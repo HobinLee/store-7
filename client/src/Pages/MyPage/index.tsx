@@ -1,146 +1,155 @@
 import Header from "@/Components/Header";
-import { PageWrapper } from "@/shared/styled";
+import { PageWrapper, Contents } from "@/shared/styled";
 import React from "react";
 import styled from "styled-components";
 import Table from "./Table";
-import { sampleMypage } from "../../shared/dummy";
+import Section from "./Section";
+import { sampleMain } from "@/shared/dummy";
+import Item from "@/Components/Item";
+import tableForm from "./tableForm";
+import Sidebar from "./Sidebar";
+import { Brush1 } from "@/assets/";
 
 const MyPage = () => {
   return (
     <MyPageWrapper>
       <Header />
-      <Container>
-        <Sidebar />
-        <Content>
-          <ContentHeader />
-          <ContentBody />
-        </Content>
-      </Container>
+      <Contents>
+        <ContentHeader />
+        <ContentBody>
+          <Sidebar />
+          <Content />
+        </ContentBody>
+      </Contents>
     </MyPageWrapper>
   );
 };
 
 const MyPageWrapper = styled(PageWrapper)``;
 
-const Container = styled.div`
-  padding-top: 5rem;
-  margin: 0 auto;
-  width: 110rem;
+const ContentBody = styled.div`
   display: flex;
-`;
-
-const Sidebar = () => {
-  const handleClickItem = (path) => () => {
-    console.log(`${path}로 변경!`);
-  };
-
-  return (
-    <SidebarWrpper>
-      <h4>마이페이지</h4>
-      <SidebarContent>
-        <p>쇼핑정보</p>
-        <ul>
-          {sampleMypage.shopping.map(({ itemTitle, path }, i) => (
-            <li key={i} onClick={handleClickItem(path)}>
-              {itemTitle}
-            </li>
-          ))}
-        </ul>
-      </SidebarContent>
-      <SidebarContent>
-        <p>회원정보</p>
-        <ul>
-          {sampleMypage.userInfo.map(({ itemTitle, path }, i) => (
-            <li key={i} onClick={handleClickItem(path)}>
-              {itemTitle}
-            </li>
-          ))}
-        </ul>
-      </SidebarContent>
-    </SidebarWrpper>
-  );
-};
-
-const SidebarWrpper = styled.div`
-  margin-right: 3rem;
-  width: 23rem;
-  & > h4 {
-    font-size: 2rem;
-    font-weight: bold;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid silver;
-  }
-`;
-
-const SidebarContent = styled.div`
-  & > p {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-top: 4rem;
-    margin-bottom: 1rem;
-  }
-  & > ul > li {
-    font-size: 1.4rem;
-    padding: 0.7rem;
-    color: #878787;
-    cursor: pointer;
-    &:hover {
-      background: silver;
-    }
-  }
-`;
-
-const Content = styled.div`
-  flex: 1;
 `;
 
 const ContentHeader = () => {
   return (
     <ContentHeaderWrapper>
       <div className="greeting">반가워요,</div>
-      <p>홍영준님의</p>
-      <p>회원등급은 일반회원그룹 입니다.</p>
+      <p>
+        <span>홍영준</span> 님의
+      </p>
+      <p>
+        회원등급은 <span>일반회원</span>입니다.
+      </p>
     </ContentHeaderWrapper>
   );
 };
 
 const ContentHeaderWrapper = styled.div`
+  width: 100%;
+  margin-bottom: 8rem;
+
   .greeting {
     font-size: 4rem;
     font-weight: bold;
     margin: 2.5rem 0;
   }
+
   p {
     font-size: 1.7rem;
     line-height: 1.7rem;
+    span {
+      ${({ theme }) => theme.font.large}
+    }
   }
+
   p + p {
     margin-top: 1rem;
   }
 `;
 
-const ContentBody = () => {
+const Content = () => {
   return (
     <ContentBodyWrapper>
-      <Table
-        checker
-        ths={["상품명/옵션", "상품금액/수량", "합계"]}
-        ratio={[6, 2, 1]}
+      <Section
+        title="찜리스트"
+        descrition="최근 30일 내에 진행중인 주문정보입니다."
+        lineType="long1"
       >
-        <tr>
-          <td>test</td>
-          <td>2</td>
-          <td>3</td>
-        </tr>
-        <tr>
-          <td>test2</td>
-          <td>2</td>
-          <td>3</td>
-        </tr>
-      </Table>
+        <ItemList>
+          {sampleMain.map((item) => (
+            <li key={item.id}>
+              <Item {...item} />
+            </li>
+          ))}
+        </ItemList>
+      </Section>
+      <Section
+        title="진행 중인 주문"
+        descrition="최근 30일 내에 진행중인 주문정보입니다."
+        lineType="long2"
+      >
+        <Table ths={["상품명/옵션", "상품금액/수량	", "합계"]} ratio={[6, 2, 1]}>
+          <tr>
+            <td>test</td>
+            <td>2</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>test2</td>
+            <td>2</td>
+            <td>3</td>
+          </tr>
+        </Table>
+      </Section>
+      <Section
+        title="최근 주문 정보"
+        descrition="최근 30일 내에 주문하신 내역입니다."
+        lineType="long3"
+      >
+        <Table
+          ths={[
+            "날짜/주문번호",
+            "상품명/옵션	",
+            "상품금액/수량",
+            "주문상태",
+            "확인리뷰",
+          ]}
+          ratio={[1, 2, 1, 1, 1]}
+        >
+          <tr>
+            <td>test 1</td>
+            <td>test 2</td>
+            <td>test 3</td>
+            <td>test 4</td>
+            <td>test 5</td>
+          </tr>
+        </Table>
+      </Section>
+      <Section
+        title="최근 본 상품"
+        descrition="ET님께서 본 최근 상품입니다."
+        lineType="long2"
+      >
+        <ItemList>
+          {sampleMain.map((item) => (
+            <li key={item.id}>
+              <Item {...item} />
+            </li>
+          ))}
+        </ItemList>
+      </Section>
     </ContentBodyWrapper>
   );
 };
+
+const ItemList = styled.ul`
+  display: flex;
+  margin-top: 2rem;
+  gap: 1rem;
+  justify-content: space-between;
+  width: 100%;
+`;
 
 const ContentBodyWrapper = styled.div``;
 

@@ -1,16 +1,24 @@
 import React from "react";
 import styled from "styled-components";
+import SignatureLine from "@/Components/SignatureLine";
 
 type SectionType = {
   title: string;
   descrition?: string;
+  lineType: string;
   children: JSX.Element | JSX.Element[];
 };
 
-const Section = ({ title, descrition = "", children }: SectionType) => {
+const Section = ({
+  title,
+  descrition = "",
+  children,
+  lineType,
+}: SectionType) => {
   return (
     <SectionWrapper>
-      <div className="section__title">
+      <SignatureLine type={lineType} />
+      <div className="title">
         <h3>{title}</h3>
         <p>{descrition}</p>
       </div>
@@ -20,14 +28,15 @@ const Section = ({ title, descrition = "", children }: SectionType) => {
 };
 
 const SectionWrapper = styled.div`
-  margin-top: 8rem;
+  margin-bottom: 12rem;
 
-  .section__title {
+  .title {
     display: flex;
     align-items: flex-end;
-    margin: 1rem 0;
+    margin-bottom: 3rem;
+
     h3 {
-      ${({ theme }) => theme.font.medium}
+      ${({ theme }) => theme.font.large}
       font-weight: bold;
     }
     p {

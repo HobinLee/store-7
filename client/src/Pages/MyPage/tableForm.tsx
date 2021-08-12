@@ -43,10 +43,10 @@ const Sum = () => {
 
 const SumWrapper = styled.div``;
 
-const TableForm = {
+const tableForm = {
   ProductOption,
   PriceAndAmount,
   Sum,
 };
 
-export default TableForm;
+export default tableForm;

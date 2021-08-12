@@ -59,7 +59,7 @@ const App = () => {
         <ETRoute path="/detail">
           <DetailPage />
         </ETRoute>
-        <ETRoute path="/myPage">
+        <ETRoute path="/mypage">
           <MyPage />
         </ETRoute>
       </ETRouter>
