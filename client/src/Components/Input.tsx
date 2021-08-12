@@ -6,6 +6,7 @@ type InputType = {
   required?: boolean;
   value: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
+  onBlur?: ChangeEventHandler<HTMLInputElement>;
   type?: string;
   className?: string;
 };
@@ -15,6 +16,7 @@ const Input = ({
   required = true,
   value,
   onChange,
+  onBlur,
   type = "text",
   className,
 }: InputType) => (
@@ -24,6 +26,7 @@ const Input = ({
     required={required}
     value={value}
     onChange={onChange}
+    onBlur={onBlur}
     type={type}
     autoComplete="off"
   />
