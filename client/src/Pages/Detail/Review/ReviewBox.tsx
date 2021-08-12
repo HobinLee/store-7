@@ -16,7 +16,12 @@ const ReviewBox = (review: ReviewType) => {
         </div>
       </Header>
 
-      <div className="content">{review.content}</div>
+      <div className="content">
+        <div className="content-img">
+          {review.img && <img src={`${review.img}`} alt="review_img" />}
+        </div>
+        <span>{review.content}</span>
+      </div>
     </Wrapper>
   );
 };
@@ -30,6 +35,17 @@ const Wrapper = styled.div`
     background-color: ${({ theme }) => theme.color.background};
     border-radius: 1rem;
     padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+
+    .content-img {
+      max-width: 80%;
+      align-self: center;
+      img {
+        width: 100%;
+      }
+    }
   }
   border-bottom: 0.1rem solid ${({ theme }) => theme.color.line};
 `;

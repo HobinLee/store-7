@@ -2,6 +2,7 @@ export type ReviewType = {
   id: number;
   rate: number;
   content: string;
+  img?: string;
   author: string;
   date: string;
 };
@@ -48,4 +49,12 @@ export type AddressType = {
 export type PostcodeType = {
   postcode?: number;
   address?: string;
+};
+
+export type ItemBannerType = {
+  brief?: string;
+  title: string;
+  src: any;
+  id: number;
+  isWhite?: boolean;
 };
