@@ -7,7 +7,7 @@ const ProductOption = ({ url, title }) => {
       <div className="thumbnail">
         <img src={url} />
       </div>
-      <h4 className="title">{title}</h4>
+      <h4 className="product__title">{title}</h4>
     </ProductOptionWrapper>
   );
 };
@@ -15,19 +15,22 @@ const ProductOption = ({ url, title }) => {
 const ProductOptionWrapper = styled.div`
   display: flex;
   align-items: center;
+
   .thumbnail {
-    width: 4rem;
-    height: 5rem;
+    width: 6rem;
+    height: 7.5rem;
     img {
       display: block;
       width: 100%;
     }
-    margin-right: 1rem;
+    margin-right: 2rem;
   }
 
-  .title {
-    ${({ theme }) => theme.font.small}
+  .product__title {
+    flex: 1;
+    ${({ theme }) => theme.font.large}
     font-weight: bold;
+    line-height: 2.5rem;
   }
 `;
 
@@ -43,10 +46,10 @@ const Sum = () => {
 
 const SumWrapper = styled.div``;
 
-const tableForm = {
+const TableFrom = {
   ProductOption,
   PriceAndAmount,
   Sum,
 };
 
-export default tableForm;
+export default TableFrom;

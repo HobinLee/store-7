@@ -18,7 +18,7 @@ const Section = ({
   return (
     <SectionWrapper>
       <SignatureLine type={lineType} />
-      <div className="title">
+      <div className="section__title">
         <h3>{title}</h3>
         <p>{descrition}</p>
       </div>
@@ -30,7 +30,7 @@ const Section = ({
 const SectionWrapper = styled.div`
   margin-bottom: 12rem;
 
-  .title {
+  .section__title {
     display: flex;
     align-items: flex-end;
     margin-bottom: 3rem;

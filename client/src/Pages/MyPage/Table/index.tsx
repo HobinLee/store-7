@@ -55,7 +55,7 @@ const Table = ({
 const TableWrapper = styled.table`
   width: 100%;
 
-  ${({ theme }) => theme.font.small}
+  ${({ theme }) => theme.font.medium}
   th {
     padding: 1rem 0;
   }

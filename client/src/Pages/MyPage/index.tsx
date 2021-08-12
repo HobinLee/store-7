@@ -1,14 +1,14 @@
-import Header from "@/Components/Header";
-import { PageWrapper, Contents, ItemList } from "@/shared/styled";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import Table from "./Table";
-import Section from "./Section";
-import { sampleMain } from "@/shared/dummy";
-import Item from "@/Components/Item";
+
+import { PageWrapper, Contents } from "@/shared/styled";
+import Header from "@/Components/Header";
 import Sidebar from "./Sidebar";
+import Content from "./Content";
 
 const MyPage = () => {
+  const [viewType, setViewType] = useState();
+
   return (
     <MyPageWrapper>
       <Header />
@@ -22,12 +22,10 @@ const MyPage = () => {
     </MyPageWrapper>
   );
 };
-
-const MyPageWrapper = styled(PageWrapper)``;
-
 const ContentBody = styled.div`
   display: flex;
 `;
+const MyPageWrapper = styled(PageWrapper)``;
 
 const ContentHeader = () => {
   return (
@@ -65,82 +63,5 @@ const ContentHeaderWrapper = styled.div`
     margin-top: 1rem;
   }
 `;
-
-const Content = () => {
-  return (
-    <ContentBodyWrapper>
-      <Section
-        title="찜리스트"
-        descrition="최근 30일 내에 진행중인 주문정보입니다."
-        lineType="long1"
-      >
-        <ItemList>
-          {sampleMain.map((item) => (
-            <li key={item.id}>
-              <Item {...item} />
-            </li>
-          ))}
-        </ItemList>
-      </Section>
-      <Section
-        title="진행 중인 주문"
-        descrition="최근 30일 내에 진행중인 주문정보입니다."
-        lineType="long2"
-      >
-        <Table ths={["상품명/옵션", "상품금액/수량	", "합계"]} ratio={[6, 2, 1]}>
-          <tr>
-            <td>test</td>
-            <td>2</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>test2</td>
-            <td>2</td>
-            <td>3</td>
-          </tr>
-        </Table>
-      </Section>
-      <Section
-        title="최근 주문 정보"
-        descrition="최근 30일 내에 주문하신 내역입니다."
-        lineType="long3"
-      >
-        <Table
-          ths={[
-            "날짜/주문번호",
-            "상품명/옵션	",
-            "상품금액/수량",
-            "주문상태",
-            "확인리뷰",
-          ]}
-          ratio={[1, 2, 1, 1, 1]}
-        >
-          <tr>
-            <td>test 1</td>
-            <td>test 2</td>
-            <td>test 3</td>
-            <td>test 4</td>
-            <td>test 5</td>
-          </tr>
-        </Table>
-      </Section>
-      <Section
-        title="최근 본 상품"
-        descrition="ET님께서 본 최근 상품입니다."
-        lineType="long2"
-      >
-        <ItemList>
-          {sampleMain.map((item) => (
-            <li key={item.id}>
-              <Item {...item} />
-            </li>
-          ))}
-        </ItemList>
-      </Section>
-    </ContentBodyWrapper>
-  );
-};
-
-const ContentBodyWrapper = styled.div``;
 
 export default MyPage;
