@@ -2,7 +2,7 @@ import hamburger from "./hamburger.svg";
 import banner1 from "./banner1.gif";
 import banner2 from "./banner2.gif";
 import banner3 from "./banner3.gif";
-import Bursh1 from "./brush1.svg";
+import Brush1 from "./brush1.svg";
 import Brush2 from "./brush2.svg";
 import Brush3 from "./brush3.svg";
 import Brush4 from "./brush4.svg";
@@ -18,7 +18,7 @@ export {
   banner1,
   banner2,
   banner3,
-  Bursh1,
+  Brush1,
   Brush2,
   Brush3,
   Brush4,
