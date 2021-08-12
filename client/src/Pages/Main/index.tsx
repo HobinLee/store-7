@@ -1,12 +1,12 @@
 import Header from "@/Components/Header";
-import { PageWrapper, Contents, ItemList } from "@/shared/styled";
+import { PageWrapper, Contents } from "@/shared/styled";
 import React from "react";
 import styled from "styled-components";
-import Item from "@/Components/Item";
 import Footer from "@/Components/Footer";
-import { sampleMain } from "@/shared/dummy";
 import GiftSection from "./GiftSection";
 import BannerSection from "./BannerSection/";
+import ReviewSection from "./ReviewSection/";
+import ProductSection from "./ProductSection/";
 
 const MainPage = () => {
   return (
@@ -15,27 +15,11 @@ const MainPage = () => {
       <BannerSection />
       <Contents style={{ padding: "10rem 5rem" }}>
         <div className="main__contents-wrapper">
-          <div>
-            <div className="title">잘나가는</div>
-            <ItemList>
-              {sampleMain.map((item) => (
-                <li key={item.id}>
-                  <Item {...item} />
-                </li>
-              ))}
-            </ItemList>
-          </div>
+          <ProductSection title="잘나가는" />
           <GiftSection />
-          <div>
-            <div className="title">잘나가요</div>
-            <ItemList>
-              {sampleMain.map((item) => (
-                <li key={item.id}>
-                  <Item {...item} />
-                </li>
-              ))}
-            </ItemList>
-          </div>
+          <ProductSection title="할인 중인 상품" />
+          <ReviewSection />
+          <ProductSection title="신상" />
         </div>
       </Contents>
       <Footer />
@@ -49,7 +33,7 @@ const Wrapper = styled(PageWrapper)`
     height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 5rem;
+    gap: 10rem;
 
     & > div {
       ${({ theme }) => theme.flexCenter}
