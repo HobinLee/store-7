@@ -6,6 +6,7 @@ import Footer from "@/Components/Footer";
 import ItemInfoBox from "@/Components/ItemInfoBox";
 import CartBox from "./CartBox";
 import { buyItems } from "@/shared/dummy";
+import { Arrow } from "@/assets";
 
 const CartPage = () => {
   return (
@@ -15,12 +16,17 @@ const CartPage = () => {
       </Header>
       <div className="contents">
         <Title>
-          장바구니 <span className="other">주문/결제</span>
+          장바구니{" "}
+          <span className="other">
+            <Arrow /> 주문/결제
+          </span>
         </Title>
 
         <Content>
           <div className="items">
-            <input type="checkbox" />
+            <div>
+              <input type="checkbox" /> 모두선택
+            </div>
             {buyItems.map((i) => (
               <ItemInfoBox {...i} />
             ))}
@@ -47,6 +53,7 @@ const Title = styled.div`
   ${({ theme }) => theme.font.xlarge}
   .other {
     color: ${({ theme }) => theme.color.grey2};
+    fill: ${({ theme }) => theme.color.grey2};
   }
 `;
 
@@ -57,6 +64,8 @@ const Content = styled.div`
   width: 100%;
   gap: 3rem;
   .items {
+    ${({ theme }) => theme.font.medium};
+    padding-bottom: 5rem;
     display: flex;
     flex-direction: column;
     width: 100%;
