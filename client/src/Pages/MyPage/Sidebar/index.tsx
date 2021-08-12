@@ -4,7 +4,7 @@ import { sampleMypage } from "@/shared/dummy";
 import SignatureLine from "@/Components/SignatureLine";
 import { ETLink } from "@/Router";
 
-const Sidebar = () => {
+const Sidebar = ({ setCurrent }) => {
   return (
     <SidebarWrpper>
       <SidebarContent>
@@ -12,7 +12,12 @@ const Sidebar = () => {
         <p>쇼핑정보</p>
         <ul>
           {sampleMypage.shopping.map(({ itemTitle, path }, i) => (
-            <li key={i}>
+            <li
+              key={i}
+              onClick={() => {
+                setCurrent(path);
+              }}
+            >
               <ETLink to={`/mypage/${path}`}>{itemTitle}</ETLink>
             </li>
           ))}
@@ -23,7 +28,12 @@ const Sidebar = () => {
         <p>회원정보</p>
         <ul>
           {sampleMypage.userInfo.map(({ itemTitle, path }, i) => (
-            <li key={i}>
+            <li
+              key={i}
+              onClick={() => {
+                setCurrent(path);
+              }}
+            >
               <ETLink to={`/mypage/${path}`}>{itemTitle}</ETLink>
             </li>
           ))}

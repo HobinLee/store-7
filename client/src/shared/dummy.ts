@@ -4,11 +4,11 @@ import { QuestionListType, ReviewListType, UserType } from "./type";
 
 export const sampleMypage = {
   shopping: [
-    { itemTitle: "주문목록/배송조회", path: "itemlist" },
+    { itemTitle: "주문목록/배송조회", path: "orderlist" },
     { itemTitle: "찜리스트", path: "wishlist" },
   ],
   userInfo: [
-    { itemTitle: "회원정보 변경", path: "changeUserInfo" },
+    { itemTitle: "회원정보 변경", path: "userinfo" },
     { itemTitle: "나의 상품문의", path: "question" },
     { itemTitle: "나의 상품후기", path: "review" },
   ],
