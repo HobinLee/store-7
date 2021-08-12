@@ -55,3 +55,16 @@ export const imageZoom = (imgID: string, resultID: string, lensID: string) => {
   lens.addEventListener("touchmove", moveLens);
   img.addEventListener("touchmove", moveLens);
 };
+
+export const getCurrentPrice = (price: number, discountRate: number) => {
+  const saledPrice = calSaledPrice(price, discountRate);
+  return convertToKRW(saledPrice);
+};
+
+export const calSaledPrice = (price: number, discountRate: number) => {
+  return (price * (100 - discountRate)) / 100;
+};
+
+export const convertToKRW = (price) => {
+  return price.toLocaleString() + "원";
+};

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
 import { Triangle } from "@/assets";
+import { convertToKRW } from "@/utils/util";
 
 const OptionBox = ({ numValue, handleClickNumVal }) => {
   const [isCartAlertShown, setIsCartAlertShown] = useState(false);
@@ -31,7 +32,7 @@ const OptionBox = ({ numValue, handleClickNumVal }) => {
 
       <div className="total-price">
         <div>총 합계금액</div>
-        {(10000 * parseInt(numValue.value)).toLocaleString()}원
+        {convertToKRW(10000 * parseInt(numValue.value))}
       </div>
 
       <div className="buttons">

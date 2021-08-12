@@ -3,6 +3,7 @@ import { ETLink } from "@/Router";
 import styled, { css } from "styled-components";
 import MagnifiedImage from "./MagnifiedImage";
 import { Wish } from "@/assets";
+import { getCurrentPrice, convertToKRW } from "@/utils/util";
 
 type ItemType = {
   id: number;
@@ -64,7 +65,7 @@ const Item = ({
           {discountRate !== 0 && (
             <div className="info__sale">
               <div className="discount-rate">{discountRate}%</div>
-              <div className="before-price">{appendWon(price)}</div>
+              <div className="before-price">{convertToKRW(price)}</div>
             </div>
           )}
           <div className="info__price">
@@ -154,17 +155,5 @@ const Tag = styled.div<{
     margin-left: 1rem;
   }
 `;
-const getCurrentPrice = (price: number, discountRate: number) => {
-  const saledPrice = calSaledPrice(price, discountRate);
-  return appendWon(saledPrice);
-};
-
-const calSaledPrice = (price: number, discountRate: number) => {
-  return (price * (100 - discountRate)) / 100;
-};
-
-const appendWon = (price) => {
-  return price.toLocaleString() + "원";
-};
 
 export default Item;
