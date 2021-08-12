@@ -1,17 +1,21 @@
 import { PageWrapper } from "@/shared/styled";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Header from "@/Components/Header";
 import Footer from "@/Components/Footer";
-import Table from "@/Pages/MyPage/Table";
 import OrderBox from "./OrderBox";
 import Input from "@/Components/Input";
 import useInput from "@/hooks/useInput";
+import AddressModal from "./AddressModal";
+import ItemInfoBox from "@/Components/ItemInfoBox";
+import { buyItems } from "@/shared/dummy";
 
 const OrderPage = () => {
   const nameValue = useInput("");
   const emailValue = useInput("");
   const phoneValue = useInput("");
+
+  const [isAddressModalOpened, setIsAddressModalOpened] = useState(false);
 
   return (
     <Wrapper>
@@ -19,29 +23,19 @@ const OrderPage = () => {
         <OrderBox />
       </Header>
       <div className="contents">
-        <Title>주문/결제</Title>
+        <Title>
+          <span className="other">장바구니</span> 주문/결제
+        </Title>
 
         <Content>
           <Info>
             <div className="label">주문상품</div>
-            <Table
-              checker
-              ths={["상품/옵션 정보", "수량", "상품금액", "배송비"]}
-              ratio={[6, 1, 1, 1]}
-            >
-              <tr>
-                <td>test</td>
-                <td>1개</td>
-                <td>10,000원</td>
-                <td>2,500원</td>
-              </tr>
-              <tr>
-                <td>test2</td>
-                <td>2개</td>
-                <td>10,000원</td>
-                <td>2,500원</td>
-              </tr>
-            </Table>
+            <div className="items">
+              <input type="checkbox" />
+              {buyItems.map((i) => (
+                <ItemInfoBox {...i} />
+              ))}
+            </div>
           </Info>
 
           <Info>
@@ -86,7 +80,8 @@ const OrderPage = () => {
 
           <Info>
             <div className="label">
-              배송지<div>변경</div>
+              배송지
+              <div onClick={() => setIsAddressModalOpened(true)}>변경</div>
             </div>
             <div>
               <div>집</div>
@@ -106,6 +101,9 @@ const OrderPage = () => {
         </Content>
       </div>
       <Footer />
+      {true && (
+        <AddressModal closeModal={() => setIsAddressModalOpened(false)} />
+      )}
     </Wrapper>
   );
 };
@@ -139,6 +137,9 @@ const Wrapper = styled(PageWrapper)`
 const Title = styled.div`
   width: 100%;
   ${({ theme }) => theme.font.xlarge}
+  .other {
+    color: ${({ theme }) => theme.color.grey2};
+  }
 `;
 
 const Content = styled.div`
@@ -162,6 +163,12 @@ const Info = styled.div`
   }
   div {
     ${({ theme }) => theme.font.medium};
+  }
+  .items {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 2rem;
   }
 `;
 
