@@ -39,7 +39,16 @@ module.exports = (env) => {
             {
               loader: "@svgr/webpack",
               options: {
-                svgo: false,
+                svgoConfig: {
+                  plugins: [
+                    {
+                      removeRasterImages: false,
+                      removeStyleElement: false,
+                      removeUnknownsAndDefaults: false,
+                      removeViewBox: false,
+                    },
+                  ],
+                },
               },
             },
           ],
