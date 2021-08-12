@@ -42,7 +42,7 @@ const Table = ({
           ))}
         </tr>
         <tr>
-          <td colspan={ratio.length + 1}>
+          <td colSpan={ratio.length + 1}>
             <SignatureLine type="long2" height="0.5" />
           </td>
         </tr>

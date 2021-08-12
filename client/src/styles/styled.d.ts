@@ -10,6 +10,7 @@ declare module "styled-components" {
       placeholder: string;
       light_grey1: string;
       light_grey2: string;
+      error_color: string;
       grey1: string;
       grey2: string;
       line: string;

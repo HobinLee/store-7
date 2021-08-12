@@ -42,7 +42,9 @@ const Address = ({ onChangeAddress }) => {
       <div className="address-search" onClick={handleOpenPopup}>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <div className="address-search__upper">
-          <button className="address-search__button">주소 찾기</button>
+          <button className="address-search__button" type="button">
+            주소 찾기
+          </button>
           <input disabled value={address.postcode ?? ""} />
         </div>
         <input disabled value={address.address ?? ""} />
