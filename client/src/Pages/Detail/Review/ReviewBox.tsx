@@ -17,7 +17,9 @@ const ReviewBox = (review: ReviewType) => {
       </Header>
 
       <div className="content">
-        {review.img && <img src={`${review.img}`} alt="review_img" />}
+        <div className="content-img">
+          {review.img && <img src={`${review.img}`} alt="review_img" />}
+        </div>
         <span>{review.content}</span>
       </div>
     </Wrapper>
@@ -37,9 +39,12 @@ const Wrapper = styled.div`
     flex-direction: column;
     gap: 3rem;
 
-    img {
+    .content-img {
       max-width: 80%;
       align-self: center;
+      img {
+        width: 100%;
+      }
     }
   }
   border-bottom: 0.1rem solid ${({ theme }) => theme.color.line};

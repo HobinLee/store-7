@@ -50,14 +50,19 @@ const ReviewListWrapper = styled.ul`
       padding: 0;
       justify-content: flex-start;
       gap: 2rem;
-
-      img {
-        display: block;
+      .content-img {
+        ${({ theme }) => theme.borderRadius.small}
         width: 100%;
         max-width: 100%;
+        overflow: hidden;
+      }
+      img {
+        width: 100%;
+        min-width: 100%;
+        display: block;
         height: 20rem;
         object-fit: cover;
-        ${({ theme }) => theme.borderRadius.small}
+        transition: transform 0.5s;
       }
 
       span {
@@ -69,6 +74,10 @@ const ReviewListWrapper = styled.ul`
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
       }
+    }
+
+    &:hover img {
+      transform: scale(1.05);
     }
   }
 `;
