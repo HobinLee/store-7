@@ -15,5 +15,5 @@ export { LINE_LINK } from "./link-image";
 export { default as Back } from "./back.svg";
 export { default as Arrow } from "./arrow.svg";
 export { default as Check } from "./check.svg";
-export { default as Back } from "./back.svg";
-export { default as Arrow } from "./arrow.svg";
+export { default as Wish } from "./wish.svg";
+export { default as BookMark } from "./bookmark.svg";

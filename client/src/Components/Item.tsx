@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ETLink } from "@/Router";
 import styled, { css } from "styled-components";
 import MagnifiedImage from "./MagnifiedImage";
-import { Wish, BookMark } from "@/assets/";
+import { Wish } from "@/assets";
 
 type ItemType = {
   id: number;
