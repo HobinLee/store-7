@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Close } from "@/assets/";
+import { Close } from "@/assets";
 import { ReactChild } from "react";
 
 type ReviewModalType = {

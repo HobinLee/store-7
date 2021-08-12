@@ -35,7 +35,7 @@ const Item = ({
           <MagnifiedImage src="https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg" />
           <div className="thumbnail__tags">
             {tags.map((tag) => (
-              <Tag tag={tag}>{tag}</Tag>
+              <Tag tag={tag}>{tag.toUpperCase()}</Tag>
             ))}
           </div>
           <div className="thumbnail__wish">
@@ -143,14 +143,13 @@ const Tag = styled.div<{
   tag: string;
 }>`
   ${({ theme, tag }) => css`
-    ${theme.font.large}
+    ${theme.font.medium}
     ${theme.tags[tag]}
     ${theme.borderRadius.small}
   `};
 
   font-weight: bold;
   padding: 0.3rem 1rem;
-
   & + & {
     margin-left: 1rem;
   }

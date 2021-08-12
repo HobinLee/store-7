@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { LINE_LINK } from "@/assets/";
+import { LINE_LINK } from "@/assets";
 
 export const PageWrapper = styled.div`
   position: relative;
