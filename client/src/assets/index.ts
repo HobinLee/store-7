@@ -8,6 +8,8 @@ import Brush3 from "./brush3.svg";
 import Brush4 from "./brush4.svg";
 import Brush5 from "./brush5.svg";
 import Brush6 from "./brush6.svg";
+import Wish from "./wish.svg";
+import BookMark from "./bookmark.svg";
 import logo from "./logo.png";
 import MenuIcon from "./menu.svg";
 import Close from "./close.svg";
@@ -28,4 +30,6 @@ export {
   MenuIcon,
   Close,
   LINE_LINK,
+  Wish,
+  BookMark,
 };
