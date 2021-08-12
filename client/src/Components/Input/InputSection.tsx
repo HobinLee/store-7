@@ -1,18 +1,29 @@
-import React, { ReactElement, useState } from "react";
+import { InputType } from "@/hooks/useInput";
+import React, { ReactElement } from "react";
 import styled from "styled-components";
+import Input from ".";
 
 type FormSectionType = {
   title: string;
   brief?: string;
-  children: ReactElement | ReactElement[];
+  input?: InputType;
+  children?: ReactElement | ReactElement[];
 };
 
-const InputSection = ({ title, brief, children }: FormSectionType) => {
+const InputSection = ({ title, input, brief, children }: FormSectionType) => {
   return (
     <SectionWrapper>
       <h3 className="form__title">{title}</h3>
       {brief && <small className="form__brief">{brief}</small>}
-      {children}
+      {input ? (
+        <Input
+          value={input.value}
+          onChange={input.onChange}
+          placeholder={title}
+        />
+      ) : (
+        children
+      )}
     </SectionWrapper>
   );
 };
