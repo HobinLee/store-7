@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { LINE_LINK } from "@/assets/";
+import { LINE_LINK } from "@/assets";
 
 const SignatureLine = ({
   type,
