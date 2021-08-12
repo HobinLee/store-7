@@ -10,11 +10,23 @@ import AddressModal from "./AddressModal";
 import ItemInfoBox from "@/Components/ItemInfoBox";
 import { buyItems } from "@/shared/dummy";
 import { Arrow } from "@/assets";
+import InputSection from "@/Components/Input/InputSection";
+import useValidation from "@/hooks/useValidation";
+import ValidationInput from "@/Components/Input/ValidationInput";
+import {
+  validateEmail,
+  validatePhoneNumber,
+  VALIDATION_ERR_MSG,
+} from "@/utils/validations";
+import { sampleUser } from "@/shared/dummy";
 
 const OrderPage = () => {
-  const nameValue = useInput("");
-  const emailValue = useInput("");
-  const phoneValue = useInput("");
+  const email = useInput("");
+  const emailValidation = useValidation(validateEmail);
+  const name = useInput("");
+  const nameValidation = useValidation((name: string) => !!name.length);
+  const phone = useInput("");
+  const phoneValidation = useValidation(validatePhoneNumber);
 
   const [isAddressModalOpened, setIsAddressModalOpened] = useState(false);
 
@@ -43,41 +55,34 @@ const OrderPage = () => {
 
           <Info>
             <div className="label">주문자</div>
-            <div className="info-input">
-              <label>이름</label>
-              <Input
-                className="order-input"
-                value={nameValue.value}
-                onChange={nameValue.onChange}
-              />
-            </div>
-            <div className="info-input">
-              <label>이메일</label>
-              <Input
-                className="order-input"
-                value={emailValue.value}
-                onChange={emailValue.onChange}
-              />
-              @
-              <select className="order-input">
-                <option>naver.com</option>
-                <option>naver.com</option>
-                <option>naver.com</option>
-                <option>직접 입력</option>
-              </select>
-            </div>
-            <div className="info-input">
-              <label>휴대전화</label>
-              <select className="order-input">
-                <option>010</option>
-                <option>010</option>
-                <option>010</option>
-              </select>
-              <Input
-                className="order-input"
-                value={phoneValue.value}
-                onChange={phoneValue.onChange}
-              />
+            <div className="user-info">
+              <InputSection title="이름">
+                <ValidationInput
+                  input={name}
+                  validation={nameValidation}
+                  placeholder="이름"
+                  message={VALIDATION_ERR_MSG.INVALID_NAME}
+                />
+              </InputSection>
+              <InputSection title="이메일">
+                <ValidationInput
+                  input={email}
+                  validation={emailValidation}
+                  placeholder="이메일을 입력해주세요"
+                  message={VALIDATION_ERR_MSG.INVALID_EMAIL}
+                />
+              </InputSection>
+              <InputSection
+                title="휴대폰 번호"
+                brief="휴대폰 번호를 적어주세요"
+              >
+                <ValidationInput
+                  input={phone}
+                  validation={phoneValidation}
+                  placeholder="010-0000-0000"
+                  message={VALIDATION_ERR_MSG.INVALID_PHONE}
+                />
+              </InputSection>
             </div>
           </Info>
 
@@ -91,13 +96,17 @@ const OrderPage = () => {
                 변경
               </div>
             </div>
-            <div>
-              <div>집</div>
-              <div>서울 강남구 선릉로76길 33 (대치동) 대치파인빌, 101호</div>
+
+            <div className="address-info">
+              <div className="name">{sampleUser.addresses[0].name}</div>
+              <div>{sampleUser.addresses[0].detailAddress}</div>
               <select className="order-input">
                 <option>배송시 요청사항을 선택해주세요.</option>
                 <option>부재시 문 앞에 놓아주세요.</option>
                 <option>배송전에 미리 연락주세요.</option>
+                <option>부재시 경비실에 맡겨주세요.</option>
+                <option>부재시 전화주시거나 문자 남겨 주세요.</option>
+                <option>직접입력</option>
               </select>
             </div>
           </Info>
@@ -126,6 +135,7 @@ const Wrapper = styled(PageWrapper)`
     cursor: pointer;
   }
   .order-input {
+    width: 30rem;
     border: 0.1rem solid ${({ theme }) => theme.color.line};
     padding: 0.8rem 1rem;
     border-radius: 0.5rem;
@@ -153,21 +163,35 @@ const Title = styled.div`
 const Content = styled.div`
   box-sizing: border-box;
   padding-right: 43rem;
+  display: flex;
+  flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  gap: 3rem;
+  gap: 8rem;
+  margin-top: 4rem;
 `;
 
 const Info = styled.div`
   width: 100%;
-  margin: 8rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2rem;
   .label {
     ${({ theme }) => theme.flexCenter};
     ${({ theme }) => theme.font.large};
+    width: 100%;
     justify-content: space-between;
     padding-bottom: 2rem;
     margin: 2rem 0;
     border-bottom: 0.1rem solid ${({ theme }) => theme.color.line};
+  }
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    width: 30rem;
   }
   div {
     ${({ theme }) => theme.font.medium};
@@ -177,6 +201,14 @@ const Info = styled.div`
     flex-direction: column;
     width: 100%;
     gap: 2rem;
+  }
+  .address-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    .name {
+      ${({ theme }) => theme.font.large};
+    }
   }
   .address-btn {
     cursor: pointer;
