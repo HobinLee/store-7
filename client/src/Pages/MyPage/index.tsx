@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import { PageWrapper, Contents, ItemList } from "@/shared/styled";
+import { PageWrapper, Contents } from "@/shared/styled";
 import Header from "@/Components/Header";
 import Sidebar from "./Sidebar";
 import Content from "./Content";
@@ -22,7 +22,9 @@ const MyPage = () => {
     </MyPageWrapper>
   );
 };
-
+const ContentBody = styled.div`
+  display: flex;
+`;
 const MyPageWrapper = styled(PageWrapper)``;
 
 const ContentHeader = () => {
@@ -60,10 +62,6 @@ const ContentHeaderWrapper = styled.div`
   p + p {
     margin-top: 1rem;
   }
-`;
-
-const ContentBody = styled.div`
-  display: flex;
 `;
 
 export default MyPage;
