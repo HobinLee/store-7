@@ -10,7 +10,7 @@ export type InputType = {
   setValue: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default (defaultValue: string) => {
+export default (defaultValue: string): InputType => {
   const [value, setValue] = useState(defaultValue);
 
   const onChange = ({
