@@ -128,6 +128,7 @@ export const sampleMain = [
     tags: ["new", "sale"],
     title: `타이틀이 굉장히 길어지면 무슨 일이 일어날지 대비하기 위해 작성하는 굉장히 긴 타이틀입니동. 세상에 이렇게 긴 타이틀을 가진 제품이 있을진 모르겠지만 그래도 일단 길에 줄줄 늘어놔야겠죠? 아 배고프다 이따 저녁은 어제 시킨 김치찜인데 솔직히 맛있진 않아서.. 떡볶이 먹고 싶다`,
     price: 10000,
+    isWish: true,
   },
   {
     id: 2,
@@ -135,12 +136,14 @@ export const sampleMain = [
     tags: ["new", "green", "sale"],
     title: "타이틀2",
     price: 260000,
+    isWish: false,
   },
   {
     id: 3,
     tags: ["green"],
     title: "타이틀3",
     price: 10000,
+    isWish: false,
   },
   {
     id: 4,
@@ -148,6 +151,7 @@ export const sampleMain = [
     tags: ["sale"],
     title: "타이틀4",
     price: 100000,
+    isWish: true,
   },
 ];
 
@@ -159,6 +163,7 @@ export const sampleCategory = [
     title:
       "`타이틀이 굉장히 길어지면 무슨 일이 일어날지 대비하기 위해 작성하는 굉장히 긴 타이틀입니동. 세상에 이렇게 긴 타이틀을 가진 제품이 있을진 모르겠지만 그래도 일단 길에 줄줄 늘어놔야겠죠? 아 배고프다 이따 저녁은 어제 시킨 김치찜인데 솔직히 맛있진 않아서.. 떡볶이 먹고 싶다`",
     price: 10000,
+    isWish: true,
   },
   {
     id: 2,
@@ -166,12 +171,14 @@ export const sampleCategory = [
     tags: ["new", "green", "sale"],
     title: "타이틀2",
     price: 260000,
+    isWish: false,
   },
   {
     id: 3,
     tags: ["green"],
     title: "타이틀3",
     price: 10000,
+    isWish: true,
   },
   {
     id: 4,
@@ -179,6 +186,7 @@ export const sampleCategory = [
     tags: ["sale"],
     title: "타이틀4",
     price: 100000,
+    isWish: true,
   },
   {
     id: 5,
@@ -186,6 +194,7 @@ export const sampleCategory = [
     tags: ["new", "sale"],
     title: "타이틀",
     price: 10000,
+    isWish: false,
   },
   {
     id: 6,
@@ -193,12 +202,14 @@ export const sampleCategory = [
     tags: ["new", "green", "sale"],
     title: "타이틀2",
     price: 260000,
+    isWish: false,
   },
   {
     id: 7,
     tags: ["green"],
     title: "타이틀3",
     price: 10000,
+    isWish: true,
   },
   {
     id: 8,
@@ -206,6 +217,7 @@ export const sampleCategory = [
     tags: ["sale"],
     title: "타이틀4",
     price: 100000,
+    isWish: true,
   },
 ];
 
