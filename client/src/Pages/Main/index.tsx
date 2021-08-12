@@ -2,27 +2,17 @@ import Header from "@/Components/Header";
 import { PageWrapper, Contents, ItemList } from "@/shared/styled";
 import React from "react";
 import styled from "styled-components";
-import Banner from "./Banner";
-import BannerImg from "@/assets/banner1.gif";
 import Item from "@/Components/Item";
 import Footer from "@/Components/Footer";
 import { sampleMain } from "@/shared/dummy";
-import GiftSection from "./GiftSection/";
-import { ItemBannerType } from "@/shared/type";
-const banner1: ItemBannerType = {
-  brief: "다시 돌아온 플리츠마마x배민 콜라보!",
-  title: "플리츠마마X배달의민족. 텀블러백",
-  src: BannerImg,
-  id: 1,
-};
-
-const list: ItemBannerType[] = [banner1];
+import GiftSection from "./GiftSection";
+import BannerSection from "./BannerSection/";
 
 const MainPage = () => {
   return (
     <Wrapper>
       <Header />
-      <Banner items={list} />
+      <BannerSection />
       <Contents style={{ padding: "10rem 5rem" }}>
         <div className="main__contents-wrapper">
           <div>
