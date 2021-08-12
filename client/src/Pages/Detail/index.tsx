@@ -46,7 +46,7 @@ const DetailPage = () => {
     if (val === 1) {
       numValue.setValue((num + 1).toString());
     } else {
-      if (num > 0) numValue.setValue((num - 1).toString());
+      if (num > 1) numValue.setValue((num - 1).toString());
     }
   };
 
