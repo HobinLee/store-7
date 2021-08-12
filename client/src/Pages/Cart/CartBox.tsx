@@ -23,6 +23,7 @@ const CartBox = () => {
       <Button
         className="order-btn"
         primary
+        size="large"
         onClick={() => (window.location.href = "/order")}
       >
         2개 상품 구매하기
@@ -37,7 +38,6 @@ const Wrapper = styled.div`
   padding: 3rem;
   .order-btn {
     margin-top: 2rem;
-    width: 100%;
   }
 `;
 

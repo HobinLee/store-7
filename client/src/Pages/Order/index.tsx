@@ -9,6 +9,7 @@ import useInput from "@/hooks/useInput";
 import AddressModal from "./AddressModal";
 import ItemInfoBox from "@/Components/ItemInfoBox";
 import { buyItems } from "@/shared/dummy";
+import { Arrow } from "@/assets";
 
 const OrderPage = () => {
   const nameValue = useInput("");
@@ -24,14 +25,16 @@ const OrderPage = () => {
       </Header>
       <div className="contents">
         <Title>
-          <span className="other">장바구니</span> 주문/결제
+          <span className="other">장바구니</span> <Arrow /> 주문/결제
         </Title>
 
         <Content>
           <Info>
             <div className="label">주문상품</div>
             <div className="items">
-              <input type="checkbox" />
+              <div>
+                <input type="checkbox" /> 모두선택
+              </div>
               {buyItems.map((i) => (
                 <ItemInfoBox {...i} />
               ))}
@@ -81,7 +84,12 @@ const OrderPage = () => {
           <Info>
             <div className="label">
               배송지
-              <div onClick={() => setIsAddressModalOpened(true)}>변경</div>
+              <div
+                className="address-btn"
+                onClick={() => setIsAddressModalOpened(true)}
+              >
+                변경
+              </div>
             </div>
             <div>
               <div>집</div>
@@ -101,7 +109,7 @@ const OrderPage = () => {
         </Content>
       </div>
       <Footer />
-      {true && (
+      {isAddressModalOpened && (
         <AddressModal closeModal={() => setIsAddressModalOpened(false)} />
       )}
     </Wrapper>
@@ -169,6 +177,13 @@ const Info = styled.div`
     flex-direction: column;
     width: 100%;
     gap: 2rem;
+  }
+  .address-btn {
+    cursor: pointer;
+    :hover {
+      font-weight: bolder;
+      color: ${({ theme }) => theme.color.primary1};
+    }
   }
 `;
 

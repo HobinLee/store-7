@@ -29,7 +29,7 @@ export type QuestionListType = {
   questions: QuestionType[];
 };
 
-export type User = {
+export type UserType = {
   name: string;
   phone: string;
   email: string;

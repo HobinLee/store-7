@@ -8,6 +8,7 @@ type ButtonType = {
   disabled?: boolean;
   children: ReactChild;
   className?: string;
+  size?: "large" | "medium" | "small";
 };
 
 const Button = ({
@@ -17,19 +18,22 @@ const Button = ({
   disabled = false,
   children,
   className,
+  size = "medium",
 }: ButtonType) => (
-  <Container {...{ onClick, type, primary, disabled, className }}>
+  <Container {...{ onClick, type, primary, disabled, className, size }}>
     {children}
   </Container>
 );
 
-const Container = styled.button<{ primary: boolean }>`
-  ${({ theme }) => theme.font.large}
+const Container = styled.button<{ primary: boolean; size: string }>`
+  ${({ theme, size }) =>
+    size === "small" ? theme.font.small : theme.font.large}
+  padding: ${({ size }) => (size === "small" ? "1rem 1.5rem" : " 1.5rem 3rem")};
+  border-radius: ${({ size }) => (size === "small" ? "0.5rem" : "1rem")};
+
   cursor: pointer;
-  padding: 1.5rem 3rem;
   border: 0.1rem solid
     ${({ primary, theme }) => (primary ? "none" : theme.color.line)};
-  border-radius: 1rem;
   box-sizing: border-box;
   color: ${({ primary, theme }) =>
     primary ? theme.color.white : theme.color.title_active};
@@ -37,6 +41,8 @@ const Container = styled.button<{ primary: boolean }>`
     primary ? theme.color.primary1 : "#fff"};
   opacity: 1;
   transition: opacity 0.5s;
+
+  width: ${({ size }) => size === "large" && "100%"};
 
   &:hover {
     background: ${({ primary, theme }) =>

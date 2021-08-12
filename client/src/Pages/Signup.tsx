@@ -5,7 +5,7 @@ import { ETLink } from "@/Router";
 import Address from "@/Components/Address";
 import useInput from "@/hooks/useInput";
 import InputSection from "@/Components/Input/InputSection";
-import { AddressType, User } from "@/shared/type";
+import { AddressType, UserType } from "@/shared/type";
 import Button from "@/Components/Button";
 import useValidation from "@/hooks/useValidation";
 import ValidationInput from "@/Components/Input/ValidationInput";
@@ -38,7 +38,7 @@ const SignupPage = () => {
   };
 
   const handleSubmit = () => {
-    const userInfo: User = {
+    const userInfo: UserType = {
       email: email.value,
       name: name.value,
       phone: phone.value,
