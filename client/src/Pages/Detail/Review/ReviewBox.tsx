@@ -10,7 +10,7 @@ const ReviewBox = (review: ReviewType) => {
         <div className="author">{review.author}</div>
         <div className="info">
           <div className="info__rate">
-            <ETRating value={review.rate} />
+            <ETRating value={review.rate} readOnly />
           </div>
           <div className="info__date">{review.date}</div>
         </div>
