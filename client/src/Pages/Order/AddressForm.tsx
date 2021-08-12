@@ -115,6 +115,7 @@ const Form = styled.form`
   .save-btn {
     position: absolute;
     padding: 2rem;
+    background: #fff;
     box-sizing: border-box;
     bottom: 0;
     width: 100%;

@@ -50,7 +50,9 @@ const Container = styled.button<{ primary: boolean; size: string }>`
   }
 
   &:disabled {
-    opacity: 0.3;
+    cursor: default;
+    background: ${({ primary, theme }) =>
+      primary ? theme.color.primary2 : theme.color.background};
   }
 `;
 
