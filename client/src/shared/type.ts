@@ -2,6 +2,7 @@ export type ReviewType = {
   id: number;
   rate: number;
   content: string;
+  img?: string;
   author: string;
   date: string;
 };
