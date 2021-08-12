@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { sampleMypage } from "@/shared/dummy";
-import { SignatureLine } from "@/shared/styled";
+import SignatureLine from "@/Components/SignatureLine";
 
 const Sidebar = () => {
   const handleClickItem = (path) => () => {
@@ -38,7 +38,7 @@ const Sidebar = () => {
 
 const SidebarWrpper = styled.div`
   margin-right: 5rem;
-  width: 40rem;
+  width: 20rem;
   & > h4 {
     ${({ theme }) => theme.font.large}
     margin-bottom: 6rem;
