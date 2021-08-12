@@ -42,6 +42,25 @@ const borderRadius = {
   `,
 };
 
+const tags = {
+  new: css`
+    background: #2ac1bc;
+    color: white;
+  `,
+  best: css`
+    background: #242424;
+    color: white;
+  `,
+  sale: css`
+    background: #f45452;
+    color: white;
+  `,
+  green: css`
+    background: #1a8b26;
+    color: white;
+  `,
+};
+
 export const light: DefaultTheme = {
   color: {
     title_active: "#1e2222",
@@ -65,6 +84,7 @@ export const light: DefaultTheme = {
   flexCenter,
   shadow,
   borderRadius,
+  tags,
 };
 export const dark: DefaultTheme = {
   color: {
@@ -89,6 +109,7 @@ export const dark: DefaultTheme = {
   flexCenter,
   shadow,
   borderRadius,
+  tags,
 };
 
 const customMediaQuery = (maxWidth: number): string =>
