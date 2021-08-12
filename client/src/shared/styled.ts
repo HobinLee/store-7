@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const PageWrapper = styled.div`
   position: relative;
   width: 100%;
-  margin-top: 25rem;
+  margin-top: 22rem;
   padding-bottom: 30rem;
 `;
 

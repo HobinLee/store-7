@@ -190,7 +190,6 @@ const Scroll = styled.div<{ yOffset: number; selectedTab: string }>`
   margin-top: 10rem;
   .bottom-wrapper {
     width: 100%;
-    overflow-y: scroll;
   }
 
   .option-box {

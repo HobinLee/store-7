@@ -1,10 +1,6 @@
 import React from "react";
 import DaumPostcode from "react-daum-postcode";
-
-export type PostcodeType = {
-  postcode?: number;
-  address?: string;
-};
+import { PostcodeType } from "@/shared/type";
 
 const getFullAddress = (data): string => {
   const ROAD_ADDRESS = "R";
