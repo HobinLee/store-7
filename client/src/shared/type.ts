@@ -49,3 +49,11 @@ export type PostcodeType = {
   postcode?: number;
   address?: string;
 };
+
+export type ItemBannerType = {
+  brief?: string;
+  title: string;
+  src: any;
+  id: number;
+  isWhite?: boolean;
+};
