@@ -81,7 +81,12 @@ const OrderPage = () => {
           <Info>
             <div className="label">
               배송지
-              <div onClick={() => setIsAddressModalOpened(true)}>변경</div>
+              <div
+                className="address-btn"
+                onClick={() => setIsAddressModalOpened(true)}
+              >
+                변경
+              </div>
             </div>
             <div>
               <div>집</div>
@@ -101,7 +106,7 @@ const OrderPage = () => {
         </Content>
       </div>
       <Footer />
-      {true && (
+      {isAddressModalOpened && (
         <AddressModal closeModal={() => setIsAddressModalOpened(false)} />
       )}
     </Wrapper>
@@ -169,6 +174,13 @@ const Info = styled.div`
     flex-direction: column;
     width: 100%;
     gap: 2rem;
+  }
+  .address-btn {
+    cursor: pointer;
+    :hover {
+      font-weight: bolder;
+      color: ${({ theme }) => theme.color.primary1};
+    }
   }
 `;
 
