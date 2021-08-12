@@ -56,10 +56,6 @@ const Content = styled.div`
   align-items: flex-start;
   width: 100%;
   gap: 3rem;
-  .order-btn {
-    margin-top: 2rem;
-    width: 100%;
-  }
   .items {
     display: flex;
     flex-direction: column;
