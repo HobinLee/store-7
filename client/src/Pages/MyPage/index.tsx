@@ -1,14 +1,12 @@
 import Header from "@/Components/Header";
-import { PageWrapper, Contents } from "@/shared/styled";
+import { PageWrapper, Contents, ItemList } from "@/shared/styled";
 import React from "react";
 import styled from "styled-components";
 import Table from "./Table";
 import Section from "./Section";
 import { sampleMain } from "@/shared/dummy";
 import Item from "@/Components/Item";
-import tableForm from "./tableForm";
 import Sidebar from "./Sidebar";
-import { Brush1 } from "@/assets/";
 
 const MyPage = () => {
   return (
@@ -142,14 +140,6 @@ const Content = () => {
     </ContentBodyWrapper>
   );
 };
-
-const ItemList = styled.ul`
-  display: flex;
-  margin-top: 2rem;
-  gap: 1rem;
-  justify-content: space-between;
-  width: 100%;
-`;
 
 const ContentBodyWrapper = styled.div``;
 
