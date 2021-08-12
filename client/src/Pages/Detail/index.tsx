@@ -9,7 +9,7 @@ import Question from "./Question";
 import Footer from "@/Components/Footer";
 import Guide from "./Guide";
 
-const topHeight = 700;
+const topHeight = 740;
 
 const Blank = styled.div`
   width: 100%;
