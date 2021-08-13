@@ -17,7 +17,7 @@ const Section = ({
 }: SectionType) => {
   return (
     <SectionWrapper>
-      <SignatureLine type={lineType} />
+      <SignatureLine type={lineType} height="1" />
       <div className="section__title">
         <h3>{title}</h3>
         <p>{descrition}</p>
@@ -33,7 +33,7 @@ const SectionWrapper = styled.div`
   .section__title {
     display: flex;
     align-items: flex-end;
-    margin-bottom: 3rem;
+    margin-bottom: 6rem;
 
     h3 {
       ${({ theme }) => theme.font.large}

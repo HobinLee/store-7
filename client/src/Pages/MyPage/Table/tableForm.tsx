@@ -28,9 +28,10 @@ const ProductOptionWrapper = styled.div`
 
   .product__title {
     flex: 1;
-    ${({ theme }) => theme.font.large}
+    ${({ theme }) => theme.font.medium}
     font-weight: bold;
     line-height: 2.5rem;
+    text-align: left;
   }
 `;
 
@@ -41,15 +42,42 @@ const PriceAndAmount = () => {
 const PriceAndAmountWrapper = styled.div``;
 
 const Sum = () => {
-  <SumWrapper></SumWrapper>;
+  return <SumWrapper></SumWrapper>;
 };
 
 const SumWrapper = styled.div``;
+
+const Order = ({
+  orderDate,
+  orderNumber,
+}: {
+  orderDate: number | string;
+  orderNumber: number | string;
+}) => {
+  return (
+    <OrderWrapper>
+      <div className="order__date">{orderDate}</div>
+      <div className="order__number">{orderNumber}</div>
+    </OrderWrapper>
+  );
+};
+
+const OrderWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  ${({ theme }) => theme.font.small}
+
+  .order__date {
+    margin-bottom: 1rem;
+  }
+`;
 
 const TableFrom = {
   ProductOption,
   PriceAndAmount,
   Sum,
+  Order,
 };
 
 export default TableFrom;

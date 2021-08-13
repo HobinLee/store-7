@@ -2,12 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { sampleMypage } from "@/shared/dummy";
 import SignatureLine from "@/Components/SignatureLine";
+import { ETLink } from "@/Router";
 
-const Sidebar = () => {
-  const handleClickItem = (path) => () => {
-    console.log(`${path}로 변경!`);
-  };
-
+const Sidebar = ({ setCurrent }) => {
   return (
     <SidebarWrpper>
       <SidebarContent>
@@ -15,8 +12,13 @@ const Sidebar = () => {
         <p>쇼핑정보</p>
         <ul>
           {sampleMypage.shopping.map(({ itemTitle, path }, i) => (
-            <li key={i} onClick={handleClickItem(path)}>
-              {itemTitle}
+            <li
+              key={i}
+              onClick={() => {
+                setCurrent(path);
+              }}
+            >
+              <ETLink to={`/mypage/${path}`}>{itemTitle}</ETLink>
             </li>
           ))}
         </ul>
@@ -26,8 +28,13 @@ const Sidebar = () => {
         <p>회원정보</p>
         <ul>
           {sampleMypage.userInfo.map(({ itemTitle, path }, i) => (
-            <li key={i} onClick={handleClickItem(path)}>
-              {itemTitle}
+            <li
+              key={i}
+              onClick={() => {
+                setCurrent(path);
+              }}
+            >
+              <ETLink to={`/mypage/${path}`}>{itemTitle}</ETLink>
             </li>
           ))}
         </ul>
@@ -57,8 +64,9 @@ const SidebarContent = styled.div`
     color: #878787;
     cursor: pointer;
 
-    &:hover {
+    & > *:hover {
       color: black;
+      font-weight: bold;
     }
   }
 `;

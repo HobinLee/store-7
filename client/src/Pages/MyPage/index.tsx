@@ -7,7 +7,7 @@ import Sidebar from "./Sidebar";
 import Content from "./Content";
 
 const MyPage = () => {
-  const [viewType, setViewType] = useState();
+  const [current, setCurrent] = useState("/");
 
   return (
     <MyPageWrapper>
@@ -15,14 +15,15 @@ const MyPage = () => {
       <Contents>
         <ContentHeader />
         <ContentBody>
-          <Sidebar />
-          <Content />
+          <Sidebar setCurrent={setCurrent} />
+          <Content current={current} />
         </ContentBody>
       </Contents>
     </MyPageWrapper>
   );
 };
 const ContentBody = styled.div`
+  width: 100%;
   display: flex;
 `;
 const MyPageWrapper = styled(PageWrapper)``;

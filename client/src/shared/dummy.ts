@@ -4,11 +4,11 @@ import { QuestionListType, ReviewListType, UserType } from "./type";
 
 export const sampleMypage = {
   shopping: [
-    { itemTitle: "주문목록/배송조회", path: "itemlist" },
+    { itemTitle: "주문목록/배송조회", path: "orderlist" },
     { itemTitle: "찜리스트", path: "wishlist" },
   ],
   userInfo: [
-    { itemTitle: "회원정보 변경", path: "changeUserInfo" },
+    { itemTitle: "회원정보 변경", path: "userinfo" },
     { itemTitle: "나의 상품문의", path: "question" },
     { itemTitle: "나의 상품후기", path: "review" },
   ],
@@ -422,5 +422,39 @@ export const buyItems = [
     num: 1,
     price: 10000,
     delivery: 2500,
+  },
+];
+
+export const recent = [
+  {
+    date: "20210813",
+    number: "20210813004530201",
+    url: "https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg",
+    title:
+      "아 11시 30분에 했던 걸 날려먹어서 다시 하고 있네 하하 인생은 도전보단 안전이다 내일 점심 저녁 다 맛있는거 머거야지 데모 영상은 뭐 그냥 뚝딱 찍자",
+    price: 10000,
+    count: 2,
+    status: "shipping",
+    reviewID: 0,
+  },
+  {
+    date: "20210812",
+    number: "20210812004533211",
+    url: "https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg",
+    title: "점심은 떡볶이",
+    price: 5000,
+    count: 10,
+    status: "completed",
+    reviewID: 12,
+  },
+  {
+    date: "20210809",
+    number: "20210809004313219",
+    url: "https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg",
+    title: "어제 먹은 김치찜은 별로였는데 아직도 남음.",
+    price: 27500,
+    count: 1,
+    status: "completed",
+    reviewID: 12,
   },
 ];
