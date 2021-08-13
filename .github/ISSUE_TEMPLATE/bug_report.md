@@ -3,7 +3,7 @@ name: Bug Report
 about: 버그 제보
 title: ""
 labels: bug
-assignees: HobinLee, kowoohyuk
+assignees: HobinLee, danmin20, jjunyjjuny, LeagueLugas
 ---
 
 ## ⚠️ 버그 설명

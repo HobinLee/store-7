@@ -3,7 +3,7 @@ name: Feature Request
 about: 추가해야 할 기능 제안
 title: ""
 labels: feature
-assignees: HobinLee, kowoohyuk
+assignees: HobinLee, danmin20, jjunyjjuny, LeagueLugas
 ---
 
 ## :hammer: 기능 설명
