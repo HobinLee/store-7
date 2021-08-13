@@ -21,6 +21,10 @@ assignees: HobinLee, danmin20, jjunyjjuny, LeagueLugas
 - [ ] 체크 사항 3
 - [ ] 체크 사항 4
 
+## ⏰ 예상 소요 시간 [단위: MD]
+
+1MD
+
 ## 🚧 주의 사항
 
 > 기능을 구현할 때 유의깊게 살펴볼 사항
