@@ -92,8 +92,7 @@ const ItemWrapper = styled.div`
       right: 1rem;
 
       & > svg:hover {
-        fill: #2ac1bc;
-        opacity: 1;
+        opacity: 0.7;
       }
       & > svg:active {
         transform: scale(1.1);
