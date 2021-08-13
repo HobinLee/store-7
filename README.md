@@ -3,8 +3,8 @@
 <h2 align='center'>https://store-7.woowahan-techcamp.shop/</h2>
 
 <div>
-  <img width='480' src='https://user-images.githubusercontent.com/50590192/129288074-c4d4989d-6571-4ced-ac90-7bb85ab85f13.png' />
-  <img width='480' src='https://user-images.githubusercontent.com/50590192/129291909-936e20a5-f705-488a-9c92-6df511bd2942.png' />
+  <img width='400' src='https://user-images.githubusercontent.com/50590192/129288074-c4d4989d-6571-4ced-ac90-7bb85ab85f13.png' />
+  <img width='400' src='https://user-images.githubusercontent.com/50590192/129291909-936e20a5-f705-488a-9c92-6df511bd2942.png' />
 </div>
 
 ## Tect Stack
@@ -22,7 +22,6 @@
 
 [![TypeScript Badge](https://img.shields.io/badge/Typescript-235A97?style=flat-square&logo=Typescript&logoColor=white)]()
 [![nextjs Badge](https://img.shields.io/badge/NestJS-E0234E?style=flat-square&logo=nestjs&logoColor=white)]()
-[![babel Badge](https://img.shields.io/badge/babel-F9DC3E?style=flat-square&logo=babel&logoColor=black)]()
 [![elasticsearch Badge](https://img.shields.io/badge/elasticsearch-005571?style=flat-square&logo=elasticsearch&logoColor=white)]()
 [![typeorm Badge](https://img.shields.io/badge/recoil-000?style=flat-square&logo=typeorm&logoColor=white)]()
 
@@ -39,6 +38,8 @@
 사용자와 팀원들에게 기분 좋은 경험을 선사하기 위해 오늘도 열심히 삽질을 하는 중입니다.
 
 ### ET의 왼팔 [홍영준](https://github.com/jjunyjjuny) - ENTJ
-하루종일 앉아서 개발하다보니 정말 ET가 될 것 같습니다..
+하루종일 앉아서 개발하다보니 정말 ET가 될 것 같습니다..  
+~~근데 우리 ET는 오른손잡이에요.. 열심히해서 양손잡이 ET가 되도록 팀에 기여하겠습니다~~
+
 
 ![image](https://user-images.githubusercontent.com/50590192/129292862-2f056d36-b992-42e2-a569-c6693a7ef8cf.png)
