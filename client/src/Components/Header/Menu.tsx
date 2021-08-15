@@ -12,17 +12,19 @@ export type CategoryType = {
 const Menu = () => {
   const [currentCategoryIndex, setCurrentCategory] = useState(0);
 
-  const checkChangeCategory = (e): boolean => {
-    if (e.target.nodeName === "UL") return false;
-
-    const [dx, dy] = [e.movementX, e.movementY];
+  const checkChangeCategory = ({
+    target,
+    movementX: dx,
+    movementY: dy,
+  }): boolean => {
+    if (target.nodeName === "UL") return false;
 
     if (!dx && !dy) return false;
 
     const moveRatio = Math.abs(dx / dy);
 
     // 기울기가 THRESHOLD 이상으로 넘어갈 때만 category 변경
-    const THRESHOLD = 20;
+    const THRESHOLD = 100;
 
     if (moveRatio !== 0 && moveRatio < THRESHOLD) return false;
 
