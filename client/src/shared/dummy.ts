@@ -69,6 +69,7 @@ export const questions: QuestionListType = {
         author: "우아한개발자",
         content: "점심 뭐드셨어여",
         date: new Date(),
+        category: "상품",
       },
     },
     {
@@ -81,6 +82,7 @@ export const questions: QuestionListType = {
         중 사이즈 1개는 닦아도 오염이 남아있어요
         찝찝해서 교환신청합니다`,
         date: new Date(),
+        category: "배송",
       },
       answer: {
         content: `안녕하세요 고객님
@@ -427,6 +429,7 @@ export const buyItems = [
 
 export const recent = [
   {
+    id: 1,
     date: "20210813",
     number: "20210813004530201",
     url: "https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg",
@@ -438,6 +441,7 @@ export const recent = [
     reviewID: 0,
   },
   {
+    id: 2,
     date: "20210812",
     number: "20210812004533211",
     url: "https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg",
@@ -448,6 +452,7 @@ export const recent = [
     reviewID: 12,
   },
   {
+    id: 3,
     date: "20210809",
     number: "20210809004313219",
     url: "https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg",
@@ -456,5 +461,22 @@ export const recent = [
     count: 1,
     status: "completed",
     reviewID: 12,
+  },
+];
+
+export const review = [
+  {
+    id: 1,
+    number: 123,
+    title: "제목 1",
+    date: "20210814",
+    author: "홍영준",
+  },
+  {
+    id: 2,
+    number: 234,
+    title: "제목 2",
+    date: "20210815",
+    author: "홍영준",
   },
 ];

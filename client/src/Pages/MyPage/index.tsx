@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { PageWrapper, Contents } from "@/shared/styled";
 import Header from "@/Components/Header";
 import Sidebar from "./Sidebar";
-import Content from "./Content";
+import ContentArea from "./ContentArea";
 
 const MyPage = () => {
   const [current, setCurrent] = useState("/");
@@ -16,12 +16,13 @@ const MyPage = () => {
         <ContentHeader />
         <ContentBody>
           <Sidebar setCurrent={setCurrent} />
-          <Content current={current} />
+          <ContentArea current={current} />
         </ContentBody>
       </Contents>
     </MyPageWrapper>
   );
 };
+
 const ContentBody = styled.div`
   width: 100%;
   display: flex;
