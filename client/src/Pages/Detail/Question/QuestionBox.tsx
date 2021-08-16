@@ -29,6 +29,7 @@ const QuestionBox = (Question: QuestionType) => {
 };
 
 const Wrapper = styled.div<{ isAnswered: boolean }>`
+  text-align: left;
   ${({ theme }) => theme.font.medium}
   width: 100%;
   padding: 4rem 0;
