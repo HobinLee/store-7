@@ -5,7 +5,7 @@ import WishList from "./WishList";
 import Question from "./Question";
 import Review from "./Review";
 
-const Contents = {
+const contents = {
   "/": Root,
   "orderlist": OrderList,
   "wishlist": WishList,
@@ -14,4 +14,4 @@ const Contents = {
   "review": Review,
 };
 
-export default Contents;
+export default contents;

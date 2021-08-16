@@ -1,11 +1,9 @@
-import React from "react";
-
 import styled from "styled-components";
 import Section from "../../Section";
 import Table from "../../Table";
 import Item from "@/Components/Item";
 import { recent, sampleMain } from "@/shared/dummy";
-import RecentOrderRow from "../../Table/rows/RecentOrderRow";
+import RecentOrder from "../../Table/Row/RecentOrder";
 import { ItemList } from "@/shared/styled";
 
 const Root = () => {
@@ -34,7 +32,7 @@ const Root = () => {
           ratio={[1, 3, 1, 0.5, 0.5]}
         >
           {recent.map((re) => (
-            <RecentOrderRow {...re} />
+            <RecentOrder {...re} />
           ))}
         </Table>
       </Section>

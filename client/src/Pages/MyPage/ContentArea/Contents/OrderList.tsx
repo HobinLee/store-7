@@ -1,10 +1,9 @@
-import React from "react";
 import styled from "styled-components";
 
 import Section from "../../Section";
 import Table from "../../Table";
-import RecentOrderRow from "../../Table/rows/RecentOrderRow";
-import { EmptyRow } from "../../Table/rows/EmptyRow";
+import RecentOrder from "../../Table/Row/RecentOrder";
+import row from "@/Pages/MyPage/Table/Row";
 import { recent } from "@/shared/dummy";
 
 const OrderList = () => {
@@ -26,9 +25,9 @@ const OrderList = () => {
           ratio={[1, 3, 1, 0.5, 0.5]}
         >
           {recent.length !== 0 ? (
-            <EmptyRow colSpan={5} message="조회내역이 없습니다." />
+            <row.Empty colSpan={5} message="조회내역이 없습니다." />
           ) : (
-            recent.map((re) => <RecentOrderRow {...re} />)
+            recent.map((re) => <RecentOrder {...re} />)
           )}
         </Table>
       </Section>

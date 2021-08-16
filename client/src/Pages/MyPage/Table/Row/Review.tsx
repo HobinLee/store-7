@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { ReviewType } from "@/shared/type";
 import dayjs from "dayjs";
 import ReviewBox from "@/Pages/Detail/Review/ReviewBox";
 import styled from "styled-components";
 
-const ReviewRow = (review: ReviewType) => {
+const Review = (review: ReviewType) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -45,4 +45,4 @@ const Wrapper = styled.tr`
   }
 `;
 
-export default ReviewRow;
+export default Review;

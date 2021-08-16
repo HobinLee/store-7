@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import Contents from "./Contents";
+import contents from "./contents";
 
 const ContentArea = ({ current }) => {
-  const Content = Contents[current];
+  const Content = contents[current];
   return (
     <ContentWrapper>
       <Content />

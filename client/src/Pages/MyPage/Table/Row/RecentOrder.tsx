@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import TableFrom from "../tableForm";
 
-type RecentOrderRowType = {
+type RecentOrderType = {
   id: number;
   date: string;
   number: string;
@@ -14,7 +14,7 @@ type RecentOrderRowType = {
   reviewID: number;
 };
 
-const RecentOrderRow = ({
+const RecentOrder = ({
   id,
   date,
   number,
@@ -24,7 +24,7 @@ const RecentOrderRow = ({
   count,
   status,
   reviewID,
-}: RecentOrderRowType) => {
+}: RecentOrderType) => {
   const statusStyle = status === "completed" ? { color: "#2ac1bc" } : {};
   const statusStr = {
     shipping: "배송 중",
@@ -70,4 +70,4 @@ const ReviewBoxWrapper = styled.div`
   }
 `;
 
-export default RecentOrderRow;
+export default RecentOrder;

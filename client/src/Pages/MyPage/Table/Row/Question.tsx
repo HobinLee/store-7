@@ -1,18 +1,17 @@
-<<<<<<< HEAD
-import React, { useState } from "react";
+import { useState } from "react";
 import QuestionBox from "@/Pages/Detail/Question/QuestionBox";
 import { QuestionType } from "@/shared/type";
 import dayjs from "dayjs";
 import styled from "styled-components";
 
-const QuestionRow = (Question: QuestionType) => {
+const Question = (Question: QuestionType) => {
   const [isOpen, setIsOpen] = useState(false);
   const { question, answer } = Question;
   const isAnswered = !!answer;
 
   return (
     <>
-      <QuestionRowWrapper
+      <Wrapper
         onClick={() => {
           setIsOpen(!isOpen);
         }}
@@ -24,7 +23,7 @@ const QuestionRow = (Question: QuestionType) => {
           <div>{question.content}</div>
         </td>
         <td className="status">{isAnswered ? "답변 완료" : "미답변"}</td>
-      </QuestionRowWrapper>
+      </Wrapper>
       {isOpen && (
         <tr>
           <td colSpan={4}>
@@ -36,7 +35,7 @@ const QuestionRow = (Question: QuestionType) => {
   );
 };
 
-const QuestionRowWrapper = styled.tr<{ isAnswered: boolean }>`
+const Wrapper = styled.tr<{ isAnswered: boolean }>`
   cursor: pointer;
   .status {
     color: ${({ theme, isAnswered }) =>
@@ -54,36 +53,4 @@ const QuestionRowWrapper = styled.tr<{ isAnswered: boolean }>`
   }
 `;
 
-=======
-import React from "react";
-import { ETLink } from "@/Router";
-
-type QuestionRowType = {
-  id: number;
-  date: string;
-  category: string;
-  title: string;
-  status: string;
-};
-
-const QuestionRow = ({
-  id,
-  date,
-  category,
-  title,
-  status,
-}: QuestionRowType) => {
-  return (
-    <tr>
-      <td>{date}</td>
-      <td>{category}</td>
-      <td>
-        <ETLink to={`/mypage/question/${id}`}>{title}</ETLink>
-      </td>
-      <td>{status}</td>
-    </tr>
-  );
-};
-
->>>>>>> chore: 각종 Row 컴포넌트
-export default QuestionRow;
+export default Question;

@@ -1,9 +1,8 @@
-import React from "react";
 import styled from "styled-components";
 import Section from "../../Section";
 import Table from "../../Table";
-import QuestionRow from "../../Table/rows/QuestionRow";
-import { EmptyRow } from "../../Table/rows/EmptyRow";
+import row from "@/Pages/MyPage/Table/Row";
+
 import { questions } from "@/shared/dummy";
 
 const Question = () => {
@@ -15,9 +14,11 @@ const Question = () => {
           ratio={[1, 1, 5, 1]}
         >
           {questions.questions.length === 0 ? (
-            <EmptyRow colSpan={4} message="게시글이 존재하지 않습니다." />
+            <row.Empty colSpan={4} message="게시글이 존재하지 않습니다." />
           ) : (
-            questions.questions.map((question) => <QuestionRow {...question} />)
+            questions.questions.map((question) => (
+              <row.Question {...question} />
+            ))
           )}
         </Table>
       </Section>
