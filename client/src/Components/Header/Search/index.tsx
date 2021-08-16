@@ -30,6 +30,11 @@ const Search = () => {
     JSON.parse(localStorage.getItem(LS_SEARCH)) ?? []
   );
 
+  const setNewSearchList = (newList: string[]) => {
+    setSearchList(newList);
+    localStorage.setItem(LS_SEARCH, JSON.stringify(newList));
+  };
+
   const makeNewSearchedList = (newKeyword: string): string[] => {
     const MAX_LIST_COUNT = 10;
 
@@ -45,10 +50,13 @@ const Search = () => {
 
     searchValue.setValue(keyword);
 
-    const newList: string[] = makeNewSearchedList(keyword);
+    setNewSearchList(makeNewSearchedList(keyword));
+  };
 
-    setSearchList(newList);
-    localStorage.setItem(LS_SEARCH, JSON.stringify(newList));
+  const handleDeleteSearchList = (keyword?: string) => {
+    keyword
+      ? setNewSearchList(searchList.filter((value) => value !== keyword))
+      : setNewSearchList([]);
   };
 
   useEffect(() => {
@@ -90,7 +98,11 @@ const Search = () => {
                 handleSearch={handleSearch}
               />
             ) : (
-              <SearchList list={searchList} handleSearch={handleSearch} />
+              <SearchList
+                list={searchList}
+                handleSearch={handleSearch}
+                handleDelete={handleDeleteSearchList}
+              />
             )}
           </SearchBox>
         )}
@@ -119,8 +131,6 @@ const SearchBox = styled.div`
   ${({ theme }) => theme.font.small}
   position: absolute;
   width: 27rem;
-  max-height: 16rem;
-  overflow-y: scroll;
   padding: 1rem;
   border: 1px solid ${({ theme }) => theme.color.light_grey2};
   background: ${({ theme }) => theme.color.off_white};
