@@ -1,12 +1,27 @@
 import styled from "styled-components";
-import Checkbox from "./Checkbox";
+import Checkbox from "@/Components/Checkbox";
+import { convertToKRW } from "@/utils/util";
 
-const ItemInfoBox = ({ name, num, price, delivery }) => {
+export type ItemInfoBoxProps = {
+  name: string;
+  num: number;
+  price: number;
+  delivery: number;
+  thumbnail?: string;
+};
+
+const ItemInfoBox = ({
+  name,
+  num,
+  price,
+  delivery,
+  thumbnail = "",
+}: ItemInfoBoxProps) => {
   return (
     <Wrapper>
       <div className="info">
         <Checkbox />
-        <img src="" />
+        <img role="img" src={thumbnail} />
         <div>
           <div className="info__name">{name}</div>
           <div className="info__num">{num}개</div>
@@ -14,8 +29,8 @@ const ItemInfoBox = ({ name, num, price, delivery }) => {
       </div>
 
       <div className="price">
-        <div>총 {price}원</div>
-        <div>배송비 {delivery}원</div>
+        <div>총 {convertToKRW(price)}</div>
+        <div>배송비 {convertToKRW(delivery)}</div>
       </div>
     </Wrapper>
   );
