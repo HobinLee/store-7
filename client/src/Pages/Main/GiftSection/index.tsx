@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import SecretpenImg from "@/assets/secretpen.png";
-import TrayImg from "@/assets/tray.png";
+import { SecretpenImg } from "@/assets";
+import { TrayImg } from "@/assets";
 import GiftList from "./GiftList";
 import { ItemBannerType } from "@/shared/type";
 

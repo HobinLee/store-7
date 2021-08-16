@@ -27,8 +27,8 @@ const Table = ({
     <TableWrapper>
       <colgroup>
         {checker && <col style={{ width: "10%" }} />}
-        {ratio.map((ra) => (
-          <col style={{ width: `${(ra / entire) * 90}%` }} />
+        {ratio.map((ra, idx) => (
+          <col key={idx} style={{ width: `${(ra / entire) * 90}%` }} />
         ))}
       </colgroup>
       <thead>
@@ -38,8 +38,8 @@ const Table = ({
               <AllChecker />
             </th>
           )}
-          {ths.map((th) => (
-            <th>{th}</th>
+          {ths.map((th, idx) => (
+            <th key={idx}>{th}</th>
           ))}
         </tr>
         <tr>
@@ -105,9 +105,9 @@ const CheckerWrapper = styled.div`
 `;
 
 const appendCheckerToChildren = (children) => {
-  return React.Children.map(children, (child) => {
+  return React.Children.map(children, (child, idx) => {
     return (
-      <tr>
+      <tr key={idx}>
         <td>
           <Checker />
         </td>

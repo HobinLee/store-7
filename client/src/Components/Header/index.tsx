@@ -1,5 +1,5 @@
 import { ETLink } from "@/Router";
-import LogoImg from "@/assets/logo.png";
+import { Logo } from "@/assets";
 import React, { ReactChild, useEffect, useState } from "react";
 import styled from "styled-components";
 import SearchBar from "./Search";
@@ -15,7 +15,7 @@ const Header = ({ children }: { children?: ReactChild }) => {
     <TopWrapper>
       <Wrapper>
         <ETLink to="/">
-          <img width="200" src={LogoImg} />
+          <img width="200" src={Logo} />
         </ETLink>
         <SearchBar />
         <div className="header__buttons">

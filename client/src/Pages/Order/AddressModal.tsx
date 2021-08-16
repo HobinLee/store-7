@@ -29,8 +29,12 @@ const AddressModal = ({ closeModal }) => {
 
         {page === "select" ? (
           <Contents>
-            {sampleUser.addresses.map((address) => (
-              <AddressBox {...{ setPage, address }} user={sampleUser} />
+            {sampleUser.addresses.map((address, idx) => (
+              <AddressBox
+                key={idx}
+                {...{ setPage, address }}
+                user={sampleUser}
+              />
             ))}
           </Contents>
         ) : (

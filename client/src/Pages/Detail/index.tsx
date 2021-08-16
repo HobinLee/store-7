@@ -78,8 +78,9 @@ const DetailPage = () => {
       <Header>
         {yOffset > topHeight && (
           <FixedTab yOffset={yOffset}>
-            {tabs.map((tab) => (
+            {tabs.map((tab, idx) => (
               <TabA
+                key={idx}
                 onClick={() => handleSelectTab(tab.id)}
                 isSelected={selectedTab === tab.id}
               >
@@ -121,8 +122,9 @@ const DetailPage = () => {
 
         <Scroll {...{ selectedTab, yOffset }}>
           <Tab yOffset={yOffset}>
-            {tabs.map((tab) => (
+            {tabs.map((tab, idx) => (
               <TabA
+                key={idx}
                 onClick={() => handleSelectTab(tab.id)}
                 isSelected={selectedTab === tab.id}
               >
@@ -132,8 +134,10 @@ const DetailPage = () => {
           </Tab>
 
           <div className="bottom-wrapper">
-            {tabs.map((tab) => (
-              <TabPage>{tab.id === selectedTab && tab.component}</TabPage>
+            {tabs.map((tab, idx) => (
+              <TabPage key={idx}>
+                {tab.id === selectedTab && tab.component}
+              </TabPage>
             ))}
           </div>
 

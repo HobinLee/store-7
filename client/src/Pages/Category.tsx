@@ -22,8 +22,8 @@ const CategoryPage = () => {
           </div>
         </Filter>
         <div className="items">
-          {sampleCategory.map((item) => (
-            <Item {...item} />
+          {sampleCategory.map((item, idx) => (
+            <Item {...item} key={idx} />
           ))}
         </div>
       </Contents>

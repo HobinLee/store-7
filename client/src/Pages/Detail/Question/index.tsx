@@ -28,8 +28,8 @@ const Question = () => {
           문의하기
         </Button>
       </Header>
-      {questions.questions.map((question) => (
-        <QuestionBox {...question} />
+      {questions.questions.map((question, idx) => (
+        <QuestionBox {...question} key={idx} />
       ))}
 
       {isModalOpened && <QuestionModal {...{ handleModalOpen }} />}
