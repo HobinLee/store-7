@@ -69,6 +69,7 @@ export const questions: QuestionListType = {
         author: "우아한개발자",
         content: "점심 뭐드셨어여",
         date: new Date(),
+        category: "상품",
       },
     },
     {
@@ -81,6 +82,7 @@ export const questions: QuestionListType = {
         중 사이즈 1개는 닦아도 오염이 남아있어요
         찝찝해서 교환신청합니다`,
         date: new Date(),
+        category: "배송",
       },
       answer: {
         content: `안녕하세요 고객님
