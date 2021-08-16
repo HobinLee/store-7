@@ -7,7 +7,6 @@ import DetailPage from "./Pages/Detail";
 import CartPage from "./Pages/Cart";
 import MyPage from "./Pages/MyPage";
 import OrderPage from "./Pages/Order";
-import CollectionPage from "./Pages/Collection";
 import { light, dark } from "./styles/theme";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "./styles/global-style";
@@ -46,9 +45,6 @@ const App = () => {
         </ETRoute>
         <ETRoute path="/order" exact>
           <OrderPage />
-        </ETRoute>
-        <ETRoute path="/collection" exact>
-          <CollectionPage />
         </ETRoute>
         <ETRoute path="/category">
           <CategoryPage />

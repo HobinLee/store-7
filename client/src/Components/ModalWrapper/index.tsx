@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Close } from "@/assets";
 import { ReactChild } from "react";
 
-type ReviewModalType = {
+export type ModalWrapperProps = {
   closeModal?: Function;
   children: ReactChild;
   title?: string;
@@ -16,14 +16,14 @@ const ModalWrapper = ({
   title,
   className,
   hideCloseBtn = false,
-}: ReviewModalType) => {
+}: ModalWrapperProps) => {
   return (
     <>
       <Wrapper>
         <Modal className={className}>
           <div className="header">{title}</div>
           {!hideCloseBtn && (
-            <Close onClick={closeModal} className="close-btn" />
+            <Close role="button" onClick={closeModal} className="close-btn" />
           )}
           {children}
         </Modal>
