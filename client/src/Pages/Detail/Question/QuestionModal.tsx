@@ -1,6 +1,5 @@
 import Button from "@/Components/Button";
 import useInput from "@/hooks/useInput";
-import React from "react";
 import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
 import { useState } from "react";

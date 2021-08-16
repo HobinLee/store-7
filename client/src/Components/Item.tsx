@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { ETLink } from "@/Router";
 import styled, { css } from "styled-components";
 import MagnifiedImage from "./MagnifiedImage";
@@ -22,10 +22,11 @@ const Item = ({
   price,
   isWish,
 }: ItemType) => {
-  const ToggleWish = (id: number, boolean: boolean) => {
+  const toggleWish = (e: Event) => {
+    e.stopPropagation();
     //TODO: 서버 좋아요 변경
-    console.log(`${id} 아이템 wish를 ${boolean}으로`);
-    setIsWish(boolean);
+    // console.log(`${id} 아이템 wish를 ${boolean}으로`);
+    setIsWish(!isWishState);
   };
   const [isWishState, setIsWish] = useState(isWish);
 
@@ -42,24 +43,10 @@ const Item = ({
             ))}
           </div>
           <div className="thumbnail__wish">
-            {isWishState ? (
-              <Wish
-                opacity="1"
-                fill="#2ac1bc"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  ToggleWish(id, false);
-                }}
-              />
-            ) : (
-              <Wish
-                fill="white"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  ToggleWish(id, true);
-                }}
-              />
-            )}
+            <Wish
+              onClick={toggleWish}
+              className={isWishState ? "active" : "inactive"}
+            />
           </div>
         </div>
         <div className="info">
@@ -93,12 +80,16 @@ const ItemWrapper = styled.div`
       bottom: 1rem;
       right: 1rem;
 
-      & > svg:hover {
+      /* & > svg:hover {
         opacity: 0.7;
       }
       & > svg:active {
         transform: scale(1.1);
-      }
+      } */
+    }
+    .active {
+    }
+    .inactive {
     }
   }
 

@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { Banner1 } from "@/assets";
 import Banner from "./Banner";

@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, ReactChild } from "react";
+import { MouseEventHandler, ReactChild } from "react";
 import styled from "styled-components";
 
 type ButtonType = {

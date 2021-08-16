@@ -1,5 +1,5 @@
 import { PageWrapper } from "@/shared/styled";
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { ETLink } from "@/Router";
 import Address from "@/Components/Address";

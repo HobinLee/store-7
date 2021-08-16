@@ -1,5 +1,4 @@
 import { imageZoom } from "@/utils/util";
-import React from "react";
 import { useEffect } from "react";
 import styled from "styled-components";
 

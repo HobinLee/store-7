@@ -1,5 +1,5 @@
 import { PageWrapper } from "@/shared/styled";
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import Header from "@/Components/Header";
 import Footer from "@/Components/Footer";

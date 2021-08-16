@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { ETLink } from "@/Router";
 import { ItemBannerType } from "@/shared/type";

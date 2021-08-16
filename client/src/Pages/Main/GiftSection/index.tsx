@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { SecretpenImg } from "@/assets";
 import { TrayImg } from "@/assets";

@@ -1,6 +1,6 @@
 import { ETLink } from "@/Router";
 import { Logo } from "@/assets";
-import React, { ReactChild, useEffect, useState } from "react";
+import { ReactChild, useState } from "react";
 import styled from "styled-components";
 import SearchBar from "./Search";
 import Menu from "./Menu";

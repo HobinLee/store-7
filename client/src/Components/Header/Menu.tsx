@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { getSiblingIndex } from "@/utils/node";
 import { ETLink } from "@/Router";

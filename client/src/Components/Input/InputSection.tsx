@@ -1,5 +1,5 @@
 import { InputType } from "@/hooks/useInput";
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import styled from "styled-components";
 import Input from ".";
 

@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import ReviewBox from "@/Pages/Detail/Review/ReviewBox";
 import { ReviewType } from "@/shared/type";
