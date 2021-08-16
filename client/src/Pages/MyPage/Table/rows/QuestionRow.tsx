@@ -9,6 +9,7 @@ const QuestionRow = (Question: QuestionType) => {
   const [isOpen, setIsOpen] = useState(false);
   const { question, answer } = Question;
   const isAnswered = !!answer;
+
   return (
     <>
       <QuestionRowWrapper
