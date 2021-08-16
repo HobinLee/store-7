@@ -458,3 +458,41 @@ export const recent = [
     reviewID: 12,
   },
 ];
+
+export const question = [
+  {
+    id: 1,
+    date: "20210813",
+    category: "기타",
+    title: "2주밖에 안 남았어요.",
+    문의상태: "답변완료",
+  },
+  {
+    id: 2,
+    date: "20210814",
+    category: "교환/환불",
+    title: "바꿔줘요.",
+    문의상태: "답변대기",
+  },
+  {
+    id: 3,
+    date: "20210815",
+    category: "상품",
+    title: "다 때가 있다 재입고 문의.",
+    문의상태: "답변완료",
+  },
+];
+export const review = [
+  {
+    number: 1,
+    title: "제목 1",
+    date: "20210814",
+    author: "홍영준",
+  },
+  {
+    number: 2,
+    title: "제목 2",
+    date: "20210815",
+    author: "홍영준",
+  },
+];
