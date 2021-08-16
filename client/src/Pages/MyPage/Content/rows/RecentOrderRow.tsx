@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import TableFrom from "../Table/tableForm";
+import TableFrom from "../../Table/tableForm";
 
 type RecentOrderRowType = {
   date: string;
