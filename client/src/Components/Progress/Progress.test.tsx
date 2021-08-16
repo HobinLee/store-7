@@ -1,23 +1,24 @@
 import { render } from "@/utils/test-util";
 import { screen } from "@testing-library/react";
+import Progress, { output, ProgressProps } from "./index";
 
-import Progress, { ProgressProps } from "./index";
+const NUMBER = Math.floor(Math.random() * 10) + 1;
 
-const ProgressProps: ProgressProps = {
+const progressProps: ProgressProps = {
   content: {
-    value: Math.floor(Math.random() * 10) + 1,
-    count: Math.floor(Math.random() * 10) + 1,
-    totalCount: Math.floor(Math.random() * 10) + 1,
+    value: NUMBER,
+    count: NUMBER,
+    totalCount: NUMBER,
   },
 };
 
 describe("<Progress />", () => {
+  const OUTPUT = output(progressProps.content);
+
   it("should render component in document", () => {
-    const { container } = render(<Progress {...ProgressProps} />);
+    const { container } = render(<Progress {...progressProps} />);
     expect(container).toBeInTheDocument();
-    expect(screen.queryByText(ProgressProps.content.count)).toBeInTheDocument();
-    expect(
-      screen.queryByText(`${ProgressProps.content.value}점`)
-    ).toBeInTheDocument();
+    expect(screen.queryByText(OUTPUT.countOutput)).toBeInTheDocument();
+    expect(screen.queryByText(OUTPUT.valueOutput)).toBeInTheDocument();
   });
 });

@@ -1,11 +1,13 @@
 import { render, fireEvent } from "@/utils/test-util";
 import { screen } from "@testing-library/react";
-
 import ModalWrapper, { ModalWrapperProps } from "./index";
 
-const ModalWrapperProps: ModalWrapperProps = {
-  children: <div>children</div>,
-  title: "title",
+const CHILDREN = "children";
+const TILTE = "title";
+
+const modalWrapperProps: ModalWrapperProps = {
+  children: <div>{CHILDREN}</div>,
+  title: TILTE,
 };
 
 describe("<ModalWrapper />", () => {
@@ -16,12 +18,12 @@ describe("<ModalWrapper />", () => {
       <ModalWrapper
         closeModal={handleClick}
         hideCloseBtn
-        {...ModalWrapperProps}
+        {...modalWrapperProps}
       />
     );
     expect(container).toBeInTheDocument();
-    expect(screen.queryByText("title")).toBeInTheDocument();
-    expect(screen.queryByText("children")).toBeInTheDocument();
+    expect(screen.queryByText(TILTE)).toBeInTheDocument();
+    expect(screen.queryByText(CHILDREN)).toBeInTheDocument();
 
     expect(screen.queryByRole("button")).not.toBeInTheDocument();
   });
@@ -30,7 +32,7 @@ describe("<ModalWrapper />", () => {
     const handleClick = jest.fn();
 
     const { container } = render(
-      <ModalWrapper closeModal={handleClick} {...ModalWrapperProps} />
+      <ModalWrapper closeModal={handleClick} {...modalWrapperProps} />
     );
     expect(container).toBeInTheDocument();
     expect(screen.queryByText("title")).toBeInTheDocument();

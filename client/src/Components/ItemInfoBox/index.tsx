@@ -10,6 +10,14 @@ export type ItemInfoBoxProps = {
   thumbnail?: string;
 };
 
+export const output = ({ num, price, delivery }) => {
+  return {
+    numOutput: `${num}개`,
+    priceOutput: `총 ${convertToKRW(price)}`,
+    deliveryOutput: `배송비 ${convertToKRW(delivery)}`,
+  };
+};
+
 const ItemInfoBox = ({
   name,
   num,
@@ -17,6 +25,8 @@ const ItemInfoBox = ({
   delivery,
   thumbnail = "",
 }: ItemInfoBoxProps) => {
+  const OUTPUT = output({ ...{ num, price, delivery } });
+
   return (
     <Wrapper>
       <div className="info">
@@ -24,13 +34,13 @@ const ItemInfoBox = ({
         <img role="img" src={thumbnail} />
         <div>
           <div className="info__name">{name}</div>
-          <div className="info__num">{num}개</div>
+          <div className="info__num">{OUTPUT.numOutput}</div>
         </div>
       </div>
 
       <div className="price">
-        <div>총 {convertToKRW(price)}</div>
-        <div>배송비 {convertToKRW(delivery)}</div>
+        <div>{OUTPUT.priceOutput}</div>
+        <div>{OUTPUT.deliveryOutput}</div>
       </div>
     </Wrapper>
   );

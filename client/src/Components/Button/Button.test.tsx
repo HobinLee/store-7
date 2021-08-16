@@ -1,10 +1,12 @@
 import { render, fireEvent } from "@/utils/test-util";
 import { screen } from "@testing-library/react";
 
-import Button, { ButtonType } from "./index";
+import Button, { ButtonProps } from "./index";
 
-const ButtonProps: ButtonType = {
-  children: <div>children</div>,
+const CHILDREN = "children";
+
+const buttonProps: ButtonProps = {
+  children: <div>{CHILDREN}</div>,
 };
 
 describe("<Button />", () => {
@@ -12,12 +14,12 @@ describe("<Button />", () => {
     const handleClick = jest.fn();
 
     const { container } = render(
-      <Button {...ButtonProps} onClick={handleClick} />
+      <Button {...buttonProps} onClick={handleClick} />
     );
     expect(container).toBeInTheDocument();
 
     // children 체크
-    const children = screen.queryByText("children");
+    const children = screen.queryByText(CHILDREN);
     expect(children).toBeInTheDocument();
 
     // 클릭 이벤트 체크
