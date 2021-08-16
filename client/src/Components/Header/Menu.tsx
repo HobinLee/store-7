@@ -152,7 +152,6 @@ const MainCategoryWrapper = styled.ul`
 
   .selected {
     font-weight: bolder;
-    position: relative;
     a {
       color: ${({ theme }) => theme.color.primary1};
     }
