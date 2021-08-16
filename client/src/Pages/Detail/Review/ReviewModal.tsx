@@ -1,5 +1,5 @@
 import Button from "@/Components/Button";
-import ETRating from "@/Components/ETRating";
+import Rating from "@/Components/Rating";
 import useInput from "@/hooks/useInput";
 import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
@@ -12,7 +12,7 @@ const ReviewModal = ({ handleModalOpen }) => {
       <Wrapper>
         <div className="content">
           <div className="content__label">별점 평가</div>
-          <ETRating />
+          <Rating />
         </div>
         <div className="content">
           <div className="content__label">사진 첨부 (선택)</div>
