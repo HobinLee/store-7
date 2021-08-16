@@ -1,5 +1,5 @@
 import { PageWrapper } from "@/shared/styled";
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import Header from "@/Components/Header";
 import Footer from "@/Components/Footer";
@@ -47,8 +47,8 @@ const OrderPage = () => {
               <div>
                 <input type="checkbox" /> 모두선택
               </div>
-              {buyItems.map((i) => (
-                <ItemInfoBox {...i} />
+              {buyItems.map((i, idx) => (
+                <ItemInfoBox {...i} key={idx} />
               ))}
             </div>
           </Info>

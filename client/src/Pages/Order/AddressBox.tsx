@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { AddressType, UserType } from "@/shared/type";
 import Button from "@/Components/Button";

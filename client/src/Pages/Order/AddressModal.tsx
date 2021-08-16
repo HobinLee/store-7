@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
 import { useState } from "react";
@@ -29,8 +28,12 @@ const AddressModal = ({ closeModal }) => {
 
         {page === "select" ? (
           <Contents>
-            {sampleUser.addresses.map((address) => (
-              <AddressBox {...{ setPage, address }} user={sampleUser} />
+            {sampleUser.addresses.map((address, idx) => (
+              <AddressBox
+                key={idx}
+                {...{ setPage, address }}
+                user={sampleUser}
+              />
             ))}
           </Contents>
         ) : (

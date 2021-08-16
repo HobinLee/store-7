@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 import Section from "../Section";
@@ -35,8 +34,8 @@ const Root = () => {
           ]}
           ratio={[1, 3, 1, 0.5, 0.5]}
         >
-          {recent.map((re) => (
-            <RecentOrderRow {...re} />
+          {recent.map((re, idx) => (
+            <RecentOrderRow {...re} key={idx} />
           ))}
         </Table>
       </Section>

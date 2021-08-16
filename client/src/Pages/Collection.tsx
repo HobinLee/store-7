@@ -1,6 +1,5 @@
 import Header from "@/Components/Header";
 import { PageWrapper, Contents } from "@/shared/styled";
-import React from "react";
 import styled from "styled-components";
 import Item from "@/Components/Item";
 import Footer from "@/Components/Footer";
@@ -22,8 +21,8 @@ const CollectionPage = () => {
           </div>
         </Filter>
         <div className="items">
-          {sampleCategory.map((item) => (
-            <Item {...item} />
+          {sampleCategory.map((item, idx) => (
+            <Item {...item} key={idx} />
           ))}
         </div>
       </Contents>

@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { sampleMypage } from "@/shared/dummy";
 import SignatureLine from "@/Components/SignatureLine";

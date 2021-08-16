@@ -1,6 +1,5 @@
 import Button from "@/Components/Button";
 import useInput from "@/hooks/useInput";
-import React from "react";
 import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
 import { useState } from "react";
@@ -21,8 +20,9 @@ const QuestionModal = ({ handleModalOpen }) => {
         <div className="content">
           <div className="content__label">문의 유형</div>
           <div className="question-option">
-            {options.map((item) => (
+            {options.map((item, idx) => (
               <OptionBtn
+                key={idx}
                 onClick={() => handleSetOption(item)}
                 primary={option === item}
               >

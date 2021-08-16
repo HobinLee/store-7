@@ -1,4 +1,3 @@
-import React from "react";
 import { Check } from "@/assets";
 import styled from "styled-components";
 import { useState } from "react";

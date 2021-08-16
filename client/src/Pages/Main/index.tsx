@@ -1,6 +1,5 @@
 import Header from "@/Components/Header";
 import { PageWrapper, Contents } from "@/shared/styled";
-import React from "react";
 import styled from "styled-components";
 import Footer from "@/Components/Footer";
 import GiftSection from "./GiftSection";

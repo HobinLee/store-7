@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { ReviewType } from "@/shared/type";
 import ETRating from "@/Components/ETRating";

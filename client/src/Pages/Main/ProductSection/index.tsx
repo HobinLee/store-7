@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import Item from "@/Components/Item";
 import { ItemList } from "@/shared/styled";

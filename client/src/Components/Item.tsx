@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { ETLink } from "@/Router";
 import styled, { css } from "styled-components";
 import MagnifiedImage from "./MagnifiedImage";
@@ -22,10 +22,11 @@ const Item = ({
   price,
   isWish,
 }: ItemType) => {
-  const ToggleWish = (id: number, boolean: boolean) => {
+  const toggleWish = (e: Event) => {
+    e.stopPropagation();
     //TODO: 서버 좋아요 변경
-    console.log(`${id} 아이템 wish를 ${boolean}으로`);
-    setIsWish(boolean);
+    // console.log(`${id} 아이템 wish를 ${boolean}으로`);
+    setIsWish(!isWishState);
   };
   const [isWishState, setIsWish] = useState(isWish);
 
@@ -35,29 +36,17 @@ const Item = ({
         <div className="thumbnail">
           <MagnifiedImage src="https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg" />
           <div className="thumbnail__tags">
-            {tags.map((tag) => (
-              <Tag tag={tag}>{tag.toUpperCase()}</Tag>
+            {tags.map((tag, idx) => (
+              <Tag key={idx} tag={tag}>
+                {tag.toUpperCase()}
+              </Tag>
             ))}
           </div>
           <div className="thumbnail__wish">
-            {isWishState ? (
-              <Wish
-                opacity="1"
-                fill="#2ac1bc"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  ToggleWish(id, false);
-                }}
-              />
-            ) : (
-              <Wish
-                fill="white"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  ToggleWish(id, true);
-                }}
-              />
-            )}
+            <Wish
+              onClick={toggleWish}
+              className={isWishState ? "active" : "inactive"}
+            />
           </div>
         </div>
         <div className="info">
@@ -91,12 +80,16 @@ const ItemWrapper = styled.div`
       bottom: 1rem;
       right: 1rem;
 
-      & > svg:hover {
+      /* & > svg:hover {
         opacity: 0.7;
       }
       & > svg:active {
         transform: scale(1.1);
-      }
+      } */
+    }
+    .active {
+    }
+    .inactive {
     }
   }
 

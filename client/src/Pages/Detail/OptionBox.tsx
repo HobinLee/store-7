@@ -1,6 +1,6 @@
 import Button from "@/Components/Button";
 import Input from "@/Components/Input";
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
 import { Triangle } from "@/assets";

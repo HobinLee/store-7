@@ -1,5 +1,4 @@
 import { ReviewType } from "@/shared/type";
-import React from "react";
 import styled from "styled-components";
 import ReviewList from "./ReviewList";
 import { reviews } from "@/shared/dummy";

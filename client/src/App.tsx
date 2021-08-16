@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import MainPage from "@/Pages/Main";
 import LoginPage from "@/Pages/Login";
 import { ETRouter, ETRoute } from "./Router";
