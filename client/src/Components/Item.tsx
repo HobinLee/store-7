@@ -43,22 +43,9 @@ const Item = ({
             </div>
             <div className="thumbnail__wish">
               {isWishState ? (
-                <Wish
-                  opacity="1"
-                  fill="#2ac1bc"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleWish(id, false);
-                  }}
-                />
+                <Wish opacity="1" fill="#2ac1bc" onClick={toggleWish} />
               ) : (
-                <Wish
-                  fill="white"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleWish(id, true);
-                  }}
-                />
+                <Wish fill="white" onClick={toggleWish} />
               )}
             </div>
           </div>
