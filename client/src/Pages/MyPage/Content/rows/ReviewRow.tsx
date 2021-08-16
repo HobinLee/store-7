@@ -1,3 +1,4 @@
+import { ETLink } from "@/Router";
 import React from "react";
 
 type ReviewRowType = {
@@ -12,7 +13,9 @@ const ReviewRow = ({ id, number, date, title, author }: ReviewRowType) => {
   return (
     <tr>
       <td>{number}</td>
-      <td>{title}</td>
+      <td>
+        <ETLink to={`/mypage/review/${id}`}>{title}</ETLink>
+      </td>
       <td>{date}</td>
       <td>{author}</td>
     </tr>
