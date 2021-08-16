@@ -1,41 +1,38 @@
-import Rating from "@material-ui/lab/Rating";
+import MRating from "@material-ui/lab/Rating";
 import { withStyles } from "@material-ui/core/styles";
 import { light } from "@/styles/theme";
 
-export enum RATING_KIND {
-  BOOKING = "BOOKING",
-  ORDER = "ORDER",
-}
-
-export interface ETRatingProps {
+export type RatingProps = {
   value?: number;
   size?: "small" | "medium" | "large";
   className?: string;
   readOnly?: boolean;
-}
+};
 
-const ETRating = ({
+const Rating = ({
   value = 0,
   size = "large",
   className,
   readOnly = false,
-}: ETRatingProps) => {
+}: RatingProps) => {
   const CustomRating = withStyles({
     iconFilled: {
       color: light.color.primary1,
     },
-  })(Rating);
+  })(MRating);
 
   return (
     <div {...{ className }}>
       <CustomRating
+        role={!readOnly ? "button" : "article"}
         defaultValue={value}
         precision={0.1}
         readOnly={readOnly}
         size={size}
+        name="rating"
       />
     </div>
   );
 };
 
-export default ETRating;
+export default Rating;

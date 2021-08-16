@@ -4,6 +4,7 @@ const Footer = () => {
   return (
     <Wrapper>
       <img
+        role="img"
         width="100"
         src="https://store.baemin.com/data/skin/front/udweb_C/img/banner/da16d1162f6d783169f2c8c6556c2d8b_50794.png"
       />

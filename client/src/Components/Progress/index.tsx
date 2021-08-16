@@ -4,24 +4,27 @@ import { withStyles } from "@material-ui/core/styles";
 
 import { light } from "@/styles/theme";
 
-export enum PROGRESS_KIND {
-  BOOKING = "BOOKING",
-  ORDER = "ORDER",
-}
-
-interface Content {
-  value;
+type Content = {
+  value: number;
   count: number;
   totalCount: number;
-}
+};
 
-export interface ETProgressProps {
+export type ProgressProps = {
   content?: Content;
-}
+};
 
-const ETProgress = ({
+export const output = ({ value, count, totalCount }) => {
+  return {
+    valueOutput: `${value}점`,
+    progressValueOutput: totalCount !== 0 ? (count / totalCount) * 100 : 0 ?? 0,
+    countOutput: count,
+  };
+};
+
+const Progress = ({
   content = { value: 0, count: 0, totalCount: 0 },
-}: ETProgressProps) => {
+}: ProgressProps) => {
   const CustomLinearProgress = withStyles(() => ({
     root: {
       width: "20rem",
@@ -36,18 +39,17 @@ const ETProgress = ({
     },
   }))(LinearProgress);
 
+  const OUTPUT = output(content);
+
   return (
     <Container>
-      <span className="text">{content.value}점</span>
+      <span className="text">{OUTPUT.valueOutput}</span>
       <CustomLinearProgress
+        role="progressbar"
         variant="determinate"
-        value={
-          content.totalCount !== 0
-            ? (content.count / content.totalCount) * 100
-            : 0
-        }
+        value={OUTPUT.progressValueOutput}
       />
-      <span className="text">{content.count}</span>
+      <span className="text">{OUTPUT.countOutput}</span>
     </Container>
   );
 };
@@ -76,4 +78,4 @@ const Container = styled.div`
   }
 `;
 
-export default ETProgress;
+export default Progress;

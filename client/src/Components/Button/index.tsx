@@ -1,7 +1,7 @@
 import { MouseEventHandler, ReactChild } from "react";
 import styled from "styled-components";
 
-type ButtonType = {
+export type ButtonProps = {
   onClick?: MouseEventHandler<HTMLButtonElement>;
   type?: "button" | "submit";
   primary?: boolean;
@@ -19,7 +19,7 @@ const Button = ({
   children,
   className,
   size = "medium",
-}: ButtonType) => (
+}: ButtonProps) => (
   <Container {...{ onClick, type, primary, disabled, className, size }}>
     {children}
   </Container>

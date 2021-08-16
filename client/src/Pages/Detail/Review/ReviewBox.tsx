@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { ReviewType } from "@/shared/type";
-import ETRating from "@/Components/ETRating";
+import Rating from "@/Components/Rating";
 
 const ReviewBox = (review: ReviewType) => {
   return (
@@ -9,7 +9,7 @@ const ReviewBox = (review: ReviewType) => {
         <div className="author">{review.author}</div>
         <div className="info">
           <div className="info__rate">
-            <ETRating value={review.rate} readOnly />
+            <Rating value={review.rate} readOnly />
           </div>
           <div className="info__date">{review.date}</div>
         </div>

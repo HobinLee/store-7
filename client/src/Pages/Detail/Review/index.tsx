@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Button from "@/Components/Button";
-import ETProgress from "@/Components/ETProgress";
+import Progress from "@/Components/Progress";
 import ReviewBox from "./ReviewBox";
 import { useState } from "react";
 import ReviewModal from "./ReviewModal";
@@ -35,7 +35,7 @@ const Review = () => {
               .slice(0)
               .reverse()
               .map((item, idx) => (
-                <ETProgress
+                <Progress
                   key={idx.toString()}
                   content={{
                     value: item.rate,

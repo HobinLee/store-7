@@ -2,7 +2,7 @@ import { Check } from "@/assets";
 import styled from "styled-components";
 import { useState } from "react";
 
-type CheckboxProps = {
+export type CheckboxProps = {
   label?: string;
   isChecked?: boolean;
 };
@@ -12,8 +12,12 @@ const Checkbox = ({ label, isChecked: checked = false }: CheckboxProps) => {
 
   return (
     <Wrapper>
-      <Box {...{ isChecked }} onClick={() => setIsChecked(!isChecked)}>
-        <input type="checkbox" checked={isChecked} />
+      <Box
+        role="button"
+        {...{ isChecked }}
+        onClick={() => setIsChecked(!isChecked)}
+      >
+        <input role="checkbox" type="checkbox" readOnly checked={isChecked} />
         <Check />
       </Box>
       {label}
