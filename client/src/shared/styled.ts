@@ -53,3 +53,9 @@ export const ItemList = styled.ul`
     flex: 1;
   }
 `;
+
+export const ItemWrapList = styled.ul`
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+`;

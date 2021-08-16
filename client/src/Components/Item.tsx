@@ -31,38 +31,52 @@ const Item = ({
   const [isWishState, setIsWish] = useState(isWish);
 
   return (
-    <ETLink to={`/detail/${id}`}>
-      <ItemWrapper>
-        <div className="thumbnail">
-          <MagnifiedImage src="https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg" />
-          <div className="thumbnail__tags">
-            {tags.map((tag, idx) => (
-              <Tag key={idx} tag={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            ))}
-          </div>
-          <div className="thumbnail__wish">
-            <Wish
-              onClick={toggleWish}
-              className={isWishState ? "active" : "inactive"}
-            />
-          </div>
-        </div>
-        <div className="info">
-          <div className="info__title">{title}</div>
-          {discountRate !== 0 && (
-            <div className="info__sale">
-              <div className="discount-rate">{discountRate}%</div>
-              <div className="before-price">{convertToKRW(price)}</div>
+    <li key={id}>
+      <ETLink to={`/detail/${id}`}>
+        <ItemWrapper>
+          <div className="thumbnail">
+            <MagnifiedImage src="https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg" />
+            <div className="thumbnail__tags">
+              {tags.map((tag) => (
+                <Tag tag={tag}>{tag.toUpperCase()}</Tag>
+              ))}
             </div>
-          )}
-          <div className="info__price">
-            {getCurrentPrice(price, discountRate)}
+            <div className="thumbnail__wish">
+              {isWishState ? (
+                <Wish
+                  opacity="1"
+                  fill="#2ac1bc"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleWish(id, false);
+                  }}
+                />
+              ) : (
+                <Wish
+                  fill="white"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleWish(id, true);
+                  }}
+                />
+              )}
+            </div>
           </div>
-        </div>
-      </ItemWrapper>
-    </ETLink>
+          <div className="info">
+            <div className="info__title">{title}</div>
+            {discountRate !== 0 && (
+              <div className="info__sale">
+                <div className="discount-rate">{discountRate}%</div>
+                <div className="before-price">{convertToKRW(price)}</div>
+              </div>
+            )}
+            <div className="info__price">
+              {getCurrentPrice(price, discountRate)}
+            </div>
+          </div>
+        </ItemWrapper>
+      </ETLink>
+    </li>
   );
 };
 

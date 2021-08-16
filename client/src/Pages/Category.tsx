@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Item from "@/Components/Item";
 import Footer from "@/Components/Footer";
 import { sampleCategory } from "@/shared/dummy";
+import { ItemWrapList } from "@/shared/styled";
 
 const CategoryPage = () => {
   return (
@@ -20,30 +21,18 @@ const CategoryPage = () => {
             <div className="buttons__btn">높은가격순</div>
           </div>
         </Filter>
-        <div className="items">
-          {sampleCategory.map((item, idx) => (
-            <Item {...item} key={idx} />
+        <ItemWrapList>
+          {sampleCategory.map((item) => (
+            <Item {...item} />
           ))}
-        </div>
+        </ItemWrapList>
       </Contents>
       <Footer />
     </Wrapper>
   );
 };
 
-const Wrapper = styled(PageWrapper)`
-  .items {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    &__item {
-      width: 27rem;
-      height: 30rem;
-      background-color: lightgray;
-      margin: 0.5rem;
-    }
-  }
-`;
+const Wrapper = styled(PageWrapper)``;
 
 const Filter = styled.div`
   ${({ theme }) => theme.flexCenter}
