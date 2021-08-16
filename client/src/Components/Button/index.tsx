@@ -1,7 +1,7 @@
 import { MouseEventHandler, ReactChild } from "react";
 import styled from "styled-components";
 
-type ButtonType = {
+export type ButtonType = {
   onClick?: MouseEventHandler<HTMLButtonElement>;
   type?: "button" | "submit";
   primary?: boolean;
