@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-import Temp from "./Temp";
+import Contents from "./Contents";
 
 const Content = ({ current }) => {
-  const C = Temp[current];
+  const C = Contents[current];
   return (
     <ContentWrapper>
       <C />
