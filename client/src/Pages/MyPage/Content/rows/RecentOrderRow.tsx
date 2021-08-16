@@ -3,6 +3,7 @@ import styled from "styled-components";
 import TableFrom from "../../Table/tableForm";
 
 type RecentOrderRowType = {
+  id: number;
   date: string;
   number: string;
   url: string;
@@ -14,6 +15,7 @@ type RecentOrderRowType = {
 };
 
 const RecentOrderRow = ({
+  id,
   date,
   number,
   url,
@@ -36,7 +38,7 @@ const RecentOrderRow = ({
         <TableFrom.Order orderDate={date} orderNumber={number} />
       </td>
       <td>
-        <TableFrom.ProductOption url={url} title={title} />
+        <TableFrom.ProductOption url={url} title={title} id={id} />
       </td>
       <td>
         {price} / {count}

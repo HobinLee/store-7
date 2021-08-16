@@ -427,6 +427,7 @@ export const buyItems = [
 
 export const recent = [
   {
+    id: 1,
     date: "20210813",
     number: "20210813004530201",
     url: "https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg",
@@ -438,6 +439,7 @@ export const recent = [
     reviewID: 0,
   },
   {
+    id: 2,
     date: "20210812",
     number: "20210812004533211",
     url: "https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg",
@@ -448,6 +450,7 @@ export const recent = [
     reviewID: 12,
   },
   {
+    id: 3,
     date: "20210809",
     number: "20210809004313219",
     url: "https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg",
@@ -465,32 +468,34 @@ export const question = [
     date: "20210813",
     category: "기타",
     title: "2주밖에 안 남았어요.",
-    문의상태: "답변완료",
+    status: "답변완료",
   },
   {
     id: 2,
     date: "20210814",
     category: "교환/환불",
     title: "바꿔줘요.",
-    문의상태: "답변대기",
+    status: "답변대기",
   },
   {
     id: 3,
     date: "20210815",
     category: "상품",
     title: "다 때가 있다 재입고 문의.",
-    문의상태: "답변완료",
+    status: "답변완료",
   },
 ];
 export const review = [
   {
-    number: 1,
+    id: 1,
+    number: 123,
     title: "제목 1",
     date: "20210814",
     author: "홍영준",
   },
   {
-    number: 2,
+    id: 2,
+    number: 234,
     title: "제목 2",
     date: "20210815",
     author: "홍영준",
