@@ -29,12 +29,23 @@ const Search = () => {
   const [searchList, setSearchList] = useState<string[]>(
     JSON.parse(localStorage.getItem(LS_SEARCH)) ?? []
   );
+
+  const makeNewSearchedList = (newKeyword: string): string[] => {
+    const MAX_LIST_COUNT = 10;
+
+    const newList = [
+      newKeyword,
+      ...searchList.filter((value, idx) => value !== newKeyword),
+    ];
+
+    return newList.slice(0, MAX_LIST_COUNT);
+  };
   const handleSearch = (keyword: string = searchValue.value) => {
     if (keyword === "") return;
 
     searchValue.setValue(keyword);
 
-    const newList: string[] = [...searchList, keyword];
+    const newList: string[] = makeNewSearchedList(keyword);
 
     setSearchList(newList);
     localStorage.setItem(LS_SEARCH, JSON.stringify(newList));
