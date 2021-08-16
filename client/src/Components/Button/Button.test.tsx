@@ -1,6 +1,5 @@
 import { render, fireEvent } from "@/utils/test-util";
-import { screen, createEvent } from "@testing-library/react";
-import "jest-styled-components";
+import { screen } from "@testing-library/react";
 
 import Button, { ButtonType } from "./index";
 
@@ -16,9 +15,12 @@ describe("<Button />", () => {
       <Button {...ButtonProps} onClick={handleClick} />
     );
     expect(container).toBeInTheDocument();
+
+    // children 체크
     const children = screen.queryByText("children");
     expect(children).toBeInTheDocument();
 
+    // 클릭 이벤트 체크
     fireEvent.click(
       screen.queryByRole("button") || screen.queryByRole("submit")
     );
