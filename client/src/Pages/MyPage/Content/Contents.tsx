@@ -6,9 +6,11 @@ import Item from "@/Components/Item";
 import Table from "../Table";
 import RecentOrderRow from "./rows/RecentOrderRow";
 
-import { ItemList } from "@/shared/styled";
-import { sampleMain } from "@/shared/dummy";
-import { recent, review, question } from "@/shared/dummy";
+import { ItemList, ItemWrapList } from "@/shared/styled";
+import { sampleCategory, sampleMain } from "@/shared/dummy";
+import { recent, review, question, questions } from "@/shared/dummy";
+import ReviewRow from "./rows/ReviewRow";
+import QuestionRow from "./rows/QuestionRow";
 
 const Root = () => {
   return (
@@ -94,13 +96,11 @@ const WishList = () => {
         descrition="최근 30일 내에 진행중인 주문정보입니다."
         lineType="long1"
       >
-        <ItemList>
-          {sampleMain.map((item) => (
-            <li key={item.id}>
-              <Item {...item} />
-            </li>
+        <ItemWrapList>
+          {sampleCategory.map((item) => (
+            <Item {...item} />
           ))}
-        </ItemList>
+        </ItemWrapList>
       </Section>
     </ContentWrapper>
   );
@@ -130,7 +130,7 @@ const Question = () => {
           {recent.length === 0 ? (
             <EmptyRow colSpan={4} message="게시글이 존재하지 않습니다." />
           ) : (
-            question.map((re) => <RecentOrderRow {...re} />)
+            questions.questions.map((question) => <QuestionRow {...question} />)
           )}
         </Table>
       </Section>
@@ -145,7 +145,7 @@ const Review = () => {
           {recent.length === 0 ? (
             <EmptyRow colSpan={4} message="게시글이 존재하지 않습니다." />
           ) : (
-            review.map((re) => <RecentOrderRow {...re} />)
+            review.map((re) => <ReviewRow {...re} />)
           )}
         </Table>
       </Section>
