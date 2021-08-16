@@ -464,29 +464,6 @@ export const recent = [
   },
 ];
 
-export const question = [
-  {
-    id: 1,
-    date: "20210813",
-    category: "기타",
-    title: "2주밖에 안 남았어요.",
-    status: "답변완료",
-  },
-  {
-    id: 2,
-    date: "20210814",
-    category: "교환/환불",
-    title: "바꿔줘요.",
-    status: "답변대기",
-  },
-  {
-    id: 3,
-    date: "20210815",
-    category: "상품",
-    title: "다 때가 있다 재입고 문의.",
-    status: "답변완료",
-  },
-];
 export const review = [
   {
     id: 1,
