@@ -21,8 +21,6 @@ const RandomList = [
 
 const AutoList = ({ keyword, handleSearch }) => {
   const handleClick = (v) => {
-    console.log(v, "click");
-
     handleSearch(v);
   };
   const [autoList, setAutoList] = useState<string[]>([]);
