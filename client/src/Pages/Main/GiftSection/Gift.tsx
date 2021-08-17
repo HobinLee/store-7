@@ -1,6 +1,7 @@
 import { ItemBannerType } from "@/shared/type";
 import { ETLink } from "@/Router";
 import styled from "styled-components";
+import { gap } from "@/styles/theme";
 
 const GiftItem = ({ item }: { item: ItemBannerType }) => (
   <ItemWrapper isWhite={item.isWhite}>
@@ -36,7 +37,7 @@ const ItemWrapper = styled.div<{ isWhite: boolean }>`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.5rem;
+    ${gap("0.5rem", "column")}
     padding: 2rem;
     background: ${({ isWhite }) =>
       isWhite

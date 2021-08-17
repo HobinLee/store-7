@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { ReviewType } from "@/shared/type";
 import Rating from "@/Components/Rating";
+import { gap } from "@/styles/theme";
 
 const ReviewBox = (review: ReviewType) => {
   return (
@@ -36,7 +37,7 @@ const Wrapper = styled.div`
     padding: 2rem 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    ${gap("3rem", "column")}
 
     .content-img {
       max-width: 80%;
@@ -53,10 +54,10 @@ const Header = styled.div`
   ${({ theme }) => theme.flexCenter}
   flex-direction: column;
   align-items: flex-start;
-  gap: 1rem;
+  ${gap("1rem", "column")}
   .info {
     ${({ theme }) => theme.flexCenter}
-    gap: 1rem;
+    ${gap("1rem", "column")}
   }
 `;
 

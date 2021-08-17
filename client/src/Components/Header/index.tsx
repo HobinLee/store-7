@@ -4,6 +4,7 @@ import { ReactChild, useState } from "react";
 import styled from "styled-components";
 import SearchBar from "./Search";
 import Menu from "./Menu";
+import { gap } from "@/styles/theme";
 
 const Header = ({ children }: { children?: ReactChild }) => {
   const [isLogined, setIsLogined] = useState(false);
@@ -53,7 +54,7 @@ const TopWrapper = styled.div`
   .header__buttons {
     display: flex;
     flex-direction: row;
-    gap: 5rem;
+    ${gap("5rem")}
 
     a:hover {
       font-weight: bolder;

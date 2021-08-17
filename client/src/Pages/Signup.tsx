@@ -15,6 +15,7 @@ import {
   validatePhoneNumber,
   VALIDATION_ERR_MSG,
 } from "@/utils/validations";
+import { gap } from "@/styles/theme";
 
 const SignupPage = () => {
   const email = useInput("");
@@ -150,13 +151,13 @@ const SignupForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3rem;
+  ${gap("3rem", "column")}
 
   .signup__buttons {
     width: 100%;
     display: flex;
     flex-direction: row;
-    gap: 5rem;
+    ${gap("5rem")}
 
     a {
       width: 100%;

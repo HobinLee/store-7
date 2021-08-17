@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { LINE_LINK } from "@/assets";
+import { gap } from "@/styles/theme";
 
 export const PageWrapper = styled.div`
   position: relative;
@@ -46,12 +47,14 @@ export const SignatureLine = styled.div<{ type: string }>`
 export const ItemList = styled.ul`
   display: flex;
   margin-top: 2rem;
-  gap: 1rem;
   justify-content: space-between;
   width: 100%;
+
   & > * {
     flex: 1;
   }
+
+  ${gap("1rem")}
 `;
 
 export const ItemWrapList = styled.ul`
