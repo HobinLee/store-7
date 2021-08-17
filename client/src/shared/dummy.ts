@@ -1,6 +1,6 @@
 import { CategoryType } from "@/Components/Header/Menu";
 import dayjs from "dayjs";
-import { QuestionListType, ReviewListType, UserType } from "./type";
+import { ItemType, QuestionListType, ReviewListType, UserType } from "./type";
 
 export const sampleMypage = {
   shopping: [
@@ -431,6 +431,12 @@ export const buyItems = {
       delivery: 2500,
     },
   ],
+};
+
+export const sampleItemDetail: ItemType = {
+  name: "1+1 IH 인덕션/스마트 프라이팬 궁중팬 균일가 골라담기",
+  price: 10000,
+  delivery: 2500,
 };
 
 export const recent = [

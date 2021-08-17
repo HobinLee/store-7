@@ -10,16 +10,12 @@ import Footer from "@/Components/Footer";
 import Guide from "./Guide";
 import ZoomModal from "./ZoomModal";
 import { gap } from "@/styles/theme";
+import { sampleItemDetail } from "@/shared/dummy";
+import { convertToKRW } from "@/utils/util";
 
 const topHeight = 740;
 
-const Blank = styled.div`
-  width: 100%;
-  height: 200rem;
-  background: lightgray;
-`;
-
-const tabs = [
+export const tabs = [
   {
     id: "first",
     title: "상품상세정보",
@@ -94,38 +90,48 @@ const DetailPage = () => {
 
       <Contents>
         <InfoBox>
-          <div onClick={handleZoomOpen} className="img-box">
+          <div
+            data-testid="image-box"
+            onClick={handleZoomOpen}
+            className="img-box"
+          >
             <img
               id="image"
               src="https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg"
               className="thumbnail"
             />
-            {isZoomOpened && <ZoomLens id="zoom-lens" />}
+            {isZoomOpened && (
+              <ZoomLens data-testid="zoom-lens" id="zoom-lens" />
+            )}
             {isZoomOpened && <ZoomModal />}
           </div>
           <Info>
-            <div className="title">으아아아악</div>
+            <div className="title">{sampleItemDetail.name}</div>
 
             <div className="list">
               <div className="list__item">
                 <div className="list__item--title">판매가격</div>
-                <div className="list__item--content price">10,000원</div>
+                <div className="list__item--content price">
+                  {convertToKRW(sampleItemDetail.price)}
+                </div>
               </div>
               <div className="list__item">
                 <div className="list__item--title">배송정보</div>
-                <div className="list__item--content">2,500원</div>
+                <div className="list__item--content">
+                  {convertToKRW(sampleItemDetail.delivery)}
+                </div>
               </div>
             </div>
 
-            <OptionBox {...{ numValue, handleClickNumVal }} />
+            <OptionBox key="option-box" {...{ numValue, handleClickNumVal }} />
           </Info>
         </InfoBox>
 
         <Scroll {...{ selectedTab, yOffset }}>
           <Tab yOffset={yOffset}>
-            {tabs.map((tab, idx) => (
+            {tabs.map((tab) => (
               <TabA
-                key={idx}
+                key={tab.title}
                 onClick={() => handleSelectTab(tab.id)}
                 isSelected={selectedTab === tab.id}
               >
@@ -135,8 +141,8 @@ const DetailPage = () => {
           </Tab>
 
           <div className="bottom-wrapper">
-            {tabs.map((tab, idx) => (
-              <TabPage key={idx}>
+            {tabs.map((tab) => (
+              <TabPage data-testid={tab.title} key={tab.title}>
                 {tab.id === selectedTab && tab.component}
               </TabPage>
             ))}
@@ -144,7 +150,10 @@ const DetailPage = () => {
 
           {yOffset > topHeight && selectedTab === "first" && (
             <div className="option-box">
-              <OptionBox {...{ numValue, handleClickNumVal }} />
+              <OptionBox
+                key="bottom-option-box"
+                {...{ numValue, handleClickNumVal }}
+              />
             </div>
           )}
         </Scroll>

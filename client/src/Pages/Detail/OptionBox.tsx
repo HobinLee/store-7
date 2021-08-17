@@ -10,7 +10,6 @@ import { gap } from "@/styles/theme";
 const OptionBox = ({ numValue, handleClickNumVal }) => {
   const [isCartAlertShown, setIsCartAlertShown] = useState(false);
 
-  console.log(numValue);
   return (
     <Wrapper>
       <div className="select-option">

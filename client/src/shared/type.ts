@@ -59,3 +59,10 @@ export type ItemBannerType = {
   id: number;
   isWhite?: boolean;
 };
+
+export type ItemType = {
+  name: string;
+  num?: number;
+  price: number;
+  delivery: number;
+};
