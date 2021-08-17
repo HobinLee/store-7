@@ -24,7 +24,7 @@ const AddressFormProps: AddressFormProps = {
   user: USER,
 };
 
-describe("<Progress />", () => {
+describe("<AddressForm />", () => {
   it("should render component in document", () => {
     const { container } = render(<AddressForm {...AddressFormProps} />);
     expect(container).toBeInTheDocument();

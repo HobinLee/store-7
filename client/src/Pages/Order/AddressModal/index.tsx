@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
 import { useState } from "react";
-import AddressBox from "./AddressBox";
+import AddressBox from "../AddressBox";
 import { sampleUser } from "@/shared/dummy";
 import { AddressType } from "@/shared/type";
 import Button from "@/Components/Button";
 import { Back } from "@/assets";
-import AddressForm from "./AddressForm";
+import AddressForm from "../AddressForm";
 
 const AddressModal = ({ closeModal }) => {
   const handleChangeAddress = (address: AddressType) => {
@@ -23,7 +23,11 @@ const AddressModal = ({ closeModal }) => {
     <Wrapper {...{ closeModal, title }} hideCloseBtn={page !== "select"}>
       <>
         {page !== "select" && (
-          <Back className="back-btn" onClick={() => setPage("select")} />
+          <Back
+            data-testid="back-btn"
+            className="back-btn"
+            onClick={() => setPage("select")}
+          />
         )}
 
         {page === "select" ? (

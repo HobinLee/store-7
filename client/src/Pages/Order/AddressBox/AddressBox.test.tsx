@@ -15,7 +15,7 @@ const USER = {
   phone: "phone",
   email: "email",
   image: "image",
-  addresses: [],
+  addresses: [ADDRESS],
   defaultDestinationId: 1234,
 };
 
@@ -25,7 +25,7 @@ const addressBoxProps: AddressBoxProps = {
   user: USER,
 };
 
-describe("<Progress />", () => {
+describe("<AddressBox />", () => {
   it("should render component in document", () => {
     const { container } = render(<AddressBox {...addressBoxProps} />);
     expect(container).toBeInTheDocument();
