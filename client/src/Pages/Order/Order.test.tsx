@@ -6,7 +6,6 @@ describe("<OrderPage />", () => {
   it("should render component in document", () => {
     const { container } = render(<OrderPage />);
     expect(container).toBeInTheDocument();
-    expect(screen.queryByTestId("title").innerHTML).toBe("장바구니");
 
     // 배송지 변경 클릭시 addressModal 열림
     fireEvent.click(screen.queryByText("변경"));
