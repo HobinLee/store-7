@@ -1,16 +1,16 @@
 import styled from "styled-components";
-import { ETLink } from "@/Router";
+import { Link } from "@/Router";
 
 const ProductOption = ({ url, title, id }) => {
   return (
-    <ETLink to={`/detail/${id}`}>
+    <Link to={`/detail/${id}`}>
       <ProductOptionWrapper>
         <div className="thumbnail">
           <img src={url} />
         </div>
         <h4 className="product__title">{title}</h4>
       </ProductOptionWrapper>
-    </ETLink>
+    </Link>
   );
 };
 

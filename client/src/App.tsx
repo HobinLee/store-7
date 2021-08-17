@@ -1,7 +1,7 @@
 import { useState } from "react";
 import MainPage from "@/Pages/Main";
 import LoginPage from "@/Pages/Login";
-import { ETRouter, ETRoute } from "./Router";
+import { Router, Route } from "./Router";
 import CategoryPage from "./Pages/Category";
 import DetailPage from "./Pages/Detail";
 import CartPage from "./Pages/Cart";
@@ -33,32 +33,32 @@ const App = () => {
         toggle mode
       </button>
 
-      <ETRouter>
-        <ETRoute path="/" exact>
+      <Router>
+        <Route path="/" exact>
           <MainPage />
-        </ETRoute>
-        <ETRoute path="/login" exact>
+        </Route>
+        <Route path="/login" exact>
           <LoginPage />
-        </ETRoute>
-        <ETRoute path="/cart" exact>
+        </Route>
+        <Route path="/cart" exact>
           <CartPage />
-        </ETRoute>
-        <ETRoute path="/order" exact>
+        </Route>
+        <Route path="/order" exact>
           <OrderPage />
-        </ETRoute>
-        <ETRoute path="/category">
+        </Route>
+        <Route path="/category">
           <CategoryPage />
-        </ETRoute>
-        <ETRoute path="/signup">
+        </Route>
+        <Route path="/signup">
           <SignupPage />
-        </ETRoute>
-        <ETRoute path="/detail">
+        </Route>
+        <Route path="/detail">
           <DetailPage />
-        </ETRoute>
-        <ETRoute path="/mypage">
+        </Route>
+        <Route path="/mypage">
           <MyPage />
-        </ETRoute>
-      </ETRouter>
+        </Route>
+      </Router>
     </ThemeProvider>
   );
 };

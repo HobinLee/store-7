@@ -1,4 +1,4 @@
-import { ETLink } from "@/Router";
+import { Link } from "@/Router";
 import { Logo } from "@/assets";
 import { ReactChild, useState } from "react";
 import styled from "styled-components";
@@ -15,25 +15,25 @@ const Header = ({ children }: { children?: ReactChild }) => {
   return (
     <TopWrapper>
       <Wrapper>
-        <ETLink to="/">
+        <Link to="/">
           <img width="200" src={Logo} />
-        </ETLink>
+        </Link>
         <SearchBar />
         <div className="header__buttons">
           {isLogined ? (
             <>
-              <ETLink to="/mypage">마이페이지</ETLink>
-              <ETLink to="/collection">찜</ETLink>
+              <Link to="/mypage">마이페이지</Link>
+              <Link to="/collection">찜</Link>
             </>
           ) : (
-            <ETLink to="/login">로그인</ETLink>
+            <Link to="/login">로그인</Link>
           )}
-          <ETLink to="/mypage">
+          <Link to="/mypage">
             <div>마이페이지</div>
-          </ETLink>
-          <ETLink to="/cart">
+          </Link>
+          <Link to="/cart">
             <div>장바구니</div>
-          </ETLink>
+          </Link>
         </div>
       </Wrapper>
       <Menu />

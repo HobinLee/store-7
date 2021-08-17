@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { getSiblingIndex } from "@/utils/node";
-import { ETLink } from "@/Router";
+import { Link } from "@/Router";
 import { categories } from "@/shared/dummy";
 
 export type CategoryType = {
@@ -59,9 +59,9 @@ const Menu = () => {
           key={idx}
           className={currentCategoryIndex === idx ? "selected" : ""}
         >
-          <ETLink key={idx} to={`/category?main_id=${idx}`}>
+          <Link key={idx} to={`/category?main_id=${idx}`}>
             {category.title}
-          </ETLink>
+          </Link>
         </li>
       ))}
     </MainCategoryWrapper>
@@ -87,12 +87,12 @@ const Menu = () => {
       {categories[currentCategoryIndex].subCategories?.map(
         (category: CategoryType, idx: number) => (
           <li key={idx}>
-            <ETLink
+            <Link
               key={idx}
               to={`/category?main_id=${currentCategoryIndex}&sub_id=${idx}`}
             >
               {category.title}
-            </ETLink>
+            </Link>
           </li>
         )
       )}
