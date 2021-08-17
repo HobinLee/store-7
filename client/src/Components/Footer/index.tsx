@@ -1,3 +1,4 @@
+import { gap } from "@/styles/theme";
 import styled from "styled-components";
 
 const Footer = () => {
@@ -38,14 +39,14 @@ const Wrapper = styled.div`
   padding-bottom: 8rem;
   background-color: ${({ theme }) => theme.color.light_grey1};
   ${({ theme }) => theme.flexCenter};
-  gap: 10rem;
+  ${gap("10rem")}
   img {
     margin-bottom: 5rem;
   }
   b {
     ${({ theme }) => theme.font.medium};
     display: flex;
-    gap: 5rem;
+    ${gap("rem")}
     font-weight: 700;
   }
   p {

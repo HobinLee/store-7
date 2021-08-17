@@ -1,3 +1,4 @@
+import { gap } from "@/styles/theme";
 import styled from "styled-components";
 import GiftItem from "./Gift";
 
@@ -15,7 +16,7 @@ const GiftListWrapper = styled.ul`
   display: flex;
   flex-direction: row;
   flex: 1 1 50%;
-  gap: 2rem;
+  ${gap("2rem")}
 `;
 
 export default GiftList;

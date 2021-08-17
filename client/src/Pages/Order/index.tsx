@@ -19,6 +19,7 @@ import {
   VALIDATION_ERR_MSG,
 } from "@/utils/validations";
 import { sampleUser } from "@/shared/dummy";
+import { gap } from "@/styles/theme";
 
 const OrderPage = () => {
   const email = useInput("");
@@ -167,7 +168,7 @@ const Content = styled.div`
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  gap: 8rem;
+  ${gap("8rem", "column")}
   margin-top: 4rem;
 `;
 
@@ -176,7 +177,7 @@ const Info = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 2rem;
+  ${gap("2rem", "column")}
   .label {
     ${({ theme }) => theme.flexCenter};
     ${({ theme }) => theme.font.large};
@@ -190,7 +191,7 @@ const Info = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3rem;
+    ${gap("3rem", "column")}
     width: 30rem;
   }
   div {
@@ -200,12 +201,12 @@ const Info = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    gap: 2rem;
+    ${gap("2rem", "column")}
   }
   .address-info {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    ${gap("1rem", "column")}
     .name {
       ${({ theme }) => theme.font.large};
     }

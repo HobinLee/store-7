@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ETLink } from "@/Router";
+import { Link } from "@/Router";
 import styled, { css } from "styled-components";
 import MagnifiedImage from "./MagnifiedImage";
 import { Wish } from "@/assets";
@@ -32,7 +32,7 @@ const Item = ({
 
   return (
     <li key={id}>
-      <ETLink to={`/detail/${id}`}>
+      <Link to={`/detail/${id}`}>
         <ItemWrapper>
           <div className="thumbnail">
             <MagnifiedImage src="https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg" />
@@ -62,7 +62,7 @@ const Item = ({
             </div>
           </div>
         </ItemWrapper>
-      </ETLink>
+      </Link>
     </li>
   );
 };

@@ -9,6 +9,7 @@ import ValidationInput from "@/Components/Input/ValidationInput";
 import Address from "@/Components/Address";
 
 import { validatePhoneNumber, VALIDATION_ERR_MSG } from "@/utils/validations";
+import { gap } from "@/styles/theme";
 
 type AddressFormProps = {
   address?: AddressType;
@@ -87,8 +88,8 @@ const AddressForm = ({ address: addressToEdit, user }: AddressFormProps) => {
 
 const Wrapper = styled.div`
   display: flex;
-  gap: 1rem;
   flex-direction: column;
+  ${gap("1rem", "column")}
   background: #fff;
   border-radius: 1rem;
   padding: 2rem;
@@ -111,7 +112,7 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3rem;
+  ${gap("3rem", "column")}
   .save-btn {
     position: absolute;
     padding: 2rem;

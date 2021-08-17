@@ -1,9 +1,10 @@
 import { PageWrapper } from "@/shared/styled";
 import styled from "styled-components";
 import Input from "@/Components/Input";
-import { ETLink } from "@/Router";
+import { Link } from "@/Router";
 import Button from "@/Components/Button";
 import useInput from "@/hooks/useInput";
+import { gap } from "@/styles/theme";
 
 const LoginPage = () => {
   const id = useInput("");
@@ -51,9 +52,9 @@ const LoginPage = () => {
           </Button>
           <Button>Github 로그인</Button>
           <div className="login-form__footer">
-            <ETLink to="/signup">회원가입</ETLink>
-            <ETLink to="/findid">아이디 찾기</ETLink>
-            <ETLink to="/findpw">비밀번호 찾기</ETLink>
+            <Link to="/signup">회원가입</Link>
+            <Link to="/findid">아이디 찾기</Link>
+            <Link to="/findpw">비밀번호 찾기</Link>
           </div>
         </Form>
         <Form>
@@ -135,7 +136,7 @@ const Form = styled.form`
   height: auto;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  ${gap("2rem", "column")}
 `;
 
 export default LoginPage;

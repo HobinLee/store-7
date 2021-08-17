@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, ReactElement, JSXElementConstructor } from "react";
 import MainPage from "@/Pages/Main";
 import LoginPage from "@/Pages/Login";
-import { ETRouter, ETRoute } from "./Router";
+import { Router, Route } from "./Router";
 import CategoryPage from "./Pages/Category";
 import DetailPage from "./Pages/Detail";
 import CartPage from "./Pages/Cart";
@@ -13,6 +13,19 @@ import { GlobalStyle } from "./styles/global-style";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import SignupPage from "./Pages/Signup";
+
+type route = [string, JSX.Element, boolean?];
+
+const routes: route[] = [
+  ["/", <MainPage />, true],
+  ["/login", <LoginPage />, true],
+  ["/signup", <SignupPage />],
+  ["/category", <CategoryPage />],
+  ["/order", <OrderPage />, true],
+  ["/detail", <DetailPage />],
+  ["/cart", <CartPage />],
+  ["/mypage", <MyPage />],
+];
 
 const App = () => {
   const [themeMode, setThemeMode] = useState("light");
@@ -33,32 +46,13 @@ const App = () => {
         toggle mode
       </button>
 
-      <ETRouter>
-        <ETRoute path="/" exact>
-          <MainPage />
-        </ETRoute>
-        <ETRoute path="/login" exact>
-          <LoginPage />
-        </ETRoute>
-        <ETRoute path="/cart" exact>
-          <CartPage />
-        </ETRoute>
-        <ETRoute path="/order" exact>
-          <OrderPage />
-        </ETRoute>
-        <ETRoute path="/category">
-          <CategoryPage />
-        </ETRoute>
-        <ETRoute path="/signup">
-          <SignupPage />
-        </ETRoute>
-        <ETRoute path="/detail">
-          <DetailPage />
-        </ETRoute>
-        <ETRoute path="/mypage">
-          <MyPage />
-        </ETRoute>
-      </ETRouter>
+      <Router>
+        {routes.map(([path, component, exact]: route) => (
+          <Route path={path} exact={exact ?? false}>
+            {component}
+          </Route>
+        ))}
+      </Router>
     </ThemeProvider>
   );
 };
