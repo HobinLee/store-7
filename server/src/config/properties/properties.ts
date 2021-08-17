@@ -1,10 +1,13 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 export default {
   server: {
     port: 8080,
   },
   elastic: {
-    node: "http://3.35.173.123:9200",
-    username: "elastic",
-    password: "store_7_elastic",
+    node: process.env.ELASTIC_NODE,
+    username: process.env.ELASTIC_USERNAME,
+    password: process.env.ELASTIC_PASSWORD,
   },
 };
