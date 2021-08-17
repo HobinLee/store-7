@@ -29,7 +29,7 @@ const RouterContext = createContext<RouterContextPropsType>({
   location: DEFAULT_LOCATION,
 });
 
-export const ETRouter = ({ children }): ReactElement => {
+export const Router = ({ children }): ReactElement => {
   const [location, setLocation] = useState(window.location.pathname);
 
   const setCurrentLocation = () => {
@@ -59,7 +59,7 @@ export const ETRouter = ({ children }): ReactElement => {
   );
 };
 
-export const ETRoute = ({ exact, path, children }: RouteType) => {
+export const Route = ({ exact, path, children }: RouteType) => {
   const { location } = useContext(RouterContext);
 
   const checkPath = (): boolean => {
@@ -83,7 +83,7 @@ export const moveTo = (path: string) => {
   window.dispatchEvent(routeEvent);
 };
 
-export const ETLink = ({
+export const Link = ({
   to,
   children,
 }: {
