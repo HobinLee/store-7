@@ -3,6 +3,7 @@ import Rating from "@/Components/Rating";
 import useInput from "@/hooks/useInput";
 import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
+import { gap } from "@/styles/theme";
 
 const ReviewModal = ({ handleModalOpen }) => {
   const reviewVal = useInput("");
@@ -47,7 +48,7 @@ const Wrapper = styled.form`
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    ${gap("1rem", "column")}
     &__label {
       ${({ theme }) => theme.font.medium};
     }

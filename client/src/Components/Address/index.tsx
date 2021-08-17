@@ -5,6 +5,7 @@ import useInput from "@/hooks/useInput";
 import { useState, useEffect } from "react";
 import ModalWrapper from "../ModalWrapper";
 import { AddressType, PostcodeType } from "@/shared/type";
+import { gap } from "@/styles/theme";
 
 export type ChangeAddressHandler = (address: AddressType) => {};
 
@@ -71,7 +72,7 @@ const AddressWrapper = styled.div`
   max-width: 50rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  ${gap("1rem", "column")}
   ${({ theme }) => theme.borderRadius.small}
 
   input {
@@ -99,11 +100,11 @@ const AddressWrapper = styled.div`
   .address-search {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    ${gap("1rem", "column")}
     &__upper {
       display: flex;
       flex-direction: row;
-      gap: 1rem;
+      ${gap("1rem")}
     }
     input {
       width: 100%;

@@ -3,6 +3,7 @@ import useInput from "@/hooks/useInput";
 import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
 import { useState } from "react";
+import { gap } from "@/styles/theme";
 
 export const OPTIONS = ["상품", "배송", "반품", "교환", "환불", "기타"];
 
@@ -56,7 +57,7 @@ const Wrapper = styled.form`
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    ${gap("1rem", "column")}
     &__label {
       ${({ theme }) => theme.font.medium};
     }

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { QuestionType } from "@/shared/type";
 import dayjs from "dayjs";
+import { gap } from "@/styles/theme";
 
 export const YYYY_MM_DD_HH_mm = (date: Date) =>
   dayjs(date).format("YYYY년 MM월 DD일 HH시 mm분");
@@ -59,7 +60,7 @@ const Header = styled.div`
   ${({ theme }) => theme.flexCenter}
   justify-content: flex-start;
   margin-top: 1rem;
-  gap: 1rem;
+  ${gap("1rem")}
   .date {
     color: ${({ theme }) => theme.color.grey1};
   }

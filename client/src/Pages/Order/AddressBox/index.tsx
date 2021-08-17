@@ -3,6 +3,7 @@ import { AddressType, UserType } from "@/shared/type";
 import Button from "@/Components/Button";
 import { SetStateAction } from "react";
 import { Dispatch } from "react";
+import { gap } from "@/styles/theme";
 
 export type AddressBoxProps = {
   setPage: Dispatch<SetStateAction<"select" | "add" | "edit">>;
@@ -39,8 +40,8 @@ const AddressBox = ({ setPage, address, user }: AddressBoxProps) => {
 
 const Wrapper = styled.div`
   display: flex;
-  gap: 1rem;
   flex-direction: column;
+  ${gap("1rem", "column")}
   background: #fff;
   border-radius: 1rem;
   padding: 2rem;
@@ -58,7 +59,7 @@ const Wrapper = styled.div`
     justify-content: space-between;
     & > div {
       display: flex;
-      gap: 1rem;
+      ${gap("1rem")}
     }
   }
 `;

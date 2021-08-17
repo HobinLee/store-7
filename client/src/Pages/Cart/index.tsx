@@ -7,6 +7,7 @@ import CartBox from "./CartBox";
 import { buyItems } from "@/shared/dummy";
 import { Arrow } from "@/assets";
 import Checkbox from "@/Components/Checkbox";
+import { gap } from "@/styles/theme";
 
 const CartPage = () => {
   return (
@@ -62,13 +63,13 @@ const Content = styled.div`
   display: flex;
   align-items: flex-start;
   width: 100%;
-  gap: 3rem;
+  ${gap("3rem")}
   .items {
     padding-bottom: 5rem;
     display: flex;
     flex-direction: column;
     width: 100%;
-    gap: 2rem;
+    ${gap("2rem", "column")}
   }
 `;
 

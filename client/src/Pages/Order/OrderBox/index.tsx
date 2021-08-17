@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Button from "@/Components/Button";
 import { convertToKRW } from "@/utils/util";
+import { gap } from "@/styles/theme";
 
 export type OrderBoxProps = {
   totalPrice: number;
@@ -76,7 +77,7 @@ const Result = styled.div`
   background: ${({ theme }) => theme.color.background};
   border-radius: 1rem;
   padding: 3rem 2rem;
-  gap: 2rem;
+  ${gap("2rem", "column")}
   width: 40rem;
   & > div {
     ${({ theme }) => theme.flexCenter};

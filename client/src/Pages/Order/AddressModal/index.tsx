@@ -7,6 +7,7 @@ import { AddressType } from "@/shared/type";
 import Button from "@/Components/Button";
 import { Back } from "@/assets";
 import AddressForm from "../AddressForm";
+import { gap } from "@/styles/theme";
 
 const AddressModal = ({ closeModal }) => {
   const handleChangeAddress = (address: AddressType) => {
@@ -84,7 +85,7 @@ const Contents = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  ${gap("1rem", "column")}
   background: ${({ theme }) => theme.color.background};
   overflow-y: scroll;
 `;

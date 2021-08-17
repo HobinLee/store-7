@@ -9,6 +9,7 @@ import Question from "./Question";
 import Footer from "@/Components/Footer";
 import Guide from "./Guide";
 import ZoomModal from "./ZoomModal";
+import { gap } from "@/styles/theme";
 
 const topHeight = 740;
 
@@ -177,7 +178,7 @@ const InfoBox = styled.div`
   width: 100%;
   height: 50rem;
   box-sizing: border-box;
-  gap: 9rem;
+  ${gap("5rem")}
   .thumbnail {
     width: 50rem;
     height: 100%;

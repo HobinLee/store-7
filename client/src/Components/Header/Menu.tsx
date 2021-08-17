@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { getSiblingIndex } from "@/utils/node";
-import { ETLink } from "@/Router";
+import { Link } from "@/Router";
 import { categories } from "@/shared/dummy";
 
 export type CategoryType = {
@@ -11,59 +11,98 @@ export type CategoryType = {
 
 const Menu = () => {
   const [currentCategoryIndex, setCurrentCategory] = useState(0);
+  const [padding, setPadding] = useState(0);
 
-  const checkChangeCategory = (e): boolean => {
-    if (e.target.nodeName === "UL") return false;
-
-    const [dx, dy] = [e.movementX, e.movementY];
+  const checkChangeCategory = ({
+    target,
+    movementX: dx,
+    movementY: dy,
+  }): boolean => {
+    if (target.nodeName === "UL") return false;
 
     if (!dx && !dy) return false;
 
     const moveRatio = Math.abs(dx / dy);
 
     // 기울기가 THRESHOLD 이상으로 넘어갈 때만 category 변경
-    const THRESHOLD = 20;
+    const THRESHOLD = 100;
 
     if (moveRatio !== 0 && moveRatio < THRESHOLD) return false;
 
     return true;
   };
 
+  const getPadding = ($li: HTMLElement) => {
+    const left: number = $li.offsetLeft - $li.parentElement.offsetLeft;
+    const width: number = $li.offsetWidth;
+    const barWidth: number = $li.parentElement.offsetWidth;
+
+    setPadding(barWidth - 2 * left - width);
+  };
+
   const handleMouseMove = (e) => {
     if (!checkChangeCategory(e)) return;
 
-    const currentIndex = getSiblingIndex(e.target.closest("LI") as HTMLElement);
-    setCurrentCategory(currentIndex);
+    const $li: HTMLElement = e.target.closest("LI");
+    const currentIndex = getSiblingIndex($li);
+
+    if (currentIndex !== currentCategoryIndex) {
+      setCurrentCategory(currentIndex);
+      getPadding($li);
+    }
   };
+
+  const generateMainCategory = (
+    <MainCategoryWrapper onMouseMove={handleMouseMove}>
+      {categories.map((category: CategoryType, idx: number) => (
+        <li
+          key={idx}
+          className={currentCategoryIndex === idx ? "selected" : ""}
+        >
+          <Link key={idx} to={`/category?main_id=${idx}`}>
+            {category.title}
+          </Link>
+        </li>
+      ))}
+    </MainCategoryWrapper>
+  );
+
+  const getWidth = (list: CategoryType[]): number => {
+    const CHAR_WIDTH = 10; //한 글자당 가로 크기: 10px (대충)
+    const PADDING = 60; //한 버튼당 가로 패딩이: 6rem
+
+    return (
+      list?.reduce(
+        (prev, curr) => prev + curr.title.length * CHAR_WIDTH + PADDING,
+        0
+      ) ?? 0
+    );
+  };
+
+  const generateSubCategory = (
+    <SubCategoryWrapper
+      padding={padding}
+      width={getWidth(categories[currentCategoryIndex].subCategories)}
+    >
+      {categories[currentCategoryIndex].subCategories?.map(
+        (category: CategoryType, idx: number) => (
+          <li key={idx}>
+            <Link
+              key={idx}
+              to={`/category?main_id=${currentCategoryIndex}&sub_id=${idx}`}
+            >
+              {category.title}
+            </Link>
+          </li>
+        )
+      )}
+    </SubCategoryWrapper>
+  );
 
   return (
     <Wrapper>
-      <MainCategoryWrapper onMouseMove={handleMouseMove}>
-        {categories.map((category: CategoryType, idx: number) => (
-          <li
-            key={idx}
-            className={currentCategoryIndex === idx ? "selected" : ""}
-          >
-            <ETLink key={idx} to={`/category?main_id=${idx}`}>
-              {category.title}
-            </ETLink>
-          </li>
-        ))}
-      </MainCategoryWrapper>
-      <SubCategoryWrapper>
-        {categories[currentCategoryIndex].subCategories?.map(
-          (category: CategoryType, idx: number) => (
-            <li key={idx}>
-              <ETLink
-                key={idx}
-                to={`/category?main_id=${currentCategoryIndex}&sub_id=${idx}`}
-              >
-                {category.title}
-              </ETLink>
-            </li>
-          )
-        )}
-      </SubCategoryWrapper>
+      {generateMainCategory}
+      {generateSubCategory}
     </Wrapper>
   );
 };
@@ -74,7 +113,6 @@ const Wrapper = styled.div`
   width: 100%;
   max-width: 120rem;
   padding: 0 5rem;
-  overflow-x: scroll;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -83,7 +121,6 @@ const Wrapper = styled.div`
 
   ul {
     width: 100%;
-    padding: 0.5rem 0;
   }
 
   li {
@@ -97,9 +134,21 @@ const Wrapper = styled.div`
 `;
 
 const MainCategoryWrapper = styled.ul`
+  padding: 0.5rem 0;
+  width: auto;
   justify-content: space-between;
   display: flex;
   flex-direction: row;
+  overflow-x: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+  }
+
+  li {
+    flex-shrink: 0;
+  }
 
   .selected {
     font-weight: bolder;
@@ -109,14 +158,46 @@ const MainCategoryWrapper = styled.ul`
   }
 `;
 
-const SubCategoryWrapper = styled.ul`
+/* Sub 카테고리가 메인 카테고리 가운데 오도록 padding 값을 구하는 함수!
+ * 하지만 만약 Sub카테고리의 길이가 길어서 가운데 온다면 전체 영역을 벗어 나기 때문에
+ * padding을 적용하지 않고 flex-start, flex-end로 제일 끝에 오도록 반영
+ */
+const setPadding = (padding: number, width: number): string => {
+  const PADDING = 100; //100px;
+
+  const barWidth = window.innerWidth - PADDING;
+  const totalWidth = Math.abs(padding) + width;
+
+  // 가운데 위치해도 괜찮은 경우
+  if (totalWidth < barWidth) {
+    return padding > 0
+      ? `padding-right:${padding}px;`
+      : `padding-left:${Math.abs(padding)}px;`;
+  } else {
+    //길이가 길어서 가운데 위치 한다면 가릴 경우
+    return padding > 0
+      ? `justify-content: flex-start;`
+      : `justify-content: flex-end;`;
+  }
+};
+
+const SubCategoryWrapper = styled.ul<{ padding: number; width: number }>`
+  box-sizing: border-box;
   display: flex;
   justify-content: center;
   flex-direction: row;
+  ${({ padding, width }) => setPadding(padding, width)}
   ${({ theme }) => theme.font.small}
+  overflow-x: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+  }
 
   li {
     padding: 1rem 3rem;
+    flex-shrink: 0;
   }
 `;
 
