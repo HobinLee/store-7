@@ -1,0 +1,27 @@
+name: CI-Server
+
+on:
+  push:
+    branches: [dev]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./server
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: build docker image
+        run: docker build -t leaguelugas/store-7 .
+        working-directory: ./server
+
+      - name: publish to Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: leaguelugas/store-7:latest
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
