@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: build docker image
-        run: docker build -t leaguelugas/store-7 .
+        run: docker build -t leaguelugas/store-7:latest .
         working-directory: ./server
 
       - name: publish to Registry
