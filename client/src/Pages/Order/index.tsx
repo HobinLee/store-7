@@ -36,7 +36,10 @@ const OrderPage = () => {
       </Header>
       <div className="contents">
         <Title>
-          <span className="other">장바구니</span> <Arrow /> 주문/결제
+          <span data-testid="title" className="other">
+            장바구니
+          </span>{" "}
+          <Arrow /> 주문/결제
         </Title>
 
         <Content>
