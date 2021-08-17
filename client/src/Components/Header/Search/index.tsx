@@ -1,49 +1,12 @@
-import { ETLink } from "@/Router";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useEffect, useState } from "react";
-import Input from "../Input";
+import Input from "@/Components/Input";
 import { DropdownWrapper, DropdownItem } from "@/shared/styled";
 import useInput from "@/hooks/useInput";
+import SearchList from "./SearchList";
+import AutoList from "./AutoCompleteList";
 
 const LS_SEARCH = "search";
-
-const SearchList = ({ list, handleSearch }) => {
-  const generateList = list.map((keyword, idx) => (
-    <li key={idx} onClick={() => handleSearch(keyword)}>
-      {" "}
-      {keyword}{" "}
-    </li>
-  ));
-  return (
-    <SearchListWrapper>
-      {list.length > 0 ? (
-        generateList
-      ) : (
-        <span className="no-list">최근 검색내역이 없습니다</span>
-      )}
-    </SearchListWrapper>
-  );
-};
-
-const SearchListWrapper = styled.ul`
-  display: flex;
-  flex-direction: column;
-  margin-top: 1rem;
-
-  li {
-    color: ${({ theme }) => theme.color.grey1};
-    padding: 1rem;
-    max-width: 100%;
-    cursor: pointer;
-    &:hover {
-      background: ${({ theme }) => theme.color.background};
-    }
-  }
-
-  .no-list {
-    color: ${({ theme }) => theme.color.grey1};
-  }
-`;
 
 const Search = () => {
   const searchValue = useInput("");
@@ -59,22 +22,41 @@ const Search = () => {
   };
 
   const [isSearchBoxOpened, setIsSearchBoxOpened] = useState(false);
-  const handleSearchBoxOpen = () => {
+  const handleSearchBox = () => {
     setIsSearchBoxOpened(!isSearchBoxOpened);
   };
 
-  const [searchList, setSearchList] = useState(
+  const [searchList, setSearchList] = useState<string[]>(
     JSON.parse(localStorage.getItem(LS_SEARCH)) ?? []
   );
+
+  const setNewSearchList = (newList: string[]) => {
+    setSearchList(newList);
+    localStorage.setItem(LS_SEARCH, JSON.stringify(newList));
+  };
+
+  const makeNewSearchedList = (newKeyword: string): string[] => {
+    const MAX_LIST_COUNT = 10;
+
+    const newList = [
+      newKeyword,
+      ...searchList.filter((value, idx) => value !== newKeyword),
+    ];
+
+    return newList.slice(0, MAX_LIST_COUNT);
+  };
   const handleSearch = (keyword: string = searchValue.value) => {
     if (keyword === "") return;
 
     searchValue.setValue(keyword);
 
-    const newList: string[] = [...searchList, keyword];
+    setNewSearchList(makeNewSearchedList(keyword));
+  };
 
-    setSearchList(newList);
-    localStorage.setItem(LS_SEARCH, JSON.stringify(newList));
+  const handleDeleteSearchList = (keyword?: string) => {
+    keyword
+      ? setNewSearchList(searchList.filter((value) => value !== keyword))
+      : setNewSearchList([]);
   };
 
   useEffect(() => {
@@ -99,7 +81,7 @@ const Search = () => {
           </DropdownWrapper>
         )}
       </div>
-      <div style={{ position: "relative" }} onClick={handleSearchBoxOpen}>
+      <div style={{ position: "relative" }} onClick={handleSearchBox}>
         <SearchInput
           placeholder="검색어를 입력해주세요."
           value={searchValue.value}
@@ -110,8 +92,18 @@ const Search = () => {
         )}
         {isSearchBoxOpened && (
           <SearchBox>
-            <span className="search-list__title">최근검색어</span>
-            <SearchList list={searchList} handleSearch={handleSearch} />
+            {searchValue.value?.length ? (
+              <AutoList
+                keyword={searchValue.value}
+                handleSearch={handleSearch}
+              />
+            ) : (
+              <SearchList
+                list={searchList}
+                handleSearch={handleSearch}
+                handleDelete={handleDeleteSearchList}
+              />
+            )}
           </SearchBox>
         )}
       </div>
@@ -139,8 +131,6 @@ const SearchBox = styled.div`
   ${({ theme }) => theme.font.small}
   position: absolute;
   width: 27rem;
-  max-height: 16rem;
-  overflow-y: scroll;
   padding: 1rem;
   border: 1px solid ${({ theme }) => theme.color.light_grey2};
   background: ${({ theme }) => theme.color.off_white};
