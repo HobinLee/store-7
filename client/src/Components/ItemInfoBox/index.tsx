@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Checkbox from "@/Components/Checkbox";
 import { convertToKRW } from "@/utils/util";
+import { gap } from "@/styles/theme";
 
 export type ItemInfoBoxProps = {
   name: string;
@@ -57,7 +58,7 @@ const Wrapper = styled.div`
   .info {
     display: flex;
     align-items: flex-start;
-    gap: 2rem;
+    ${gap("2rem")}
     &__name {
       ${({ theme }) => theme.font.large};
     }
@@ -74,7 +75,7 @@ const Wrapper = styled.div`
     ${({ theme }) => theme.flexCenter};
     font-weight: 700;
     justify-content: flex-end;
-    gap: 2rem;
+    ${gap("2rem")}
   }
 `;
 

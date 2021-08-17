@@ -4,6 +4,7 @@ import Input from "@/Components/Input";
 import { ETLink } from "@/Router";
 import Button from "@/Components/Button";
 import useInput from "@/hooks/useInput";
+import { gap } from "@/styles/theme";
 
 const LoginPage = () => {
   const id = useInput("");
@@ -135,7 +136,7 @@ const Form = styled.form`
   height: auto;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  ${gap("2rem", "column")}
 `;
 
 export default LoginPage;

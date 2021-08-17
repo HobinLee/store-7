@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { QuestionType } from "@/shared/type";
 import dayjs from "dayjs";
+import { gap } from "@/styles/theme";
 
 const QuestionBox = (Question: QuestionType) => {
   const isAnswered = Question.answer ? true : false;
@@ -58,7 +59,7 @@ const Header = styled.div`
   ${({ theme }) => theme.flexCenter}
   justify-content: flex-start;
   margin-top: 1rem;
-  gap: 1rem;
+  ${gap("1rem")}
   .date {
     color: ${({ theme }) => theme.color.grey1};
   }

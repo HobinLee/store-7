@@ -5,6 +5,7 @@ import ReviewBox from "./ReviewBox";
 import { useState } from "react";
 import ReviewModal from "./ReviewModal";
 import { reviews } from "@/shared/dummy";
+import { gap } from "@/styles/theme";
 
 const Review = () => {
   const [isModalOpened, setIsModalOpened] = useState(false);
@@ -79,7 +80,7 @@ const Header = styled.div`
   justify-content: space-between;
   .left {
     ${({ theme }) => theme.flexCenter};
-    gap: 4rem;
+    ${gap("4rem")}
   }
   .progress {
     background-color: ${({ theme }) => theme.color.background};
@@ -109,7 +110,7 @@ const Filter = styled.div`
 
   .buttons {
     ${({ theme }) => theme.flexCenter};
-    gap: 1.5rem;
+    ${gap("1.5rem")}
     & > * {
       cursor: pointer;
     }
