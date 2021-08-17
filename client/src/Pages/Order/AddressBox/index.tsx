@@ -5,7 +5,7 @@ import { SetStateAction } from "react";
 import { Dispatch } from "react";
 import { gap } from "@/styles/theme";
 
-type AddressBoxProps = {
+export type AddressBoxProps = {
   setPage: Dispatch<SetStateAction<"select" | "add" | "edit">>;
   address: AddressType;
   user: UserType;
@@ -21,7 +21,7 @@ const AddressBox = ({ setPage, address, user }: AddressBoxProps) => {
       <div className="name">{address.name}</div>
       <div>{address.detailAddress}</div>
       <div className="user">
-        {user.name} {user.phone}
+        <span>{user.name}</span> <span>{user.phone}</span>
       </div>
       <div className="buttons">
         <div>

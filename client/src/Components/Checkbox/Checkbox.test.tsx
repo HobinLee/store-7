@@ -15,7 +15,7 @@ describe("<Checkbox />", () => {
     const { container } = render(<Checkbox {...checkboxProps} />);
     expect(container).toBeInTheDocument();
     expect(
-      screen.getByRole("checkbox", { checked: IS_CHECKED })
+      screen.queryByRole("checkbox", { checked: IS_CHECKED })
     ).toBeInTheDocument();
 
     // label 체크
@@ -24,6 +24,8 @@ describe("<Checkbox />", () => {
 
     // 클릭하면 false -> true || true -> false
     fireEvent.click(screen.queryByRole("button"));
-    expect(screen.getByRole("checkbox", { checked: true })).toBeInTheDocument();
+    expect(
+      screen.queryByRole("checkbox", { checked: true })
+    ).toBeInTheDocument();
   });
 });

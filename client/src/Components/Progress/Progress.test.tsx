@@ -2,13 +2,11 @@ import { render } from "@/utils/test-util";
 import { screen } from "@testing-library/react";
 import Progress, { output, ProgressProps } from "./index";
 
-const NUMBER = Math.floor(Math.random() * 10) + 1;
-
 const progressProps: ProgressProps = {
   content: {
-    value: NUMBER,
-    count: NUMBER,
-    totalCount: NUMBER,
+    value: 10000,
+    count: 5,
+    totalCount: 3,
   },
 };
 

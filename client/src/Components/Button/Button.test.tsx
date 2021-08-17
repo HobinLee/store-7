@@ -28,4 +28,19 @@ describe("<Button />", () => {
     );
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
+
+  it("when disabled", () => {
+    const handleClick = jest.fn();
+
+    const { container } = render(
+      <Button {...buttonProps} onClick={handleClick} disabled />
+    );
+    expect(container).toBeInTheDocument();
+
+    // disabled이면 클릭 안됨
+    fireEvent.click(
+      screen.queryByRole("button") || screen.queryByRole("submit")
+    );
+    expect(handleClick).toHaveBeenCalledTimes(0);
+  });
 });

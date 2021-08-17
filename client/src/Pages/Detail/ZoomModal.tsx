@@ -7,7 +7,7 @@ const ZoomModal = () => {
     imageZoom("image", "zoom-box", "zoom-lens");
   }, []);
 
-  return <Wrapper id="zoom-box"></Wrapper>;
+  return <Wrapper data-testid="zoom-box" id="zoom-box"></Wrapper>;
 };
 
 const Wrapper = styled.div`
