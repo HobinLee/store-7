@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export const imageZoom = (imgID: string, resultID: string, lensID: string) => {
   const moveLens = (e: MouseEvent) => {
     e.preventDefault();
@@ -68,3 +70,6 @@ export const calSaledPrice = (price: number, discountRate: number) => {
 export const convertToKRW = (price) => {
   return price.toLocaleString() + "원";
 };
+
+export const YYYY_MM_DD_HH_mm = (date: Date) =>
+  dayjs(date).format("YYYY년 MM월 DD일 HH시 mm분");

@@ -1,7 +1,8 @@
 import { QuestionType } from "@/shared/type";
 import { render } from "@/utils/test-util";
+import { YYYY_MM_DD_HH_mm } from "@/utils/util";
 import { screen } from "@testing-library/react";
-import QuestionBox, { YYYY_MM_DD_HH_mm } from "./index";
+import QuestionBox from "./index";
 
 const AUTHOR = "author";
 const Q_CONTENT = "question";

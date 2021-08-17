@@ -4,7 +4,7 @@ export type ReviewType = {
   content: string;
   img?: string;
   author: string;
-  date: string;
+  date: Date;
 };
 export type ReviewListType = {
   totalCount: number;
