@@ -54,9 +54,6 @@ const DetailPage = () => {
   };
 
   const [isZoomOpened, setIsZoomOpened] = useState(false);
-  const handleZoomOpen = () => {
-    setIsZoomOpened(!isZoomOpened);
-  };
 
   useEffect(() => {
     addEventListener("scroll", () => {
@@ -92,7 +89,8 @@ const DetailPage = () => {
         <InfoBox>
           <div
             data-testid="image-box"
-            onClick={handleZoomOpen}
+            onClick={() => setIsZoomOpened(true)}
+            onMouseLeave={() => setIsZoomOpened(false)}
             className="img-box"
           >
             <img
