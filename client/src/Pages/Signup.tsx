@@ -1,7 +1,7 @@
 import { PageWrapper } from "@/shared/styled";
 import { useState } from "react";
 import styled from "styled-components";
-import { ETLink } from "@/Router";
+import { ETLink, moveTo } from "@/Router";
 import Address from "@/Components/Address";
 import useInput from "@/hooks/useInput";
 import InputSection from "@/Components/Input/InputSection";
@@ -55,6 +55,7 @@ const SignupPage = () => {
     };
 
     //TODO: API 요청 보낸 후 리디렉션
+    moveTo("/");
   };
 
   const isSubmittable =
