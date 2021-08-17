@@ -14,7 +14,7 @@ export const output = (props: OrderBoxProps) => {
     priceOutput: convertToKRW(props.totalPrice),
     deliveryOutput: convertToKRW(props.totalDelivery),
     paymentOutput: convertToKRW(props.totalPayment),
-    countOutput: `${props.totalCount}개 상품 구매하기`,
+    buttonText: `${convertToKRW(props.totalPrice)}원 결제하기`,
   };
 };
 
@@ -54,7 +54,7 @@ const OrderBox = ({
         size="large"
         onClick={() => (window.location.href = "/order")}
       >
-        <span>{OUTPUT.countOutput}</span>
+        {OUTPUT.buttonText}
       </Button>
     </Wrapper>
   );

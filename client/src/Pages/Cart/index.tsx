@@ -12,7 +12,7 @@ const CartPage = () => {
   return (
     <Wrapper>
       <Header>
-        <CartBox />
+        <CartBox {...buyItems} />
       </Header>
       <div className="contents">
         <Title>
