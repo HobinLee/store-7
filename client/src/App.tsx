@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, ReactElement, JSXElementConstructor } from "react";
 import MainPage from "@/Pages/Main";
 import LoginPage from "@/Pages/Login";
 import { Router, Route } from "./Router";
@@ -13,6 +13,19 @@ import { GlobalStyle } from "./styles/global-style";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import SignupPage from "./Pages/Signup";
+
+type route = [string, JSX.Element, boolean?];
+
+const routes: route[] = [
+  ["/", <MainPage />, true],
+  ["/login", <LoginPage />, true],
+  ["/signup", <SignupPage />],
+  ["/category", <CategoryPage />],
+  ["/order", <OrderPage />, true],
+  ["/detail", <DetailPage />],
+  ["/cart", <CartPage />],
+  ["/mypage", <MyPage />],
+];
 
 const App = () => {
   const [themeMode, setThemeMode] = useState("light");
@@ -34,30 +47,11 @@ const App = () => {
       </button>
 
       <Router>
-        <Route path="/" exact>
-          <MainPage />
-        </Route>
-        <Route path="/login" exact>
-          <LoginPage />
-        </Route>
-        <Route path="/cart" exact>
-          <CartPage />
-        </Route>
-        <Route path="/order" exact>
-          <OrderPage />
-        </Route>
-        <Route path="/category">
-          <CategoryPage />
-        </Route>
-        <Route path="/signup">
-          <SignupPage />
-        </Route>
-        <Route path="/detail">
-          <DetailPage />
-        </Route>
-        <Route path="/mypage">
-          <MyPage />
-        </Route>
+        {routes.map(([path, component, exact]: route) => (
+          <Route path={path} exact={exact ?? false}>
+            {component}
+          </Route>
+        ))}
       </Router>
     </ThemeProvider>
   );
