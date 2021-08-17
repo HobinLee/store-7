@@ -1,7 +1,7 @@
 import { PageWrapper } from "@/shared/styled";
 import { useState } from "react";
 import styled from "styled-components";
-import { ETLink } from "@/Router";
+import { Link, moveTo } from "@/Router";
 import Address from "@/Components/Address";
 import useInput from "@/hooks/useInput";
 import InputSection from "@/Components/Input/InputSection";
@@ -55,6 +55,7 @@ const SignupPage = () => {
     };
 
     //TODO: API 요청 보낸 후 리디렉션
+    moveTo("/");
   };
 
   const isSubmittable =
@@ -118,9 +119,9 @@ const SignupPage = () => {
           <Address onChangeAddress={handleChangeAddress} />
         </InputSection>
         <div className="signup__buttons">
-          <ETLink to="/">
+          <Link to="/">
             <Button size="large">취소</Button>
-          </ETLink>
+          </Link>
 
           <Button type="submit" size="large" primary disabled={!isSubmittable}>
             회원가입

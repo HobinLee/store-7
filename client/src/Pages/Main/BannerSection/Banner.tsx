@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ETLink } from "@/Router";
+import { Link } from "@/Router";
 import { ItemBannerType } from "@/shared/type";
 import { gap } from "@/styles/theme";
 
@@ -11,7 +11,7 @@ const Banner = ({ items }: BannerPropsType) => {
   return (
     <BannerWrapper>
       <div className="banner-content">
-        <ETLink to={`/detail/`}>
+        <Link to={`/detail/`}>
           <div className="banner__info-wrapper">
             <div className="banner__info">
               <h3 className="banner__title">{items[0].title}</h3>
@@ -22,7 +22,7 @@ const Banner = ({ items }: BannerPropsType) => {
             </div>
           </div>
           <img src={items[0].src} />
-        </ETLink>
+        </Link>
       </div>
     </BannerWrapper>
   );

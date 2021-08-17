@@ -1,17 +1,17 @@
 import { ItemBannerType } from "@/shared/type";
-import { ETLink } from "@/Router";
+import { Link } from "@/Router";
 import styled from "styled-components";
 import { gap } from "@/styles/theme";
 
 const GiftItem = ({ item }: { item: ItemBannerType }) => (
   <ItemWrapper isWhite={item.isWhite}>
-    <ETLink to={`/detail/${item.id}`}>
+    <Link to={`/detail/${item.id}`}>
       <img src={item.src} />
       <div className="item__info">
         <h5 className="item__title">{item.title}</h5>
         <span className="item__brief">{item.brief}</span>
       </div>
-    </ETLink>
+    </Link>
   </ItemWrapper>
 );
 

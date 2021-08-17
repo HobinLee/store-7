@@ -1,16 +1,16 @@
 import styled from "styled-components";
 import ReviewBox from "@/Pages/Detail/Review/ReviewBox";
 import { ReviewType } from "@/shared/type";
-import { ETLink } from "@/Router";
+import { Link } from "@/Router";
 import { gap } from "@/styles/theme";
 
 const ReviewList = ({ reviews }: { reviews: ReviewType[] }) => (
   <ReviewListWrapper>
     {reviews.map((review: ReviewType, idx: number) => (
       <li key={idx}>
-        <ETLink to={`/detail/${review.id}`}>
+        <Link to={`/detail/${review.id}`}>
           <ReviewBox {...review} />
-        </ETLink>
+        </Link>
       </li>
     ))}
   </ReviewListWrapper>
