@@ -27,7 +27,7 @@ const CartPage = () => {
             <div>
               <Checkbox label="모두선택" />
             </div>
-            {buyItems.map((i, idx) => (
+            {buyItems.items.map((i, idx) => (
               <ItemInfoBox {...i} key={idx} />
             ))}
           </div>

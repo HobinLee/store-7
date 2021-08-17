@@ -1,21 +1,50 @@
 import styled from "styled-components";
 import Button from "@/Components/Button";
+import { convertToKRW } from "@/utils/util";
 
-const OrderBox = () => {
+export type OrderBoxProps = {
+  totalPrice: number;
+  totalDelivery: number;
+  totalPayment: number;
+  totalCount: number;
+};
+
+export const output = (props: OrderBoxProps) => {
+  return {
+    priceOutput: convertToKRW(props.totalPrice),
+    deliveryOutput: convertToKRW(props.totalDelivery),
+    paymentOutput: convertToKRW(props.totalPayment),
+    countOutput: `${props.totalCount}개 상품 구매하기`,
+  };
+};
+
+const OrderBox = ({
+  totalPrice,
+  totalDelivery,
+  totalPayment,
+  totalCount,
+}: OrderBoxProps) => {
+  const OUTPUT = output({
+    totalPrice,
+    totalDelivery,
+    totalPayment,
+    totalCount,
+  });
+
   return (
     <Wrapper>
       <Result>
         <div>
           <div>총 상품금액</div>
-          <div className="value">20,000원</div>
+          <div className="value">{OUTPUT.priceOutput}</div>
         </div>
         <div>
           <div>총 배송비</div>
-          <div className="value">2,500원</div>
+          <div className="value">{OUTPUT.deliveryOutput}</div>
         </div>
         <div className="result">
           <div>결제금액</div>
-          <div className="value">24,500원</div>
+          <div className="value">{OUTPUT.paymentOutput}</div>
         </div>
       </Result>
 
@@ -25,7 +54,7 @@ const OrderBox = () => {
         size="large"
         onClick={() => (window.location.href = "/order")}
       >
-        2개 상품 구매하기
+        <span>{OUTPUT.countOutput}</span>
       </Button>
     </Wrapper>
   );

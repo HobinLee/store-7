@@ -4,7 +4,6 @@ import styled from "styled-components";
 import Header from "@/Components/Header";
 import Footer from "@/Components/Footer";
 import OrderBox from "./OrderBox";
-import Input from "@/Components/Input";
 import useInput from "@/hooks/useInput";
 import AddressModal from "./AddressModal";
 import ItemInfoBox from "@/Components/ItemInfoBox";
@@ -33,7 +32,7 @@ const OrderPage = () => {
   return (
     <Wrapper>
       <Header>
-        <OrderBox />
+        <OrderBox {...buyItems} />
       </Header>
       <div className="contents">
         <Title>
@@ -47,7 +46,7 @@ const OrderPage = () => {
               <div>
                 <input type="checkbox" /> 모두선택
               </div>
-              {buyItems.map((i, idx) => (
+              {buyItems.items.map((i, idx) => (
                 <ItemInfoBox {...i} key={idx} />
               ))}
             </div>
