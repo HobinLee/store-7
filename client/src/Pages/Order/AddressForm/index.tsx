@@ -11,7 +11,7 @@ import Address from "@/Components/Address";
 import { validatePhoneNumber, VALIDATION_ERR_MSG } from "@/utils/validations";
 import { gap } from "@/styles/theme";
 
-type AddressFormProps = {
+export type AddressFormProps = {
   address?: AddressType;
   user?: UserType;
 };
@@ -72,7 +72,7 @@ const AddressForm = ({ address: addressToEdit, user }: AddressFormProps) => {
             message={VALIDATION_ERR_MSG.INVALID_PHONE}
           />
         </InputSection>
-        <InputSection title="주소" brief="기본 배송지로 저장됩니다">
+        <InputSection title="주소">
           <Address onChangeAddress={handleChangeAddress} />
         </InputSection>
 

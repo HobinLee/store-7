@@ -35,9 +35,9 @@ const Review = () => {
             {reviews.rates
               .slice(0)
               .reverse()
-              .map((item, idx) => (
+              .map((item) => (
                 <Progress
-                  key={idx.toString()}
+                  key={item.rate}
                   content={{
                     value: item.rate,
                     count: item.count,
@@ -66,7 +66,7 @@ const Review = () => {
       </Filter>
 
       {reviews.reviews.map((review) => (
-        <ReviewBox {...review} />
+        <ReviewBox key={review.id} {...review} />
       ))}
 
       {isModalOpened && <ReviewModal {...{ handleModalOpen }} />}

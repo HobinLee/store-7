@@ -1,22 +1,50 @@
 import styled from "styled-components";
 import Button from "@/Components/Button";
+import { convertToKRW } from "@/utils/util";
 import { gap } from "@/styles/theme";
 
-const OrderBox = () => {
+export type CartBoxProps = {
+  totalPrice: number;
+  totalDelivery: number;
+  totalPayment: number;
+  totalCount: number;
+};
+
+export const output = (props: CartBoxProps) => {
+  return {
+    priceOutput: convertToKRW(props.totalPrice),
+    deliveryOutput: convertToKRW(props.totalDelivery),
+    paymentOutput: convertToKRW(props.totalPayment),
+    buttonText: `${props.totalCount}개 상품 구매하기`,
+  };
+};
+
+const CartBox = ({
+  totalPrice,
+  totalDelivery,
+  totalPayment,
+  totalCount,
+}: CartBoxProps) => {
+  const OUTPUT = output({
+    totalPrice,
+    totalDelivery,
+    totalPayment,
+    totalCount,
+  });
   return (
     <Wrapper>
       <Result>
         <div>
           <div>총 상품금액</div>
-          <div className="value">20,000원</div>
+          <div className="value">{OUTPUT.priceOutput}</div>
         </div>
         <div>
           <div>총 배송비</div>
-          <div className="value">2,500원</div>
+          <div className="value">{OUTPUT.deliveryOutput}</div>
         </div>
         <div className="result">
           <div>결제금액</div>
-          <div className="value">24,500원</div>
+          <div className="value">{OUTPUT.paymentOutput}</div>
         </div>
       </Result>
 
@@ -26,7 +54,7 @@ const OrderBox = () => {
         size="large"
         onClick={() => (window.location.href = "/order")}
       >
-        2개 상품 구매하기
+        {OUTPUT.buttonText}
       </Button>
     </Wrapper>
   );
@@ -68,4 +96,4 @@ const Result = styled.div`
   }
 `;
 
-export default OrderBox;
+export default CartBox;

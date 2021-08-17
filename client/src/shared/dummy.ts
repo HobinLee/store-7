@@ -1,6 +1,6 @@
 import { CategoryType } from "@/Components/Header/Menu";
 import dayjs from "dayjs";
-import { QuestionListType, ReviewListType, UserType } from "./type";
+import { ItemType, QuestionListType, ReviewListType, UserType } from "./type";
 
 export const sampleMypage = {
   shopping: [
@@ -114,7 +114,7 @@ export const reviews: ReviewListType = {
       content: "조아유",
       img: "https://store.baemin.com/data/board/upload/goodsreview/eea0b21ff31b55a0",
       author: "우아한개발자",
-      date: dayjs(new Date()).format("YYYY.MM.DD"),
+      date: new Date(),
     },
     {
       id: 1,
@@ -123,7 +123,7 @@ export const reviews: ReviewListType = {
         "흠 처음에 별 생각 없이 구매했는데, 생각보다 너무 잘 산것 같습니다. 부모님께서 참 좋아하세요. 이렇게 긴 리뷰라면 내일 곱도리탕 맛있게 먹을 수 있겠죠? 데모 화이팅!",
       img: "https://store.baemin.com/data/board/upload/goodsreview/4d9f2950f11c0478",
       author: "우아한개발자",
-      date: dayjs(new Date()).format("YYYY.MM.DD"),
+      date: new Date(),
     },
     {
       id: 3,
@@ -131,7 +131,7 @@ export const reviews: ReviewListType = {
       img: "https://store.baemin.com/data/board/upload/goodsreview/0b3a8185859afb31",
       content: "와 너무 귀여워요 ㅠㅠ",
       author: "우아한개발자",
-      date: dayjs(new Date()).format("YYYY.MM.DD"),
+      date: new Date(),
     },
   ],
 };
@@ -394,38 +394,50 @@ export const categories: CategoryType[] = [
   },
 ];
 
-export const buyItems = [
-  {
-    name: "1+1 IH 인덕션/스마트 프라이팬 궁중팬 균일가 골라담기",
-    num: 1,
-    price: 10000,
-    delivery: 2500,
-  },
-  {
-    name: "1+1 IH 인덕션/스마트 프라이팬 궁중팬 균일가 골라담기",
-    num: 1,
-    price: 10000,
-    delivery: 2500,
-  },
-  {
-    name: "1+1 IH 인덕션/스마트 프라이팬 궁중팬 균일가 골라담기",
-    num: 1,
-    price: 10000,
-    delivery: 2500,
-  },
-  {
-    name: "1+1 IH 인덕션/스마트 프라이팬 궁중팬 균일가 골라담기",
-    num: 1,
-    price: 10000,
-    delivery: 2500,
-  },
-  {
-    name: "1+1 IH 인덕션/스마트 프라이팬 궁중팬 균일가 골라담기",
-    num: 1,
-    price: 10000,
-    delivery: 2500,
-  },
-];
+export const buyItems = {
+  totalPrice: 50000,
+  totalDelivery: 40000,
+  totalPayment: 90000,
+  totalCount: 5,
+  items: [
+    {
+      name: "1+1 IH 인덕션/스마트 프라이팬 궁중팬 균일가 골라담기",
+      num: 1,
+      price: 10000,
+      delivery: 2500,
+    },
+    {
+      name: "1+1 IH 인덕션/스마트 프라이팬 궁중팬 균일가 골라담기",
+      num: 1,
+      price: 10000,
+      delivery: 2500,
+    },
+    {
+      name: "1+1 IH 인덕션/스마트 프라이팬 궁중팬 균일가 골라담기",
+      num: 1,
+      price: 10000,
+      delivery: 2500,
+    },
+    {
+      name: "1+1 IH 인덕션/스마트 프라이팬 궁중팬 균일가 골라담기",
+      num: 1,
+      price: 10000,
+      delivery: 2500,
+    },
+    {
+      name: "1+1 IH 인덕션/스마트 프라이팬 궁중팬 균일가 골라담기",
+      num: 1,
+      price: 10000,
+      delivery: 2500,
+    },
+  ],
+};
+
+export const sampleItemDetail: ItemType = {
+  name: "1+1 IH 인덕션/스마트 프라이팬 궁중팬 균일가 골라담기",
+  price: 10000,
+  delivery: 2500,
+};
 
 export const recent = [
   {
