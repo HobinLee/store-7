@@ -1,48 +1,12 @@
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useEffect, useState } from "react";
-import Input from "../Input";
+import Input from "@/Components/Input";
 import { DropdownWrapper, DropdownItem } from "@/shared/styled";
 import useInput from "@/hooks/useInput";
+import SearchList from "./SearchList";
+import AutoList from "./AutoCompleteList";
 
 const LS_SEARCH = "search";
-
-const SearchList = ({ list, handleSearch }) => {
-  const generateList = list.map((keyword, idx) => (
-    <li key={idx} onClick={() => handleSearch(keyword)}>
-      {" "}
-      {keyword}{" "}
-    </li>
-  ));
-  return (
-    <SearchListWrapper>
-      {list.length > 0 ? (
-        generateList
-      ) : (
-        <span className="no-list">최근 검색내역이 없습니다</span>
-      )}
-    </SearchListWrapper>
-  );
-};
-
-const SearchListWrapper = styled.ul`
-  display: flex;
-  flex-direction: column;
-  margin-top: 1rem;
-
-  li {
-    color: ${({ theme }) => theme.color.grey1};
-    padding: 1rem;
-    max-width: 100%;
-    cursor: pointer;
-    &:hover {
-      background: ${({ theme }) => theme.color.background};
-    }
-  }
-
-  .no-list {
-    color: ${({ theme }) => theme.color.grey1};
-  }
-`;
 
 const Search = () => {
   const searchValue = useInput("");
@@ -58,11 +22,11 @@ const Search = () => {
   };
 
   const [isSearchBoxOpened, setIsSearchBoxOpened] = useState(false);
-  const handleSearchBoxOpen = () => {
+  const handleSearchBox = () => {
     setIsSearchBoxOpened(!isSearchBoxOpened);
   };
 
-  const [searchList, setSearchList] = useState(
+  const [searchList, setSearchList] = useState<string[]>(
     JSON.parse(localStorage.getItem(LS_SEARCH)) ?? []
   );
   const handleSearch = (keyword: string = searchValue.value) => {
@@ -98,7 +62,7 @@ const Search = () => {
           </DropdownWrapper>
         )}
       </div>
-      <div style={{ position: "relative" }} onClick={handleSearchBoxOpen}>
+      <div style={{ position: "relative" }} onClick={handleSearchBox}>
         <SearchInput
           placeholder="검색어를 입력해주세요."
           value={searchValue.value}
@@ -109,8 +73,14 @@ const Search = () => {
         )}
         {isSearchBoxOpened && (
           <SearchBox>
-            <span className="search-list__title">최근검색어</span>
-            <SearchList list={searchList} handleSearch={handleSearch} />
+            {searchValue.value?.length ? (
+              <AutoList
+                keyword={searchValue.value}
+                handleSearch={handleSearch}
+              />
+            ) : (
+              <SearchList list={searchList} handleSearch={handleSearch} />
+            )}
           </SearchBox>
         )}
       </div>
