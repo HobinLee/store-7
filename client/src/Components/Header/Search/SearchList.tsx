@@ -67,6 +67,7 @@ const SearchListWrapper = styled.div`
   }
 
   .no-list {
+    padding: 0.7rem 0;
     color: ${({ theme }) => theme.color.grey1};
   }
 

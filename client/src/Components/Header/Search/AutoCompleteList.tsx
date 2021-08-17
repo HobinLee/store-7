@@ -67,6 +67,7 @@ const AutoListWrapper = styled.ul`
   }
 
   .no-list {
+    padding: 0.7rem 0;
     color: ${({ theme }) => theme.color.grey2};
   }
 `;
