@@ -73,6 +73,16 @@ export const ETRoute = ({ exact, path, children }: RouteType) => {
   return checkPath() ? children : null;
 };
 
+export const moveTo = (path: string) => {
+  const routeEvent = new CustomEvent("pushstate", {
+    detail: {
+      pathname: path,
+    },
+  });
+
+  window.dispatchEvent(routeEvent);
+};
+
 export const ETLink = ({
   to,
   children,
@@ -81,13 +91,7 @@ export const ETLink = ({
   children: React.ReactChild | React.ReactChild[];
 }) => {
   const handleClickLink = () => {
-    const routeEvent = new CustomEvent("pushstate", {
-      detail: {
-        pathname: to,
-      },
-    });
-
-    window.dispatchEvent(routeEvent);
+    moveTo(to);
   };
 
   return <LinkWrapper onClick={handleClickLink}>{children}</LinkWrapper>;
