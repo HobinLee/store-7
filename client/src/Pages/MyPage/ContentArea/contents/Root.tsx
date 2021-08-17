@@ -32,7 +32,7 @@ const Root = () => {
           ratio={[1, 3, 1, 0.5, 0.5]}
         >
           {recent.map((re) => (
-            <RecentOrder {...re} />
+            <RecentOrder {...re} key={re.id} />
           ))}
         </Table>
       </Section>
@@ -43,9 +43,7 @@ const Root = () => {
       >
         <ItemList>
           {sampleMain.map((item) => (
-            <li key={item.id}>
-              <Item {...item} />
-            </li>
+            <Item {...item} key={item.id} />
           ))}
         </ItemList>
       </Section>

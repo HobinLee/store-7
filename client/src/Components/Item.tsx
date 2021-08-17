@@ -31,14 +31,16 @@ const Item = ({
   const [isWishState, setIsWish] = useState(isWish);
 
   return (
-    <li key={id}>
-      <Link to={`/detail/${id}`}>
+    <li>
+      <ETLink to={`/detail/${id}`}>
         <ItemWrapper>
           <div className="thumbnail">
             <MagnifiedImage src="https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg" />
             <div className="thumbnail__tags">
-              {tags.map((tag) => (
-                <Tag tag={tag}>{tag.toUpperCase()}</Tag>
+              {tags.map((tag, idx) => (
+                <Tag tag={tag} key={idx}>
+                  {tag.toUpperCase()}
+                </Tag>
               ))}
             </div>
             <div className="thumbnail__wish">

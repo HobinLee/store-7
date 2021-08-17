@@ -15,7 +15,7 @@ const WishList = () => {
       >
         <ItemWrapList>
           {sampleCategory.map((item) => (
-            <Item {...item} />
+            <Item {...item} key={item.id} />
           ))}
         </ItemWrapList>
       </Section>
