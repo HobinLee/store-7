@@ -4,10 +4,10 @@ import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
 import { useState } from "react";
 
+export const OPTIONS = ["상품", "배송", "반품", "교환", "환불", "기타"];
+
 const QuestionModal = ({ handleModalOpen }) => {
   const reviewVal = useInput("");
-
-  const options = ["상품", "배송", "반품", "교환", "환불", "기타"];
 
   const [option, setOption] = useState("상품");
   const handleSetOption = (val: string) => {
@@ -20,7 +20,7 @@ const QuestionModal = ({ handleModalOpen }) => {
         <div className="content">
           <div className="content__label">문의 유형</div>
           <div className="question-option">
-            {options.map((item, idx) => (
+            {OPTIONS.map((item, idx) => (
               <OptionBtn
                 key={idx}
                 onClick={() => handleSetOption(item)}

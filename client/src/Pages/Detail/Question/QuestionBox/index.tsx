@@ -2,6 +2,9 @@ import styled from "styled-components";
 import { QuestionType } from "@/shared/type";
 import dayjs from "dayjs";
 
+export const YYYY_MM_DD_HH_mm = (date: Date) =>
+  dayjs(date).format("YYYY년 MM월 DD일 HH시 mm분");
+
 const QuestionBox = (Question: QuestionType) => {
   const isAnswered = Question.answer ? true : false;
   return (
@@ -9,9 +12,7 @@ const QuestionBox = (Question: QuestionType) => {
       <div className="status">{isAnswered ? "답변완료" : "미답변"}</div>
       <Header>
         <div>{Question.question.author}</div>
-        <div className="date">
-          {dayjs(Question.question.date).format("YYYY년 MM월 DD일 HH시 mm분")}
-        </div>
+        <div className="date">{YYYY_MM_DD_HH_mm(Question.question.date)}</div>
       </Header>
 
       <div className="content">

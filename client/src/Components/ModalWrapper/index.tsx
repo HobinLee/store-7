@@ -23,7 +23,12 @@ const ModalWrapper = ({
         <Modal className={className}>
           <div className="header">{title}</div>
           {!hideCloseBtn && (
-            <Close role="button" onClick={closeModal} className="close-btn" />
+            <Close
+              data-testid="close-btn"
+              role="button"
+              onClick={closeModal}
+              className="close-btn"
+            />
           )}
           {children}
         </Modal>

@@ -19,7 +19,7 @@ export type QuestionType = {
     author: string;
     content: string;
     date: Date;
-    category: string;
+    category?: string;
   };
   answer?: {
     content: string;
