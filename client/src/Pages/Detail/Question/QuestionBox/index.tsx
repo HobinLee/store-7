@@ -1,26 +1,26 @@
 import styled from "styled-components";
-import { QuestionType } from "@/shared/type";
+import { QnAType } from "@/shared/type";
 import { gap } from "@/styles/theme";
 import { YYYY_MM_DD_HH_mm } from "@/utils/util";
 
-const QuestionBox = (Question: QuestionType) => {
+const QuestionBox = (Question: QnAType) => {
   const isAnswered = Question.answer ? true : false;
   return (
     <Wrapper isAnswered={isAnswered}>
       <div className="status">{isAnswered ? "답변완료" : "미답변"}</div>
       <Header>
-        <div>{Question.question.author}</div>
-        <div className="date">{YYYY_MM_DD_HH_mm(Question.question.date)}</div>
+        <div>{Question.authorName}</div>
+        <div className="date">{YYYY_MM_DD_HH_mm(Question.createdAt)}</div>
       </Header>
 
       <div className="content">
         <div>Q</div>
-        {Question.question.content}
+        {Question.question}
       </div>
       {isAnswered && (
         <div className="content">
           <div>A</div>
-          {Question.answer.content}
+          {Question.answer}
         </div>
       )}
     </Wrapper>
