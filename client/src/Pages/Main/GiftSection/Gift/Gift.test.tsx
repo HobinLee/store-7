@@ -1,4 +1,4 @@
-import { render } from "@/utils/test-util";
+import { expectText, render } from "@/utils/test-util";
 import Gift, { GiftItemProps } from "./index";
 
 const giftProps: GiftItemProps = {
@@ -14,5 +14,8 @@ describe("<ProductSection />", () => {
   it("should render component in document", () => {
     const { container } = render(<Gift {...giftProps} />);
     expect(container).toBeInTheDocument();
+
+    expectText(giftProps.item.title);
+    expectText(giftProps.item.brief);
   });
 });
