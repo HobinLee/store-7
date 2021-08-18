@@ -12,7 +12,7 @@ const Review = () => {
           {reviews.reviews.length === 0 ? (
             <rows.Empty colSpan={3} message="게시글이 존재하지 않습니다." />
           ) : (
-            reviews.reviews.map((re) => <rows.Review {...re} />)
+            reviews.reviews.map((re) => <rows.Review {...re} key={re.id} />)
           )}
         </Table>
       </Section>
