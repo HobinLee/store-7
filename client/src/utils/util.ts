@@ -73,3 +73,5 @@ export const convertToKRW = (price) => {
 
 export const YYYY_MM_DD_HH_mm = (date: Date) =>
   dayjs(date).format("YYYY년 MM월 DD일 HH시 mm분");
+
+export const YYYYMMDD = (date: Date) => dayjs(date).format("YYYYMMDD");

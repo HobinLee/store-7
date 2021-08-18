@@ -3,21 +3,25 @@ import { sampleMypage } from "@/shared/dummy";
 import SignatureLine from "@/Components/SignatureLine";
 import { Link } from "@/Router";
 
-const Sidebar = ({ setCurrent }) => {
+export interface SidebarProps {
+  setCurrent: (path: string) => void;
+}
+
+const Sidebar = ({ setCurrent }: SidebarProps) => {
   return (
     <SidebarWrpper>
       <SidebarContent>
         <SignatureLine type="short2" />
         <p>쇼핑정보</p>
         <ul>
-          {sampleMypage.shopping.map(({ itemTitle, path }, i) => (
+          {sampleMypage.shopping.map(({ title, path }, i) => (
             <li
               key={i}
               onClick={() => {
                 setCurrent(path);
               }}
             >
-              <Link to={`/mypage/${path}`}>{itemTitle}</Link>
+              <Link to={`/mypage/${path}`}>{title}</Link>
             </li>
           ))}
         </ul>
@@ -26,14 +30,14 @@ const Sidebar = ({ setCurrent }) => {
         <SignatureLine type="short3" />
         <p>회원정보</p>
         <ul>
-          {sampleMypage.userInfo.map(({ itemTitle, path }, i) => (
+          {sampleMypage.userInfo.map(({ title, path }, i) => (
             <li
               key={i}
               onClick={() => {
                 setCurrent(path);
               }}
             >
-              <Link to={`/mypage/${path}`}>{itemTitle}</Link>
+              <Link to={`/mypage/${path}`}>{title}</Link>
             </li>
           ))}
         </ul>

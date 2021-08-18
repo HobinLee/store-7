@@ -5,7 +5,7 @@ import { Link } from "@/Router";
 import { categories } from "@/shared/dummy";
 
 export type CategoryType = {
-  title: string;
+  name: string;
   subCategories?: CategoryType[];
 };
 
@@ -60,7 +60,7 @@ const Menu = () => {
           className={currentCategoryIndex === idx ? "selected" : ""}
         >
           <Link key={idx} to={`/category?main_id=${idx}`}>
-            {category.title}
+            {category.name}
           </Link>
         </li>
       ))}
@@ -73,7 +73,7 @@ const Menu = () => {
 
     return (
       list?.reduce(
-        (prev, curr) => prev + curr.title.length * CHAR_WIDTH + PADDING,
+        (prev, curr) => prev + curr.name.length * CHAR_WIDTH + PADDING,
         0
       ) ?? 0
     );
@@ -91,7 +91,7 @@ const Menu = () => {
               key={idx}
               to={`/category?main_id=${currentCategoryIndex}&sub_id=${idx}`}
             >
-              {category.title}
+              {category.name}
             </Link>
           </li>
         )
