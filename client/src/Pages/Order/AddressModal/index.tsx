@@ -9,7 +9,7 @@ import { Back } from "@/assets";
 import AddressForm from "../AddressForm";
 import { gap } from "@/styles/theme";
 
-const AddressModal = () => {
+const AddressModal = ({ closeModal }) => {
   const handleChangeAddress = (address: AddressType) => {
     console.log(address);
   };
@@ -21,7 +21,7 @@ const AddressModal = () => {
     (page === "add" && "배송지 추가");
 
   return (
-    <Wrapper {...{ title }} hideCloseBtn={page !== "select"}>
+    <Wrapper {...{ closeModal, title }} hideCloseBtn={page !== "select"}>
       <>
         {page !== "select" && (
           <Back

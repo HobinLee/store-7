@@ -1,4 +1,5 @@
 import { PageWrapper } from "@/shared/styled";
+import { useState } from "react";
 import styled from "styled-components";
 import Header from "@/Components/Header";
 import Footer from "@/Components/Footer";
@@ -18,8 +19,6 @@ import {
 } from "@/utils/validations";
 import { sampleUser } from "@/shared/dummy";
 import { gap } from "@/styles/theme";
-import { useSetRecoilState } from "recoil";
-import { modalState } from "@/store/state";
 
 const OrderPage = () => {
   const email = useInput("");
@@ -29,7 +28,7 @@ const OrderPage = () => {
   const phone = useInput("");
   const phoneValidation = useValidation(validatePhoneNumber);
 
-  const setIsModalOpened = useSetRecoilState(modalState);
+  const [isAddressModalOpened, setIsAddressModalOpened] = useState(false);
 
   return (
     <Wrapper>
@@ -92,7 +91,7 @@ const OrderPage = () => {
               배송지
               <div
                 className="address-btn"
-                onClick={() => setIsModalOpened(true)}
+                onClick={() => setIsAddressModalOpened(true)}
               >
                 변경
               </div>
@@ -119,7 +118,9 @@ const OrderPage = () => {
         </Content>
       </div>
       <Footer />
-      <AddressModal />
+      {isAddressModalOpened && (
+        <AddressModal closeModal={() => setIsAddressModalOpened(false)} />
+      )}
     </Wrapper>
   );
 };
