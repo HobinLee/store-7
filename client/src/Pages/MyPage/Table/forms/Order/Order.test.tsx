@@ -2,6 +2,8 @@ import "jest-styled-components";
 import { render } from "@/utils/test-util";
 import { screen } from "@testing-library/react";
 import Order, { OrderProps } from "./index";
+import { expectText } from "@/utils/test-util";
+import { YYYYMMDD } from "@/utils/util";
 
 const OrderProps: OrderProps = {
   orderDate: new Date(),
@@ -9,9 +11,17 @@ const OrderProps: OrderProps = {
 };
 
 describe("<Order />", () => {
-  it("should render component in document", () => {
+  let page;
+  beforeEach(() => {
     const { container } = render(<Order {...OrderProps} />);
+    page = container;
+  });
+  it("should render component in document", () => {
+    expect(page).toBeInTheDocument();
+  });
 
-    expect(container).toBeInTheDocument();
+  it("should render text in document", () => {
+    expectText(OrderProps.orderNumber);
+    expectText(YYYYMMDD(OrderProps.orderDate));
   });
 });
