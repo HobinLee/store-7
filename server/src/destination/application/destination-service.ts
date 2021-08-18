@@ -19,9 +19,9 @@ export class DestinationService {
     }
   }
 
-  createDestination(destinationRequest: DestinationRequest): string {
+  createDestination(destination: DestinationRequest): string {
     try {
-      this.destinations.createDestination(destinationRequest);
+      this.destinations.createDestination(destination);
     } catch (e) {
       return e;
     }

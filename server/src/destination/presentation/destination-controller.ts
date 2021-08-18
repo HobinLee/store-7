@@ -1,16 +1,7 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Patch,
-  Post,
-  Delete,
-  Param,
-} from "@nestjs/common";
+import { Body, Controller, Patch, Post, Delete, Param } from "@nestjs/common";
 import { DestinationService } from "../application/destination-service";
 import {
   DestinationRequest,
-  DestinationResponse,
   DestinationModifyRequest,
 } from "../dto/destination-request";
 
@@ -19,27 +10,24 @@ export class DestinationController {
   constructor(private readonly destinationService: DestinationService) {}
 
   @Post()
-  createDestination(@Body() destinationRequest: DestinationRequest): string {
-    return this.destinationService.createDestination(destinationRequest);
+  createDestination(@Body() destination: DestinationRequest): string {
+    return this.destinationService.createDestination(destination);
   }
 
-  @Get()
-  async findDestinationsByUserId(
-    @Body()
-    userId: number
-  ): Promise<DestinationResponse[]> {
-    return await this.destinationService.findDestinationsByUserId(userId);
-  }
+  //   @Get()
+  //   async findDestinationsByUserId(
+  //     @Body()
+  //     userId: number
+  //   ): Promise<DestinationResponse[]> {
+  //     return await this.destinationService.findDestinationsByUserId(userId);
+  //   }
 
   @Patch("/:id")
   updateDestination(
     @Param("id") id: number,
-    @Body() destinationModifyRequest: DestinationModifyRequest
+    @Body() modifiedDestination: DestinationModifyRequest
   ): string {
-    return this.destinationService.updateDestination(
-      id,
-      destinationModifyRequest
-    );
+    return this.destinationService.updateDestination(id, modifiedDestination);
   }
 
   @Delete()

@@ -17,9 +17,9 @@ export class Destination {
   @Column({ length: 11, name: "detail_address" })
   detailAddress: string;
 
-  @Column({ type: "int", length: 11, name: "user_id" })
+  @Column({ type: "int", name: "user_id" })
   userId: number;
 
-  @Column({ type: "tinyint", length: 32, name: "is_default" })
+  @Column({ type: "tinyint", length: 1, name: "is_default" })
   isDetault: boolean;
 }
