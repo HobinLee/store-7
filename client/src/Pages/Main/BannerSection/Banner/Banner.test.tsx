@@ -1,5 +1,5 @@
 import { ItemBannerType } from "@/shared/type";
-import { render } from "@/utils/test-util";
+import { expectText, render } from "@/utils/test-util";
 import Banner, { BannerProps } from "./index";
 
 const banner1: ItemBannerType = {
@@ -17,5 +17,8 @@ describe("<ProductSection />", () => {
   it("should render component in document", () => {
     const { container } = render(<Banner {...bannerProps} />);
     expect(container).toBeInTheDocument();
+
+    expectText(banner1.brief);
+    expectText(banner1.title);
   });
 });
