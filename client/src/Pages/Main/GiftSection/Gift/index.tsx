@@ -3,7 +3,11 @@ import { Link } from "@/Router";
 import styled from "styled-components";
 import { gap } from "@/styles/theme";
 
-const GiftItem = ({ item }: { item: ItemBannerType }) => (
+export interface GiftItemProps {
+  item: ItemBannerType;
+}
+
+const GiftItem = ({ item }: GiftItemProps) => (
   <ItemWrapper isWhite={item.isWhite}>
     <Link to={`/detail/${item.id}`}>
       <img src={item.src} />

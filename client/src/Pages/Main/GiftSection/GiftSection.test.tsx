@@ -1,9 +1,9 @@
 import { render } from "@/utils/test-util";
-import BannerSection from "./index";
+import GiftSection from "./index";
 
 describe("<ProductSection />", () => {
   it("should render component in document", () => {
-    const { container } = render(<BannerSection />);
+    const { container } = render(<GiftSection />);
     expect(container).toBeInTheDocument();
   });
 });

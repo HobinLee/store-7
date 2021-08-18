@@ -1,6 +1,11 @@
+import { ItemBannerType } from "@/shared/type";
 import { gap } from "@/styles/theme";
 import styled from "styled-components";
-import GiftItem from "./Gift";
+import GiftItem from "../Gift";
+
+export interface GiftListProps {
+  items: ItemBannerType[];
+}
 
 const GiftList = ({ items }) => (
   <GiftListWrapper>
