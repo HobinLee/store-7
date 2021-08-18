@@ -7,7 +7,7 @@ import { qnas } from "@/shared/dummy";
 
 const Question = () => {
   return (
-    <Wrapper>
+    <Wrapper data-testid="test__question">
       <Section title="상품문의" lineType="long1">
         <Table
           ths={["문의 날짜", "카테고리", "제목", "문의상태"]}

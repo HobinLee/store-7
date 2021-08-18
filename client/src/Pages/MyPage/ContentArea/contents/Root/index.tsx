@@ -8,7 +8,7 @@ import { ItemList } from "@/shared/styled";
 
 const Root = () => {
   return (
-    <Wrapper>
+    <Wrapper data-testid="test__root">
       <Section
         title="진행 중인 주문"
         description="최근 30일 내에 진행중인 주문정보입니다."

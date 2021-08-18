@@ -7,7 +7,7 @@ import { ItemWrapList } from "@/shared/styled";
 
 const WishList = () => {
   return (
-    <Wrapper>
+    <Wrapper data-testid="test__wishlist">
       <Section
         title="찜리스트"
         description="최근 30일 내에 진행중인 주문정보입니다."

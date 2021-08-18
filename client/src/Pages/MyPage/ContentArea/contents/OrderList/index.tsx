@@ -8,7 +8,7 @@ import { recent } from "@/shared/dummy";
 
 const OrderList = () => {
   return (
-    <Wrapper>
+    <Wrapper data-testid="test__orderlist">
       <Section
         title="주문목록/배송조회"
         description="최근 30일 내에 주문한 주문정보입니다."

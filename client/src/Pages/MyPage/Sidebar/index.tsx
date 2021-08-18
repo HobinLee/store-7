@@ -21,7 +21,8 @@ const Sidebar = ({ setCurrent }: SidebarProps) => {
                 setCurrent(path);
               }}
             >
-              <Link to={`/mypage/${path}`}>{title}</Link>
+              {/* <Link to={`/mypage/${path}`}>{title}</Link> */}
+              {title}
             </li>
           ))}
         </ul>
@@ -37,7 +38,8 @@ const Sidebar = ({ setCurrent }: SidebarProps) => {
                 setCurrent(path);
               }}
             >
-              <Link to={`/mypage/${path}`}>{title}</Link>
+              {/* <Link to={`/mypage/${path}`}>{title}</Link> */}
+              {title}
             </li>
           ))}
         </ul>
