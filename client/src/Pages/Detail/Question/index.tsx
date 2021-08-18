@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Button from "@/Components/Button";
 import QuestionBox from "./QuestionBox";
 import QuestionModal from "./QuestionModal";
-import { questions } from "@/shared/dummy";
+import { qnas } from "@/shared/dummy";
 import { useSetRecoilState } from "recoil";
 import { modalState } from "@/store/state";
 
@@ -22,15 +22,15 @@ const Question = () => {
     <div>
       <Header>
         <div>
-          상품문의 <span className="total">{questions.totalCount}</span>
+          상품문의 <span className="total">{qnas.length}</span>
         </div>
 
         <Button onClick={() => handleModalOpen(true)} primary>
           문의하기
         </Button>
       </Header>
-      {questions.questions.map((question, idx) => (
-        <QuestionBox {...question} key={idx} />
+      {qnas.map((qna, idx) => (
+        <QuestionBox {...qna} key={idx} />
       ))}
 
       <QuestionModal {...{ handleModalOpen }} />

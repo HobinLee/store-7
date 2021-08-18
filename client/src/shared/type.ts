@@ -27,6 +27,7 @@ export type QuestionType = {
     date: Date;
   };
 };
+
 export type QuestionListType = {
   totalCount: number;
   questions: QuestionType[];
@@ -38,10 +39,10 @@ export type QnAType = {
   type: string;
   title: string;
   question: string;
-  answer: string;
-  image: string;
+  answer?: string;
+  image?: string;
   createdAt: Date;
-  answerCreatedAt: Date;
+  answerCreatedAt?: Date;
   product: {
     id: number;
     name: string;

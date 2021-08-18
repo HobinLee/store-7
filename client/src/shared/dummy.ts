@@ -1,5 +1,4 @@
 import { CategoryType } from "@/Components/Header/Menu";
-import dayjs from "dayjs";
 import {
   ItemType,
   QnAType,
@@ -106,7 +105,7 @@ export const questions: QuestionListType = {
   ],
 };
 
-export const quas: QnAType[] = [
+export const qnas: QnAType[] = [
   {
     id: 1,
     authorName: "우아한개발자1",
