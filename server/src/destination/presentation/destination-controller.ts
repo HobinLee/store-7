@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Patch, Post, Delete } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  Patch,
+  Post,
+  Delete,
+  Param,
+} from "@nestjs/common";
 import { DestinationService } from "../application/destination-service";
 import {
   DestinationRequest,
@@ -23,11 +31,10 @@ export class DestinationController {
     return await this.destinationService.findDestinationsByUserId(userId);
   }
 
-  @Patch()
+  @Patch("/:id")
   updateDestination(
-    @Body()
-    id: number,
-    destinationModifyRequest: DestinationModifyRequest
+    @Param("id") id: number,
+    @Body() destinationModifyRequest: DestinationModifyRequest
   ): string {
     return this.destinationService.updateDestination(
       id,
@@ -36,7 +43,7 @@ export class DestinationController {
   }
 
   @Delete()
-  deleteDestination(@Body() id: number): string {
+  deleteDestination(@Param("id") id: number): string {
     return this.destinationService.deleteDestination(id);
   }
 }
