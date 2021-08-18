@@ -16,6 +16,7 @@ const Question = (question: QnAType) => {
           setIsOpen(!isOpen);
         }}
         isAnswered={isAnswered}
+        data-testid="test__question"
       >
         <td>{dayjs(createdAt).format("YYYYMMDD")}</td>
         <td>{type}</td>
