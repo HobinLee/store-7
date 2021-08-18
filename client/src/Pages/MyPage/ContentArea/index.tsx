@@ -8,13 +8,13 @@ export interface ContentAreaProps {
 const ContentArea = ({ current }: ContentAreaProps) => {
   const Content = contents[current];
   return (
-    <ContentWrapper>
+    <Wrapper data-testid="test__content-area">
       <Content />
-    </ContentWrapper>
+    </Wrapper>
   );
 };
 
-const ContentWrapper = styled.div`
+const Wrapper = styled.div`
   flex: 1;
 `;
 
