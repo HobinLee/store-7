@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
-import { User } from "../domain/user";
+import { Users } from "../domain/users";
 import { SigninRequest } from "../dto/signin-request";
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly user: User) {}
+  constructor(private readonly users: Users) {}
 
   auth(signinRequest: SigninRequest): string {
     return "Authenticated!";

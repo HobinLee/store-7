@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
+import MysqlConfig from "./infra/mysql/mysql-config";
 import { UserModule } from "./user/user-module";
 
 @Module({
-  imports: [ConfigModule.forRoot(), UserModule],
+  imports: [MysqlConfig, UserModule],
 })
 export class AppModule {}
