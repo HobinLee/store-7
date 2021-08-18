@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import contents from "./contents";
 
-const ContentArea = ({ current }) => {
+export interface ContentAreaProps {
+  current: string;
+}
+
+const ContentArea = ({ current }: ContentAreaProps) => {
   const Content = contents[current];
   return (
     <ContentWrapper>

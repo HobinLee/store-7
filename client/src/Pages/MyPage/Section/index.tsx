@@ -1,25 +1,25 @@
 import styled from "styled-components";
 import SignatureLine from "@/Components/SignatureLine";
 
-type SectionType = {
+export interface SectionProps {
   title: string;
-  descrition?: string;
+  description?: string;
   lineType: string;
   children: JSX.Element | JSX.Element[];
-};
+}
 
 const Section = ({
   title,
-  descrition = "",
+  description = "",
   children,
   lineType,
-}: SectionType) => {
+}: SectionProps) => {
   return (
     <SectionWrapper>
       <SignatureLine type={lineType} height="1" />
       <div className="section__title">
         <h3>{title}</h3>
-        <p>{descrition}</p>
+        <p>{description}</p>
       </div>
       <div>{children}</div>
     </SectionWrapper>

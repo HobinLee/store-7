@@ -9,7 +9,7 @@ type ItemType = {
   id: number;
   discountRate?: number;
   tags?: string[];
-  title: string;
+  name: string;
   price: number;
   isWish: boolean;
 };
@@ -18,7 +18,7 @@ const Item = ({
   id,
   discountRate = 0,
   tags = [],
-  title,
+  name,
   price,
   isWish,
 }: ItemType) => {
@@ -50,7 +50,7 @@ const Item = ({
             </div>
           </div>
           <div className="info">
-            <div className="info__title">{title}</div>
+            <div className="info__name">{name}</div>
             {discountRate !== 0 && (
               <div className="info__sale">
                 <div className="discount-rate">{discountRate}%</div>
@@ -80,13 +80,6 @@ const ItemWrapper = styled.div`
       position: absolute;
       bottom: 1rem;
       right: 1rem;
-
-      /* & > svg:hover {
-        opacity: 0.7;
-      }
-      & > svg:active {
-        transform: scale(1.1);
-      } */
     }
     .active {
     }
@@ -97,7 +90,7 @@ const ItemWrapper = styled.div`
   .info {
     margin-top: 1.5rem;
     padding: 0 1rem;
-    &__title {
+    &__name {
       ${({ theme }) => theme.font.medium};
       font-weight: 500;
       margin-bottom: 1rem;

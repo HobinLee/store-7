@@ -8,12 +8,16 @@ import ContentArea from "./ContentArea";
 
 const MyPage = () => {
   const [current, setCurrent] = useState("/");
+  const user: User = {
+    username: "홍영준",
+    grade: "쭈굴회원",
+  };
 
   return (
     <MyPageWrapper>
       <Header />
       <Contents>
-        <ContentHeader />
+        <ContentHeader {...user} />
         <ContentBody>
           <Sidebar setCurrent={setCurrent} />
           <ContentArea current={current} />
@@ -23,21 +27,26 @@ const MyPage = () => {
   );
 };
 
+const MyPageWrapper = styled(PageWrapper)``;
 const ContentBody = styled.div`
   width: 100%;
   display: flex;
 `;
-const MyPageWrapper = styled(PageWrapper)``;
 
-const ContentHeader = () => {
+export interface User {
+  username: string;
+  grade: string;
+}
+
+export const ContentHeader = ({ username, grade }: User) => {
   return (
     <ContentHeaderWrapper>
       <div className="greeting">반가워요,</div>
       <p>
-        <span>홍영준</span> 님의
+        <span>{username}</span> 님의
       </p>
       <p>
-        회원등급은 <span>일반회원</span>입니다.
+        회원등급은 <span>{grade}</span>입니다.
       </p>
     </ContentHeaderWrapper>
   );
