@@ -23,7 +23,10 @@ module.exports = (env) => {
         {
           test: /\.(ts|tsx)$/,
           exclude: /node_modules/,
-          loader: "babel-loader",
+          loader: "ts-loader",
+          options: {
+            transpileOnly: true,
+          },
         },
         {
           test: /\.(png|jpe?g|gif|woff|woff2|ttf|ico)$/i,

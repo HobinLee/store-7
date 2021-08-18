@@ -1,15 +1,15 @@
 import Button from "@/Components/Button";
 import Input from "@/Components/Input";
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
 import { Triangle } from "@/assets";
 import { convertToKRW } from "@/utils/util";
+import { gap } from "@/styles/theme";
 
 const OptionBox = ({ numValue, handleClickNumVal }) => {
   const [isCartAlertShown, setIsCartAlertShown] = useState(false);
 
-  console.log(numValue);
   return (
     <Wrapper>
       <div className="select-option">
@@ -83,7 +83,7 @@ const Wrapper = styled.div`
     padding: 1.5rem 0;
     &__right {
       ${({ theme }) => theme.flexCenter}
-      gap: 2rem;
+      ${gap("2rem")}
       .num-input {
         ${({ theme }) => theme.flexCenter}
         div {
@@ -128,7 +128,7 @@ const Wrapper = styled.div`
     ${({ theme }) => theme.flexCenter}
     width: 100%;
     justify-content: flex-end;
-    gap: 1rem;
+    ${gap("1rem")}
   }
   .alert {
     width: auto;

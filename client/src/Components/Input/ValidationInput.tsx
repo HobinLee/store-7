@@ -1,8 +1,8 @@
-import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
 import { InputType } from "@/hooks/useInput";
 import { ValidationType } from "@/hooks/useValidation";
+import { gap } from "@/styles/theme";
 
 type VIPropsType = {
   input: InputType;
@@ -48,7 +48,7 @@ const InputWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  ${gap("1rem", "column")}
 
   input {
     box-sizing: border-box;

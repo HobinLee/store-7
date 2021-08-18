@@ -1,12 +1,12 @@
 import Header from "@/Components/Header";
 import { PageWrapper, Contents } from "@/shared/styled";
-import React from "react";
 import styled from "styled-components";
 import Footer from "@/Components/Footer";
 import GiftSection from "./GiftSection";
 import BannerSection from "./BannerSection/";
 import ReviewSection from "./ReviewSection/";
 import ProductSection from "./ProductSection/";
+import { gap } from "@/styles/theme";
 
 const MainPage = () => {
   return (
@@ -33,7 +33,7 @@ const Wrapper = styled(PageWrapper)`
     height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 10rem;
+    ${gap("10rem", "column")}
 
     & > div {
       ${({ theme }) => theme.flexCenter}

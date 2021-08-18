@@ -1,10 +1,8 @@
 import { PageWrapper } from "@/shared/styled";
-import React, { useState } from "react";
 import styled from "styled-components";
 import Header from "@/Components/Header";
 import Footer from "@/Components/Footer";
 import OrderBox from "./OrderBox";
-import Input from "@/Components/Input";
 import useInput from "@/hooks/useInput";
 import AddressModal from "./AddressModal";
 import ItemInfoBox from "@/Components/ItemInfoBox";
@@ -19,6 +17,9 @@ import {
   VALIDATION_ERR_MSG,
 } from "@/utils/validations";
 import { sampleUser } from "@/shared/dummy";
+import { gap } from "@/styles/theme";
+import { useSetRecoilState } from "recoil";
+import { modalState } from "@/store/state";
 
 const OrderPage = () => {
   const email = useInput("");
@@ -28,12 +29,12 @@ const OrderPage = () => {
   const phone = useInput("");
   const phoneValidation = useValidation(validatePhoneNumber);
 
-  const [isAddressModalOpened, setIsAddressModalOpened] = useState(false);
+  const setIsModalOpened = useSetRecoilState(modalState);
 
   return (
     <Wrapper>
       <Header>
-        <OrderBox />
+        <OrderBox {...buyItems} />
       </Header>
       <div className="contents">
         <Title>
@@ -47,8 +48,8 @@ const OrderPage = () => {
               <div>
                 <input type="checkbox" /> 모두선택
               </div>
-              {buyItems.map((i) => (
-                <ItemInfoBox {...i} />
+              {buyItems.items.map((i, idx) => (
+                <ItemInfoBox {...i} key={idx} />
               ))}
             </div>
           </Info>
@@ -91,7 +92,7 @@ const OrderPage = () => {
               배송지
               <div
                 className="address-btn"
-                onClick={() => setIsAddressModalOpened(true)}
+                onClick={() => setIsModalOpened(true)}
               >
                 변경
               </div>
@@ -118,9 +119,7 @@ const OrderPage = () => {
         </Content>
       </div>
       <Footer />
-      {isAddressModalOpened && (
-        <AddressModal closeModal={() => setIsAddressModalOpened(false)} />
-      )}
+      <AddressModal />
     </Wrapper>
   );
 };
@@ -167,7 +166,7 @@ const Content = styled.div`
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  gap: 8rem;
+  ${gap("8rem", "column")}
   margin-top: 4rem;
 `;
 
@@ -176,7 +175,7 @@ const Info = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 2rem;
+  ${gap("2rem", "column")}
   .label {
     ${({ theme }) => theme.flexCenter};
     ${({ theme }) => theme.font.large};
@@ -190,7 +189,7 @@ const Info = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3rem;
+    ${gap("3rem", "column")}
     width: 30rem;
   }
   div {
@@ -200,12 +199,12 @@ const Info = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    gap: 2rem;
+    ${gap("2rem", "column")}
   }
   .address-info {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    ${gap("1rem", "column")}
     .name {
       ${({ theme }) => theme.font.large};
     }

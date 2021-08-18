@@ -1,14 +1,16 @@
-import React from "react";
 import styled from "styled-components";
+import { Link } from "@/Router";
 
-const ProductOption = ({ url, title }) => {
+const ProductOption = ({ url, title, id }) => {
   return (
-    <ProductOptionWrapper>
-      <div className="thumbnail">
-        <img src={url} />
-      </div>
-      <h4 className="product__title">{title}</h4>
-    </ProductOptionWrapper>
+    <Link to={`/detail/${id}`}>
+      <ProductOptionWrapper>
+        <div className="thumbnail">
+          <img src={url} />
+        </div>
+        <h4 className="product__title">{title}</h4>
+      </ProductOptionWrapper>
+    </Link>
   );
 };
 

@@ -1,13 +1,14 @@
-import React from "react";
 import styled from "styled-components";
 import Button from "@/Components/Button";
 import QuestionBox from "./QuestionBox";
-import { useState } from "react";
 import QuestionModal from "./QuestionModal";
 import { questions } from "@/shared/dummy";
+import { useSetRecoilState } from "recoil";
+import { modalState } from "@/store/state";
 
 const Question = () => {
-  const [isModalOpened, setIsModalOpened] = useState(false);
+  const setIsModalOpened = useSetRecoilState(modalState);
+
   const handleModalOpen = (val: boolean) => {
     if (!val) {
       const submit = window.confirm(
@@ -28,11 +29,11 @@ const Question = () => {
           문의하기
         </Button>
       </Header>
-      {questions.questions.map((question) => (
-        <QuestionBox {...question} />
+      {questions.questions.map((question, idx) => (
+        <QuestionBox {...question} key={idx} />
       ))}
 
-      {isModalOpened && <QuestionModal {...{ handleModalOpen }} />}
+      <QuestionModal {...{ handleModalOpen }} />
     </div>
   );
 };

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { ETLink } from "@/Router";
+import { useState } from "react";
+import { Link } from "@/Router";
 import styled, { css } from "styled-components";
 import MagnifiedImage from "./MagnifiedImage";
 import { Wish } from "@/assets";
@@ -22,58 +22,48 @@ const Item = ({
   price,
   isWish,
 }: ItemType) => {
-  const ToggleWish = (id: number, boolean: boolean) => {
+  const toggleWish = (e: Event) => {
+    e.stopPropagation();
     //TODO: 서버 좋아요 변경
-    console.log(`${id} 아이템 wish를 ${boolean}으로`);
-    setIsWish(boolean);
+    // console.log(`${id} 아이템 wish를 ${boolean}으로`);
+    setIsWish(!isWishState);
   };
   const [isWishState, setIsWish] = useState(isWish);
 
   return (
-    <ETLink to={`/detail/${id}`}>
-      <ItemWrapper>
-        <div className="thumbnail">
-          <MagnifiedImage src="https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg" />
-          <div className="thumbnail__tags">
-            {tags.map((tag) => (
-              <Tag tag={tag}>{tag.toUpperCase()}</Tag>
-            ))}
-          </div>
-          <div className="thumbnail__wish">
-            {isWishState ? (
-              <Wish
-                opacity="1"
-                fill="#2ac1bc"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  ToggleWish(id, false);
-                }}
-              />
-            ) : (
-              <Wish
-                fill="white"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  ToggleWish(id, true);
-                }}
-              />
-            )}
-          </div>
-        </div>
-        <div className="info">
-          <div className="info__title">{title}</div>
-          {discountRate !== 0 && (
-            <div className="info__sale">
-              <div className="discount-rate">{discountRate}%</div>
-              <div className="before-price">{convertToKRW(price)}</div>
+    <li key={id}>
+      <Link to={`/detail/${id}`}>
+        <ItemWrapper>
+          <div className="thumbnail">
+            <MagnifiedImage src="https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg" />
+            <div className="thumbnail__tags">
+              {tags.map((tag) => (
+                <Tag tag={tag}>{tag.toUpperCase()}</Tag>
+              ))}
             </div>
-          )}
-          <div className="info__price">
-            {getCurrentPrice(price, discountRate)}
+            <div className="thumbnail__wish">
+              {isWishState ? (
+                <Wish opacity="1" fill="#2ac1bc" onClick={toggleWish} />
+              ) : (
+                <Wish fill="white" onClick={toggleWish} />
+              )}
+            </div>
           </div>
-        </div>
-      </ItemWrapper>
-    </ETLink>
+          <div className="info">
+            <div className="info__title">{title}</div>
+            {discountRate !== 0 && (
+              <div className="info__sale">
+                <div className="discount-rate">{discountRate}%</div>
+                <div className="before-price">{convertToKRW(price)}</div>
+              </div>
+            )}
+            <div className="info__price">
+              {getCurrentPrice(price, discountRate)}
+            </div>
+          </div>
+        </ItemWrapper>
+      </Link>
+    </li>
   );
 };
 
@@ -91,13 +81,16 @@ const ItemWrapper = styled.div`
       bottom: 1rem;
       right: 1rem;
 
-      & > svg:hover {
-        fill: #2ac1bc;
-        opacity: 1;
+      /* & > svg:hover {
+        opacity: 0.7;
       }
       & > svg:active {
         transform: scale(1.1);
-      }
+      } */
+    }
+    .active {
+    }
+    .inactive {
     }
   }
 

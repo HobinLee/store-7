@@ -1,5 +1,6 @@
 import { InputType } from "@/hooks/useInput";
-import React, { ReactElement } from "react";
+import { gap } from "@/styles/theme";
+import { ReactElement } from "react";
 import styled from "styled-components";
 import Input from ".";
 
@@ -32,7 +33,8 @@ const SectionWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+
+  ${gap("1rem", "column")}
 
   .form__title {
     ${({ theme }) => theme.font.medium}

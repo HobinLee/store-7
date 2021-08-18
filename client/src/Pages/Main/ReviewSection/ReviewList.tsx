@@ -1,16 +1,16 @@
-import React from "react";
 import styled from "styled-components";
 import ReviewBox from "@/Pages/Detail/Review/ReviewBox";
 import { ReviewType } from "@/shared/type";
-import { ETLink } from "@/Router";
+import { Link } from "@/Router";
+import { gap } from "@/styles/theme";
 
 const ReviewList = ({ reviews }: { reviews: ReviewType[] }) => (
   <ReviewListWrapper>
     {reviews.map((review: ReviewType, idx: number) => (
       <li key={idx}>
-        <ETLink to={`/detail/${review.id}`}>
+        <Link to={`/detail/${review.id}`}>
           <ReviewBox {...review} />
-        </ETLink>
+        </Link>
       </li>
     ))}
   </ReviewListWrapper>
@@ -20,7 +20,7 @@ const ReviewListWrapper = styled.ul`
   width: 100%;
   display: flex;
   flex-direction: row;
-  gap: 2rem;
+  ${gap("2rem")}
 
   li {
     width: 100%;
@@ -29,7 +29,7 @@ const ReviewListWrapper = styled.ul`
       display: flex;
       flex-direction: column-reverse;
       border: none;
-      gap: 2rem;
+      ${gap("2rem", "column-reverse")}
 
       & > div {
         flex-direction: column-reverse;
@@ -49,7 +49,7 @@ const ReviewListWrapper = styled.ul`
       background: none;
       padding: 0;
       justify-content: flex-start;
-      gap: 2rem;
+      ${gap("2rem", "column")}
       .content-img {
         ${({ theme }) => theme.borderRadius.small}
         width: 100%;

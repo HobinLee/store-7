@@ -4,7 +4,7 @@ export type ReviewType = {
   content: string;
   img?: string;
   author: string;
-  date: string;
+  date: Date;
 };
 export type ReviewListType = {
   totalCount: number;
@@ -19,6 +19,7 @@ export type QuestionType = {
     author: string;
     content: string;
     date: Date;
+    category?: string;
   };
   answer?: {
     content: string;
@@ -57,4 +58,11 @@ export type ItemBannerType = {
   src: any;
   id: number;
   isWhite?: boolean;
+};
+
+export type ItemType = {
+  name: string;
+  num?: number;
+  price: number;
+  delivery: number;
 };

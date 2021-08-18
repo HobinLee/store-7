@@ -1,4 +1,3 @@
-export { default as Hamburger } from "./hamburger.svg";
 export { default as Banner1 } from "./banner1.gif";
 export { default as Banner2 } from "./banner2.gif";
 export { default as Banner3 } from "./banner3.gif";
@@ -17,3 +16,5 @@ export { default as Arrow } from "./arrow.svg";
 export { default as Check } from "./check.svg";
 export { default as Wish } from "./wish.svg";
 export { default as Triangle } from "./triangle.svg";
+export { default as SecretpenImg } from "./secretpen.png";
+export { default as TrayImg } from "./tray.png";

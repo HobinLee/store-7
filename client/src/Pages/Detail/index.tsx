@@ -2,23 +2,20 @@ import Header from "@/Components/Header";
 import OptionBox from "./OptionBox";
 import useInput from "@/hooks/useInput";
 import { PageWrapper, Contents } from "@/shared/styled";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import Review from "./Review";
 import Question from "./Question";
 import Footer from "@/Components/Footer";
 import Guide from "./Guide";
 import ZoomModal from "./ZoomModal";
+import { gap } from "@/styles/theme";
+import { sampleItemDetail } from "@/shared/dummy";
+import { convertToKRW } from "@/utils/util";
 
 const topHeight = 740;
 
-const Blank = styled.div`
-  width: 100%;
-  height: 200rem;
-  background: lightgray;
-`;
-
-const tabs = [
+export const tabs = [
   {
     id: "first",
     title: "상품상세정보",
@@ -57,9 +54,6 @@ const DetailPage = () => {
   };
 
   const [isZoomOpened, setIsZoomOpened] = useState(false);
-  const handleZoomOpen = () => {
-    setIsZoomOpened(!isZoomOpened);
-  };
 
   useEffect(() => {
     addEventListener("scroll", () => {
@@ -78,8 +72,9 @@ const DetailPage = () => {
       <Header>
         {yOffset > topHeight && (
           <FixedTab yOffset={yOffset}>
-            {tabs.map((tab) => (
+            {tabs.map((tab, idx) => (
               <TabA
+                key={idx}
                 onClick={() => handleSelectTab(tab.id)}
                 isSelected={selectedTab === tab.id}
               >
@@ -92,30 +87,41 @@ const DetailPage = () => {
 
       <Contents>
         <InfoBox>
-          <div onClick={handleZoomOpen} className="img-box">
+          <div
+            data-testid="image-box"
+            onClick={() => setIsZoomOpened(true)}
+            onMouseLeave={() => setIsZoomOpened(false)}
+            className="img-box"
+          >
             <img
               id="image"
               src="https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg"
               className="thumbnail"
             />
-            {isZoomOpened && <ZoomLens id="zoom-lens" />}
+            {isZoomOpened && (
+              <ZoomLens data-testid="zoom-lens" id="zoom-lens" />
+            )}
             {isZoomOpened && <ZoomModal />}
           </div>
           <Info>
-            <div className="title">으아아아악</div>
+            <div className="title">{sampleItemDetail.name}</div>
 
             <div className="list">
               <div className="list__item">
                 <div className="list__item--title">판매가격</div>
-                <div className="list__item--content price">10,000원</div>
+                <div className="list__item--content price">
+                  {convertToKRW(sampleItemDetail.price)}
+                </div>
               </div>
               <div className="list__item">
                 <div className="list__item--title">배송정보</div>
-                <div className="list__item--content">2,500원</div>
+                <div className="list__item--content">
+                  {convertToKRW(sampleItemDetail.delivery)}
+                </div>
               </div>
             </div>
 
-            <OptionBox {...{ numValue, handleClickNumVal }} />
+            <OptionBox key="option-box" {...{ numValue, handleClickNumVal }} />
           </Info>
         </InfoBox>
 
@@ -123,6 +129,7 @@ const DetailPage = () => {
           <Tab yOffset={yOffset}>
             {tabs.map((tab) => (
               <TabA
+                key={tab.title}
                 onClick={() => handleSelectTab(tab.id)}
                 isSelected={selectedTab === tab.id}
               >
@@ -133,13 +140,18 @@ const DetailPage = () => {
 
           <div className="bottom-wrapper">
             {tabs.map((tab) => (
-              <TabPage>{tab.id === selectedTab && tab.component}</TabPage>
+              <TabPage data-testid={tab.title} key={tab.title}>
+                {tab.id === selectedTab && tab.component}
+              </TabPage>
             ))}
           </div>
 
           {yOffset > topHeight && selectedTab === "first" && (
             <div className="option-box">
-              <OptionBox {...{ numValue, handleClickNumVal }} />
+              <OptionBox
+                key="bottom-option-box"
+                {...{ numValue, handleClickNumVal }}
+              />
             </div>
           )}
         </Scroll>
@@ -173,7 +185,7 @@ const InfoBox = styled.div`
   width: 100%;
   height: 50rem;
   box-sizing: border-box;
-  gap: 9rem;
+  ${gap("5rem")}
   .thumbnail {
     width: 50rem;
     height: 100%;

@@ -1,8 +1,7 @@
-import React from "react";
 import styled from "styled-components";
 import { sampleMypage } from "@/shared/dummy";
 import SignatureLine from "@/Components/SignatureLine";
-import { ETLink } from "@/Router";
+import { Link } from "@/Router";
 
 const Sidebar = ({ setCurrent }) => {
   return (
@@ -18,7 +17,7 @@ const Sidebar = ({ setCurrent }) => {
                 setCurrent(path);
               }}
             >
-              <ETLink to={`/mypage/${path}`}>{itemTitle}</ETLink>
+              <Link to={`/mypage/${path}`}>{itemTitle}</Link>
             </li>
           ))}
         </ul>
@@ -34,7 +33,7 @@ const Sidebar = ({ setCurrent }) => {
                 setCurrent(path);
               }}
             >
-              <ETLink to={`/mypage/${path}`}>{itemTitle}</ETLink>
+              <Link to={`/mypage/${path}`}>{itemTitle}</Link>
             </li>
           ))}
         </ul>

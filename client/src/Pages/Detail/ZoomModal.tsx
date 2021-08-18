@@ -1,5 +1,4 @@
 import { imageZoom } from "@/utils/util";
-import React from "react";
 import { useEffect } from "react";
 import styled from "styled-components";
 
@@ -8,7 +7,7 @@ const ZoomModal = () => {
     imageZoom("image", "zoom-box", "zoom-lens");
   }, []);
 
-  return <Wrapper id="zoom-box"></Wrapper>;
+  return <Wrapper data-testid="zoom-box" id="zoom-box"></Wrapper>;
 };
 
 const Wrapper = styled.div`
