@@ -2,9 +2,14 @@ import { FC, ReactElement } from "react";
 import { render, RenderOptions } from "@testing-library/react";
 import { ThemeProvider } from "styled-components";
 import { light } from "@/styles/theme";
+import { RecoilRoot } from "recoil";
 
 const AllTheProviders: FC = ({ children }) => {
-  return <ThemeProvider theme={light}>{children}</ThemeProvider>;
+  return (
+    <ThemeProvider theme={light}>
+      <RecoilRoot>{children}</RecoilRoot>
+    </ThemeProvider>
+  );
 };
 
 const customRender = (
