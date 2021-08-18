@@ -106,6 +106,3 @@ dist
 
 #etc
 .DS_Store
-client/package-lock.json
-
-server/package-lock.json
