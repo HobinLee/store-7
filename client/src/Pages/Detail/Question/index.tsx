@@ -1,14 +1,12 @@
 import styled from "styled-components";
 import Button from "@/Components/Button";
 import QuestionBox from "./QuestionBox";
+import { useState } from "react";
 import QuestionModal from "./QuestionModal";
 import { qnas } from "@/shared/dummy";
-import { useSetRecoilState } from "recoil";
-import { modalState } from "@/store/state";
 
 const Question = () => {
-  const setIsModalOpened = useSetRecoilState(modalState);
-
+  const [isModalOpened, setIsModalOpened] = useState(false);
   const handleModalOpen = (val: boolean) => {
     if (!val) {
       const submit = window.confirm(
@@ -33,7 +31,7 @@ const Question = () => {
         <QuestionBox {...qna} key={idx} />
       ))}
 
-      <QuestionModal {...{ handleModalOpen }} />
+      {isModalOpened && <QuestionModal {...{ handleModalOpen }} />}
     </div>
   );
 };
