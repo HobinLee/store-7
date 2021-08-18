@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 import Section from "../../Section";
 import Table from "../../Table";
-import RecentOrder from "../../Table/Row/RecentOrder";
-import row from "@/Pages/MyPage/Table/Row";
+import RecentOrder from "../../Table/rows/RecentOrder";
+import rows from "@/Pages/MyPage/Table/rows";
 import { recent } from "@/shared/dummy";
 
 const OrderList = () => {
@@ -25,7 +25,7 @@ const OrderList = () => {
           ratio={[1, 3, 1, 0.5, 0.5]}
         >
           {recent.length !== 0 ? (
-            <row.Empty colSpan={5} message="조회내역이 없습니다." />
+            <rows.Empty colSpan={5} message="조회내역이 없습니다." />
           ) : (
             recent.map((re) => <RecentOrder {...re} />)
           )}

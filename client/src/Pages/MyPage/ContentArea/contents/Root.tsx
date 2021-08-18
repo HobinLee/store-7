@@ -3,7 +3,7 @@ import Section from "../../Section";
 import Table from "../../Table";
 import Item from "@/Components/Item";
 import { recent, sampleMain } from "@/shared/dummy";
-import RecentOrder from "../../Table/Row/RecentOrder";
+import RecentOrder from "../../Table/rows/RecentOrder";
 import { ItemList } from "@/shared/styled";
 
 const Root = () => {

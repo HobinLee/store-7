@@ -3,11 +3,11 @@ import Question from "./Question";
 import RecentOrder from "./RecentOrder";
 import Review from "./Review";
 
-const row = {
+const rows = {
   Empty,
   Question,
   RecentOrder,
   Review,
 };
 
-export default row;
+export default rows;

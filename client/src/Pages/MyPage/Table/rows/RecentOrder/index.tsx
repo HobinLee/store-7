@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import TableFrom from "../tableForm";
+import forms from "@/Pages/MyPage/Table/forms";
 
 type RecentOrderType = {
   id: number;
@@ -35,10 +35,10 @@ const RecentOrder = ({
   return (
     <tr>
       <td>
-        <TableFrom.Order orderDate={date} orderNumber={number} />
+        <forms.Order orderDate={date} orderNumber={number} />
       </td>
       <td>
-        <TableFrom.ProductOption url={url} title={title} id={id} />
+        <forms.ProductOption url={url} title={title} id={id} />
       </td>
       <td>
         {price} / {count}
