@@ -12,6 +12,7 @@ const WishList = () => {
         title="찜리스트"
         description="최근 30일 내에 진행중인 주문정보입니다."
         lineType="long1"
+        data-testid="test__section"
       >
         <ItemWrapList>
           {sampleCategory.map((item) => (
