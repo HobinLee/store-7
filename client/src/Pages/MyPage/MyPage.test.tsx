@@ -1,6 +1,5 @@
-import { render } from "@testing-library/react";
 import "jest-styled-components";
-
+import { render } from "@/utils/test-util";
 import MyPage from "./index";
 
 describe("<MyPage />", () => {

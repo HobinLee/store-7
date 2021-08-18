@@ -13,9 +13,7 @@ const ProductSection = ({ title }: ProductSectionProps) => {
       <div className="title">{title}</div>
       <ItemList>
         {sampleMain.map((item) => (
-          <li key={item.id}>
-            <Item {...item} />
-          </li>
+          <Item {...item} key={item.id} />
         ))}
       </ItemList>
     </SectionWrapper>

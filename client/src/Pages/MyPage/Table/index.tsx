@@ -2,19 +2,19 @@ import React from "react";
 import styled from "styled-components";
 import SignatureLine from "@/Components/SignatureLine";
 
-type TableType = {
+export interface TableProps {
   ths: string[];
   ratio: number[];
   checker?: boolean;
   children: React.ReactNode | React.ReactNode[];
-};
+}
 
 const Table = ({
   ths,
   ratio,
   checker = false,
   children: inputedChildren,
-}: TableType) => {
+}: TableProps) => {
   // 체크 기능은 이후 isChecked라는 값이 애초에 들어있을건지 협의 후 만들기!
 
   const entire = ratio.reduce((acc, curr) => acc + curr, 0);

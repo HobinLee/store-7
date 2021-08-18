@@ -10,12 +10,12 @@ const WishList = () => {
     <Wrapper>
       <Section
         title="찜리스트"
-        descrition="최근 30일 내에 진행중인 주문정보입니다."
+        description="최근 30일 내에 진행중인 주문정보입니다."
         lineType="long1"
       >
         <ItemWrapList>
           {sampleCategory.map((item) => (
-            <Item {...item} />
+            <Item {...item} key={item.id} />
           ))}
         </ItemWrapList>
       </Section>

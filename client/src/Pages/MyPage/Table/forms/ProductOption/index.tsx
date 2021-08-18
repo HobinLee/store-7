@@ -2,17 +2,17 @@ import styled from "styled-components";
 import { Link } from "@/Router";
 
 export interface ProductOptionProps {
-  url: string;
+  image: string;
   name: string;
-  id: string;
+  id: number;
 }
 
-const ProductOption = ({ url, name, id }: ProductOptionProps) => {
+const ProductOption = ({ image, name, id }: ProductOptionProps) => {
   return (
     <Link to={`/detail/${id}`}>
       <ProductOptionWrapper>
         <div className="thumbnail">
-          <img src={url} />
+          <img src={image} />
         </div>
         <h4 className="product__name">{name}</h4>
       </ProductOptionWrapper>

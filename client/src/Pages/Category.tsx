@@ -23,7 +23,7 @@ const CategoryPage = () => {
         </Filter>
         <ItemWrapList>
           {sampleCategory.map((item) => (
-            <Item {...item} />
+            <Item {...item} key={item.id} />
           ))}
         </ItemWrapList>
       </Contents>
