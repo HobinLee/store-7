@@ -4,7 +4,11 @@ import { ReviewType } from "@/shared/type";
 import { Link } from "@/Router";
 import { gap } from "@/styles/theme";
 
-const ReviewList = ({ reviews }: { reviews: ReviewType[] }) => (
+export interface ReviewListProps {
+  reviews: ReviewType[];
+}
+
+const ReviewList = ({ reviews }: ReviewListProps) => (
   <ReviewListWrapper>
     {reviews.map((review: ReviewType, idx: number) => (
       <li key={idx}>
