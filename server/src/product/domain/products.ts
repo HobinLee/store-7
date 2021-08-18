@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { Like, Repository } from "typeorm";
 import { Product } from "../entity/product";
 
 @Injectable()
@@ -10,8 +10,20 @@ export class Products {
     private readonly productRepository: Repository<Product>
   ) {}
 
-  findProducts() {
-    this.productRepository.find();
+  async findProductsByOrderAndCategoryAndSubCategoryAndKeyword(
+    order: string,
+    category: string,
+    subCategory: string,
+    keyword: string
+  ): Promise<Product[]> {
+    return this.productRepository.find({
+      relations: ["options", "images", "detailImages"],
+      where: {
+        category: Like(category),
+        subCategory: Like(subCategory),
+        name: Like(keyword),
+      },
+    });
   }
 
   fintProductById() {
