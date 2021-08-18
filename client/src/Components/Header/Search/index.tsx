@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Input from "@/Components/Input";
 import { DropdownWrapper, DropdownItem } from "@/shared/styled";

@@ -1,14 +1,11 @@
 import { gap } from "@/styles/theme";
 import styled from "styled-components";
+import { Logo } from "@/assets";
 
 const Footer = () => {
   return (
     <Wrapper>
-      <img
-        role="img"
-        width="100"
-        src="https://store.baemin.com/data/skin/front/udweb_C/img/banner/da16d1162f6d783169f2c8c6556c2d8b_50794.png"
-      />
+      <img width="300" src={Logo} />
 
       <div>
         <b>
@@ -35,18 +32,14 @@ const Wrapper = styled.div`
   left: 0;
   bottom: 0;
   width: 100%;
-  padding-top: 5rem;
-  padding-bottom: 8rem;
+  height: 30rem;
   background-color: ${({ theme }) => theme.color.light_grey1};
   ${({ theme }) => theme.flexCenter};
   ${gap("10rem")}
-  img {
-    margin-bottom: 5rem;
-  }
   b {
     ${({ theme }) => theme.font.medium};
     display: flex;
-    ${gap("rem")}
+    justify-content: space-between;
     font-weight: 700;
   }
   p {

@@ -13,7 +13,6 @@ export const GlobalStyle = createGlobalStyle`
     color: ${({ theme }) => theme.color.title_active};
     a {
       text-decoration: none;
-      color: ${({ theme }) => theme.color.title_active};
     }
     button,
     input,
