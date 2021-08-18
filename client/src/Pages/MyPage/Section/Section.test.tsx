@@ -20,7 +20,7 @@ describe("<Section />", () => {
 
   it("should render component in document", () => {
     expect(page).toBeInTheDocument();
-    expect(screen.getByTestId("test__children")).toBeInTheDocument();
+    expect(screen.queryByTestId("test__children")).toBeInTheDocument();
   });
 
   it("should render text in document", () => {
