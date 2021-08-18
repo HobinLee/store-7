@@ -164,7 +164,7 @@ export const reviews: ReviewListType = {
       content: "조아유",
       image:
         "https://store.baemin.com/data/board/upload/goodsreview/eea0b21ff31b55a0",
-      author: "우아한개발자",
+      author: "쭈니쭈니",
       date: new Date(),
     },
     {
@@ -183,7 +183,7 @@ export const reviews: ReviewListType = {
       image:
         "https://store.baemin.com/data/board/upload/goodsreview/0b3a8185859afb31",
       content: "와 너무 귀여워요 ㅠㅠ",
-      author: "우아한개발자",
+      author: "호비",
       date: new Date(),
     },
   ],

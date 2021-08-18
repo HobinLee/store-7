@@ -3,25 +3,25 @@ import { Link } from "@/Router";
 import { ItemBannerType } from "@/shared/type";
 import { gap } from "@/styles/theme";
 
-type BannerPropsType = {
-  items: ItemBannerType[];
-};
+export interface BannerProps {
+  banners: ItemBannerType[];
+}
 
-const Banner = ({ items }: BannerPropsType) => {
+const Banner = ({ banners }: BannerProps) => {
   return (
     <BannerWrapper>
       <div className="banner-content">
         <Link to={`/detail/`}>
           <div className="banner__info-wrapper">
             <div className="banner__info">
-              <h3 className="banner__title">{items[0].title}</h3>
-              <div className="banner__brief">{items[0].brief}</div>
+              <h3 className="banner__title">{banners[0].title}</h3>
+              <div className="banner__brief">{banners[0].brief}</div>
             </div>
             <div className="banner__button">
               <span>자세히 보기</span>
             </div>
           </div>
-          <img src={items[0].src} />
+          <img src={banners[0].src} />
         </Link>
       </div>
     </BannerWrapper>
