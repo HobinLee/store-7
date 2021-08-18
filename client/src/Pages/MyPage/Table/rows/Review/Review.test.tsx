@@ -33,7 +33,7 @@ describe("<Review />", () => {
   });
 
   it("should render <ReviewBox /> component under row when  row is clicked ", () => {
-    fireEvent.click(screen.queryByTestId("test__review"));
+    fireEvent.click(screen.queryByTestId("test__review-row"));
     expect(screen.queryByTestId("test__review-box")).toBeInTheDocument();
   });
 });

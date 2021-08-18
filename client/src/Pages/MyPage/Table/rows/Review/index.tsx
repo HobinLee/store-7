@@ -10,7 +10,7 @@ const Review = (review: ReviewType) => {
 
   return (
     <>
-      <Wrapper data-testid="test__review"
+      <Wrapper data-testid="test__review-row"
         onClick={() => {
           setIsOpen(!isOpen);
         }}

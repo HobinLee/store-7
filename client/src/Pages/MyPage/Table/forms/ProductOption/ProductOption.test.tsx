@@ -23,6 +23,6 @@ describe("<ProductOption />", () => {
   });
 
   it("should render text in document", () => {
-    expectText(ProductOption.name);
+    expectText(ProductOptionProps.name);
   });
 });

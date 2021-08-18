@@ -30,7 +30,7 @@ describe("<Question />", () => {
   });
 
   it("should open <ReviewBox /> component under row when  row is clicked ", () => {
-    fireEvent.click(screen.queryByTestId("test__question"));
+    fireEvent.click(screen.queryByTestId("test__question-row"));
     expect(screen.queryByTestId("test__question-box")).toBeInTheDocument();
   });
 

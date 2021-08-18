@@ -34,9 +34,9 @@ describe("<MyPage />", () => {
     expect(screen.queryByTestId("test__userinfo")).toBeInTheDocument();
 
     fireEvent.click(screen.queryByText("나의 상품문의"));
-    expect(screen.queryByTestId("test__question")).toBeInTheDocument();
+    expect(screen.queryByTestId("test__question-content")).toBeInTheDocument();
 
     fireEvent.click(screen.queryByText("나의 상품후기"));
-    expect(screen.queryByTestId("test__review")).toBeInTheDocument();
+    expect(screen.queryByTestId("test__review-content")).toBeInTheDocument();
   });
 });
