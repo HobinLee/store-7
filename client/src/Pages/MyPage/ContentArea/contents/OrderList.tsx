@@ -11,7 +11,7 @@ const OrderList = () => {
     <Wrapper>
       <Section
         title="주문목록/배송조회"
-        descrition="최근 30일 내에 주문한 주문정보입니다."
+        description="최근 30일 내에 주문한 주문정보입니다."
         lineType="long1"
       >
         <Table

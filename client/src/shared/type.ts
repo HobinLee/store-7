@@ -2,10 +2,11 @@ export type ReviewType = {
   id: number;
   rate: number;
   content: string;
-  img?: string;
+  image?: string;
   author: string;
   date: Date;
 };
+
 export type ReviewListType = {
   totalCount: number;
   averageRate: number;
@@ -29,6 +30,22 @@ export type QuestionType = {
 export type QuestionListType = {
   totalCount: number;
   questions: QuestionType[];
+};
+
+export type QnAType = {
+  id: number;
+  authorName: string;
+  type: string;
+  title: string;
+  question: string;
+  answer: string;
+  image: string;
+  createdAt: Date;
+  answerCreatedAt: Date;
+  product: {
+    id: number;
+    name: string;
+  };
 };
 
 export type UserType = {
@@ -65,4 +82,15 @@ export type ItemType = {
   num?: number;
   price: number;
   delivery: number;
+};
+
+export type ProductType = {
+  id: number;
+  name: string;
+  price: number;
+  originPrice?: number;
+  isWish: boolean;
+  amount: number;
+  images: string[];
+  details: string[];
 };

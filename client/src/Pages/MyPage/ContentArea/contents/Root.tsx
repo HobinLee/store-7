@@ -11,14 +11,14 @@ const Root = () => {
     <Wrapper>
       <Section
         title="진행 중인 주문"
-        descrition="최근 30일 내에 진행중인 주문정보입니다."
+        description="최근 30일 내에 진행중인 주문정보입니다."
         lineType="long1"
       >
         <div></div>
       </Section>
       <Section
         title="최근 주문 정보"
-        descrition="최근 30일 내에 주문하신 내역입니다."
+        description="최근 30일 내에 주문하신 내역입니다."
         lineType="long2"
       >
         <Table
@@ -38,7 +38,7 @@ const Root = () => {
       </Section>
       <Section
         title="최근 본 상품"
-        descrition="ET님께서 본 최근 상품입니다."
+        description="ET님께서 본 최근 상품입니다."
         lineType="long2"
       >
         <ItemList>
