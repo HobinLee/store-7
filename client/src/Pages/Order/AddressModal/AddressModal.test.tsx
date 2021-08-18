@@ -4,7 +4,7 @@ import AddressModal from "./index";
 
 describe("<AddressModal />", () => {
   it("should render component in document", () => {
-    const { container } = render(<AddressModal closeModal={() => {}} />);
+    const { container } = render(<AddressModal />);
     expect(container).toBeInTheDocument();
 
     expect(screen.queryByText("배송지 선택")).toBeInTheDocument();
