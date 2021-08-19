@@ -17,7 +17,7 @@ export class Users {
 
   async createAndGetUserId(createUser: CreateUserDTO): Promise<number> {
     const result = await this.createUser(createUser);
-    return result.identifiers[0].id;
+    return result.identifiers[0]?.id ?? 0;
   }
 
   async createUser(createUser: CreateUserDTO) {
