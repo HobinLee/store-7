@@ -1,7 +1,4 @@
-import { GET, POST, DELETE } from "@/utils/axios";
-
-// GET /carts 장바구니 목록
-export const getCarts = () => GET("/carts");
+import { POST, DELETE } from "@/utils/axios";
 
 // POST /carts 장바구니 담기
 export const postCart = ({ data }) => POST("/carts", data);

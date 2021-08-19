@@ -1,9 +1,13 @@
+import { Product } from "@/product/entity/product";
+import { User } from "@/user/entity/user";
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from "typeorm";
 
 @Entity()
@@ -11,11 +15,13 @@ export class Cart {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: "int", name: "user_id" })
-  userId: number;
+  @ManyToOne(() => User, (user) => user.carts, { nullable: false })
+  @JoinColumn({ name: "user_id" })
+  user: User;
 
-  @Column({ type: "int", name: "product_id" })
-  productId: number;
+  @ManyToOne(() => Product, (product) => product.carts, { nullable: false })
+  @JoinColumn({ name: "product_id" })
+  product: Product;
 
   @Column({ type: "int", name: "product_option_id", nullable: true })
   productOptionId: number;

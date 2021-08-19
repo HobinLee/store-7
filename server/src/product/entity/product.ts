@@ -3,6 +3,7 @@ import { ProductImage } from "./product-image";
 import { ProductOption } from "./option";
 import { ProductDetailImage } from "./product-detail-image";
 import { ProductUploadRequest } from "@/product/dto/product-upload-request";
+import { Cart } from "@/cart/entity/cart";
 
 @Entity()
 export class Product {
@@ -43,6 +44,9 @@ export class Product {
     cascade: true,
   })
   detailImages: ProductDetailImage[];
+
+  @OneToMany(() => Cart, (cart) => cart.product)
+  carts: Cart[];
 
   @CreateDateColumn({
     type: "timestamp",

@@ -66,7 +66,7 @@ export class ProductService {
   async deleteProduct(id: number) {
     await this.products.deleteProduct(id);
   }
-  
+
   async getProductQuestions(productId: number) {
     const questions = await this.questions.findQuestionsByProductId(productId);
     return questions.map(QuestionResponse.of);

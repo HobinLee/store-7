@@ -89,9 +89,26 @@ export type ProductType = {
   id: number;
   name: string;
   price: number;
-  originPrice?: number;
-  isWish: boolean;
-  amount: number;
+  deliveryCost: number;
+  discountRate: number;
+  stock: number;
+  category: string;
+  subCategory: string;
+  option: string;
   images: string[];
   details: string[];
+};
+
+export type CartType = {
+  totalPrice: number;
+  totalDelivery: number;
+  totalPayment: number;
+  items: {
+    name: string;
+    price: number;
+    deliveryCost: number;
+    images: string[];
+    productOptionId: number;
+    amount: number;
+  }[];
 };

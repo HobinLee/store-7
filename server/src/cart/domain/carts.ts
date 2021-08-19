@@ -12,7 +12,10 @@ export class Carts {
   ) {}
 
   async findCartsByUserId(userId: number): Promise<Cart[]> {
-    return this.cartRepository.find({ where: { userId } });
+    return this.cartRepository.find({
+      where: { user: { id: userId } },
+      relations: ["user", "product", "product.images"],
+    });
   }
 
   async createCart(cart: CreateCartRequest) {
