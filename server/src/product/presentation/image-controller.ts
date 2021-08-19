@@ -10,6 +10,6 @@ export class ImageController {
   @Get("/:name")
   async getImage(@Param("name") imageName: string, @Res() res: Response) {
     const image = await this.imageService.getImage(imageName);
-    res.set("Content-Type", "image/jpeg").send(image);
+    res.set("Content-Type", "image/*").send(image);
   }
 }
