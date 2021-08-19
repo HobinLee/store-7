@@ -14,7 +14,7 @@ export class DestinationController {
     @Param("userId") userId: number,
     @Body() destination: DestinationRequest
   ): string {
-    return this.destinationService.createDestination(1, destination);
+    return this.destinationService.createDestination(destination);
   }
 
   //   @Get()

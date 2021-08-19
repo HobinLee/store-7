@@ -15,9 +15,9 @@ export class DestinationService {
     return destinations.map(DestinationResponse.of);
   }
 
-  createDestination(userId: number, destination: DestinationRequest): string {
+  createDestination(destination: DestinationRequest): string {
     try {
-      this.destinations.createDestination({ ...destination, userId });
+      this.destinations.createDestination(destination);
     } catch (e) {
       return e;
     }
