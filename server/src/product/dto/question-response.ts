@@ -1,3 +1,5 @@
+import { Question } from "../entity/question";
+
 export class QuestionResponse {
   id: number;
   authorName: string;
@@ -6,14 +8,39 @@ export class QuestionResponse {
   question: string;
   answer: string;
   image: string;
+  isSecret: boolean;
   createdAt: Date;
-  answeredCreatedAt: Date;
+  answeredAt: Date;
   product: {
     id: number;
     name: string;
   };
 
-  static of(): QuestionResponse {
-    return null;
+  static of(q: Question): QuestionResponse {
+    const id = q.id,
+      authorName = "q.userId",
+      type = q.type,
+      title = q.title,
+      question = q.question,
+      answer = q.answer,
+      image = q.image,
+      isSecret = q.isSecret,
+      createdAt = q.createdAt,
+      answeredAt = q.answeredAt,
+      product = { id: q.productId, name: "name" };
+
+    return {
+      id,
+      authorName,
+      type,
+      title,
+      question,
+      answer,
+      image,
+      isSecret,
+      createdAt,
+      answeredAt,
+      product,
+    };
   }
 }

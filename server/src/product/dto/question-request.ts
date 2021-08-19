@@ -1,5 +1,5 @@
-export interface QuestionRequest {
-  userID: number;
+export interface QuestionPostRequest {
+  userId: number;
   productID: number;
   type: string;
   title: string;
@@ -7,6 +7,11 @@ export interface QuestionRequest {
   isSecret: boolean;
 }
 
-export interface QuestionDelete {
+export interface QuestionPatchRequest {
   id: number;
+  content: {
+    type: string;
+    content: string;
+    isSecret: boolean;
+  };
 }
