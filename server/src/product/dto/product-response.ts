@@ -24,7 +24,7 @@ export class ProductResponse {
       option = product.option,
       stock = product.stock,
       images = product.getImagesAsString(),
-      details = product.getDetailImagesAdString();
+      details = product.getDetailImagesAsString();
 
     return {
       id,

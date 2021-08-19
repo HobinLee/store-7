@@ -78,7 +78,7 @@ export class Product {
     return this.images.map((image) => image.id);
   }
 
-  getDetailImagesAdString() {
+  getDetailImagesAsString() {
     return this.detailImages.map((image) => image.id);
   }
 }
