@@ -8,6 +8,8 @@ import { ProductOption } from "./entity/option";
 import { ProductController } from "./presentation/product-controller";
 import { ProductService } from "./application/product-service";
 import { S3Repository } from "@/product/infrastructure/s3-repository";
+import { Question } from "./entity/question";
+import { Questions } from "./domain/questions";
 
 @Module({
   imports: [
@@ -16,9 +18,10 @@ import { S3Repository } from "@/product/infrastructure/s3-repository";
       ProductOption,
       ProductImage,
       ProductDetailImage,
+      Question,
     ]),
   ],
   controllers: [ProductController],
-  providers: [Products, ProductService, S3Repository],
+  providers: [Products, ProductService, S3Repository, Questions],
 })
 export class ProductModule {}

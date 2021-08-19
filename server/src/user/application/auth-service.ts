@@ -27,21 +27,22 @@ export class AuthService {
   ): Promise<string | Error> {
     try {
       const { email, password } = signinRequest;
-      const userPW: string = await (
-        await this.users.findUserByEmail(email)
-      ).password;
+      const { id: userId, password: userPW } = await this.users.findUserByEmail(
+        email
+      );
 
       if (!userPW || !PasswordEncoder.check(password, userPW)) {
         throw Error(RESULT_MSG.FAILED_TO_SIGN_IN);
       }
 
-      const token: string = await this.jwtService.signAsync(signinRequest);
+      const token: string = await this.jwtService.signAsync({ userId });
       if (!token) throw Error(RESULT_MSG.FAILED_TO_GEN_JWT);
 
       signinResponse.cookie(properties.auth.tokenKey, token);
 
       return RESULT_MSG.SUCCESS_TO_SIGN_IN;
     } catch (e) {
+      console.error(e);
       return e;
     }
   }
@@ -51,6 +52,7 @@ export class AuthService {
       signoutResponse.clearCookie(properties.auth.tokenKey);
       return RESULT_MSG.SUCCESS_TO_SIGN_OUT;
     } catch (e) {
+      console.error(e);
       return e;
     }
   }

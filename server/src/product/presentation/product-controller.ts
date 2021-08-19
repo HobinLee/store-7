@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Patch,
   Query,
   UploadedFiles,
   UseInterceptors,
@@ -16,6 +17,10 @@ import { ReviewResponse } from "@/product/dto/review-response";
 import { QuestionResponse } from "@/product/dto/question-response";
 import { FileFieldsInterceptor } from "@nestjs/platform-express";
 import { ProductUploadRequest } from "@/product/dto/product-upload-request";
+import {
+  QuestionPatchRequest,
+  QuestionPostRequest,
+} from "../dto/question-request";
 
 @Controller("/products")
 export class ProductController {
@@ -49,10 +54,32 @@ export class ProductController {
   }
 
   @Get("/:productId/questions")
-  async getQuestions(
+  async getProductQuestions(
     @Param("productId") productId: number
-  ): Promise<QuestionResponse> {
-    return await this.productService.getQuestions(productId);
+  ): Promise<QuestionResponse[]> {
+    return await this.productService.getProductQuestions(productId);
+  }
+
+  @Get("/my/questions")
+  async getMyQuestions(
+    @Param("userId") userId: number
+  ): Promise<QuestionResponse[]> {
+    return await this.productService.getUserQuestions(userId);
+  }
+
+  @Post("/:questions")
+  async postQuestion(@Body() question: QuestionPostRequest) {
+    return await this.productService.postQuestion(question);
+  }
+
+  @Patch("/questions/:id")
+  async patchQuestion(@Body() request: QuestionPatchRequest) {
+    return await this.productService.patchQuestion(request);
+  }
+
+  @Delete("/questions/:id")
+  async deleteQuestion(@Body("id") id: number) {
+    await this.productService.deleteQuestion(id);
   }
 
   @UseInterceptors(

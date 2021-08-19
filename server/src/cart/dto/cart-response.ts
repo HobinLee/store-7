@@ -7,14 +7,6 @@ export class CartResponse {
   productOptionId: number;
   amount: number;
 
-  constructor(response: CartResponse) {
-    this.id = response.id;
-    this.userId = response.userId;
-    this.productId = response.productId;
-    this.productOptionId = response.productOptionId;
-    this.amount = response.amount;
-  }
-
   static of(cart: Cart): CartResponse {
     const id = cart.id,
       userId = cart.userId,
@@ -22,12 +14,12 @@ export class CartResponse {
       productOptionId = cart.productOptionId,
       amount = cart.amount;
 
-    return new CartResponse({
+    return {
       id,
       userId,
       productId,
       productOptionId,
       amount,
-    });
+    } as CartResponse;
   }
 }

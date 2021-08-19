@@ -2,6 +2,7 @@ import { Injectable, Res } from "@nestjs/common";
 import { Users } from "../domain/users";
 import { SignupRequest } from "../dto/signup-request";
 import { JwtService } from "@nestjs/jwt";
+import { JwtPayload } from "jsonwebtoken";
 import { Response } from "express";
 import properties from "../../config/properties/properties";
 import { CheckEmailResponse } from "../dto/check-email-response";
@@ -34,22 +35,22 @@ export class UserService {
     @Res({ passthrough: true }) signupResponse: Response
   ): Promise<string | Error> {
     try {
-      const newUserId = await this.createNewUser(user);
-      if (!newUserId) throw Error(RESULT_MSG.FAILED_TO_SIGN_UP);
+      const userId = await this.createNewUser(user);
+      if (!userId) throw new Error(RESULT_MSG.FAILED_TO_SIGN_UP);
 
-      const newAddress = await this.createNewAddress(address, newUserId);
-      if (!newAddress) throw Error(RESULT_MSG.FAILED_TO_ADD_DESTINATION);
+      const newAddress = await this.createNewAddress(address, userId);
+      if (!newAddress) throw new Error(RESULT_MSG.FAILED_TO_ADD_DESTINATION);
 
-      const token: string = this.jwtService.sign({
-        email: user.email,
-        password: user.password,
-      });
-      if (!token) throw Error(RESULT_MSG.FAILED_TO_GEN_JWT);
+      console.log("USER ID IS: " + userId);
+
+      const token: string = await this.jwtService.signAsync({ userId });
+      if (!token) throw new Error(RESULT_MSG.FAILED_TO_GEN_JWT);
 
       signupResponse.cookie(properties.auth.tokenKey, token);
 
       return RESULT_MSG.SUCCESS_TO_SIGN_UP;
     } catch (e) {
+      console.error(e);
       return e;
     }
   }
@@ -62,17 +63,17 @@ export class UserService {
 
       return await this.users.createAndGetUserId(user);
     } catch (e) {
-      return e;
+      return 0;
     }
   }
 
   async createNewAddress(address: FirstDestinationDTO, userId: number) {
     try {
       return await this.destinationService.createDestination(
-        userId,
-        createFirstDestination(address)
+        createFirstDestination(userId, address)
       );
     } catch (e) {
+      console.error(e);
       return e;
     }
   }
@@ -81,6 +82,7 @@ export class UserService {
     try {
       return { isExist: !!(await this.users.findUserByEmail(email)) };
     } catch (e) {
+      console.error(e);
       return e;
     }
   }
