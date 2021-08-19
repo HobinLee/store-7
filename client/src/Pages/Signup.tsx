@@ -5,7 +5,7 @@ import { Link, moveTo } from "@/Router";
 import Address from "@/Components/Address";
 import useInput from "@/hooks/useInput";
 import InputSection from "@/Components/Input/InputSection";
-import { AddressType, UserType } from "@/shared/type";
+import { DestinationType, UserType, AddressType } from "@/shared/type";
 import Button from "@/Components/Button";
 import useValidation from "@/hooks/useValidation";
 import ValidationInput from "@/Components/Input/ValidationInput";
@@ -26,26 +26,26 @@ const SignupPage = () => {
   const confirmValidation = useValidation((confirm) => pw.value === confirm);
   const name = useInput("");
   const nameValidation = useValidation((name: string) => !!name.length);
-  const phone = useInput("");
+  const phoneNumber = useInput("");
   const phoneValidation = useValidation(validatePhoneNumber);
 
   const [address, setAddress] = useState<AddressType>({
-    postcode: {},
+    address: "",
+    postCode: "",
     detailAddress: "",
   });
 
-  const handleChangeAddress = (address: AddressType) => {
+  const handleChangeAddress = (address: DestinationType) => {
     setAddress(address);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const userInfo: UserType = {
       email: email.value,
       name: name.value,
-      phone: phone.value,
-      image: "",
-      addresses: [address],
-      defaultDestinationId: 0,
+      phoneNumber: phoneNumber.value,
+      profile: "",
+      destinations: [address],
     };
 
     //TODO: 나중에 DTO 빼기~
@@ -64,7 +64,7 @@ const SignupPage = () => {
     confirmValidation.isValid &&
     nameValidation.isValid &&
     phoneValidation.isValid &&
-    !!address.postcode.postcode;
+    !!address.postCode;
 
   return (
     <Wrapper>
@@ -109,7 +109,7 @@ const SignupPage = () => {
         </InputSection>
         <InputSection title="휴대폰 번호" brief="휴대폰 번호를 적어주세요">
           <ValidationInput
-            input={phone}
+            input={phoneNumber}
             validation={phoneValidation}
             placeholder="010-0000-0000"
             message={VALIDATION_ERR_MSG.INVALID_PHONE}

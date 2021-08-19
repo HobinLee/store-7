@@ -1,5 +1,5 @@
 import DaumPostcode from "react-daum-postcode";
-import { PostcodeType } from "@/shared/type";
+import { AddressType } from "@/shared/type";
 
 const getFullAddress = (data): string => {
   const ROAD_ADDRESS = "R";
@@ -7,7 +7,7 @@ const getFullAddress = (data): string => {
   let fullAddress = data.address;
   let extraAddress = "";
 
-  if (data.addressType === ROAD_ADDRESS) {
+  if (data.DestinationType === ROAD_ADDRESS) {
     if (data.bname !== "") {
       extraAddress += data.bname;
     }
@@ -23,8 +23,8 @@ const getFullAddress = (data): string => {
 
 const PopupPostcode = ({ onComplete }) => {
   const handleComplete = (data) => {
-    const sendData: PostcodeType = {
-      postcode: data.zonecode,
+    const sendData: AddressType = {
+      postCode: data.zonecode,
       address: getFullAddress(data),
     };
 

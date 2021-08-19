@@ -101,8 +101,8 @@ const OrderPage = () => {
               </div>
 
               <div className="address-info">
-                <div className="name">{sampleUser.addresses[0].name}</div>
-                <div>{sampleUser.addresses[0].detailAddress}</div>
+                <div className="name">{sampleUser.destinations[0].name}</div>
+                <div>{sampleUser.destinations[0].detailAddress}</div>
                 <select className="order-input">
                   <option>배송시 요청사항을 선택해주세요.</option>
                   <option>부재시 문 앞에 놓아주세요.</option>

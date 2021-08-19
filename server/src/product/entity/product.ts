@@ -90,7 +90,7 @@ export class Product {
   }
 
   getThumbnailImage() {
-    if (this.images.length == 0) return "";
+    if (!this.images) return "";
     return this.images[0].id;
   }
 

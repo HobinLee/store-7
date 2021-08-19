@@ -4,17 +4,17 @@ import PopupPostcode from "./Popup";
 import useInput from "@/hooks/useInput";
 import { useState, useEffect } from "react";
 import ModalWrapper from "../ModalWrapper";
-import { AddressType, PostcodeType } from "@/shared/type";
+import { DestinationType, AddressType } from "@/shared/type";
 import { gap } from "@/styles/theme";
 
-export type ChangeAddressHandler = (address: AddressType) => {};
+export type ChangeAddressHandler = (address: DestinationType) => {};
 
 const Address = ({ onChangeAddress }) => {
   const [isPopupOpen, setPopup] = useState(false);
-  const [address, setAddress] = useState<PostcodeType>({});
+  const [address, setAddress] = useState<AddressType>({});
   const addressDetail = useInput("");
 
-  const handleSearchAddress = (postData: PostcodeType) => {
+  const handleSearchAddress = (postData: AddressType) => {
     setAddress(postData);
     handleClosePopup();
   };
@@ -29,7 +29,7 @@ const Address = ({ onChangeAddress }) => {
 
   const handleChangeDetail = () => {
     const addressData: AddressType = {
-      postcode: address,
+      ...address,
       detailAddress: addressDetail.value,
     };
 
@@ -46,7 +46,7 @@ const Address = ({ onChangeAddress }) => {
           <button className="address-search__button" type="button">
             주소 찾기
           </button>
-          <input disabled value={address.postcode ?? ""} />
+          <input disabled value={address.postCode ?? ""} />
         </div>
         <input disabled value={address.address ?? ""} />
       </div>

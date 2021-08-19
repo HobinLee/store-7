@@ -3,14 +3,14 @@ import ModalWrapper from "@/Components/ModalWrapper";
 import { useState } from "react";
 import AddressBox from "../AddressBox";
 import { sampleUser } from "@/shared/dummy";
-import { AddressType } from "@/shared/type";
+import { DestinationType } from "@/shared/type";
 import Button from "@/Components/Button";
 import { Back } from "@/assets";
 import AddressForm from "../AddressForm";
 import { gap } from "@/styles/theme";
 
 const AddressModal = ({ closeModal }) => {
-  const handleChangeAddress = (address: AddressType) => {
+  const handleChangeAddress = (address: DestinationType) => {
     console.log(address);
   };
 
@@ -33,7 +33,7 @@ const AddressModal = ({ closeModal }) => {
 
         {page === "select" ? (
           <Contents>
-            {sampleUser.addresses.map((address, idx) => (
+            {sampleUser.destinations.map((address, idx) => (
               <AddressBox
                 key={idx}
                 {...{ setPage, address }}

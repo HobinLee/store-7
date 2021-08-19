@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { AddressType, UserType } from "@/shared/type";
+import { DestinationType, UserType } from "@/shared/type";
 import Button from "@/Components/Button";
 import { SetStateAction } from "react";
 import { Dispatch } from "react";
@@ -7,12 +7,12 @@ import { gap } from "@/styles/theme";
 
 export type AddressBoxProps = {
   setPage: Dispatch<SetStateAction<"select" | "add" | "edit">>;
-  address: AddressType;
+  address: DestinationType;
   user: UserType;
 };
 
 const AddressBox = ({ setPage, address, user }: AddressBoxProps) => {
-  const handleChangeaddress = (address: AddressType) => {
+  const handleChangeaddress = (address: DestinationType) => {
     console.log(address);
   };
 
@@ -21,7 +21,7 @@ const AddressBox = ({ setPage, address, user }: AddressBoxProps) => {
       <div className="name">{address.name}</div>
       <div>{address.detailAddress}</div>
       <div className="user">
-        <span>{user.name}</span> <span>{user.phone}</span>
+        <span>{user.name}</span> <span>{user.phoneNumber}</span>
       </div>
       <div className="buttons">
         <div>

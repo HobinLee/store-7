@@ -12,7 +12,7 @@ const ProductSection = ({ title, type }: ProductSectionProps) => {
 
   return (
     <SectionWrapper>
-      q<div className="title">{title}</div>
+      <div className="title">{title}</div>
       <ItemList>
         {items.map((item) => (
           <Item {...item} key={item.id} />

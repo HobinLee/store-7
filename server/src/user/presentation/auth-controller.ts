@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Post, Res } from "@nestjs/common";
+import {
+  All,
+  Body,
+  Controller,
+  Delete,
+  Param,
+  Post,
+  Req,
+  Res,
+} from "@nestjs/common";
 import { AuthService } from "../application/auth-service";
 import { SigninRequest } from "../dto/signin-request";
 import { Response } from "express";
@@ -12,6 +21,7 @@ export class AuthController {
     @Body() signinRequest: SigninRequest,
     @Res({ passthrough: true }) signinResponse: Response
   ): Promise<Error | string> {
+    console.log("try sign in");
     return this.authService.signIn(signinRequest, signinResponse);
   }
 

@@ -2,7 +2,7 @@ import { InputType } from "@/hooks/useInput";
 import { gap } from "@/styles/theme";
 import { ReactElement } from "react";
 import styled from "styled-components";
-import Input from ".";
+import Input from "..";
 
 type FormSectionType = {
   title: string;

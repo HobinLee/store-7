@@ -3,8 +3,8 @@ import styled from "styled-components";
 import Input from "@/Components/Input";
 import { DropdownWrapper, DropdownItem } from "@/shared/styled";
 import useInput from "@/hooks/useInput";
-import SearchList from "./SearchList";
-import AutoList from "./AutoCompleteList";
+import SearchList from "./DropDown/SearchedList";
+import AutoList from "./DropDown/AutoCompleteList";
 
 const LS_SEARCH = "search";
 

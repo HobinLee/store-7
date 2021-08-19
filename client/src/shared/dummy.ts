@@ -24,48 +24,39 @@ export const sampleMypage = {
 
 export const sampleUser: UserType = {
   name: "이정민",
-  phone: "010-4632-6807",
+  phoneNumber: "010-4632-6807",
   email: "ljm991108@gmail.com",
-  image: "",
-  addresses: [
+  profile: "",
+  destinations: [
     {
       id: 0,
       name: "집",
       detailAddress: "서울 강남구 선릉로76길 33 (대치동) 대치파인빌, 101호",
-      postcode: {
-        postcode: 10101,
-        address: "서울 강남구 선릉로76길 33 (대치동) 대치파인빌, 101호",
-      },
+      postCode: "10101",
+      address: "서울 강남구 선릉로76길 33 (대치동) 대치파인빌, 101호",
     },
     {
       id: 1,
       name: "회사",
       detailAddress: "우아한형제들 작은집",
-      postcode: {
-        postcode: 10101,
-        address: "서울 강남구 선릉로76길 33 (대치동) 대치파인빌, 101호",
-      },
+      postCode: "10101",
+      address: "서울 강남구 선릉로76길 33 (대치동) 대치파인빌, 101호",
     },
     {
       id: 1,
       name: "회사",
       detailAddress: "우아한형제들 작은집",
-      postcode: {
-        postcode: 10101,
-        address: "서울 강남구 선릉로76길 33 (대치동) 대치파인빌, 101호",
-      },
+      postCode: "10101",
+      address: "서울 강남구 선릉로76길 33 (대치동) 대치파인빌, 101호",
     },
     {
       id: 1,
       name: "회사",
       detailAddress: "우아한형제들 작은집",
-      postcode: {
-        postcode: 10101,
-        address: "서울 강남구 선릉로76길 33 (대치동) 대치파인빌, 101호",
-      },
+      postCode: "10101",
+      address: "서울 강남구 선릉로76길 33 (대치동) 대치파인빌, 101호",
     },
   ],
-  defaultDestinationId: 0,
 };
 
 export const questions: QuestionListType = {
