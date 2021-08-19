@@ -1,10 +1,15 @@
 import { GET, PATCH } from "@/utils/axios";
+import { useQuery } from "react-query";
 
 // GET /my 내 정보
 export const getMe = () => GET("/my");
 
 // PATCH /my 내 정보 수정
 export const patchMe = ({ data }) => PATCH("/my", data);
+
+// GET /my/carts 내 장바구니
+const getCarts = () => GET("/my/carts");
+export const useCarts = () => useQuery(["carts"], () => getCarts());
 
 // GET /my/reviews 내 리뷰
 export const getMyReviews = () => GET("/my/reviews");

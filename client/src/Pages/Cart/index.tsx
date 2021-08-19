@@ -8,34 +8,39 @@ import { buyItems } from "@/shared/dummy";
 import { Arrow } from "@/assets";
 import Checkbox from "@/Components/Checkbox";
 import { gap } from "@/styles/theme";
+import { useCarts } from "../../../api/my";
 
 const CartPage = () => {
-  return (
-    <Wrapper>
-      <Header>
-        <CartBox {...buyItems} />
-      </Header>
-      <div className="contents">
-        <Title>
-          장바구니{" "}
-          <span className="other">
-            <Arrow /> 주문/결제
-          </span>
-        </Title>
+  const { status, data: carts, error } = useCarts();
 
-        <Content>
-          <div className="items">
-            <div>
-              <Checkbox label="모두선택" />
+  return (
+    status !== "loading" && (
+      <Wrapper>
+        <Header>
+          <CartBox {...carts} />
+        </Header>
+        <div className="contents">
+          <Title>
+            장바구니{" "}
+            <span className="other">
+              <Arrow /> 주문/결제
+            </span>
+          </Title>
+
+          <Content>
+            <div className="items">
+              <div>
+                <Checkbox label="모두선택" />
+              </div>
+              {carts.items.map((i, idx) => (
+                <ItemInfoBox {...i} key={idx} />
+              ))}
             </div>
-            {buyItems.items.map((i, idx) => (
-              <ItemInfoBox {...i} key={idx} />
-            ))}
-          </div>
-        </Content>
-      </div>
-      <Footer />
-    </Wrapper>
+          </Content>
+        </div>
+        <Footer />
+      </Wrapper>
+    )
   );
 };
 

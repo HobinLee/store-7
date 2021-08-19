@@ -1,29 +1,26 @@
 import { Cart } from "../entity/cart";
-import { ProductDTO } from "./product-DTO";
 
 export class CartResponse {
-  id: number;
-  userId: number;
-  product: ProductDTO;
+  name: string;
+  price: number;
+  deliveryCost: number;
+  images: string[];
   productOptionId: number;
   amount: number;
 
   static of(cart: Cart): CartResponse {
-    const id = cart.id,
-      userId = cart.user.id,
-      product = {
-        name: cart.product.name,
-        price: cart.product.getDiscountedPrice(),
-        deliveryCost: cart.product.deliveryCost,
-        images: cart.product.getImagesAsString(),
-      },
+    const name = cart.product.name,
+      price = cart.product.getDiscountedPrice(),
+      deliveryCost = cart.product.deliveryCost,
+      images = cart.product.getImagesAsString(),
       productOptionId = cart.productOptionId,
       amount = cart.amount;
 
     return {
-      id,
-      userId,
-      product,
+      name,
+      price,
+      deliveryCost,
+      images,
       productOptionId,
       amount,
     } as CartResponse;
