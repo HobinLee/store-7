@@ -5,10 +5,22 @@ import { Users } from "./domain/users";
 import { User } from "./entity/user";
 import PasswordEncoder from "./infrastructure/password-encoder";
 import { AuthController } from "./presentation/auth-controller";
+import { JwtModule } from "@nestjs/jwt";
+import properties from "../config/properties/properties";
+import { UserController } from "./presentation/user-controller";
+import { UserService } from "./application/user-service";
+
+const jwtConfig = properties.auth;
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])],
-  controllers: [AuthController],
-  providers: [AuthService, Users, PasswordEncoder],
+  imports: [
+    TypeOrmModule.forFeature([User]),
+    JwtModule.register({
+      secret: jwtConfig.secret,
+      signOptions: { expiresIn: jwtConfig.expiresIn },
+    }),
+  ],
+  controllers: [AuthController, UserController],
+  providers: [AuthService, UserService, Users, PasswordEncoder],
 })
 export class UserModule {}
