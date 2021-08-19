@@ -9,7 +9,7 @@ export interface SidebarProps {
 
 const Sidebar = ({ setCurrent }: SidebarProps) => {
   return (
-    <SidebarWrpper>
+    <SidebarWrpper data-testid="test__sidebar">
       <SidebarContent>
         <SignatureLine type="short2" />
         <p>쇼핑정보</p>

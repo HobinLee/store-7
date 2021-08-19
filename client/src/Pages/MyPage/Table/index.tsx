@@ -23,7 +23,7 @@ const Table = ({
     : inputedChildren;
 
   return (
-    <TableWrapper>
+    <TableWrapper data-testid="test__table">
       <colgroup>
         {checker && <col style={{ width: "10%" }} />}
         {ratio.map((ra, idx) => (

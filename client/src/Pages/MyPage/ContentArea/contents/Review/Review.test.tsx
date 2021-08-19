@@ -4,9 +4,13 @@ import { screen } from "@testing-library/react";
 import Review from "./index";
 
 describe("<Review />", () => {
-  it("should render component in document", () => {
+  let page;
+  beforeEach(() => {
     const { container } = render(<Review />);
+    page = container;
+  });
 
-    expect(container).toBeInTheDocument();
+  it("should render component in document", () => {
+    expect(page).toBeInTheDocument();
   });
 });

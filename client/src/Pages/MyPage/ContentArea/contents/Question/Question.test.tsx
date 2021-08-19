@@ -4,9 +4,13 @@ import { screen } from "@testing-library/react";
 import Question from "./index";
 
 describe("<Question />", () => {
-  it("should render component in document", () => {
+  let page;
+  beforeEach(() => {
     const { container } = render(<Question />);
+    page = container;
+  });
 
-    expect(container).toBeInTheDocument();
+  it("should render component in document", () => {
+    expect(page).toBeInTheDocument();
   });
 });

@@ -6,7 +6,7 @@ import { YYYY_MM_DD_HH_mm } from "@/utils/util";
 
 const ReviewBox = (review: ReviewType) => {
   return (
-    <Wrapper>
+    <Wrapper data-testid="test__review-box">
       <Header>
         <div className="author">{review.author}</div>
         <div className="info">

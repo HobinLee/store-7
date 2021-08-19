@@ -6,7 +6,7 @@ import { YYYY_MM_DD_HH_mm } from "@/utils/util";
 const QuestionBox = (Question: QnAType) => {
   const isAnswered = Question.answer ? true : false;
   return (
-    <Wrapper isAnswered={isAnswered}>
+    <Wrapper isAnswered={isAnswered} data-testid="test__question-box">
       <div className="status">{isAnswered ? "답변완료" : "미답변"}</div>
       <Header>
         <div>{Question.authorName}</div>

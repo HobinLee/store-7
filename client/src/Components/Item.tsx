@@ -31,7 +31,7 @@ const Item = ({
   const [isWishState, setIsWish] = useState(isWish);
 
   return (
-    <li>
+    <li data-testid="test__itme">
       <Link to={`/detail/${id}`}>
         <ItemWrapper>
           <div className="thumbnail">
