@@ -16,7 +16,7 @@ const OptionBox = ({ numValue, handleClickNumVal }) => {
     try {
       if (status !== "loading") {
         await postCart({
-          product: { id: productId },
+          product: { id: parseInt(productId) },
           amount: parseInt(numValue.value),
         });
       }

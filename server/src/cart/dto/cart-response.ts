@@ -10,7 +10,7 @@ export class CartResponse {
   amount: number;
 
   static of(cart: Cart): CartResponse {
-    const id = cart.product.id,
+    const id = cart.id,
       name = cart.product.name,
       price = cart.product.getDiscountedPrice(),
       deliveryCost = cart.product.deliveryCost,
