@@ -34,8 +34,8 @@ export class Products {
     });
   }
 
-  fintProductById() {
-    this.productRepository.findOne();
+  async findProductById(id: number): Promise<Product> {
+    return this.productRepository.findOne();
   }
 
   createProduct() {

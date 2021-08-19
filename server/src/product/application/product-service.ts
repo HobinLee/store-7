@@ -1,6 +1,9 @@
 import { Injectable } from "@nestjs/common";
-import { ProductResponse } from "../dto/product-response";
+import { ProductElementResponse } from "../dto/product-element-response";
 import { Products } from "../domain/products";
+import { ProductResponse } from "@/product/dto/product-response";
+import { QuestionResponse } from "@/product/dto/question-response";
+import { ReviewResponse } from "@/product/dto/review-response";
 
 @Injectable()
 export class ProductService {
@@ -11,7 +14,7 @@ export class ProductService {
     category: string,
     subCategory: string,
     keyword: string
-  ): Promise<ProductResponse[]> {
+  ): Promise<ProductElementResponse[]> {
     const products =
       await this.products.findProductsByOrderAndCategoryAndSubCategoryAndKeyword(
         order,
@@ -19,6 +22,21 @@ export class ProductService {
         subCategory,
         keyword
       );
-    return products.map(ProductResponse.of);
+    return products.map(ProductElementResponse.of);
+  }
+
+  async getProduct(id: number) {
+    const product = await this.products.findProductById(id);
+    return ProductResponse.of(product);
+  }
+
+  async getReviews(productId: number) {
+    const product = await this.getProduct(productId);
+    return ReviewResponse.of(); // TODO insert product.reviews in parameter
+  }
+
+  async getQuestions(productId: number) {
+    const product = await this.getProduct(productId);
+    return QuestionResponse.of(); // TODO insert product.questions in parameter
   }
 }

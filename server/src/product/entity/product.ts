@@ -73,4 +73,12 @@ export class Product {
     if (this.images.length == 0) return "";
     return this.images[0].id;
   }
+
+  getImagesAsString() {
+    return this.images.map((image) => image.id);
+  }
+
+  getDetailImagesAdString() {
+    return this.detailImages.map((image) => image.id);
+  }
 }

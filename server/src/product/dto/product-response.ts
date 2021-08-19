@@ -4,41 +4,40 @@ export class ProductResponse {
   id: number;
   name: string;
   price: number;
-  originPrice: number;
+  deliveryCost: number;
   discountRate: number;
-  isWish: boolean;
-  amount: number;
-  image: string;
-
-  constructor(response: ProductResponse) {
-    this.id = response.id;
-    this.name = response.name;
-    this.price = response.price;
-    this.originPrice = response.originPrice;
-    this.discountRate = response.discountRate;
-    this.isWish = response.isWish;
-    this.amount = response.amount;
-    this.image = response.image;
-  }
+  stock: number;
+  category: string;
+  subCategory: string;
+  option: string;
+  images: string[];
+  details: string[];
 
   static of(product: Product): ProductResponse {
     const id = product.id,
       name = product.name,
-      originPrice = product.price,
+      price = product.getDiscountedPrice(),
+      deliveryCost = product.deliveryCost,
       discountRate = product.discountRate,
-      amount = product.stock,
-      image = product.getThumbnailImage(),
-      price = product.getDiscountedPrice();
+      category = product.category,
+      subCategory = product.subCategory,
+      option = product.option,
+      stock = product.stock,
+      images = product.getImagesAsString(),
+      details = product.getDetailImagesAdString();
 
-    return new ProductResponse({
+    return {
       id,
       name,
       price,
-      originPrice,
+      deliveryCost,
       discountRate,
-      isWish: false,
-      amount,
-      image,
-    });
+      category,
+      subCategory,
+      option,
+      stock,
+      images,
+      details,
+    } as ProductResponse;
   }
 }
