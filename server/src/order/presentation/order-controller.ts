@@ -3,7 +3,7 @@ import { OrderService } from "../application/order-service";
 import { OrderRequest, OrderResponse } from "../dto/order-request";
 
 @Controller("/orders")
-export class DestinationController {
+export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
   @Post()

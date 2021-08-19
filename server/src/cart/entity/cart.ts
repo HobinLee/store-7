@@ -3,6 +3,7 @@ import {
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
+  UpdateDateColumn,
 } from "typeorm";
 
 @Entity()
@@ -22,6 +23,18 @@ export class Cart {
   @Column({ type: "int" })
   amount: number;
 
-  @CreateDateColumn({ name: "created_at", type: "timestamp" })
-  createdAt!: Date;
+  @CreateDateColumn({
+    type: "timestamp",
+    name: "created_at",
+    default: () => "CURRENT_TIMESTAMP(6)",
+  })
+  createdAt: Date;
+
+  @UpdateDateColumn({
+    type: "timestamp",
+    name: "updated_at",
+    default: () => "CURRENT_TIMESTAMP(6)",
+    onUpdate: "CURRENT_TIMESTAMP(6)",
+  })
+  updatedAt: Date;
 }

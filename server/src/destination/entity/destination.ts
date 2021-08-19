@@ -3,6 +3,7 @@ import {
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
+  UpdateDateColumn,
 } from "typeorm";
 
 @Entity()
@@ -25,9 +26,21 @@ export class Destination {
   @Column({ type: "int", name: "user_id" })
   userId: number;
 
-  @Column({ type: "tinyint", length: 1, name: "is_default" })
+  @Column({ type: "tinyint", name: "is_default" })
   isDetault: boolean;
 
-  @CreateDateColumn({ name: "created_at", type: "timestamp" })
-  createdAt!: Date;
+  @CreateDateColumn({
+    type: "timestamp",
+    name: "created_at",
+    default: () => "CURRENT_TIMESTAMP(6)",
+  })
+  createdAt: Date;
+
+  @UpdateDateColumn({
+    type: "timestamp",
+    name: "updated_at",
+    default: () => "CURRENT_TIMESTAMP(6)",
+    onUpdate: "CURRENT_TIMESTAMP(6)",
+  })
+  updatedAt: Date;
 }
