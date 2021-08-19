@@ -1,4 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+} from "typeorm";
 
 @Entity()
 export class Destination {
@@ -22,4 +27,7 @@ export class Destination {
 
   @Column({ type: "tinyint", length: 1, name: "is_default" })
   isDetault: boolean;
+
+  @CreateDateColumn({ name: "created_at", type: "timestamp" })
+  createdAt!: Date;
 }

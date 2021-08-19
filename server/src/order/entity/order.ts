@@ -1,4 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+} from "typeorm";
 
 @Entity()
 export class Order {
@@ -28,4 +33,7 @@ export class Order {
 
   @Column({ type: "char", length: 5 })
   status: string;
+
+  @CreateDateColumn({ name: "created_at", type: "timestamp" })
+  createdAt!: Date;
 }
