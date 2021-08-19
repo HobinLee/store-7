@@ -54,13 +54,13 @@ export class UserService {
     }
   }
 
-  async createNewUser(user: CreateUserDTO) {
+  async createNewUser(user: CreateUserDTO): Promise<number> {
     try {
       //TODO: validation 체크
 
       user.password = PasswordEncoder.encode(user.password);
 
-      return await this.users.createUser(user);
+      return await this.users.createAndGetUserId(user);
     } catch (e) {
       return e;
     }

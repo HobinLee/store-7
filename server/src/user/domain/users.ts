@@ -15,11 +15,12 @@ export class Users {
     return await this.userRepository.findOne({ where: { email } });
   }
 
-  async createUser(createUser: CreateUserDTO): Promise<number> {
-    return (
-      (await (
-        await this.userRepository.insert(createUser)
-      ).identifiers[0].id) ?? 0
-    );
+  async createAndGetUserId(createUser: CreateUserDTO): Promise<number> {
+    const result = await this.createUser(createUser);
+    return result.identifiers[0].id;
+  }
+
+  async createUser(createUser: CreateUserDTO) {
+    return await this.userRepository.insert(createUser);
   }
 }
