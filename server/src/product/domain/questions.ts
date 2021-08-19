@@ -3,8 +3,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Question } from "@/product/entity/question";
 import {
-  QuestionRequest,
-  QuestionDelete,
+  QuestionPostRequest,
+  QuestionPatchRequest,
 } from "@/product/dto/question-request";
 
 @Injectable()
@@ -14,23 +14,27 @@ export class Questions {
     private readonly questionRepository: Repository<Question>
   ) {}
 
-  async findQuestionsByProductID(productID): Promise<Question[]> {
-    return await this.questionRepository.find({ where: { productID } });
+  async findQuestion(id): Promise<Question> {
+    return await this.questionRepository.findOne({ where: { id } });
   }
 
-  async findQuestionsByUserID(userID): Promise<Question[]> {
-    return await this.questionRepository.find({ where: { userID } });
+  async findQuestionsByProductId(productId): Promise<Question[]> {
+    return await this.questionRepository.find({ where: { productId } });
   }
 
-  createQuestion(question: QuestionRequest) {
+  async findQuestionsByUserId(userId): Promise<Question[]> {
+    return await this.questionRepository.find({ where: { userId } });
+  }
+
+  createQuestion(question: QuestionPostRequest) {
     this.questionRepository.insert(question);
   }
 
-  editQuestion(id, question: QuestionRequest) {
-    this.questionRepository.update({ id }, question);
+  editQuestion(request: QuestionPatchRequest) {
+    this.questionRepository.update({ id: request.id }, { ...request.content });
   }
 
-  deleteQuestion(question: QuestionDelete) {
-    this.questionRepository.delete(question);
+  deleteQuestion(id: number) {
+    this.questionRepository.delete({ id });
   }
 }
