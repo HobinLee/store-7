@@ -36,7 +36,6 @@ export class AuthService {
       }
 
       const token: string = await this.jwtService.signAsync(signinRequest);
-
       if (!token) throw Error(RESULT_MSG.FAILED_TO_GEN_JWT);
 
       signinResponse.cookie(properties.auth.tokenKey, token);
