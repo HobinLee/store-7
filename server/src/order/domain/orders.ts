@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { OrderRequest } from "../dto/order-request";
+import { CreateOrderRequest } from "../dto/order-request";
 import { Order } from "../entity/order";
 
 @Injectable()
@@ -23,11 +23,11 @@ export class Orders {
     return await this.orderRepository.find({ where: { id } });
   }
 
-  async findOrderByOrderNum(orderNum: number) {
-    return await this.orderRepository.find({ where: { orderNum } });
-  }
+  // async findOrderByOrderNum(orderNum: number) {
+  //   return await this.orderRepository.find({ where: { orderNum } });
+  // }
 
-  createOrder(order: OrderRequest) {
+  async createOrder(order: CreateOrderRequest) {
     this.orderRepository.insert(order);
   }
 

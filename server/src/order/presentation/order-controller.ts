@@ -1,14 +1,18 @@
 import { Body, Controller, Get, Patch, Post, Param } from "@nestjs/common";
 import { OrderService } from "../application/order-service";
-import { OrderRequest, OrderResponse } from "../dto/order-request";
+import { OrderRequest } from "../dto/order-request";
+import { OrderResponse } from "../dto/order-response";
 
 @Controller("/orders")
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
   @Post()
-  createDestination(@Body() order: OrderRequest): string {
-    return this.orderService.createOrder(order);
+  createDestination(
+    @Param("userId") userId: number,
+    @Body() order: OrderRequest
+  ): string {
+    return this.orderService.createOrder(1, order);
   }
 
   //   @Get()
@@ -24,12 +28,12 @@ export class OrderController {
     return await this.orderService.findOrders();
   }
 
-  @Get("/:orderNum")
-  async findOrderByOrderNum(
-    @Param("orderNum") orderNum: number
-  ): Promise<OrderResponse[]> {
-    return await this.orderService.findOrderByOrderNum(orderNum);
-  }
+  // @Get("/:orderNum")
+  // async findOrderByOrderId(
+  //   @Param("orderNum") orderNum: number
+  // ): Promise<OrderResponse[]> {
+  //   return await this.orderService.findOrderByOrderNum(orderNum);
+  // }
 
   @Get("/:id")
   async findOrderById(@Param("id") id: number): Promise<OrderResponse[]> {
@@ -37,7 +41,7 @@ export class OrderController {
   }
 
   @Patch("/:id")
-  updateDestination(@Param("id") id: number, @Body() status: string): string {
+  updateOrderStatus(@Param("id") id: number, @Body() status: string): string {
     return this.orderService.updateOrderStatus(id, status);
   }
 }
