@@ -8,18 +8,31 @@ import ReviewSection from "./ReviewSection/";
 import ProductSection from "./ProductSection/";
 import { gap } from "@/styles/theme";
 
+export interface SectionType {
+  title: string;
+  type: string;
+}
+
+const SECTION_TYPES: {
+  [key: string]: SectionType;
+} = {
+  hot: { title: "잘나가는", type: "hot" },
+  discount: { title: "할인 중인 상품", type: "discount" },
+  new: { title: "신상", type: "new" },
+};
+
 const MainPage = () => {
   return (
     <Wrapper>
       <Header />
       <BannerSection />
-      <Contents style={{ padding: "10rem 5rem" }}>
+      <Contents>
         <div className="main__contents-wrapper">
-          <ProductSection title="잘나가는" />
+          <ProductSection {...SECTION_TYPES.hot} />
           <GiftSection />
-          <ProductSection title="할인 중인 상품" />
+          <ProductSection {...SECTION_TYPES.discount} />
           <ReviewSection />
-          <ProductSection title="신상" />
+          <ProductSection {...SECTION_TYPES.new} />
         </div>
       </Contents>
       <Footer />
@@ -33,16 +46,14 @@ const Wrapper = styled(PageWrapper)`
     height: 100%;
     display: flex;
     flex-direction: column;
-    ${gap("10rem", "column")}
+    padding: 5rem;
+    ${gap("8rem", "column")}
 
     & > div {
       ${({ theme }) => theme.flexCenter}
       flex-direction: column;
       width: 100%;
       box-sizing: border-box;
-      & + & {
-        margin-top: 10rem;
-      }
       .title {
         width: 100%;
         ${({ theme }) => theme.font.large}

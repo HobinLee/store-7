@@ -3,13 +3,14 @@ import { ReviewType } from "@/shared/type";
 import dayjs from "dayjs";
 import ReviewBox from "@/Pages/Detail/Review/ReviewBox";
 import styled from "styled-components";
+import { YYYYMMDD } from "@/utils/util";
 
 const Review = (review: ReviewType) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-      <Wrapper
+      <Wrapper data-testid="test__review-row"
         onClick={() => {
           setIsOpen(!isOpen);
         }}
@@ -18,7 +19,7 @@ const Review = (review: ReviewType) => {
         <td className="content">
           <div>{review.content}</div>
         </td>
-        <td>{dayjs(review.date).format("YYYYMMDD")}</td>
+        <td>{YYYYMMDD(review.date)}</td>
       </Wrapper>
       {isOpen && (
         <tr>

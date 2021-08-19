@@ -97,7 +97,7 @@ export const light: DefaultTheme = {
     white: "#ffffff",
     background: "#f5f5f5",
     off_white: "#fcfcfc",
-    primary1: "#2ac1bc",
+    primary1: "#3be1b4",
     primary2: "#a0e1e0",
     primary3: "#219a95",
     red: "#f45452",

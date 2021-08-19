@@ -40,7 +40,7 @@ export interface User {
 
 export const ContentHeader = ({ username, grade }: User) => {
   return (
-    <ContentHeaderWrapper>
+    <ContentHeaderWrapper data-testid="test__content-header">
       <div className="greeting">반가워요,</div>
       <p>
         <span>{username}</span> 님의

@@ -15,7 +15,7 @@ const list: ItemBannerType[] = [banner1];
 const BannerSection = () => {
   return (
     <SectionWrapper>
-      <Banner items={list} />
+      <Banner banners={list} />
     </SectionWrapper>
   );
 };

@@ -6,7 +6,7 @@ import { YYYY_MM_DD_HH_mm } from "@/utils/util";
 
 const ReviewBox = (review: ReviewType) => {
   return (
-    <Wrapper>
+    <Wrapper data-testid="test__review-box">
       <Header>
         <div className="author">{review.author}</div>
         <div className="info">
@@ -19,7 +19,7 @@ const ReviewBox = (review: ReviewType) => {
 
       <div className="content">
         <div className="content-img">
-          {review.img && <img src={`${review.img}`} alt="review_img" />}
+          {review.image && <img src={`${review.image}`} alt="review_img" />}
         </div>
         <span>{review.content}</span>
       </div>

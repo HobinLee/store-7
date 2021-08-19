@@ -1,30 +1,30 @@
 import styled from "styled-components";
 
-import TableFrom from "../tableForm";
+import forms from "@/Pages/MyPage/Table/forms";
 
-type RecentOrderType = {
+export interface RecentOrderProps {
   id: number;
-  date: string;
+  date: Date;
   number: string;
-  url: string;
-  title: string;
+  image: string;
+  name: string;
   price: number;
   status: string;
   count: number;
   reviewID: number;
-};
+}
 
 const RecentOrder = ({
   id,
   date,
   number,
-  url,
-  title,
+  image,
+  name,
   price,
   count,
   status,
   reviewID,
-}: RecentOrderType) => {
+}: RecentOrderProps) => {
   const statusStyle = status === "completed" ? { color: "#2ac1bc" } : {};
   const statusStr = {
     shipping: "배송 중",
@@ -35,10 +35,10 @@ const RecentOrder = ({
   return (
     <tr>
       <td>
-        <TableFrom.Order orderDate={date} orderNumber={number} />
+        <forms.Order orderDate={date} orderNumber={number} />
       </td>
       <td>
-        <TableFrom.ProductOption url={url} title={title} id={id} />
+        <forms.ProductOption image={image} name={name} id={id} />
       </td>
       <td>
         {price} / {count}

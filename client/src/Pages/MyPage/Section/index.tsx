@@ -15,7 +15,7 @@ const Section = ({
   lineType,
 }: SectionProps) => {
   return (
-    <SectionWrapper>
+    <SectionWrapper data-testid="test__section">
       <SignatureLine type={lineType} height="1" />
       <div className="section__title">
         <h3>{title}</h3>

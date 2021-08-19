@@ -16,7 +16,7 @@ const Header = ({ children }: { children?: ReactChild }) => {
     <TopWrapper>
       <Wrapper>
         <Link to="/">
-          <img width="200" src={Logo} />
+          <img width="150" src={Logo} />
         </Link>
         <SearchBar />
         <div className="header__buttons">
@@ -49,17 +49,25 @@ const TopWrapper = styled.div`
   left: 0;
   width: 100%;
   z-index: 10;
-  background: ${({ theme }) => theme.color.white};
+  background: #000;
 
   .header__buttons {
     display: flex;
     flex-direction: row;
     ${gap("5rem")}
 
+    a {
+      color: ${({ theme }) => theme.color.primary1};
+    }
+
     a:hover {
       font-weight: bolder;
       color: ${({ theme }) => theme.color.primary1};
     }
+  }
+
+  img {
+    margin-top: 3rem;
   }
 `;
 

@@ -1,9 +1,9 @@
-interface EmptyRow {
+export interface EmptyProps {
   colSpan: number;
   message: string;
 }
 
-export const Empty = ({ colSpan, message }: EmptyRow) => {
+export const Empty = ({ colSpan, message }: EmptyProps) => {
   return (
     <tr>
       <td colSpan={colSpan}>{message}</td>

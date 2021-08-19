@@ -140,6 +140,7 @@ const MainCategoryWrapper = styled.ul`
   display: flex;
   flex-direction: row;
   overflow-x: scroll;
+  color: #fff;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
   &::-webkit-scrollbar {
@@ -191,6 +192,8 @@ const SubCategoryWrapper = styled.ul<{ padding: number; width: number }>`
   overflow-x: scroll;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+  color: #fff;
+
   &::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
   }

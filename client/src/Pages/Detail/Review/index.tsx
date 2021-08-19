@@ -2,15 +2,13 @@ import styled from "styled-components";
 import Button from "@/Components/Button";
 import Progress from "@/Components/Progress";
 import ReviewBox from "./ReviewBox";
+import { useState } from "react";
 import ReviewModal from "./ReviewModal";
 import { reviews } from "@/shared/dummy";
 import { gap } from "@/styles/theme";
-import { useSetRecoilState } from "recoil";
-import { modalState } from "@/store/state";
 
 const Review = () => {
-  const setIsModalOpened = useSetRecoilState(modalState);
-
+  const [isModalOpened, setIsModalOpened] = useState(false);
   const handleModalOpen = (val: boolean) => {
     if (!val) {
       const submit = window.confirm(
@@ -71,7 +69,7 @@ const Review = () => {
         <ReviewBox key={review.id} {...review} />
       ))}
 
-      <ReviewModal {...{ handleModalOpen }} />
+      {isModalOpened && <ReviewModal {...{ handleModalOpen }} />}
     </div>
   );
 };

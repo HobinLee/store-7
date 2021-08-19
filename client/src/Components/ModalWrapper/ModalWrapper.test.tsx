@@ -1,6 +1,9 @@
 import { render, fireEvent } from "@/utils/test-util";
 import { screen } from "@testing-library/react";
 import ModalWrapper, { ModalWrapperProps } from "./index";
+import { useCallback } from "react";
+import { useState } from "react";
+import { renderHook, act } from "@testing-library/react-hooks";
 
 const CHILDREN = "children";
 const TILTE = "title";
@@ -10,10 +13,23 @@ const modalWrapperProps: ModalWrapperProps = {
   title: TILTE,
 };
 
+const useModal = () => {
+  const [isModalOpened, setIsModalOpened] = useState(true);
+  const closeModal = useCallback(() => setIsModalOpened(false), []);
+
+  return { isModalOpened, closeModal };
+};
+
 describe("<ModalWrapper />", () => {
   it("closeBtn 없음", () => {
+    const handleClick = jest.fn();
+
     const { container } = render(
-      <ModalWrapper hideCloseBtn {...modalWrapperProps} />
+      <ModalWrapper
+        closeModal={handleClick}
+        hideCloseBtn
+        {...modalWrapperProps}
+      />
     );
     expect(container).toBeInTheDocument();
     expect(screen.queryByText(TILTE)).toBeInTheDocument();
@@ -23,10 +39,17 @@ describe("<ModalWrapper />", () => {
   });
 
   it("closeBtn 있음", () => {
-    const handleClick = jest.fn();
+    const { result } = renderHook(() => useModal());
 
     const { container } = render(
-      <ModalWrapper closeModal={handleClick} {...modalWrapperProps} />
+      <ModalWrapper
+        closeModal={() =>
+          act(() => {
+            result.current.closeModal();
+          })
+        }
+        {...modalWrapperProps}
+      />
     );
     expect(container).toBeInTheDocument();
     expect(screen.queryByText("title")).toBeInTheDocument();
@@ -34,9 +57,10 @@ describe("<ModalWrapper />", () => {
 
     expect(screen.queryByRole("button")).toBeInTheDocument();
 
+    // 클릭시 isModalOpened -> false
     fireEvent.click(
       screen.queryByRole("button") || screen.queryByRole("submit")
     );
-    expect(handleClick).toHaveBeenCalledTimes(1);
+    expect(result.current.isModalOpened).toBe(false);
   });
 });

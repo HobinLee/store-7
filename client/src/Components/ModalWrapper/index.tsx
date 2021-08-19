@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import { Close } from "@/assets";
 import { ReactChild } from "react";
-import { useRecoilState } from "recoil";
-import { modalState as mState } from "@/store/state";
 
 export type ModalWrapperProps = {
   closeModal?: Function;
@@ -13,16 +11,14 @@ export type ModalWrapperProps = {
 };
 
 const ModalWrapper = ({
+  closeModal,
   children,
   title,
   className,
   hideCloseBtn = false,
 }: ModalWrapperProps) => {
-  const [modalState, setModalState] = useRecoilState(mState);
-  if (!modalState) return <></>;
-
   return (
-    <div onClick={() => setModalState(false)}>
+    <div onClick={() => closeModal()}>
       <Wrapper>
         <Modal onClick={(e) => e.stopPropagation()} className={className}>
           <div className="header">{title}</div>
@@ -30,7 +26,7 @@ const ModalWrapper = ({
             <Close
               data-testid="close-btn"
               role="button"
-              onClick={() => setModalState(false)}
+              onClick={closeModal}
               className="close-btn"
             />
           )}
