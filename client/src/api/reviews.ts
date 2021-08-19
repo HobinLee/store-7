@@ -10,4 +10,4 @@ export const postReview = ({ data }) => POST("/reviews", data);
 export const patchReview = ({ id }) => PATCH(`/reviews/${id}`);
 
 // DELETE /reviews/:id
-export const deleteReview = ({ id }) => DELETE(`/reviews/${id}`);
+export const deleteReview = (id) => DELETE(`/reviews/${id}`);
