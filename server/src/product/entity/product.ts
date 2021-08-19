@@ -45,7 +45,7 @@ export class Product {
   @OneToMany(() => ProductImage, (image) => image.product)
   images: ProductImage[];
 
-  @OneToMany(() => ProductImage, (detailImage) => detailImage.product)
+  @OneToMany(() => ProductDetailImage, (detailImage) => detailImage.product)
   detailImages: ProductDetailImage[];
 
   @CreateDateColumn({

@@ -35,7 +35,9 @@ export class Products {
   }
 
   async findProductById(id: number): Promise<Product> {
-    return this.productRepository.findOne(id);
+    return this.productRepository.findOne(id, {
+      relations: ["options", "images", "detailImages"],
+    });
   }
 
   createProduct() {
