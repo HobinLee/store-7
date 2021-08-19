@@ -32,7 +32,7 @@ export class Question {
   answer: string;
 
   @Column({ type: "tinyint", name: "is_secret" })
-  isSecret: number;
+  isSecret: boolean;
 
   @CreateDateColumn({
     type: "timestamp",
