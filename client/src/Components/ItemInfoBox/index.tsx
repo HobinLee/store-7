@@ -5,34 +5,34 @@ import { gap } from "@/styles/theme";
 
 export type ItemInfoBoxProps = {
   name: string;
-  num: number;
+  amount: number;
   price: number;
-  delivery: number;
-  thumbnail?: string;
+  deliveryCost: number;
+  images?: string[];
 };
 
-export const output = ({ num, price, delivery }) => {
+export const output = ({ amount, price, deliveryCost }) => {
   return {
-    numOutput: `${num}개`,
+    numOutput: `${amount}개`,
     priceOutput: `총 ${convertToKRW(price)}`,
-    deliveryOutput: `배송비 ${convertToKRW(delivery)}`,
+    deliveryOutput: `배송비 ${convertToKRW(deliveryCost)}`,
   };
 };
 
 const ItemInfoBox = ({
   name,
-  num,
+  amount,
   price,
-  delivery,
-  thumbnail = "",
+  deliveryCost,
+  images,
 }: ItemInfoBoxProps) => {
-  const OUTPUT = output({ ...{ num, price, delivery } });
+  const OUTPUT = output({ ...{ amount, price, deliveryCost } });
 
   return (
     <Wrapper>
       <div className="info">
         <Checkbox />
-        <img role="img" src={thumbnail} />
+        <img role="img" src={images[0]} />
         <div>
           <div className="info__name">{name}</div>
           <div className="info__num">{OUTPUT.numOutput}</div>

@@ -6,10 +6,10 @@ const NAME = "name";
 
 const itemInfoBoxProps: ItemInfoBoxProps = {
   name: NAME,
-  thumbnail: "",
-  num: 1000,
+  images: [""],
+  amount: 1000,
   price: 10000,
-  delivery: 2500,
+  deliveryCost: 2500,
 };
 
 describe("<ItemInfoBox />", () => {

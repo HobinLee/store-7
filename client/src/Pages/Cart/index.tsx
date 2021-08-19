@@ -4,7 +4,6 @@ import Header from "@/Components/Header";
 import Footer from "@/Components/Footer";
 import ItemInfoBox from "@/Components/ItemInfoBox";
 import CartBox from "./CartBox";
-import { buyItems } from "@/shared/dummy";
 import { Arrow } from "@/assets";
 import Checkbox from "@/Components/Checkbox";
 import { gap } from "@/styles/theme";
@@ -17,7 +16,7 @@ const CartPage = () => {
     status !== "loading" && (
       <Wrapper>
         <Header>
-          <CartBox {...carts} />
+          <CartBox {...carts} totalCount={carts.items.length} />
         </Header>
         <div className="contents">
           <Title>

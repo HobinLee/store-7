@@ -98,3 +98,17 @@ export type ProductType = {
   images: string[];
   details: string[];
 };
+
+export type CartType = {
+  totalPrice: number;
+  totalDelivery: number;
+  totalPayment: number;
+  items: {
+    name: string;
+    price: number;
+    deliveryCost: number;
+    images: string[];
+    productOptionId: number;
+    amount: number;
+  }[];
+};

@@ -1,3 +1,4 @@
+import { CartType } from "@/shared/type";
 import { GET, PATCH } from "@/utils/axios";
 import { useQuery } from "react-query";
 
@@ -8,7 +9,7 @@ export const getMe = () => GET("/my");
 export const patchMe = ({ data }) => PATCH("/my", data);
 
 // GET /my/carts 내 장바구니
-const getCarts = () => GET("/my/carts");
+const getCarts = (): Promise<CartType> => GET("/my/carts");
 export const useCarts = () => useQuery(["carts"], () => getCarts());
 
 // GET /my/reviews 내 리뷰
