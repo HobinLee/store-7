@@ -9,8 +9,8 @@ export const getMe = () => GET("/my");
 export const patchMe = ({ data }) => PATCH("/my", data);
 
 // GET /my/carts 내 장바구니
-const getCarts = (): Promise<CartType> => GET("/my/carts");
-export const useCarts = () => useQuery(["carts"], () => getCarts());
+const getMyCarts = (): Promise<CartType> => GET("/my/carts");
+export const useMyCarts = () => useQuery(["carts"], () => getMyCarts());
 
 // GET /my/reviews 내 리뷰
 export const getMyReviews = () => GET("/my/reviews");

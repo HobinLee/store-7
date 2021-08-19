@@ -37,7 +37,10 @@ export class ProductService {
 
   async getProduct(id: number) {
     const product = await this.products.findProductById(id);
-    return ProductResponse.of(product);
+    if (product) {
+      return ProductResponse.of(product);
+    }
+    throw new Error("404 Product NotFound");
   }
 
   async getReviews(productId: number) {

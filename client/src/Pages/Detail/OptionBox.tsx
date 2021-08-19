@@ -6,14 +6,31 @@ import ModalWrapper from "@/Components/ModalWrapper";
 import { Triangle } from "@/assets";
 import { convertToKRW } from "@/utils/util";
 import { gap } from "@/styles/theme";
+import { postCart } from "@/api/carts";
 
 const OptionBox = ({ numValue, handleClickNumVal }) => {
   const [isCartAlertShown, setIsCartAlertShown] = useState(false);
+  const productId = location.pathname.split("detail/")[1];
+
+  const handlePostCart = async () => {
+    try {
+      if (status !== "loading") {
+        await postCart({
+          product: { id: parseInt(productId) },
+          amount: parseInt(numValue.value),
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsCartAlertShown(true);
+    }
+  };
 
   return (
     <Wrapper>
       <div className="select-option">
-        <div>으아아아악</div>
+        <div>수량</div>
         <div className="select-option__right">
           <div className="num-input">
             <NumInput value={numValue.value} onChange={numValue.onChange} />
@@ -37,7 +54,7 @@ const OptionBox = ({ numValue, handleClickNumVal }) => {
 
       <div className="buttons">
         <Button>찜</Button>
-        <Button onClick={() => setIsCartAlertShown(true)}>장바구니</Button>
+        <Button onClick={handlePostCart}>장바구니</Button>
         <Button onClick={() => (window.location.href = "/order")} primary>
           바로 구매
         </Button>

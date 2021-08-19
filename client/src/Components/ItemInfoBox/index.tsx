@@ -32,7 +32,7 @@ const ItemInfoBox = ({
     <Wrapper>
       <div className="info">
         <Checkbox />
-        <img role="img" src={images[0]} />
+        <img role="img" src={process.env.IMG_URL + images[0]} />
         <div>
           <div className="info__name">{name}</div>
           <div className="info__num">{OUTPUT.numOutput}</div>
@@ -70,6 +70,8 @@ const Wrapper = styled.div`
     width: 7rem;
     height: 7rem;
     background-color: ${({ theme }) => theme.color.grey1};
+    object-fit: cover;
+    border-radius: 0.5rem;
   }
   .price {
     ${({ theme }) => theme.flexCenter};
