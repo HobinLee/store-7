@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import {
   DestinationModifyRequest,
-  CreateDestinationRequest,
+  DestinationRequest,
 } from "../dto/destination-request";
 import { Destination } from "../entity/destination";
 
@@ -18,7 +18,7 @@ export class Destinations {
     return await this.destinationRepository.find({ where: { userId } });
   }
 
-  async createDestination(destination: CreateDestinationRequest) {
+  async createDestination(destination: DestinationRequest) {
     return this.destinationRepository.insert(destination);
   }
 
