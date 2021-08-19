@@ -14,6 +14,7 @@ const LoginPage = () => {
   const phoneNumber = useInput("");
 
   const handleSignin = async () => {
+    console.log("handle signin");
     //TODO: 로그인 요청
     const result = await POST("/auth", {
       email: email.value,
@@ -49,7 +50,11 @@ const LoginPage = () => {
             onChange={password.onChange}
           />
           <div>아이디 저장</div>
-          <Button primary disabled={!checkSignupable()}>
+          <Button
+            onClick={() => handleSignin()}
+            primary
+            disabled={!checkSignupable()}
+          >
             로그인
           </Button>
           <Button>Github 로그인</Button>
