@@ -27,7 +27,7 @@ export class Destination {
   userId: number;
 
   @Column({ type: "tinyint", name: "is_default" })
-  isDetault: boolean;
+  isDefault: boolean;
 
   @CreateDateColumn({
     type: "timestamp",

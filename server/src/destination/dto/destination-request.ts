@@ -15,13 +15,3 @@ export interface DestinationModifyRequest {
   userId?: number;
   isDetault?: boolean;
 }
-
-export interface DestinationResponse {
-  id: number;
-  name: string;
-  postCode: string;
-  address: string;
-  detailAddress: string;
-  userId: number;
-  isDetault: boolean;
-}
