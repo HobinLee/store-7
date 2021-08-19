@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Cart } from "@/cart/entity/cart";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 
 @Entity()
 export class User {
@@ -19,4 +20,7 @@ export class User {
 
   @Column({ type: "char", length: 32, nullable: true })
   profile: string;
+
+  @OneToMany(() => Cart, (cart) => cart.user)
+  carts: Cart[];
 }
