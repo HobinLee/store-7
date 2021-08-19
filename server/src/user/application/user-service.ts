@@ -9,7 +9,7 @@ import PasswordEncoder from "../infrastructure/password-encoder";
 import { DestinationService } from "src/destination/application/destination-service";
 import { CreateUserDTO } from "../dto/create-user";
 import {
-  createFirstDetination,
+  createFirstDestination,
   FirstDestinationDTO,
 } from "../dto/create-address";
 
@@ -70,7 +70,7 @@ export class UserService {
     try {
       return await this.destinationService.createDestination(
         userId,
-        createFirstDetination(address)
+        createFirstDestination(address)
       );
     } catch (e) {
       return e;

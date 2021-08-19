@@ -6,7 +6,7 @@ export interface FirstDestinationDTO {
   detailAddress: string;
 }
 
-export const createFirstDetination = (
+export const createFirstDestination = (
   address: FirstDestinationDTO
 ): DestinationRequest => {
   return {
