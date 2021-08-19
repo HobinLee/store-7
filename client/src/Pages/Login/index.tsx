@@ -5,46 +5,48 @@ import { Link } from "@/Router";
 import Button from "@/Components/Button";
 import useInput from "@/hooks/useInput";
 import { gap } from "@/styles/theme";
+import { POST } from "@/utils/axios";
 
 const LoginPage = () => {
-  const id = useInput("");
-  const pw = useInput("");
+  const email = useInput("");
+  const password = useInput("");
   const name = useInput("");
-  const number = useInput("");
+  const phoneNumber = useInput("");
 
-  const handleSignin = () => {
+  const handleSignin = async () => {
     //TODO: 로그인 요청
-    setTimeout(() => {
-      //로그인 처리
-      window.location.href = "/";
-    }, 1000);
+    const result = await POST("/auth", {
+      email: email.value,
+      password: password.value,
+    });
+    console.log(result);
   };
 
   const checkSignupable = (): boolean => {
     //TODO: validion Check하기(?)
-    return id.value.length > 0 && pw.value.length > 0;
+    return email.value.length > 0 && email.value.length > 0;
   };
 
   const checkLookupable = (): boolean => {
     //TODO: validion Check하기(?)
-    return name.value.length > 0 && number.value.length > 0;
+    return name.value.length > 0 && phoneNumber.value.length > 0;
   };
 
   return (
     <LoginPageWrapper>
       <LoginContent>
-        <Form onSubmit={handleSignin}>
+        <Form onSubmit={() => handleSignin()}>
           <Title>회원 로그인</Title>
           <Input
             placeholder="아이디 입력"
-            value={id.value}
-            onChange={id.onChange}
+            value={email.value}
+            onChange={email.onChange}
           />
           <Input
             placeholder="비밀번호 입력"
-            value={pw.value}
+            value={password.value}
             type="password"
-            onChange={pw.onChange}
+            onChange={password.onChange}
           />
           <div>아이디 저장</div>
           <Button primary disabled={!checkSignupable()}>
@@ -66,8 +68,8 @@ const LoginPage = () => {
           />
           <Input
             placeholder="주문번호"
-            value={number.value}
-            onChange={number.onChange}
+            value={phoneNumber.value}
+            onChange={phoneNumber.onChange}
           />
           <Button disabled={!checkLookupable()}>조회하기</Button>
           <span>
