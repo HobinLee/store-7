@@ -5,7 +5,7 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 32 })
+  @Column({ length: 64 })
   password: string;
 
   @Column({ length: 20 })
@@ -17,6 +17,6 @@ export class User {
   @Column({ type: "char", length: 11, name: "phone_number" })
   phoneNumber: string;
 
-  @Column({ type: "char", length: 32 })
+  @Column({ type: "char", length: 32, nullable: true })
   profile: string;
 }

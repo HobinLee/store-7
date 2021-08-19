@@ -9,11 +9,11 @@ import { OrderModule } from "./order/order-module";
 @Module({
   imports: [
     MysqlConfig,
-    UserModule,
     ProductModule,
     DestinationModule,
     CartModule,
     OrderModule,
+    UserModule,
   ],
 })
 export class AppModule {}
