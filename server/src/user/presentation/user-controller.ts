@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Res } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Res } from "@nestjs/common";
 import { Response } from "express";
 import { SignupRequest } from "../dto/signup-request";
 import { UserService } from "../application/user-service";
@@ -17,7 +17,9 @@ export class UserController {
   }
 
   @Get()
-  async checkEmailExist(): Promise<CheckEmailResponse | Error> {
-    return this.userService.checkEmailExist("email");
+  async checkEmailExist(
+    @Param("email") email: string
+  ): Promise<CheckEmailResponse | Error> {
+    return this.userService.checkEmailExist(email);
   }
 }
