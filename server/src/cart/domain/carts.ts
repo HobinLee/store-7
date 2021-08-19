@@ -15,7 +15,7 @@ export class Carts {
     return this.cartRepository.find({ where: { userId } });
   }
 
-  createCart(cart: CreateCartRequest) {
+  async createCart(cart: CreateCartRequest) {
     this.cartRepository.insert(cart);
   }
 
