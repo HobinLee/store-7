@@ -6,8 +6,6 @@ import { QuestionResponse } from "@/product/dto/question-response";
 import { ReviewResponse } from "@/product/dto/review-response";
 import { ProductUploadRequest } from "@/product/dto/product-upload-request";
 import { Product } from "@/product/entity/product";
-import { S3Repository } from "@/product/infrastructure/s3-repository";
-import { ProductOption } from "@/product/entity/option";
 
 @Injectable()
 export class ProductService {

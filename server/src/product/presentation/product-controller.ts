@@ -14,10 +14,7 @@ import { ProductElementResponse } from "../dto/product-element-response";
 import { ProductResponse } from "@/product/dto/product-response";
 import { ReviewResponse } from "@/product/dto/review-response";
 import { QuestionResponse } from "@/product/dto/question-response";
-import {
-  FileFieldsInterceptor,
-  FilesInterceptor,
-} from "@nestjs/platform-express";
+import { FileFieldsInterceptor } from "@nestjs/platform-express";
 import { ProductUploadRequest } from "@/product/dto/product-upload-request";
 
 @Controller("/products")
