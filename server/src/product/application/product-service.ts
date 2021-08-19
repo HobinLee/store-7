@@ -19,6 +19,6 @@ export class ProductService {
         subCategory,
         keyword
       );
-    return products.map((product) => ProductResponse.of(product));
+    return products.map(ProductResponse.of);
   }
 }

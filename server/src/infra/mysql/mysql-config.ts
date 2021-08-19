@@ -1,15 +1,15 @@
 import { TypeOrmModule } from "@nestjs/typeorm";
 import properties from "../../config/properties/properties";
 
-const mysqlConfnig = properties.mysql;
+const mysqlConfig = properties.mysql;
 
 export default TypeOrmModule.forRoot({
   type: "mysql",
-  host: mysqlConfnig.host,
-  port: mysqlConfnig.port,
-  username: mysqlConfnig.username,
-  password: mysqlConfnig.password,
-  database: mysqlConfnig.database,
+  host: mysqlConfig.host,
+  port: mysqlConfig.port,
+  username: mysqlConfig.username,
+  password: mysqlConfig.password,
+  database: mysqlConfig.database,
   synchronize: true,
   autoLoadEntities: true,
 });

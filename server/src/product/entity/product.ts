@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from "typeorm";
 import { ProductImage } from "./product-image";
 import { ProductOption } from "./option";
 import { ProductDetailImage } from "./product-detail-image";
@@ -41,8 +48,29 @@ export class Product {
   @OneToMany(() => ProductImage, (detailImage) => detailImage.product)
   detailImages: ProductDetailImage[];
 
+  @CreateDateColumn({
+    type: "timestamp",
+    name: "created_at",
+    default: () => "CURRENT_TIMESTAMP(6)",
+  })
+  createdAt: Date;
+
+  @UpdateDateColumn({
+    type: "timestamp",
+    name: "updated_at",
+    default: () => "CURRENT_TIMESTAMP(6)",
+    onUpdate: "CURRENT_TIMESTAMP(6)",
+  })
+  updatedAt: Date;
+
+  getDiscountedPrice() {
+    return this.discountRate === 0
+      ? this.price
+      : this.price * ((100 - this.discountRate) / 100);
+  }
+
   getThumbnailImage() {
-    if (!this.images) return "";
+    if (this.images.length == 0) return "";
     return this.images[0].id;
   }
 }
