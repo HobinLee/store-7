@@ -11,12 +11,14 @@ import {
   QuestionPostRequest,
   QuestionPatchRequest,
 } from "../dto/question-request";
+import { Reviews } from "../domain/reviews";
 
 @Injectable()
 export class ProductService {
   constructor(
     private readonly products: Products,
-    private readonly questions: Questions
+    private readonly questions: Questions,
+    private readonly reviews: Reviews
   ) {}
 
   async getProducts(
@@ -90,5 +92,9 @@ export class ProductService {
 
   async deleteQuestion(id: number) {
     await this.questions.deleteQuestion(id);
+  }
+
+  async getProductReview(productId: number) {
+    await this.reviews.findReviewsByProjectId(productId);
   }
 }
