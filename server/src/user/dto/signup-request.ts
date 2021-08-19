@@ -1,12 +1,6 @@
-export interface SignupRequest {
-  email: string;
-  name: string;
-  password: string;
-  phoneNumber: string;
-  profile?: string;
-  address: {
-    postCode: string;
-    address: string;
-    detailAddress: string;
-  };
+import { FirstDestinationDTO } from "./create-address";
+import { CreateUserDTO } from "./create-user";
+
+export interface SignupRequest extends CreateUserDTO {
+  address: FirstDestinationDTO;
 }
