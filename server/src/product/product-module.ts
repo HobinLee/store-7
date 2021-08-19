@@ -7,6 +7,8 @@ import { ProductDetailImage } from "./entity/product-detail-image";
 import { ProductOption } from "./entity/option";
 import { ProductController } from "./presentation/product-controller";
 import { ProductService } from "./application/product-service";
+import { Question } from "./entity/question";
+import { Questions } from "./domain/questions";
 
 @Module({
   imports: [
@@ -15,9 +17,10 @@ import { ProductService } from "./application/product-service";
       ProductOption,
       ProductImage,
       ProductDetailImage,
+      Question,
     ]),
   ],
   controllers: [ProductController],
-  providers: [Products, ProductService],
+  providers: [Products, Questions, ProductService],
 })
 export class ProductModule {}
