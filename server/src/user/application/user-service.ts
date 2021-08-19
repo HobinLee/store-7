@@ -9,7 +9,7 @@ import PasswordEncoder from "../infrastructure/password-encoder";
 import { DestinationService } from "src/destination/application/destination-service";
 import { CreateUserDTO } from "../dto/create-user";
 import {
-  createFirstDetination,
+  createFirstDestination,
   FirstDestinationDTO,
 } from "../dto/create-address";
 
@@ -69,7 +69,8 @@ export class UserService {
   async createNewAddress(address: FirstDestinationDTO, userId: number) {
     try {
       return await this.destinationService.createDestination(
-        createFirstDetination(address, userId)
+        userId,
+        createFirstDestination(address)
       );
     } catch (e) {
       return e;

@@ -1,27 +1,23 @@
 import { Injectable } from "@nestjs/common";
 import { Destinations } from "../domain/destinations";
 import {
-  DestinationRequest,
-  DestinationResponse,
   DestinationModifyRequest,
+  DestinationRequest,
 } from "../dto/destination-request";
+import { DestinationResponse } from "../dto/destination-response";
 
 @Injectable()
 export class DestinationService {
   constructor(private readonly destinations: Destinations) {}
 
   async findDestinationsByUserId(id: number): Promise<DestinationResponse[]> {
-    try {
-      const data = await this.destinations.findDestinationsByUserId(id);
-      return data;
-    } catch (e) {
-      return e;
-    }
+    const destinations = await this.destinations.findDestinationsByUserId(id);
+    return destinations.map(DestinationResponse.of);
   }
 
-  createDestination(destination: DestinationRequest): string {
+  createDestination(userId: number, destination: DestinationRequest): string {
     try {
-      this.destinations.createDestination(destination);
+      this.destinations.createDestination({ ...destination, userId });
     } catch (e) {
       return e;
     }

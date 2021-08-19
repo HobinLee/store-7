@@ -1,36 +1,29 @@
 import { Injectable } from "@nestjs/common";
 import { Carts } from "../domain/carts";
-import {
-  CartRequest,
-  CartResponse,
-  CartModifyRequest,
-} from "../dto/cart-request";
+import { CartRequest, CartModifyRequest } from "../dto/cart-request";
+import { CartResponse } from "../dto/cart-response";
 
 @Injectable()
 export class CartService {
   constructor(private readonly carts: Carts) {}
 
   async findCartsByUserId(userId: number): Promise<CartResponse[]> {
-    try {
-      const data = await this.carts.findCartsByUserId(userId);
-      return data;
-    } catch (e) {
-      return e;
-    }
+    const carts = await this.carts.findCartsByUserId(userId);
+    return carts.map(CartResponse.of);
   }
 
-  createCart(cart: CartRequest): string {
+  createCart(userId: number, cart: CartRequest): string {
     try {
-      this.carts.createCart(cart);
+      this.carts.createCart({ ...cart, userId });
     } catch (e) {
       return e;
     }
     return "Created!";
   }
 
-  updateCart(userId: number, modifiedCart: CartModifyRequest): string {
+  updateCart(id: number, modifiedCart: CartModifyRequest): string {
     try {
-      this.carts.updateCart(userId, modifiedCart);
+      this.carts.updateCart(id, modifiedCart);
     } catch (e) {
       return e;
     }

@@ -17,7 +17,7 @@ export class Cart {
   @Column({ type: "int", name: "product_id" })
   productId: number;
 
-  @Column({ type: "int", name: "product_option_id" })
+  @Column({ type: "int", name: "product_option_id", nullable: true })
   productOptionId: number;
 
   @Column({ type: "int" })

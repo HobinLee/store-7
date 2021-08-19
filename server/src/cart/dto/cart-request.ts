@@ -1,19 +1,14 @@
 export interface CartRequest {
-  userId: number;
   productId: number;
-  productOptionId: number;
+  productOptionId?: number;
   amount: number;
+}
+
+export interface CreateCartRequest extends CartRequest {
+  userId: number;
 }
 
 export interface CartModifyRequest {
   productOptionId?: number;
   amount?: number;
-}
-
-export interface CartResponse {
-  id: number;
-  userId: number;
-  productId: number;
-  productOptionId: number;
-  amount: number;
 }
