@@ -15,6 +15,9 @@ export class Review {
   @Column({ name: "order_id", type: "int" })
   orderId: number;
 
+  @Column({ name: "product_id", type: "int" })
+  productId: number;
+
   @ManyToOne(() => User, (user) => user.reviews)
   @JoinColumn({ name: "author_id" })
   author: User;
