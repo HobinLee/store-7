@@ -39,4 +39,8 @@ export class ProductService {
     const product = await this.getProduct(productId);
     return QuestionResponse.of(); // TODO insert product.questions in parameter
   }
+
+  async deleteProduct(id: number) {
+    await this.products.deleteProduct(id);
+  }
 }

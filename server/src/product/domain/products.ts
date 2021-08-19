@@ -35,15 +35,15 @@ export class Products {
   }
 
   async findProductById(id: number): Promise<Product> {
-    return this.productRepository.findOne();
+    return this.productRepository.findOne(id);
   }
 
   createProduct() {
     this.productRepository.create();
   }
 
-  deleteProduct() {
-    this.productRepository.delete({});
+  async deleteProduct(id: number) {
+    await this.productRepository.delete(id);
   }
 }
 
