@@ -19,4 +19,5 @@ export interface OrderResponse {
   amount: number;
   destination: string;
   status: string;
+  createdAt: Date;
 }

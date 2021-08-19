@@ -2,8 +2,8 @@ import { Body, Controller, Get, Patch, Post, Param } from "@nestjs/common";
 import { OrderService } from "../application/order-service";
 import { OrderRequest, OrderResponse } from "../dto/order-request";
 
-@Controller("/destinations")
-export class DestinationController {
+@Controller("/orders")
+export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
   @Post()

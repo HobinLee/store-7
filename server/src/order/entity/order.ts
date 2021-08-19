@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from "typeorm";
 
 @Entity()
 export class Order {
@@ -28,4 +34,19 @@ export class Order {
 
   @Column({ type: "char", length: 5 })
   status: string;
+
+  @CreateDateColumn({
+    type: "timestamp",
+    name: "created_at",
+    default: () => "CURRENT_TIMESTAMP(6)",
+  })
+  createdAt: Date;
+
+  @UpdateDateColumn({
+    type: "timestamp",
+    name: "updated_at",
+    default: () => "CURRENT_TIMESTAMP(6)",
+    onUpdate: "CURRENT_TIMESTAMP(6)",
+  })
+  updatedAt: Date;
 }
