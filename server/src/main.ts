@@ -6,7 +6,9 @@ import * as cookieParser from "cookie-parser";
 const serverPort = properties.server.port;
 
 const nestApplication = async () => {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    cors: { origin: "http://localhost:3000", credentials: true },
+  });
   app.use(cookieParser());
   app.enableCors({
     origin: "*",

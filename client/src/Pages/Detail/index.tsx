@@ -10,8 +10,8 @@ import Footer from "@/Components/Footer";
 import Guide from "./Guide";
 import ZoomModal from "./ZoomModal";
 import { gap } from "@/styles/theme";
-import { sampleItemDetail } from "@/shared/dummy";
 import { convertToKRW } from "@/utils/util";
+import { useProduct } from "../../../api/products";
 
 const topHeight = 740;
 
@@ -36,6 +36,8 @@ export const tabs = [
 
 const DetailPage = () => {
   const [yOffset, setYOffset] = useState(0);
+
+  const { status, data: product, error } = useProduct(1);
 
   const numValue = useInput("1");
   const handleClickNumVal = (val: 1 | -1) => {
@@ -68,96 +70,97 @@ const DetailPage = () => {
   }, []);
 
   return (
-    <Wrapper>
-      <Header>
-        {yOffset > topHeight && (
-          <FixedTab yOffset={yOffset}>
-            {tabs.map((tab, idx) => (
-              <TabA
-                key={idx}
-                onClick={() => handleSelectTab(tab.id)}
-                isSelected={selectedTab === tab.id}
-              >
-                {tab.title}
-              </TabA>
-            ))}
-          </FixedTab>
-        )}
-      </Header>
+    status !== "loading" && (
+      <Wrapper>
+        <Header>
+          {yOffset > topHeight && (
+            <FixedTab yOffset={yOffset}>
+              {tabs.map((tab, idx) => (
+                <TabA
+                  key={idx}
+                  onClick={() => handleSelectTab(tab.id)}
+                  isSelected={selectedTab === tab.id}
+                >
+                  {tab.title}
+                </TabA>
+              ))}
+            </FixedTab>
+          )}
+        </Header>
 
-      <Contents>
-        <InfoBox>
-          <div
-            data-testid="image-box"
-            onClick={() => setIsZoomOpened(true)}
-            onMouseLeave={() => setIsZoomOpened(false)}
-            className="img-box"
-          >
-            <img
-              id="image"
-              src="https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg"
-              className="thumbnail"
-            />
-            {isZoomOpened && (
-              <ZoomLens data-testid="zoom-lens" id="zoom-lens" />
-            )}
-            {isZoomOpened && <ZoomModal />}
-          </div>
-          <Info>
-            <div className="title">{sampleItemDetail.name}</div>
-
-            <div className="list">
-              <div className="list__item">
-                <div className="list__item--title">판매가격</div>
-                <div className="list__item--content price">
-                  {convertToKRW(sampleItemDetail.price)}
-                </div>
-              </div>
-              <div className="list__item">
-                <div className="list__item--title">배송정보</div>
-                <div className="list__item--content">
-                  {convertToKRW(sampleItemDetail.delivery)}
-                </div>
-              </div>
+        <Contents>
+          <InfoBox>
+            <div
+              data-testid="image-box"
+              onClick={() => setIsZoomOpened(true)}
+              onMouseLeave={() => setIsZoomOpened(false)}
+              className="img-box"
+            >
+              <img id="image" src={product.images[0]} className="thumbnail" />
+              {isZoomOpened && (
+                <ZoomLens data-testid="zoom-lens" id="zoom-lens" />
+              )}
+              {isZoomOpened && <ZoomModal />}
             </div>
+            <Info>
+              <div className="title">{product.name}</div>
 
-            <OptionBox key="option-box" {...{ numValue, handleClickNumVal }} />
-          </Info>
-        </InfoBox>
+              <div className="list">
+                <div className="list__item">
+                  <div className="list__item--title">판매가격</div>
+                  <div className="list__item--content price">
+                    {convertToKRW(product.price)}
+                  </div>
+                </div>
+                <div className="list__item">
+                  <div className="list__item--title">배송정보</div>
+                  <div className="list__item--content">
+                    {convertToKRW(product.deliveryCost)}
+                  </div>
+                </div>
+              </div>
 
-        <Scroll {...{ selectedTab, yOffset }}>
-          <Tab yOffset={yOffset}>
-            {tabs.map((tab) => (
-              <TabA
-                key={tab.title}
-                onClick={() => handleSelectTab(tab.id)}
-                isSelected={selectedTab === tab.id}
-              >
-                {tab.title}
-              </TabA>
-            ))}
-          </Tab>
-
-          <div className="bottom-wrapper">
-            {tabs.map((tab) => (
-              <TabPage data-testid={tab.title} key={tab.title}>
-                {tab.id === selectedTab && tab.component}
-              </TabPage>
-            ))}
-          </div>
-
-          {yOffset > topHeight && selectedTab === "first" && (
-            <div className="option-box">
               <OptionBox
-                key="bottom-option-box"
+                key="option-box"
                 {...{ numValue, handleClickNumVal }}
               />
+            </Info>
+          </InfoBox>
+
+          <Scroll {...{ selectedTab, yOffset }}>
+            <Tab yOffset={yOffset}>
+              {tabs.map((tab) => (
+                <TabA
+                  key={tab.title}
+                  onClick={() => handleSelectTab(tab.id)}
+                  isSelected={selectedTab === tab.id}
+                >
+                  {tab.title}
+                </TabA>
+              ))}
+            </Tab>
+
+            <div className="bottom-wrapper">
+              {tabs.map((tab) => (
+                <TabPage data-testid={tab.title} key={tab.title}>
+                  {tab.id === selectedTab && tab.component}
+                </TabPage>
+              ))}
             </div>
-          )}
-        </Scroll>
-      </Contents>
-      <Footer />
-    </Wrapper>
+
+            {yOffset > topHeight && selectedTab === "first" && (
+              <div className="option-box">
+                <OptionBox
+                  key="bottom-option-box"
+                  {...{ numValue, handleClickNumVal }}
+                />
+              </div>
+            )}
+          </Scroll>
+        </Contents>
+        <Footer />
+      </Wrapper>
+    )
   );
 };
 
