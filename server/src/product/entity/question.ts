@@ -11,10 +11,10 @@ export class Question {
   id: number;
 
   @Column({ name: "user_id", type: "int" })
-  userID: number;
+  userId: number;
 
   @Column({ name: "product_id", type: "int" })
-  productID: number;
+  productId: number;
 
   @Column({ type: "char", length: 5 })
   type: string;
@@ -41,10 +41,9 @@ export class Question {
   })
   createdAt: Date;
 
-  @CreateDateColumn({
+  @Column({
     type: "timestamp",
     name: "answered_at",
-    default: () => "CURRENT_TIMESTAMP(6)",
     nullable: true,
   })
   answeredAt: Date;
