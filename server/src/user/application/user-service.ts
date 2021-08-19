@@ -69,7 +69,8 @@ export class UserService {
   async createNewAddress(address: FirstDestinationDTO, userId: number) {
     try {
       return await this.destinationService.createDestination(
-        createFirstDetination(address, userId)
+        userId,
+        createFirstDetination(address)
       );
     } catch (e) {
       return e;

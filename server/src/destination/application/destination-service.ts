@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { Destinations } from "../domain/destinations";
 import {
-  DestinationRequest,
   DestinationModifyRequest,
+  DestinationRequest,
 } from "../dto/destination-request";
 import { DestinationResponse } from "../dto/destination-response";
 
@@ -15,9 +15,9 @@ export class DestinationService {
     return destinations.map(DestinationResponse.of);
   }
 
-  createDestination(destination: DestinationRequest): string {
+  createDestination(userId: number, destination: DestinationRequest): string {
     try {
-      this.destinations.createDestination(destination);
+      this.destinations.createDestination({ ...destination, userId });
     } catch (e) {
       return e;
     }

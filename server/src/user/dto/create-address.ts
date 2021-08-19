@@ -7,15 +7,13 @@ export interface FirstDestinationDTO {
 }
 
 export const createFirstDetination = (
-  address: FirstDestinationDTO,
-  userId: number
+  address: FirstDestinationDTO
 ): DestinationRequest => {
   return {
     name: "기본 배송지",
     postCode: address.postCode,
     address: address.address,
     detailAddress: address.address,
-    userId,
     isDetault: true,
   };
 };

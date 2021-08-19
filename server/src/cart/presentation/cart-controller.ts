@@ -11,7 +11,7 @@ export class CartController {
     // @Param("userid") userId: number,
     @Body() cart: CartRequest
   ): string {
-    return this.cartService.createCart(12, cart);
+    return this.cartService.createCart(1, cart);
   }
 
   @Patch("/:id")
