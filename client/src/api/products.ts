@@ -1,10 +1,14 @@
+import { ProductType } from "@/shared/type";
 import { DELETE, GET, POST } from "@/utils/axios";
+import { useQuery } from "react-query";
 
 // GET /products?order?category?subcategory?keyword? 상품 목록
 export const getProducts = ({ params }) => GET("/products", params);
 
 // GET /products/:id 상품 상세 정보
-export const getProduct = ({ id }) => GET(`/products/${id}`);
+const getProduct = (id: number): Promise<ProductType> => GET(`/products/${id}`);
+export const useProduct = (id: number) =>
+  useQuery(["product", id], () => getProduct(id));
 
 // GET /products/:id/reviews 리뷰 리스트
 export const getProductReviews = ({ id }) => GET(`/products/${id}/reviews`);

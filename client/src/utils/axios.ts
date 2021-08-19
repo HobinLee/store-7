@@ -13,7 +13,7 @@ const fetchWrap = async ({
 }) => {
   try {
     const config = {
-      baseURL: process.env.API_URL,
+      baseURL: "http://localhost:8080",
       withCredentials: true,
       params,
     };
