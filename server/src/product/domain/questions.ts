@@ -26,15 +26,18 @@ export class Questions {
     return await this.questionRepository.find({ where: { userId } });
   }
 
-  createQuestion(question: QuestionPostRequest) {
-    this.questionRepository.insert(question);
+  async createQuestion(question: QuestionPostRequest) {
+    await this.questionRepository.insert(question);
   }
 
-  editQuestion(request: QuestionPatchRequest) {
-    this.questionRepository.update({ id: request.id }, { ...request.content });
+  async editQuestion(request: QuestionPatchRequest) {
+    await this.questionRepository.update(
+      { id: request.id },
+      { ...request.content }
+    );
   }
 
-  deleteQuestion(id: number) {
-    this.questionRepository.delete({ id });
+  async deleteQuestion(id: number) {
+    await this.questionRepository.delete({ id });
   }
 }
