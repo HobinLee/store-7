@@ -9,6 +9,7 @@ import {
 import { ProductImage } from "./product-image";
 import { ProductOption } from "./option";
 import { ProductDetailImage } from "./product-detail-image";
+import { ProductUploadRequest } from "@/product/dto/product-upload-request";
 
 @Entity()
 export class Product {
@@ -39,13 +40,15 @@ export class Product {
   @Column({ length: 16, nullable: true })
   option: string;
 
-  @OneToMany(() => ProductOption, (option) => option.product)
+  @OneToMany(() => ProductOption, (option) => option.product, { cascade: true })
   options: ProductOption[];
 
-  @OneToMany(() => ProductImage, (image) => image.product)
+  @OneToMany(() => ProductImage, (image) => image.product, { cascade: true })
   images: ProductImage[];
 
-  @OneToMany(() => ProductDetailImage, (detailImage) => detailImage.product)
+  @OneToMany(() => ProductDetailImage, (detailImage) => detailImage.product, {
+    cascade: true,
+  })
   detailImages: ProductDetailImage[];
 
   @CreateDateColumn({
@@ -62,6 +65,19 @@ export class Product {
     onUpdate: "CURRENT_TIMESTAMP(6)",
   })
   updatedAt: Date;
+
+  static toEntity(product: ProductUploadRequest) {
+    return {
+      name: product.name,
+      price: product.price,
+      deliveryCost: product.deliveryCost,
+      discountRate: product.discountRate,
+      stock: product.stock,
+      category: product.category,
+      subCategory: product.subCategory,
+      option: product.option ? product.option.value : null,
+    } as Product;
+  }
 
   getDiscountedPrice() {
     return this.discountRate === 0

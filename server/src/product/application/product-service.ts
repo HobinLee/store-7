@@ -4,6 +4,8 @@ import { Products } from "../domain/products";
 import { ProductResponse } from "@/product/dto/product-response";
 import { QuestionResponse } from "@/product/dto/question-response";
 import { ReviewResponse } from "@/product/dto/review-response";
+import { ProductUploadRequest } from "@/product/dto/product-upload-request";
+import { Product } from "@/product/entity/product";
 import { Questions } from "../domain/questions";
 import {
   QuestionPostRequest,
@@ -42,9 +44,6 @@ export class ProductService {
     const product = await this.getProduct(productId);
     return ReviewResponse.of(); // TODO insert product.reviews in parameter
   }
-  async deleteProduct(id: number) {
-    await this.products.deleteProduct(id);
-  }
 
   // question
   // 단일 요청이 필요할지 모르니 일단 만들어두고 이후 필요 없으면 삭제, 컨트롤러에서 사용 안 하는 중
@@ -53,6 +52,21 @@ export class ProductService {
     return QuestionResponse.of(question);
   }
 
+  async createProduct(productBody: ProductUploadRequest, images, detailImages) {
+    const productEntity = Product.toEntity(productBody);
+    const product = await this.products.createProduct(productEntity);
+    this.products.addImages(images, product);
+    this.products.addDetailImages(detailImages, product);
+    if (productBody.option) {
+      this.products.addOption(productBody.option.list, product);
+    }
+    return product.id;
+  }
+
+  async deleteProduct(id: number) {
+    await this.products.deleteProduct(id);
+  }
+  
   async getProductQuestions(productId: number) {
     const questions = await this.questions.findQuestionsByProductId(productId);
     return questions.map(QuestionResponse.of);

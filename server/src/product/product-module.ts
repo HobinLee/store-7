@@ -7,6 +7,7 @@ import { ProductDetailImage } from "./entity/product-detail-image";
 import { ProductOption } from "./entity/option";
 import { ProductController } from "./presentation/product-controller";
 import { ProductService } from "./application/product-service";
+import { S3Repository } from "@/product/infrastructure/s3-repository";
 import { Question } from "./entity/question";
 import { Questions } from "./domain/questions";
 
@@ -21,6 +22,6 @@ import { Questions } from "./domain/questions";
     ]),
   ],
   controllers: [ProductController],
-  providers: [Products, Questions, ProductService],
+  providers: [Products, ProductService, S3Repository, Questions],
 })
 export class ProductModule {}

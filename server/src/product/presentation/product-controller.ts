@@ -4,15 +4,19 @@ import {
   Delete,
   Get,
   Param,
-  Patch,
   Post,
+  Patch,
   Query,
+  UploadedFiles,
+  UseInterceptors,
 } from "@nestjs/common";
 import { ProductService } from "../application/product-service";
 import { ProductElementResponse } from "../dto/product-element-response";
 import { ProductResponse } from "@/product/dto/product-response";
 import { ReviewResponse } from "@/product/dto/review-response";
 import { QuestionResponse } from "@/product/dto/question-response";
+import { FileFieldsInterceptor } from "@nestjs/platform-express";
+import { ProductUploadRequest } from "@/product/dto/product-upload-request";
 import {
   QuestionPatchRequest,
   QuestionPostRequest,
@@ -76,6 +80,21 @@ export class ProductController {
   @Delete("/questions/:id")
   async deleteQuestion(@Body("id") id: number) {
     await this.productService.deleteQuestion(id);
+  }
+
+  @UseInterceptors(
+    FileFieldsInterceptor([{ name: "images" }, { name: "details" }])
+  )
+  @Post()
+  async addProduct(
+    @UploadedFiles() files,
+    @Body() body: ProductUploadRequest
+  ): Promise<number> {
+    return await this.productService.createProduct(
+      body,
+      files.images,
+      files.details
+    );
   }
 
   @Delete("/:id")
