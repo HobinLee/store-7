@@ -2,7 +2,7 @@ name: CI-Server
 
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
 
 jobs:
   ci:
