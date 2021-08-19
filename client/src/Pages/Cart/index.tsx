@@ -7,7 +7,7 @@ import CartBox from "./CartBox";
 import { Arrow } from "@/assets";
 import Checkbox from "@/Components/Checkbox";
 import { gap } from "@/styles/theme";
-import { useCarts } from "../../../api/my";
+import { useCarts } from "@/api/my";
 
 const CartPage = () => {
   const { status, data: carts, error } = useCarts();

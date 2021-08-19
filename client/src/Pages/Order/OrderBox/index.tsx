@@ -15,7 +15,7 @@ export const output = (props: OrderBoxProps) => {
     priceOutput: convertToKRW(props.totalPrice),
     deliveryOutput: convertToKRW(props.totalDelivery),
     paymentOutput: convertToKRW(props.totalPayment),
-    buttonText: `${convertToKRW(props.totalPrice)}원 결제하기`,
+    buttonText: `${convertToKRW(props.totalPrice)} 결제하기`,
   };
 };
 

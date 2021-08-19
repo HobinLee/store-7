@@ -11,7 +11,7 @@ import Guide from "./Guide";
 import ZoomModal from "./ZoomModal";
 import { gap } from "@/styles/theme";
 import { convertToKRW } from "@/utils/util";
-import { useProduct } from "../../../api/products";
+import { useProduct } from "@/api/products";
 
 const topHeight = 740;
 
@@ -37,7 +37,7 @@ export const tabs = [
 const DetailPage = () => {
   const [yOffset, setYOffset] = useState(0);
 
-  const { status, data: product, error } = useProduct(1);
+  const { status, data: product, error } = useProduct(33);
 
   const numValue = useInput("1");
   const handleClickNumVal = (val: 1 | -1) => {
