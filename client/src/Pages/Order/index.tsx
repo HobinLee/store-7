@@ -18,10 +18,10 @@ import {
 } from "@/utils/validations";
 import { sampleUser } from "@/shared/dummy";
 import { gap } from "@/styles/theme";
-import { useCarts } from "@/api/my";
+import { useMyCarts } from "@/api/my";
 
 const OrderPage = () => {
-  const { status, data: carts, error } = useCarts();
+  const { status, data: carts, error } = useMyCarts();
 
   const email = useInput("");
   const emailValidation = useValidation(validateEmail);
@@ -50,8 +50,8 @@ const OrderPage = () => {
                 <div>
                   <input type="checkbox" /> 모두선택
                 </div>
-                {carts.items.map((i, idx) => (
-                  <ItemInfoBox {...i} key={idx} />
+                {carts.items.map((cart) => (
+                  <ItemInfoBox key={cart.id} {...cart} />
                 ))}
               </div>
             </Info>

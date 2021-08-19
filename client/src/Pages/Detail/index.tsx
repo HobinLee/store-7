@@ -8,6 +8,7 @@ import Review from "./Review";
 import Question from "./Question";
 import Footer from "@/Components/Footer";
 import Guide from "./Guide";
+import DetailInfo from "./DetailInfo";
 import ZoomModal from "./ZoomModal";
 import { gap } from "@/styles/theme";
 import { convertToKRW } from "@/utils/util";
@@ -19,15 +20,7 @@ export const tabs = [
   {
     id: "first",
     title: "상품상세정보",
-    component: (
-      <div>
-        <img src="https://store.baemin.com/data/editor/goods/0ad3730867ef81ba.jpg" />
-        <img src="https://store.baemin.com/data/editor/goods/e4a9757b5cc7aef8.jpg" />
-        <img src="https://store.baemin.com/data/editor/goods/b01bbb58754c2618.jpg" />
-        <img src="https://store.baemin.com/data/editor/goods/5e6c219626c3db38.jpg" />{" "}
-        <img src="https://store.baemin.com/data/editor/goods/796fde10dfdfd685.jpg" />{" "}
-      </div>
-    ),
+    component: <DetailInfo />,
   },
   { id: "seconed", title: "배송/교환/반품 안내", component: <Guide /> },
   { id: "third", title: "상품후기", component: <Review /> },
@@ -35,9 +28,10 @@ export const tabs = [
 ];
 
 const DetailPage = () => {
+  const productId = location.pathname.split("detail/")[1];
   const [yOffset, setYOffset] = useState(0);
 
-  const { status, data: product, error } = useProduct(33);
+  const { status, data: product, error } = useProduct(parseInt(productId));
 
   const numValue = useInput("1");
   const handleClickNumVal = (val: 1 | -1) => {
@@ -96,11 +90,17 @@ const DetailPage = () => {
               onMouseLeave={() => setIsZoomOpened(false)}
               className="img-box"
             >
-              <img id="image" src={product.images[0]} className="thumbnail" />
+              <img
+                id="image"
+                src={process.env.IMG_URL + product.images[0]}
+                className="thumbnail"
+              />
               {isZoomOpened && (
-                <ZoomLens data-testid="zoom-lens" id="zoom-lens" />
+                <>
+                  <ZoomLens data-testid="zoom-lens" id="zoom-lens" />
+                  <ZoomModal />
+                </>
               )}
-              {isZoomOpened && <ZoomModal />}
             </div>
             <Info>
               <div className="title">{product.name}</div>
@@ -150,10 +150,7 @@ const DetailPage = () => {
 
             {yOffset > topHeight && selectedTab === "first" && (
               <div className="option-box">
-                <OptionBox
-                  key="bottom-option-box"
-                  {...{ numValue, handleClickNumVal }}
-                />
+                <OptionBox {...{ numValue, handleClickNumVal }} />
               </div>
             )}
           </Scroll>

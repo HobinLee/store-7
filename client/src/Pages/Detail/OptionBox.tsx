@@ -10,10 +10,18 @@ import { gap } from "@/styles/theme";
 const OptionBox = ({ numValue, handleClickNumVal }) => {
   const [isCartAlertShown, setIsCartAlertShown] = useState(false);
 
+  const handlePostCart = async () => {
+    try {
+      if (status !== "loading") {
+        // await postCart({ productId: 33 });
+      }
+    } catch (error) {}
+  };
+
   return (
     <Wrapper>
       <div className="select-option">
-        <div>으아아아악</div>
+        <div>수량</div>
         <div className="select-option__right">
           <div className="num-input">
             <NumInput value={numValue.value} onChange={numValue.onChange} />
@@ -37,7 +45,7 @@ const OptionBox = ({ numValue, handleClickNumVal }) => {
 
       <div className="buttons">
         <Button>찜</Button>
-        <Button onClick={() => setIsCartAlertShown(true)}>장바구니</Button>
+        <Button onClick={handlePostCart}>장바구니</Button>
         <Button onClick={() => (window.location.href = "/order")} primary>
           바로 구매
         </Button>
