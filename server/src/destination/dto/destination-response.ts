@@ -9,16 +9,6 @@ export class DestinationResponse {
   userId: number;
   isDefault: boolean;
 
-  constructor(response: DestinationResponse) {
-    this.id = response.id;
-    this.name = response.name;
-    this.postCode = response.postCode;
-    this.address = response.address;
-    this.detailAddress = response.detailAddress;
-    this.userId = response.userId;
-    this.isDefault = response.isDefault;
-  }
-
   static of(destination: Destination): DestinationResponse {
     const id = destination.id,
       name = destination.name,
@@ -28,7 +18,7 @@ export class DestinationResponse {
       userId = destination.userId,
       isDefault = destination.isDefault;
 
-    return new DestinationResponse({
+    return {
       id,
       name,
       postCode,
@@ -36,6 +26,6 @@ export class DestinationResponse {
       detailAddress,
       userId,
       isDefault,
-    });
+    } as DestinationResponse;
   }
 }

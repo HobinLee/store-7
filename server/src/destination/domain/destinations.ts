@@ -22,14 +22,8 @@ export class Destinations {
     return this.destinationRepository.insert(destination);
   }
 
-  async updateDestination(
-    userId: number,
-    destination: DestinationModifyRequest
-  ) {
-    return await this.destinationRepository.update(
-      { userId },
-      { ...destination }
-    );
+  async updateDestination(id: number, destination: DestinationModifyRequest) {
+    return await this.destinationRepository.update({ id }, { ...destination });
   }
 
   async deleteDestination(id: number) {

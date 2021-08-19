@@ -25,11 +25,11 @@ export class DestinationService {
   }
 
   updateDestination(
-    userId: number,
+    id: number,
     destinationModifyRequest: DestinationModifyRequest
   ): string {
     try {
-      this.destinations.updateDestination(userId, destinationModifyRequest);
+      this.destinations.updateDestination(id, destinationModifyRequest);
     } catch (e) {
       return e;
     }
