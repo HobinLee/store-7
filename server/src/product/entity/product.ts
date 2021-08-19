@@ -1,11 +1,4 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 import { ProductImage } from "./product-image";
 import { ProductOption } from "./option";
 import { ProductDetailImage } from "./product-detail-image";
@@ -86,7 +79,7 @@ export class Product {
   }
 
   getThumbnailImage() {
-    if (this.images.length == 0) return "";
+    if (!this.images) return "";
     return this.images[0].id;
   }
 
