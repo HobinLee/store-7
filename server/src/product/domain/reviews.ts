@@ -25,8 +25,8 @@ export class Reviews {
 
   async findReviewByUserId(userId) {
     return this.reviewRepository.find({
-      relations: ["user"],
-      where: { userId },
+      relations: ["author"],
+      where: { author: userId },
     });
   }
 
