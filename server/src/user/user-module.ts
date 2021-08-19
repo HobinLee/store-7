@@ -9,6 +9,7 @@ import { JwtModule } from "@nestjs/jwt";
 import properties from "../config/properties/properties";
 import { UserController } from "./presentation/user-controller";
 import { UserService } from "./application/user-service";
+import { DestinationModule } from "src/destination/destination-module";
 
 const jwtConfig = properties.auth;
 
@@ -19,6 +20,7 @@ const jwtConfig = properties.auth;
       secret: jwtConfig.secret,
       signOptions: { expiresIn: jwtConfig.expiresIn },
     }),
+    DestinationModule,
   ],
   controllers: [AuthController, UserController],
   providers: [AuthService, UserService, Users, PasswordEncoder],
