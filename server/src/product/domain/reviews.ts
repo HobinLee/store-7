@@ -1,8 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Like, Repository } from "typeorm";
-import { Review } from "../entity/review";
-import { ReviewPostReqeust, ReviewPatchRequest } from "../dto/review-request";
+import { Repository } from "typeorm";
+import { Review } from "@/product/entity/review";
+import {
+  ReviewPostReqeust,
+  ReviewPatchRequest,
+} from "@/product/dto/review-request";
 
 @Injectable()
 export class Reviews {
@@ -13,26 +16,26 @@ export class Reviews {
 
   async findReviewsByProjectId(productId: number) {
     return this.reviewRepository.find({
-      relations: [],
+      relations: ["author"],
       where: {
         productId,
       },
     });
   }
 
-  async findReviewByUserId() {
+  async findReviewByUserId(userId) {
     return this.reviewRepository.find({
-      relations: [],
-      where: {},
+      relations: ["user"],
+      where: { userId },
     });
   }
 
-  async findLatelyReview(count: number) {
-    return this.reviewRepository.find({
-      relations: [],
-      where: {},
-    });
-  }
+  // async findLatelyReview(count: number) {
+  //   return this.reviewRepository.find({
+  //     relations: [],
+  //     where: {},
+  //   });
+  // }
 
   async createReview(review: ReviewPostReqeust) {
     await this.reviewRepository.insert(review);
