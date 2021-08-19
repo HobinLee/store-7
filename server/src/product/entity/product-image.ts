@@ -6,7 +6,9 @@ export class ProductImage {
   @PrimaryColumn({ type: "char", length: 32 })
   id: string;
 
-  @ManyToOne(() => Product, (product) => product.images, { nullable: false })
+  @ManyToOne(() => Product, (product) => product.images, {
+    nullable: false,
+  })
   @JoinColumn({ name: "product_id" })
   product: Product;
 }
