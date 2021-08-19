@@ -10,24 +10,18 @@ import {
 } from "@nestjs/common";
 import { AuthService } from "../application/auth-service";
 import { SigninRequest } from "../dto/signin-request";
-import { Request, Response } from "express";
+import { Response } from "express";
 
 @Controller("/auth")
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @All()
-  middleWare(@Req() req: Request) {
-    req.params.userId = "14";
-  }
-
   @Post()
   async signIn(
-    @Param("userId") userId: string,
     @Body() signinRequest: SigninRequest,
     @Res({ passthrough: true }) signinResponse: Response
   ): Promise<Error | string> {
-    console.log(userId);
+    console.log("try sign in");
     return this.authService.signIn(signinRequest, signinResponse);
   }
 

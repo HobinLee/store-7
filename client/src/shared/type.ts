@@ -1,20 +1,20 @@
-export type ReviewType = {
+export interface ReviewType {
   id: number;
   rate: number;
   content: string;
   image?: string;
   author: string;
   date: Date;
-};
+}
 
-export type ReviewListType = {
+export interface ReviewListType {
   totalCount: number;
   averageRate: number;
   rates: { rate: number; count: number }[];
   reviews: ReviewType[];
-};
+}
 
-export type QuestionType = {
+export interface QuestionType {
   id: number;
   question: {
     author: string;
@@ -26,17 +26,17 @@ export type QuestionType = {
     content: string;
     date: Date;
   };
-};
+}
 
-export type QuestionListType = {
+export interface QuestionListType {
   totalCount: number;
   questions: QuestionType[];
-};
+}
 
-export type QnAType = {
+export interface QnAType {
   id: number;
-  authorName: string;
   type: string;
+  authorName: string;
   title: string;
   question: string;
   answer?: string;
@@ -47,45 +47,44 @@ export type QnAType = {
     id: number;
     name: string;
   };
-};
+}
 
-export type UserType = {
+export interface UserType {
   name: string;
-  phone: string;
+  phoneNumber: string;
   email: string;
-  image: string;
-  addresses: AddressType[];
-  defaultDestinationId: number;
-};
+  profile: string;
+  destinations: DestinationType[];
+}
 
-export type AddressType = {
+export interface DestinationType extends AddressType {
   id?: number;
   name?: string;
-  detailAddress: string;
-  postcode: PostcodeType;
-};
+  isDefault?: boolean;
+}
 
-export type PostcodeType = {
-  postcode?: number;
+export interface AddressType {
+  postCode?: string;
   address?: string;
-};
+  detailAddress?: string;
+}
 
-export type ItemBannerType = {
+export interface ItemBannerType {
   brief?: string;
   title: string;
   src: any;
   id: number;
   isWhite?: boolean;
-};
+}
 
-export type ItemType = {
+export interface ItemType {
   name: string;
   num?: number;
   price: number;
   delivery: number;
-};
+}
 
-export type ProductType = {
+export interface ProductType {
   id: number;
   name: string;
   price: number;
@@ -97,9 +96,9 @@ export type ProductType = {
   option: string;
   images: string[];
   details: string[];
-};
+}
 
-export type CartType = {
+export interface CartType {
   totalPrice: number;
   totalDelivery: number;
   totalPayment: number;
@@ -112,4 +111,4 @@ export type CartType = {
     productOptionId: number;
     amount: number;
   }[];
-};
+}

@@ -1,22 +1,20 @@
 import { render } from "@/utils/test-util";
 import { screen } from "@testing-library/react";
+import { UserType } from "@/shared/type";
 import AddressForm, { AddressFormProps } from "./index";
 
 const ADDRESS = {
   name: "addressName",
   detailAddress: "detailAddress",
-  postcode: {
-    postcode: 1234,
-    address: "postcodeAddress",
-  },
+  postCode: "1234",
+  address: "postcodeAddress",
 };
-const USER = {
+const USER: UserType = {
   name: "userName",
-  phone: "phone",
+  phoneNumber: "phone",
   email: "email",
-  image: "image",
-  addresses: [],
-  defaultDestinationId: 1234,
+  profile: "image",
+  destinations: [],
 };
 
 const AddressFormProps: AddressFormProps = {

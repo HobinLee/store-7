@@ -1,22 +1,20 @@
+import { DestinationType } from "@/shared/type";
 import { render } from "@/utils/test-util";
 import { screen } from "@testing-library/react";
 import AddressBox, { AddressBoxProps } from "./index";
 
-const ADDRESS = {
+const ADDRESS: DestinationType = {
   name: "addressName",
   detailAddress: "detailAddress",
-  postcode: {
-    postcode: 1234,
-    address: "postcodeAddress",
-  },
+  postCode: "1234",
+  address: "postcodeAddress",
 };
 const USER = {
   name: "userName",
-  phone: "phone",
+  phoneNumber: "phone",
   email: "email",
-  image: "image",
-  addresses: [ADDRESS],
-  defaultDestinationId: 1234,
+  profile: "image",
+  destinations: [ADDRESS],
 };
 
 const addressBoxProps: AddressBoxProps = {
@@ -32,7 +30,7 @@ describe("<AddressBox />", () => {
     expect(screen.queryByText(ADDRESS.name)).toBeInTheDocument();
     expect(screen.queryByText(ADDRESS.detailAddress)).toBeInTheDocument();
     expect(screen.queryByText(USER.name)).toBeInTheDocument();
-    expect(screen.queryByText(USER.phone)).toBeInTheDocument();
+    expect(screen.queryByText(USER.phoneNumber)).toBeInTheDocument();
 
     expect(screen.queryByText("삭제")).toBeInTheDocument();
     expect(screen.queryByText("수정")).toBeInTheDocument();

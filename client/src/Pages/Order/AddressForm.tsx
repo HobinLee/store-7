@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { AddressType, UserType } from "@/shared/type";
+import { AddressType, UserType, DestinationType } from "@/shared/type";
 import Button from "@/Components/Button";
 import useInput from "@/hooks/useInput";
 import useValidation from "@/hooks/useValidation";
@@ -27,11 +27,12 @@ const AddressForm = ({ address: addressToEdit, user }: AddressFormProps) => {
   const phoneValidation = useValidation(validatePhoneNumber);
 
   const [address, setAddress] = useState<AddressType>({
-    postcode: {},
+    address: "",
+    postCode: "",
     detailAddress: "",
   });
 
-  const handleChangeAddress = (address: AddressType) => {
+  const handleChangeAddress = (address: DestinationType) => {
     setAddress(address);
   };
 
@@ -43,7 +44,7 @@ const AddressForm = ({ address: addressToEdit, user }: AddressFormProps) => {
     nameValidation.isValid &&
     phoneValidation.isValid &&
     addressNameValidation.isValid &&
-    !!address.postcode.postcode;
+    !!address.postCode;
 
   return (
     <Wrapper>
