@@ -18,8 +18,8 @@ export class Destinations {
     return await this.destinationRepository.find({ where: { userId } });
   }
 
-  createDestination(destination: DestinationRequest) {
-    this.destinationRepository.create(destination);
+  async createDestination(destination: DestinationRequest) {
+    return this.destinationRepository.insert(destination);
   }
 
   async updateDestination(
