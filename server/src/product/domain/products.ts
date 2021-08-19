@@ -1,7 +1,14 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Like, Repository } from "typeorm";
-import { Product } from "../entity/product";
+import { Product } from "@/product/entity/product";
+
+const ORDER_TYPE = {
+  hot: { orderAmount: "DESC" },
+  new: { createdAt: "DESC" },
+  priceAsc: { price: "ASC" },
+  priceDesc: { price: "DESC" },
+};
 
 @Injectable()
 export class Products {
@@ -11,18 +18,19 @@ export class Products {
   ) {}
 
   async findProductsByOrderAndCategoryAndSubCategoryAndKeyword(
-    order: string,
-    category: string,
-    subCategory: string,
-    keyword: string
+    order: string | "",
+    category: string | "",
+    subCategory: string | "",
+    keyword: string | ""
   ): Promise<Product[]> {
     return this.productRepository.find({
       relations: ["options", "images", "detailImages"],
       where: {
-        category: Like(category),
-        subCategory: Like(subCategory),
-        name: Like(keyword),
+        category: wrapWordToLike(category),
+        subCategory: wrapWordToLike(subCategory),
+        name: wrapWordToLike(keyword),
       },
+      order: ORDER_TYPE[order],
     });
   }
 
@@ -38,3 +46,12 @@ export class Products {
     this.productRepository.delete({});
   }
 }
+
+const wrapWordToLike = (word: string) => {
+  if (!word) return Like("%%");
+  return Like(`%${word}%`);
+};
+
+const generateOrder = (order: string) => {
+  const orderName = order.split;
+};
