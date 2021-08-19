@@ -1,50 +1,39 @@
 import { Injectable } from "@nestjs/common";
 import { Orders } from "../domain/orders";
-import { OrderRequest, OrderResponse } from "../dto/order-request";
+import { OrderRequest } from "../dto/order-request";
+import { OrderResponse } from "../dto/order-response";
 
 @Injectable()
 export class OrderService {
   constructor(private readonly orders: Orders) {}
 
   async findOrderById(id: number): Promise<OrderResponse[]> {
-    try {
-      const data = await this.orders.findOrderById(id);
-      return data;
-    } catch (e) {
-      return e;
-    }
+    const orders = await this.orders.findOrderById(id);
+    return orders.map(OrderResponse.of);
   }
 
-  async findOrderByOrderNum(orderNum: number): Promise<OrderResponse[]> {
-    try {
-      const data = await this.orders.findOrderByOrderNum(orderNum);
-      return data;
-    } catch (e) {
-      return e;
-    }
-  }
+  // async findOrderByOrderNum(orderNum: number): Promise<OrderResponse[]> {
+  //   try {
+  //     const data = await this.orders.findOrderByOrderNum(orderNum);
+  //     return data;
+  //   } catch (e) {
+  //     return e;
+  //   }
+  // }
 
   async findOrders(): Promise<OrderResponse[]> {
-    try {
-      const data = await this.orders.findOrders();
-      return data;
-    } catch (e) {
-      return e;
-    }
+    const orders = await this.orders.findOrders();
+    return orders.map(OrderResponse.of);
   }
 
   async findOrdersByUserId(userId: number): Promise<OrderResponse[]> {
-    try {
-      const data = await this.orders.findOrdersByUserId(userId);
-      return data;
-    } catch (e) {
-      return e;
-    }
+    const orders = await this.orders.findOrdersByUserId(userId);
+    return orders.map(OrderResponse.of);
   }
 
-  createOrder(order: OrderRequest): string {
+  createOrder(userId: number, order: OrderRequest): string {
     try {
-      this.orders.createOrder(order);
+      this.orders.createOrder({ ...order, userId });
     } catch (e) {
       return e;
     }

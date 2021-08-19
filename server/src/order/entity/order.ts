@@ -18,12 +18,9 @@ export class Order {
   userId: number;
 
   @Column({ length: 20 })
-  orderNum: string;
-
-  @Column({ length: 20 })
   addressee: string;
 
-  @Column({ type: "int" })
+  @Column({ type: "int", name: "product_option_id", nullable: true })
   productOptionId: number;
 
   @Column({ type: "int" })
