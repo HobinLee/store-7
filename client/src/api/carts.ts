@@ -2,7 +2,9 @@ import { POST, DELETE } from "@/utils/axios";
 
 // POST /carts 장바구니 담기
 export const postCart = (data: {
-  productId: number;
+  product: {
+    id: number;
+  };
   productOptionId?: number;
   amount: number;
 }) => POST("/carts", data);

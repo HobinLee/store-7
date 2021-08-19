@@ -6,16 +6,25 @@ import ModalWrapper from "@/Components/ModalWrapper";
 import { Triangle } from "@/assets";
 import { convertToKRW } from "@/utils/util";
 import { gap } from "@/styles/theme";
+import { postCart } from "@/api/carts";
 
 const OptionBox = ({ numValue, handleClickNumVal }) => {
   const [isCartAlertShown, setIsCartAlertShown] = useState(false);
+  const productId = location.pathname.split("detail/")[1];
 
   const handlePostCart = async () => {
     try {
       if (status !== "loading") {
-        // await postCart({ productId: 33 });
+        await postCart({
+          product: { id: productId },
+          amount: parseInt(numValue.value),
+        });
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsCartAlertShown(true);
+    }
   };
 
   return (
