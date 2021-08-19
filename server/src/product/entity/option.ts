@@ -1,10 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Product } from "./product";
 
 @Entity("product_option")
 export class ProductOption {
-  @PrimaryColumn({ type: "char", length: 32 })
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @ManyToOne(() => Product, (product) => product.options)
   product: Product;

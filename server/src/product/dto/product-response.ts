@@ -28,8 +28,7 @@ export class ProductResponse {
       discountRate = product.discountRate,
       amount = product.stock,
       image = product.getThumbnailImage(),
-      price =
-        discountRate === 0 ? originPrice : (originPrice * discountRate) / 100;
+      price = product.getDiscountedPrice();
 
     return new ProductResponse({
       id,
