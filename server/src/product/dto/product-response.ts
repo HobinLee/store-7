@@ -10,46 +10,36 @@ export class ProductResponse {
   amount: number;
   image: string;
 
-  constructor(
-    id: number,
-    name: string,
-    price: number,
-    originPrice: number,
-    discountRate: number,
-    isWish: boolean,
-    amount: number,
-    image: string
-  ) {
-    this.id = id;
-    this.name = name;
-    this.price = price;
-    this.originPrice = originPrice;
-    this.discountRate = discountRate;
-    this.isWish = isWish;
-    this.amount = amount;
-    this.image = image;
+  constructor(response: ProductResponse) {
+    this.id = response.id;
+    this.name = response.name;
+    this.price = response.price;
+    this.originPrice = response.originPrice;
+    this.discountRate = response.discountRate;
+    this.isWish = response.isWish;
+    this.amount = response.amount;
+    this.image = response.image;
   }
 
   static of(product: Product): ProductResponse {
     const id = product.id,
       name = product.name,
       originPrice = product.price,
-      disCountRate = product.discountRate,
+      discountRate = product.discountRate,
       amount = product.stock,
-      image = product.getThumbnailImage();
+      image = product.getThumbnailImage(),
+      price =
+        discountRate === 0 ? originPrice : (originPrice * discountRate) / 100;
 
-    let price = originPrice;
-    if (disCountRate > 0) price *= disCountRate / 100;
-
-    return new ProductResponse(
+    return new ProductResponse({
       id,
       name,
       price,
       originPrice,
-      disCountRate,
-      false,
+      discountRate,
+      isWish: false,
       amount,
-      image
-    );
+      image,
+    });
   }
 }
