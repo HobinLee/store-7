@@ -14,7 +14,7 @@ export class CartService {
 
   createCart(userId: number, cart: CartRequest): string {
     try {
-      this.carts.createCart({ ...cart, userId });
+      this.carts.createCart({ ...cart, user: { id: userId } });
     } catch (e) {
       return e;
     }

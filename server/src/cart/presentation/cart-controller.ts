@@ -8,7 +8,7 @@ export class CartController {
 
   @Post()
   createCart(
-    // @Param("userid") userId: number,
+    @Param("userId") userId: number,
     @Body() cart: CartRequest
   ): string {
     return this.cartService.createCart(1, cart);

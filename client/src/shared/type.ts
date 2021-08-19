@@ -104,6 +104,7 @@ export type CartType = {
   totalDelivery: number;
   totalPayment: number;
   items: {
+    id: number;
     name: string;
     price: number;
     deliveryCost: number;
