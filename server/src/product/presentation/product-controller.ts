@@ -50,7 +50,7 @@ export class ProductController {
   async getReviews(
     @Param("productId") productId: number
   ): Promise<ReviewResponse> {
-    return await this.productService.getReviews(productId);
+    return await this.productService.getProductReviews(productId);
   }
 
   @Get("/:productId/questions")

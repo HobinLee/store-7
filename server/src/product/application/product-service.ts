@@ -45,9 +45,9 @@ export class ProductService {
     throw new Error("404 Product NotFound");
   }
 
-  async getReviews(productId: number) {
-    const product = await this.getProduct(productId);
-    return ReviewResponse.of(); // TODO insert product.reviews in parameter
+  async getProductReviews(productId: number) {
+    const reviews = await this.reviews.findReviewsByProjectId(productId);
+    return ReviewResponse.of(reviews);
   }
 
   // question
@@ -92,9 +92,5 @@ export class ProductService {
 
   async deleteQuestion(id: number) {
     await this.questions.deleteQuestion(id);
-  }
-
-  async getProductReview(productId: number) {
-    await this.reviews.findReviewsByProjectId(productId);
   }
 }
