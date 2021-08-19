@@ -72,9 +72,7 @@ export class Products {
   addDetailImages(detailImages, product) {
     detailImages.forEach((image) => {
       const fileName = generateRandomFileName();
-      this.s3Repository
-        .putObject(fileName, image)
-        .then((file) => console.log(file.$response));
+      this.s3Repository.putObject(fileName, image);
       this.productDetailImageRepository.insert({
         id: fileName,
         product,
