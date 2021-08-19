@@ -17,4 +17,11 @@ export default {
     username: process.env.ELASTIC_USERNAME,
     password: process.env.ELASTIC_PASSWORD,
   },
+  auth: {
+    secret: process.env.JWT_SECRET || "",
+    expiresIn: process.env.JWT_EXPIRES_IN || "2h",
+    bearer: "Bearer ",
+    saltRounds: 10,
+    tokenKey: "token",
+  },
 };
