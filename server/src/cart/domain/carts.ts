@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { CartRequest, CartModifyRequest } from "../dto/cart-request";
+import { CreateCartRequest, CartModifyRequest } from "../dto/cart-request";
 import { Cart } from "../entity/cart";
 
 @Injectable()
@@ -11,20 +11,17 @@ export class Carts {
     private readonly cartRepository: Repository<Cart>
   ) {}
 
-  async findCartsByUserId(userId: number) {
-    return await this.cartRepository.find({ where: { userId } });
+  async findCartsByUserId(userId: number): Promise<Cart[]> {
+    return this.cartRepository.find({ where: { userId } });
   }
 
-  createCart(destination: CartRequest) {
-    this.cartRepository.create(destination);
+  createCart(cart: CreateCartRequest) {
+    this.cartRepository.insert(cart);
   }
 
-  async updateCart(
-    userId: number,
-    { amount, productOptionId }: CartModifyRequest
-  ) {
+  async updateCart(id: number, { amount, productOptionId }: CartModifyRequest) {
     return await this.cartRepository.update(
-      { userId },
+      { id },
       { ...(amount && { amount }), ...(productOptionId && { productOptionId }) }
     );
   }

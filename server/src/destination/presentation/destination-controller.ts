@@ -10,8 +10,11 @@ export class DestinationController {
   constructor(private readonly destinationService: DestinationService) {}
 
   @Post()
-  createDestination(@Body() destination: DestinationRequest): string {
-    return this.destinationService.createDestination(destination);
+  createDestination(
+    @Param("userId") userId: number,
+    @Body() destination: DestinationRequest
+  ): string {
+    return this.destinationService.createDestination(1, destination);
   }
 
   //   @Get()
@@ -30,7 +33,7 @@ export class DestinationController {
     return this.destinationService.updateDestination(id, modifiedDestination);
   }
 
-  @Delete()
+  @Delete("/:id")
   deleteDestination(@Param("id") id: number): string {
     return this.destinationService.deleteDestination(id);
   }

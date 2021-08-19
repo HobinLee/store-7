@@ -28,7 +28,7 @@ export class Orders {
   }
 
   createOrder(order: OrderRequest) {
-    this.orderRepository.create(order);
+    this.orderRepository.insert(order);
   }
 
   async updateOrderStatus(id: number, status: string) {

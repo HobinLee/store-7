@@ -7,8 +7,11 @@ export class CartController {
   constructor(private readonly cartService: CartService) {}
 
   @Post()
-  createCart(@Body() cart: CartRequest): string {
-    return this.cartService.createCart(cart);
+  createCart(
+    // @Param("userid") userId: number,
+    @Body() cart: CartRequest
+  ): string {
+    return this.cartService.createCart(1, cart);
   }
 
   @Patch("/:id")
@@ -19,7 +22,7 @@ export class CartController {
     return this.cartService.updateCart(id, modifiedCart);
   }
 
-  @Delete()
+  @Delete("/:id")
   deleteCart(@Param("id") id: number): string {
     return this.cartService.deleteCart(id);
   }
