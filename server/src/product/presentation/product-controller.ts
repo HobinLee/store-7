@@ -60,13 +60,6 @@ export class ProductController {
     return await this.productService.getProductQuestions(productId);
   }
 
-  @Get("/my/questions")
-  async getMyQuestions(
-    @Param("userId") userId: number
-  ): Promise<QuestionResponse[]> {
-    return await this.productService.getUserQuestions(userId);
-  }
-
   @Post("/:questions")
   async postQuestion(@Body() question: QuestionPostRequest) {
     return await this.productService.postQuestion(question);
