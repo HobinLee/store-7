@@ -7,9 +7,9 @@ import {
 } from "../dto/my-response";
 import { QuestionResponse } from "@/product/dto/question-response";
 import { MyReviewResponse } from "@/product/dto/review-my-response";
-import { MyService } from "@/user/application/my-service";
 import { MyInfoEditRequest } from "../dto/my-reqeust";
 import { ProductService } from "@/product/application/product-service";
+import { MyService } from "../application/my-service";
 
 @Controller("/my")
 export class MyController {
@@ -19,9 +19,7 @@ export class MyController {
   ) {}
 
   @Get("/carts")
-  async checkEmailExist(
-    @Param("userId") userId: number
-  ): Promise<MyCartsResponse> {
+  async checkEmailExist(): Promise<MyCartsResponse> {
     return await this.myService.findMyCarts(1);
   }
 
