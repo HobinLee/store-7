@@ -4,7 +4,13 @@ import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
-const ALERT_TIME = 1000;
+const ALERT_TIME = 1500;
+
+interface AlertEvent extends Event {
+  detail: {
+    message: string;
+  };
+}
 
 const Alert = () => {
   const [alert, setAlert] = useRecoilState(alertState);
@@ -16,10 +22,27 @@ const Alert = () => {
     });
   };
 
-  const showAlert = () => setTimeout(hideAlert, ALERT_TIME);
+  const showAlert = (message: string) => {
+    setAlert({
+      isOpened: true,
+      message,
+    });
+  };
+
+  const handleAlert = (e: AlertEvent) => {
+    showAlert("change" + e.detail.message);
+  };
+
+  const setEvent = () => {
+    window.addEventListener("alert", handleAlert);
+  };
 
   useEffect(() => {
-    alert.isOpened && showAlert();
+    setEvent();
+  }, []);
+
+  useEffect(() => {
+    alert.isOpened && setTimeout(hideAlert, ALERT_TIME);
   }, [alert.isOpened]);
 
   return (
@@ -31,11 +54,14 @@ const Alert = () => {
   );
 };
 
-export const alert = (message: string): AlertType => {
-  return {
-    isOpened: true,
-    message,
-  };
+export const alert = (message: string) => {
+  const alertEvent = new CustomEvent("alert", {
+    detail: {
+      message,
+    },
+  });
+
+  window.dispatchEvent(alertEvent);
 };
 
 const AlertWrapper = styled.div`
