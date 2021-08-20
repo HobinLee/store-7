@@ -15,7 +15,7 @@ export const orders = atom({
 export const alertState = atom<AlertType>({
   key: "isOpen",
   default: {
-    isOpened: true,
+    isOpened: false,
     message: "",
   },
 });
