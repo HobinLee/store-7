@@ -35,5 +35,6 @@ import { Review } from "./entity/review";
     Reviews,
     ImageService,
   ],
+  exports: [Products],
 })
 export class ProductModule {}
