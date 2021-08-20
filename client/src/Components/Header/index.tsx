@@ -6,18 +6,16 @@ import SearchBar from "./Search";
 import Menu from "./Menu";
 import { gap } from "@/styles/theme";
 import { DELETE } from "@/utils/axios";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { loginState } from "@/store/state";
+import { alert } from "../Alert";
 
 const Header = ({ children }: { children?: ReactChild }) => {
   const [isLogined, setLoginState] = useRecoilState(loginState);
 
   const handleSignout = async () => {
-    try {
-      await DELETE("/auth");
-      alert("로그아웃 성공");
-      setLoginState(false);
-    } catch (e) {}
+    await DELETE("/auth");
+    setLoginState(false);
   };
 
   return (

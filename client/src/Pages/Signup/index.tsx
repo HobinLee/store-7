@@ -16,8 +16,8 @@ import {
   VALIDATION_ERR_MSG,
 } from "@/utils/validations";
 import { gap } from "@/styles/theme";
-import { POST } from "@/utils/axios";
 import { useSetRecoilState } from "recoil";
+import { signup } from "@/api/users";
 import { loginState } from "@/store/state";
 
 const SignupPage = () => {
@@ -46,29 +46,18 @@ const SignupPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const userInfo: UserType = {
-      email: email.value,
-      name: name.value,
-      phoneNumber: phoneNumber.value,
-      profile: "",
-      destinations: [],
-    };
-
-    //TODO: 나중에 DTO 빼기~
-    const signupDTO = {
-      ...userInfo,
-      password: pw.value,
-      address,
-    };
-
     try {
-      await POST("/users", signupDTO);
-      alert("회원가입 성공");
+      await signup({
+        email: email.value,
+        password: pw.value,
+        name: name.value,
+        phoneNumber: phoneNumber.value,
+        address,
+      });
+
       setLoginState(true);
       moveTo("/");
-    } catch (e) {
-      alert("회원가입에 실패했습니다");
-    }
+    } catch (e) {}
   };
 
   const isSubmittable =

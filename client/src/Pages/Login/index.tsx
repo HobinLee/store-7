@@ -7,7 +7,9 @@ import useInput from "@/hooks/useInput";
 import { gap } from "@/styles/theme";
 import { POST } from "@/utils/axios";
 import { useSetRecoilState } from "recoil";
-import { loginState } from "@/store/state";
+import { alertState, loginState } from "@/store/state";
+import { alert } from "@/Components/Alert";
+import { signIn } from "@/api/auth";
 
 const LoginPage = () => {
   const email = useInput("");
@@ -17,17 +19,12 @@ const LoginPage = () => {
   const setLoginState = useSetRecoilState(loginState);
 
   const handleSignin = async () => {
-    try {
-      await POST("/auth", {
-        email: email.value,
-        password: password.value,
-      });
-      alert("로그인 성공");
-      setLoginState(true);
-      moveTo("/");
-    } catch (e) {
-      setLoginState(false);
-    }
+    await signIn({
+      email: email.value,
+      password: password.value,
+    });
+
+    setLoginState(true);
   };
 
   const checkSignupable = (): boolean => {
