@@ -1,3 +1,4 @@
+import { AlertType } from "@/shared/type";
 import { atom } from "recoil";
 
 export const orders = atom({
@@ -8,6 +9,14 @@ export const orders = atom({
     totalPayment: 0,
     totalCount: 0,
     items: [],
+  },
+});
+
+export const alertState = atom<AlertType>({
+  key: "isOpen",
+  default: {
+    isOpened: true,
+    message: "",
   },
 });
 
