@@ -47,9 +47,6 @@ const OrderPage = () => {
             <Info>
               <div className="label">주문상품</div>
               <div className="items">
-                <div>
-                  <input type="checkbox" /> 모두선택
-                </div>
                 {carts.items.map((cart) => (
                   <ItemInfoBox key={cart.id} {...cart} />
                 ))}
