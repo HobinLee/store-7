@@ -2,11 +2,8 @@ import { Body, Controller, Delete, Get, Post, Req, Res } from "@nestjs/common";
 import { AuthService } from "../application/auth-service";
 import { SigninRequest } from "../dto/signin-request";
 import { Request, Response } from "express";
+import statusCode from "@/config/statusCode";
 
-const STATUS = {
-  SUCCESS: 200,
-  AUTH_REQUIRED: 407,
-};
 @Controller("/auth")
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -18,9 +15,9 @@ export class AuthController {
   ) {
     try {
       await this.authService.signIn(signinRequest, signinResponse);
-      signinResponse.status(STATUS.SUCCESS);
+      signinResponse.status(statusCode.SUCCESS);
     } catch (e) {
-      signinResponse.status(STATUS.AUTH_REQUIRED);
+      signinResponse.status(statusCode.BAD_REQUEST);
     } finally {
       return;
     }
@@ -31,13 +28,11 @@ export class AuthController {
     @Res({ passthrough: true }) signoutResponse: Response,
     @Res({ passthrough: true }) res: Response
   ) {
-    console.log("try to sign out");
     try {
       await this.authService.signOut(signoutResponse);
-      res.status(STATUS.SUCCESS);
+      res.status(statusCode.SUCCESS);
     } catch (e) {
-      console.error(e);
-      res.status(STATUS.AUTH_REQUIRED);
+      res.status(statusCode.BAD_REQUEST);
     } finally {
       return;
     }
@@ -49,8 +44,8 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response
   ) {
     (await this.authService.verifyToken(req))
-      ? response.status(STATUS.SUCCESS)
-      : response.status(STATUS.AUTH_REQUIRED);
+      ? response.status(statusCode.SUCCESS)
+      : response.status(statusCode.AUTH_REQUIRED);
     return;
   }
 }

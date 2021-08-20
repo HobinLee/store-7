@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export default class ValidationChecker {
+  static;
   static checkEmailValidation(email: string): boolean {
     return email.length > 10;
   }

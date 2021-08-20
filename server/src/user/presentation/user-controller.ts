@@ -3,11 +3,7 @@ import { Response } from "express";
 import { SignupRequest } from "../dto/signup-request";
 import { UserService } from "../application/user-service";
 import { CheckEmailResponse } from "../dto/check-email-response";
-
-const STATUS = {
-  SUCCESS: 200,
-  AUTH_REQUIRED: 407,
-};
+import statusCode from "@/config/statusCode";
 
 @Controller("/users")
 export class UserController {
@@ -20,9 +16,9 @@ export class UserController {
   ) {
     try {
       await this.userService.signUp(signupRequest, signupResponse);
-      signupResponse.status(STATUS.SUCCESS);
+      signupResponse.status(statusCode.SUCCESS);
     } catch (e) {
-      signupResponse.status(STATUS.AUTH_REQUIRED);
+      signupResponse.status(statusCode.BAD_REQUEST);
     } finally {
       return;
     }
