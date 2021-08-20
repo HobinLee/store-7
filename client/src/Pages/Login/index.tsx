@@ -1,26 +1,33 @@
 import { PageWrapper } from "@/shared/styled";
 import styled from "styled-components";
 import Input from "@/Components/Input";
-import { Link } from "@/Router";
+import { Link, moveTo } from "@/Router";
 import Button from "@/Components/Button";
 import useInput from "@/hooks/useInput";
 import { gap } from "@/styles/theme";
 import { POST } from "@/utils/axios";
+import { useSetRecoilState } from "recoil";
+import { loginState } from "@/store/state";
 
 const LoginPage = () => {
   const email = useInput("");
   const password = useInput("");
   const name = useInput("");
   const phoneNumber = useInput("");
+  const setLoginState = useSetRecoilState(loginState);
 
   const handleSignin = async () => {
-    console.log("handle signin");
-    //TODO: 로그인 요청
-    const result = await POST("/auth", {
-      email: email.value,
-      password: password.value,
-    });
-    console.log(result);
+    try {
+      await POST("/auth", {
+        email: email.value,
+        password: password.value,
+      });
+      alert("로그인 성공");
+      setLoginState(true);
+      moveTo("/");
+    } catch (e) {
+      setLoginState(false);
+    }
   };
 
   const checkSignupable = (): boolean => {
