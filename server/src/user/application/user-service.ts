@@ -42,12 +42,12 @@ export class UserService {
   async createNewUser(user: CreateUserDTO): Promise<number> {
     try {
       //TODO: validation 체크
-
       user.password = PasswordEncoder.encode(user.password);
 
       return await this.users.createAndGetUserId(user);
     } catch (error) {
-      return 0;
+      console.error(error);
+      throw Error(messages.failed.FAILED_TO_SIGN_UP);
     }
   }
 

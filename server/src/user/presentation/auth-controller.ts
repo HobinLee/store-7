@@ -1,8 +1,17 @@
-import { Body, Controller, Delete, Get, Post, Req, Res } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpStatus,
+  Post,
+  Req,
+  Res,
+} from "@nestjs/common";
 import { AuthService } from "../application/auth-service";
 import { SigninRequest } from "../dto/signin-request";
 import { Request, Response } from "express";
-import statusCode from "@/config/statusCode";
+import messages from "@/config/messages";
 
 @Controller("/auth")
 export class AuthController {
@@ -15,11 +24,11 @@ export class AuthController {
   ) {
     try {
       await this.authService.signIn(signinRequest, signinResponse);
-      signinResponse.status(statusCode.SUCCESS);
+      signinResponse.status(HttpStatus.OK);
+      return { message: messages.success.SUCCESS_TO_SIGN_IN };
     } catch (e) {
-      signinResponse.status(statusCode.BAD_REQUEST);
-    } finally {
-      return;
+      signinResponse.status(HttpStatus.NOT_ACCEPTABLE);
+      return e.message;
     }
   }
 
@@ -30,11 +39,11 @@ export class AuthController {
   ) {
     try {
       await this.authService.signOut(signoutResponse);
-      res.status(statusCode.SUCCESS);
+      res.status(HttpStatus.OK);
+      return { message: messages.success.SUCCESS_TO_SIGN_OUT };
     } catch (e) {
-      res.status(statusCode.BAD_REQUEST);
-    } finally {
-      return;
+      res.status(HttpStatus.BAD_REQUEST);
+      return messages.failed.FAILED_TO_SIGN_OUT;
     }
   }
 
@@ -44,8 +53,8 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response
   ) {
     (await this.authService.verifyToken(req))
-      ? response.status(statusCode.SUCCESS)
-      : response.status(statusCode.AUTH_REQUIRED);
+      ? response.status(HttpStatus.OK)
+      : response.status(HttpStatus.PROXY_AUTHENTICATION_REQUIRED);
     return;
   }
 }

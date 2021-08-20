@@ -1,9 +1,17 @@
-import { Body, Controller, Get, Post, Query, Res } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  HttpStatus,
+  Post,
+  Query,
+  Res,
+} from "@nestjs/common";
 import { Response } from "express";
 import { SignupRequest } from "../dto/signup-request";
 import { UserService } from "../application/user-service";
 import { CheckEmailResponse } from "../dto/check-email-response";
-import statusCode from "@/config/statusCode";
+import messages from "@/config/messages";
 
 @Controller("/users")
 export class UserController {
@@ -16,11 +24,11 @@ export class UserController {
   ) {
     try {
       await this.userService.signUp(signupRequest, signupResponse);
-      signupResponse.status(statusCode.SUCCESS);
+      signupResponse.status(HttpStatus.OK);
+      return { message: messages.success.SUCCESS_TO_SIGN_UP };
     } catch (e) {
-      signupResponse.status(statusCode.BAD_REQUEST);
-    } finally {
-      return;
+      signupResponse.status(HttpStatus.BAD_REQUEST);
+      return e.message;
     }
   }
 

@@ -19,9 +19,10 @@ export class AuthService {
     @Res({ passthrough: true }) signinResponse: Response
   ): Promise<string | Error> {
     const { email, password } = signinRequest;
-    const { id: userId, password: userPW } = await this.users.findUserByEmail(
-      email
-    );
+    const user = await this.users.findUserByEmail(email);
+    if (!user) throw Error(messages.failed.FAILED_TO_SIGN_IN);
+
+    const { id: userId, password: userPW } = user;
 
     if (!userPW || !PasswordEncoder.check(password, userPW)) {
       throw Error(messages.failed.FAILED_TO_SIGN_IN);
