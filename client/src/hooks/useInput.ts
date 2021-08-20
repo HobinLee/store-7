@@ -10,7 +10,10 @@ export type InputType = {
   setValue: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default (defaultValue: string): InputType => {
+export default (
+  defaultValue: string,
+  filter?: (text: string) => string
+): InputType => {
   const [value, setValue] = useState(defaultValue);
 
   const onChange = ({
@@ -19,7 +22,7 @@ export default (defaultValue: string): InputType => {
     target: HTMLInputElement | HTMLTextAreaElement;
   }) => {
     const { value } = target;
-    setValue(value);
+    setValue(filter ? filter(target.value) : value);
   };
 
   return { value, onChange, setValue };
