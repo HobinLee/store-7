@@ -1,7 +1,18 @@
-import { DELETE, POST } from "@/utils/axios";
+import { moveTo } from "@/Router";
+import { DELETE, GET, POST } from "@/utils/axios";
 
-// DELETE /auth 로그아웃
-export const logout = () => DELETE("/auth");
+export interface signInRequestBody {
+  email: string;
+  password: string;
+}
 
 // POST /auth 로그인
-export const login = () => POST("/auth");
+export const signIn = async (loginInfo: signInRequestBody) => {
+  await POST("/auth", loginInfo);
+  moveTo("/");
+};
+
+// DELETE /auth 로그아웃
+export const signOut = async () => await DELETE("/auth");
+
+export const verifyToken = async () => await GET("/auth");
