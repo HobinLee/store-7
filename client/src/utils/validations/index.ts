@@ -1,3 +1,5 @@
+import { convertToNumber } from "../util";
+
 const EMAIL_REGEX = /^\S+@\S+\.(\S{2,})+/;
 
 //비밀번호는 대문자,소문자,숫자, 문자 문자 중 2종류이상의 조합으로 10자 이상으로 이루어져있어야 합니다
@@ -5,6 +7,8 @@ const PW_REGEX_RULE =
   /^(?=.*[A-Za-z])(?=.*[0-9])([^\s]){10,}|(?=.*[A-Za-z])(?=.*[<>{}|;:.,~!?@#$%^=&*\”\\/])([^\s]){10,}|(?=.*[0-9])(?=.*[<>{}|;:.,~!?@#$%^=&*\”\\/])([^\s]){10,}$/;
 
 const PW_MIN_LEN = 10;
+
+const PHONE_NUMBER_REGEX = /^010-?([0-9]{4})-?([0-9]{4})$/;
 
 export const VALIDATION_ERR_MSG = {
   INVALID_EMAIL: "올바른 이메일 형식이 아닙니다",
@@ -25,5 +29,5 @@ export const validatePW = (pw: string): boolean => {
 
 //TODO: 추 후 변경 해야함..!
 export const validatePhoneNumber = (phoneNumber: string): boolean => {
-  return phoneNumber.length > 5;
+  return PHONE_NUMBER_REGEX.test(phoneNumber);
 };
