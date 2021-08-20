@@ -12,6 +12,8 @@ import { Question } from "./entity/question";
 import { Questions } from "./domain/questions";
 import { ImageService } from "@/product/application/image-service";
 import { ImageController } from "@/product/presentation/image-controller";
+import { Reviews } from "./domain/reviews";
+import { Review } from "./entity/review";
 
 @Module({
   imports: [
@@ -21,9 +23,18 @@ import { ImageController } from "@/product/presentation/image-controller";
       ProductImage,
       ProductDetailImage,
       Question,
+      Review,
     ]),
   ],
   controllers: [ProductController, ImageController],
-  providers: [Products, ProductService, S3Repository, Questions, ImageService],
+  providers: [
+    Products,
+    ProductService,
+    S3Repository,
+    Questions,
+    Reviews,
+    ImageService,
+  ],
+  exports: [Products],
 })
 export class ProductModule {}

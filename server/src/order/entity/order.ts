@@ -17,6 +17,9 @@ export class Order {
   @Column({ type: "int", name: "user_id" })
   userId: number;
 
+  @Column({ type: "int", name: "review_id", nullable: true })
+  reviewId: number;
+
   @Column({ length: 20 })
   addressee: string;
 
