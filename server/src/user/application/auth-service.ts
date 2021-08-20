@@ -1,8 +1,8 @@
-import { Injectable, Res } from "@nestjs/common";
+import { Injectable, Req, Res } from "@nestjs/common";
 import { Users } from "../domain/users";
 import { SigninRequest } from "../dto/signin-request";
 import { JwtService } from "@nestjs/jwt";
-import { Response } from "express";
+import { Request, Response } from "express";
 import properties from "../../config/properties/properties";
 import PasswordEncoder from "../infrastructure/password-encoder";
 
@@ -41,9 +41,8 @@ export class AuthService {
       signinResponse.cookie(properties.auth.tokenKey, token);
 
       return RESULT_MSG.SUCCESS_TO_SIGN_IN;
-    } catch (e) {
-      console.error(e);
-      return e;
+    } catch (error) {
+      throw Error(error);
     }
   }
 
@@ -51,9 +50,19 @@ export class AuthService {
     try {
       signoutResponse.clearCookie(properties.auth.tokenKey);
       return RESULT_MSG.SUCCESS_TO_SIGN_OUT;
-    } catch (e) {
-      console.error(e);
-      return e;
+    } catch (error) {
+      throw Error(error);
+    }
+  }
+
+  verifyToken(@Req() request: Request) {
+    try {
+      const token = request.cookies[properties.auth.tokenKey];
+      if (!token) return false;
+
+      return !!this.jwtService.verifyAsync(token);
+    } catch (error) {
+      throw Error(error);
     }
   }
 }
