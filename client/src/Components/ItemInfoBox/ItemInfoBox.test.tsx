@@ -5,6 +5,7 @@ import ItemInfoBox, { ItemInfoBoxProps, output } from "./index";
 const NAME = "name";
 
 const itemInfoBoxProps: ItemInfoBoxProps = {
+  id: 1,
   name: NAME,
   images: [""],
   amount: 1000,

@@ -1,23 +1,16 @@
 import { Check } from "@/assets";
 import styled from "styled-components";
-import { useState } from "react";
 
 export type CheckboxProps = {
   label?: string;
-  isChecked?: boolean;
+  checked: boolean;
+  handleCheck: Function;
 };
 
-const Checkbox = ({ label, isChecked: checked = false }: CheckboxProps) => {
-  const [isChecked, setIsChecked] = useState(checked);
-
+const Checkbox = ({ label, checked, handleCheck }: CheckboxProps) => {
   return (
-    <Wrapper>
-      <Box
-        role="button"
-        {...{ isChecked }}
-        onClick={() => setIsChecked(!isChecked)}
-      >
-        <input role="checkbox" type="checkbox" readOnly checked={isChecked} />
+    <Wrapper onClick={() => handleCheck()}>
+      <Box role="button" {...{ checked }}>
         <Check />
       </Box>
       {label}
@@ -31,7 +24,7 @@ const Wrapper = styled.div`
   ${({ theme }) => theme.font.medium};
 `;
 
-const Box = styled.div<{ isChecked: boolean }>`
+const Box = styled.div<{ checked: boolean }>`
   ${({ theme }) => theme.flexCenter}
   cursor: pointer;
   display: flex;
@@ -41,11 +34,11 @@ const Box = styled.div<{ isChecked: boolean }>`
   margin-right: 1rem;
   cursor: pointer;
   border-radius: 0.5rem;
-  background-color: ${({ theme, isChecked }) =>
-    isChecked ? theme.color.primary1 : "#fff"};
+  background-color: ${({ theme, checked }) =>
+    checked ? theme.color.primary1 : "#fff"};
   border: 0.1rem solid
-    ${({ theme, isChecked }) =>
-      isChecked ? theme.color.primary1 : theme.color.line};
+    ${({ theme, checked }) =>
+      checked ? theme.color.primary1 : theme.color.line};
 `;
 
 export default Checkbox;

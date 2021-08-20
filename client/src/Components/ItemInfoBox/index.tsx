@@ -2,13 +2,20 @@ import styled from "styled-components";
 import Checkbox from "@/Components/Checkbox";
 import { convertToKRW } from "@/utils/util";
 import { gap } from "@/styles/theme";
+import { Close } from "@/assets";
+import { deleteCart } from "@/api/carts";
+import { ChangeEventHandler } from "react";
 
 export type ItemInfoBoxProps = {
+  id: number;
   name: string;
   amount: number;
   price: number;
   deliveryCost: number;
   images?: string[];
+  checked?: boolean;
+  handleCheck?: Function;
+  checkboxVisible?: boolean;
 };
 
 export const output = ({ amount, price, deliveryCost }) => {
@@ -20,18 +27,31 @@ export const output = ({ amount, price, deliveryCost }) => {
 };
 
 const ItemInfoBox = ({
+  id,
   name,
   amount,
   price,
   deliveryCost,
   images,
+  checked,
+  handleCheck,
+  checkboxVisible = false,
 }: ItemInfoBoxProps) => {
   const OUTPUT = output({ ...{ amount, price, deliveryCost } });
+
+  const handleDelete = async (id) => {
+    try {
+      deleteCart(parseInt(id));
+    } catch (error) {
+      console.log(error);
+    }
+    location.reload();
+  };
 
   return (
     <Wrapper>
       <div className="info">
-        <Checkbox />
+        {checkboxVisible && <Checkbox {...{ checked, handleCheck }} />}
         <img role="img" src={process.env.IMG_URL + images[0]} />
         <div>
           <div className="info__name">{name}</div>
@@ -43,6 +63,10 @@ const ItemInfoBox = ({
         <div>{OUTPUT.priceOutput}</div>
         <div>{OUTPUT.deliveryOutput}</div>
       </div>
+
+      {checkboxVisible && (
+        <Close onClick={() => handleDelete(id)} className="close-btn" />
+      )}
     </Wrapper>
   );
 };
@@ -55,6 +79,7 @@ const Wrapper = styled.div`
   border-radius: 1rem;
   padding: 2rem;
   box-sizing: border-box;
+  position: relative;
   .info {
     display: flex;
     align-items: flex-start;
@@ -78,6 +103,13 @@ const Wrapper = styled.div`
     font-weight: 700;
     justify-content: flex-end;
     ${gap("2rem")}
+  }
+  .close-btn {
+    cursor: pointer;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    fill: ${({ theme }) => theme.color.primary1};
   }
 `;
 

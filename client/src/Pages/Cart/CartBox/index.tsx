@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Button from "@/Components/Button";
 import { convertToKRW } from "@/utils/util";
 import { gap } from "@/styles/theme";
+import { moveTo } from "@/Router";
 
 export type CartBoxProps = {
   totalPrice: number;
@@ -52,7 +53,8 @@ const CartBox = ({
         className="order-btn"
         primary
         size="large"
-        onClick={() => (window.location.href = "/order")}
+        disabled={totalCount === 0}
+        onClick={() => moveTo("/order")}
       >
         {OUTPUT.buttonText}
       </Button>

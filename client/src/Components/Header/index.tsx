@@ -50,6 +50,7 @@ const TopWrapper = styled.div`
   width: 100%;
   z-index: 10;
   background: #000;
+  border-radius: 0 0 2rem 2rem;
 
   .header__buttons {
     display: flex;

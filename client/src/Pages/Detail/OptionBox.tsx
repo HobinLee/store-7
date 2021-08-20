@@ -7,6 +7,7 @@ import { Triangle } from "@/assets";
 import { convertToKRW } from "@/utils/util";
 import { gap } from "@/styles/theme";
 import { postCart } from "@/api/carts";
+import { moveTo } from "@/Router";
 
 const OptionBox = ({ numValue, handleClickNumVal }) => {
   const [isCartAlertShown, setIsCartAlertShown] = useState(false);
@@ -55,7 +56,7 @@ const OptionBox = ({ numValue, handleClickNumVal }) => {
       <div className="buttons">
         <Button>찜</Button>
         <Button onClick={handlePostCart}>장바구니</Button>
-        <Button onClick={() => (window.location.href = "/order")} primary>
+        <Button onClick={() => moveTo("/order")} primary>
           바로 구매
         </Button>
       </div>
@@ -98,19 +99,22 @@ const Wrapper = styled.div`
     background: ${({ theme }) => theme.color.background};
     width: 100%;
     padding: 1.5rem 0;
+    border-radius: 1rem;
     &__right {
       ${({ theme }) => theme.flexCenter}
-      ${gap("2rem")}
       .num-input {
         ${({ theme }) => theme.flexCenter}
+        margin-right: 2rem;
+        background: #fff;
         div {
           ${({ theme }) => theme.flexCenter}
           flex-direction: column;
+          height: 2.5rem;
           button {
             ${({ theme }) => theme.flexCenter};
             cursor: pointer;
             width: 1.6rem;
-            height: 1.6rem;
+            /* height: 1.6rem; */
             border: none;
             padding: 0.4rem;
             background: ${({ theme }) => theme.color.primary2};
@@ -119,10 +123,12 @@ const Wrapper = styled.div`
         &__up {
           transform: rotate(-90deg);
           fill: white;
+          height: 1.1rem;
         }
         &__down {
           transform: rotate(90deg);
           fill: white;
+          height: 1.2rem;
         }
       }
     }

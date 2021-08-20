@@ -10,7 +10,7 @@ export const postCart = (data: {
 }) => POST("/carts", data);
 
 // PATCH /carts/:id 장바구니 아이템 옵션/개수 변경
-export const patchCart = ({ id }: { id: number }) => POST(`/carts/${id}`, {});
+export const patchCart = (id: number) => POST(`/carts/${id}`, {});
 
 // DELETE /carts/:id 장바구니 아이템 삭제
-export const deleteCart = ({ id }: { id: number }) => DELETE(`/carts/${id}`);
+export const deleteCart = (id: number) => DELETE(`/carts/${id}`);
