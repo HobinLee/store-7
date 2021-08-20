@@ -10,7 +10,7 @@ export class User {
   @Column({ length: 64 })
   password: string;
 
-  @Column({ length: 10 })
+  @Column({ length: 10, default: "반가운분" })
   grade: string;
 
   @Column({ length: 20 })
