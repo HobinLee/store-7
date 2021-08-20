@@ -10,6 +10,9 @@ export class User {
   @Column({ length: 64 })
   password: string;
 
+  @Column({ length: 10 })
+  grade: string;
+
   @Column({ length: 20 })
   name: string;
 
