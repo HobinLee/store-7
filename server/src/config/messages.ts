@@ -1,8 +1,8 @@
 export default {
   success: {
-    SUCCESS_TO_SIGN_IN: "success to sign in",
-    SUCCESS_TO_SIGN_OUT: "success to sign out",
-    SUCCESS_TO_SIGN_UP: "success to sign up",
+    SUCCESS_TO_SIGN_IN: "로그인 성공",
+    SUCCESS_TO_SIGN_OUT: "로그아웃 완료",
+    SUCCESS_TO_SIGN_UP: "회원가입 완료",
   },
   failed: {
     FAILED_TO_SIGN_IN: "이메일 또는 비밀번호가 다릅니다",
