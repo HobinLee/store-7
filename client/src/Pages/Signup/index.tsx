@@ -19,6 +19,7 @@ import { gap } from "@/styles/theme";
 import { useSetRecoilState } from "recoil";
 import { signup } from "@/api/users";
 import { loginState } from "@/store/state";
+import { convertToNumber, convertToPhoneNumber } from "@/utils/util";
 
 const SignupPage = () => {
   const email = useInput("");
@@ -29,7 +30,7 @@ const SignupPage = () => {
   const confirmValidation = useValidation((confirm) => pw.value === confirm);
   const name = useInput("");
   const nameValidation = useValidation((name: string) => !!name.length);
-  const phoneNumber = useInput("");
+  const phoneNumber = useInput("", convertToPhoneNumber);
   const phoneValidation = useValidation(validatePhoneNumber);
   const setLoginState = useSetRecoilState(loginState);
 
@@ -51,7 +52,7 @@ const SignupPage = () => {
         email: email.value,
         password: pw.value,
         name: name.value,
-        phoneNumber: phoneNumber.value,
+        phoneNumber: convertToNumber(phoneNumber.value),
         address,
       });
 
@@ -82,7 +83,7 @@ const SignupPage = () => {
         </InputSection>
         <InputSection
           title="비밀번호"
-          brief="알파벳, 숫자, 문자 중 2종류 이상의 조합으로 10자 이상으로 이루어져있어야 합니다"
+          brief="2종류 이상의 알파벳, 숫자, 문자 조합이 10자 이상으로 이루어져있어야 합니다"
         >
           <ValidationInput
             input={pw}
