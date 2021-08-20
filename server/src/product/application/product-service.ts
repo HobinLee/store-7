@@ -50,8 +50,6 @@ export class ProductService {
     return ReviewResponse.of(reviews);
   }
 
-  // question
-  // 단일 요청이 필요할지 모르니 일단 만들어두고 이후 필요 없으면 삭제, 컨트롤러에서 사용 안 하는 중
   async getQuestion(id: number) {
     const question = await this.questions.findQuestion(id);
     return QuestionResponse.of(question);
@@ -82,12 +80,12 @@ export class ProductService {
     return questions.map(QuestionResponse.of);
   }
 
-  async postQuestion(question: QuestionPostRequest) {
-    await this.questions.createQuestion(question);
+  async registerQuestion(productId: number, question: QuestionPostRequest) {
+    await this.questions.insertQuestion(productId, question);
   }
 
-  async patchQuestion(request: QuestionPatchRequest) {
-    await this.questions.editQuestion(request);
+  async editQuestion(questionId: number, request: QuestionPatchRequest) {
+    await this.questions.updateQuestion(questionId, request);
   }
 
   async deleteQuestion(id: number) {
