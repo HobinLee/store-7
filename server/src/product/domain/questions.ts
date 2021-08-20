@@ -26,15 +26,13 @@ export class Questions {
     return await this.questionRepository.find({ where: { userId } });
   }
 
-  async createQuestion(question: QuestionPostRequest) {
-    await this.questionRepository.insert(question);
+  async insertQuestion(productId: number, question: QuestionPostRequest) {
+    const request = { productId, ...question };
+    await this.questionRepository.insert(request);
   }
 
-  async editQuestion(request: QuestionPatchRequest) {
-    await this.questionRepository.update(
-      { id: request.id },
-      { ...request.content }
-    );
+  async updateQuestion(questionId: number, request: QuestionPatchRequest) {
+    await this.questionRepository.update({ id: questionId }, request);
   }
 
   async deleteQuestion(id: number) {
