@@ -25,7 +25,7 @@ const fetchWrap = async ({
       {};
     return data;
   } catch (error) {
-    return error;
+    throw Error(error);
   }
 };
 
