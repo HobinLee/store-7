@@ -5,11 +5,19 @@ import styled from "styled-components";
 import SearchBar from "./Search";
 import Menu from "./Menu";
 import { gap } from "@/styles/theme";
+import { DELETE } from "@/utils/axios";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { loginState } from "@/store/state";
 
 const Header = ({ children }: { children?: ReactChild }) => {
-  const [isLogined, setIsLogined] = useState(false);
-  const handleLogin = () => {
-    setIsLogined(!isLogined);
+  const [isLogined, setLoginState] = useRecoilState(loginState);
+
+  const handleSignout = async () => {
+    try {
+      await DELETE("/auth");
+      alert("로그아웃 성공");
+      setLoginState(false);
+    } catch (e) {}
   };
 
   return (
@@ -23,14 +31,13 @@ const Header = ({ children }: { children?: ReactChild }) => {
           {isLogined ? (
             <>
               <Link to="/mypage">마이페이지</Link>
-              <Link to="/collection">찜</Link>
+              <button className="signout-button" onClick={handleSignout}>
+                로그아웃
+              </button>
             </>
           ) : (
             <Link to="/login">로그인</Link>
           )}
-          <Link to="/mypage">
-            <div>마이페이지</div>
-          </Link>
           <Link to="/cart">
             <div>장바구니</div>
           </Link>
@@ -81,6 +88,10 @@ const Wrapper = styled.div`
   margin: auto;
   height: 10rem;
   padding: 0 5rem;
+  .signout-button {
+    color: ${({ theme }) => theme.color.primary1};
+    cursor: pointer;
+  }
 `;
 
 export default Header;

@@ -1,17 +1,12 @@
-import {
-  All,
-  Body,
-  Controller,
-  Delete,
-  Param,
-  Post,
-  Req,
-  Res,
-} from "@nestjs/common";
+import { Body, Controller, Delete, Get, Post, Req, Res } from "@nestjs/common";
 import { AuthService } from "../application/auth-service";
 import { SigninRequest } from "../dto/signin-request";
-import { Response } from "express";
+import { Request, Response } from "express";
 
+const STATUS = {
+  SUCCESS: 200,
+  AUTH_REQUIRED: 407,
+};
 @Controller("/auth")
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -20,13 +15,42 @@ export class AuthController {
   async signIn(
     @Body() signinRequest: SigninRequest,
     @Res({ passthrough: true }) signinResponse: Response
-  ): Promise<Error | string> {
-    console.log("try sign in");
-    return this.authService.signIn(signinRequest, signinResponse);
+  ) {
+    try {
+      await this.authService.signIn(signinRequest, signinResponse);
+      signinResponse.status(STATUS.SUCCESS);
+    } catch (e) {
+      signinResponse.status(STATUS.AUTH_REQUIRED);
+    } finally {
+      return;
+    }
   }
 
   @Delete()
-  async signOut(@Res({ passthrough: true }) signoutResponse: Response) {
-    return this.authService.signOut(signoutResponse);
+  async signOut(
+    @Res({ passthrough: true }) signoutResponse: Response,
+    @Res({ passthrough: true }) res: Response
+  ) {
+    console.log("try to sign out");
+    try {
+      await this.authService.signOut(signoutResponse);
+      res.status(STATUS.SUCCESS);
+    } catch (e) {
+      console.error(e);
+      res.status(STATUS.AUTH_REQUIRED);
+    } finally {
+      return;
+    }
+  }
+
+  @Get()
+  async verifyToken(
+    @Req() req: Request,
+    @Res({ passthrough: true }) response: Response
+  ) {
+    (await this.authService.verifyToken(req))
+      ? response.status(STATUS.SUCCESS)
+      : response.status(STATUS.AUTH_REQUIRED);
+    return;
   }
 }

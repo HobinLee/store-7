@@ -10,3 +10,8 @@ export const orders = atom({
     items: [],
   },
 });
+
+export const loginState = atom({
+  key: "isLogined",
+  default: false,
+});

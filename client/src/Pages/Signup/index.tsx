@@ -16,6 +16,9 @@ import {
   VALIDATION_ERR_MSG,
 } from "@/utils/validations";
 import { gap } from "@/styles/theme";
+import { POST } from "@/utils/axios";
+import { useSetRecoilState } from "recoil";
+import { loginState } from "@/store/state";
 
 const SignupPage = () => {
   const email = useInput("");
@@ -28,6 +31,7 @@ const SignupPage = () => {
   const nameValidation = useValidation((name: string) => !!name.length);
   const phoneNumber = useInput("");
   const phoneValidation = useValidation(validatePhoneNumber);
+  const setLoginState = useSetRecoilState(loginState);
 
   const [address, setAddress] = useState<AddressType>({
     address: "",
@@ -39,23 +43,32 @@ const SignupPage = () => {
     setAddress(address);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     const userInfo: UserType = {
       email: email.value,
       name: name.value,
       phoneNumber: phoneNumber.value,
       profile: "",
-      destinations: [address],
+      destinations: [],
     };
 
     //TODO: 나중에 DTO 빼기~
-    const SignupDTO = {
+    const signupDTO = {
       ...userInfo,
-      pw: pw.value,
+      password: pw.value,
+      address,
     };
 
-    //TODO: API 요청 보낸 후 리디렉션
-    moveTo("/");
+    try {
+      await POST("/users", signupDTO);
+      alert("회원가입 성공");
+      setLoginState(true);
+      moveTo("/");
+    } catch (e) {
+      alert("회원가입에 실패했습니다");
+    }
   };
 
   const isSubmittable =
@@ -87,7 +100,7 @@ const SignupPage = () => {
             validation={pwValidation}
             placeholder="비밀번호"
             type="password"
-            message={VALIDATION_ERR_MSG.INVALID_EMAIL}
+            message={VALIDATION_ERR_MSG.INVALID_PW}
           />
         </InputSection>
         <InputSection title="비밀번호 확인">

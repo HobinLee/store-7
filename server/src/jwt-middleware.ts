@@ -12,6 +12,7 @@ export class LoggerMiddleware implements NestMiddleware {
     @Next() next: NextFunction
   ): any {
     try {
+      console.log(req.path);
       const token = req.cookies[properties.auth.tokenKey];
       req.body.userId = this.jwtService.decode(token)["userId"];
       console.log("user id: ", req.body.userId);
