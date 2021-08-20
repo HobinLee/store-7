@@ -112,3 +112,7 @@ export interface CartType {
     amount: number;
   }[];
 }
+export interface AlertType {
+  isOpened: boolean;
+  message: string;
+}

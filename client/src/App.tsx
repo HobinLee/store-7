@@ -16,6 +16,7 @@ import SignupPage from "@/Pages/Signup";
 import { useSetRecoilState } from "recoil";
 import { loginState } from "./store/state";
 import { GET } from "./utils/axios";
+import Alert from "./Components/Alert";
 
 type route = [string, JSX.Element, boolean?];
 
@@ -72,6 +73,7 @@ const App = () => {
           </Route>
         ))}
       </Router>
+      <Alert />
     </ThemeProvider>
   );
 };
