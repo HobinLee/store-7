@@ -30,7 +30,7 @@ const Alert = () => {
   };
 
   const handleAlert = (e: AlertEvent) => {
-    showAlert("change" + e.detail.message);
+    showAlert(e.detail.message);
   };
 
   const setEvent = () => {

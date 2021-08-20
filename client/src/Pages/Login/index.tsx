@@ -5,10 +5,8 @@ import { Link, moveTo } from "@/Router";
 import Button from "@/Components/Button";
 import useInput from "@/hooks/useInput";
 import { gap } from "@/styles/theme";
-import { POST } from "@/utils/axios";
 import { useSetRecoilState } from "recoil";
-import { alertState, loginState } from "@/store/state";
-import { alert } from "@/Components/Alert";
+import { loginState } from "@/store/state";
 import { signIn } from "@/api/auth";
 
 const LoginPage = () => {
@@ -27,9 +25,19 @@ const LoginPage = () => {
     setLoginState(true);
   };
 
+  const handleDemoSignin = async () => {
+    console.log(process.env.DEMO_EMAIL, process.env.DEMO_PW);
+    await signIn({
+      email: process.env.DEMO_EMAIL,
+      password: process.env.DEMO_PW,
+    });
+
+    setLoginState(true);
+  };
+
   const checkSignupable = (): boolean => {
     //TODO: validion Check하기(?)
-    return email.value.length > 0 && email.value.length > 0;
+    return email.value.length > 0 && password.value.length > 0;
   };
 
   const checkLookupable = (): boolean => {
@@ -54,14 +62,16 @@ const LoginPage = () => {
             onChange={password.onChange}
           />
           <div>아이디 저장</div>
-          <Button
-            onClick={() => handleSignin()}
-            primary
-            disabled={!checkSignupable()}
-          >
+          <Button onClick={handleSignin} primary disabled={!checkSignupable()}>
             로그인
           </Button>
-          <Button>Github 로그인</Button>
+          <Button onClick={handleDemoSignin}>시연용 아이디로 로그인</Button>
+          <div className="login-form__oauth">
+            <button>깃허브</button>
+            <button>구글</button>
+            <button>네이버</button>
+            <button>카카오</button>
+          </div>
           <div className="login-form__footer">
             <Link to="/signup">회원가입</Link>
             <Link to="/findid">아이디 찾기</Link>
