@@ -4,6 +4,11 @@ import { SignupRequest } from "../dto/signup-request";
 import { UserService } from "../application/user-service";
 import { CheckEmailResponse } from "../dto/check-email-response";
 
+const STATUS = {
+  SUCCESS: 200,
+  AUTH_REQUIRED: 407,
+};
+
 @Controller("/users")
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -12,8 +17,15 @@ export class UserController {
   async signUp(
     @Body() signupRequest: SignupRequest,
     @Res({ passthrough: true }) signupResponse: Response
-  ): Promise<string | Error> {
-    return this.userService.signUp(signupRequest, signupResponse);
+  ) {
+    try {
+      await this.userService.signUp(signupRequest, signupResponse);
+      signupResponse.status(STATUS.SUCCESS);
+    } catch (e) {
+      signupResponse.status(STATUS.AUTH_REQUIRED);
+    } finally {
+      return;
+    }
   }
 
   @Get()

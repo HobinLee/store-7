@@ -41,17 +41,14 @@ export class UserService {
       const newAddress = await this.createNewAddress(address, userId);
       if (!newAddress) throw new Error(RESULT_MSG.FAILED_TO_ADD_DESTINATION);
 
-      console.log("USER ID IS: " + userId);
-
       const token: string = await this.jwtService.signAsync({ userId });
       if (!token) throw new Error(RESULT_MSG.FAILED_TO_GEN_JWT);
 
       signupResponse.cookie(properties.auth.tokenKey, token);
 
       return RESULT_MSG.SUCCESS_TO_SIGN_UP;
-    } catch (e) {
-      console.error(e);
-      return e;
+    } catch (error) {
+      throw Error(error);
     }
   }
 
@@ -62,7 +59,7 @@ export class UserService {
       user.password = PasswordEncoder.encode(user.password);
 
       return await this.users.createAndGetUserId(user);
-    } catch (e) {
+    } catch (error) {
       return 0;
     }
   }
@@ -72,18 +69,16 @@ export class UserService {
       return await this.destinationService.createDestination(
         createFirstDestination(userId, address)
       );
-    } catch (e) {
-      console.error(e);
-      return e;
+    } catch (error) {
+      throw Error(error);
     }
   }
 
   async checkEmailExist(email: string): Promise<CheckEmailResponse | Error> {
     try {
       return { isExist: !!(await this.users.findUserByEmail(email)) };
-    } catch (e) {
-      console.error(e);
-      return e;
+    } catch (error) {
+      throw Error(error);
     }
   }
 }
