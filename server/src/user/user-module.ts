@@ -18,32 +18,35 @@ import { Questions } from "@/product/domain/questions";
 import { Review } from "@/product/entity/review";
 import { Question } from "@/product/entity/question";
 import { ProductService } from "@/product/application/product-service";
-import { Products } from "@/product/domain/products";
 import { Product } from "@/product/entity/product";
+import { Orders } from "@/order/domain/orders";
+import { Order } from "@/order/entity/order";
+import { ProductModule } from "@/product/product-module";
 
 const jwtConfig = properties.auth;
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Review, Question, Product]),
+    TypeOrmModule.forFeature([User, Review, Question, Product, Order]),
     JwtModule.register({
       secret: jwtConfig.secret,
       signOptions: { expiresIn: jwtConfig.expiresIn },
     }),
     DestinationModule,
     CartModule,
+    ProductModule,
   ],
   controllers: [AuthController, UserController, MyController],
   providers: [
+    PasswordEncoder,
     AuthService,
     UserService,
-    Users,
-    PasswordEncoder,
     MyService,
-    Products,
     ProductService,
+    Users,
     Reviews,
     Questions,
+    Orders,
   ],
 })
 export class UserModule {}
