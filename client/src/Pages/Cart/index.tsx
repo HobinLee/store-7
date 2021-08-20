@@ -10,22 +10,44 @@ import { gap } from "@/styles/theme";
 import { useMyCarts } from "@/api/my";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { orders } from "@/store/state";
 
 const CartPage = () => {
   const { status, data: carts, error } = useMyCarts();
 
   const [checkItems, setCheckItems] = useState([]);
+  const [items, setOrders] = useRecoilState(orders);
 
   useEffect(() => {
-    if (status !== "loading") setCheckItems(carts.items.map((item) => item.id));
+    if (status !== "loading") setCheckItems(carts.items);
   }, [carts]);
 
+  useEffect(() => {
+    console.log("checkitems", checkItems);
+    if (status !== "loading") {
+      const price = checkItems.reduce((sum, cart) => sum + cart.price, 0);
+      const delivery = checkItems.reduce(
+        (sum, cart) => sum + cart.deliveryCost,
+        0
+      );
+      // TODO: localstorage에 저장해서 새로고침시에도 불러오기
+      setOrders({
+        items: checkItems,
+        totalPrice: price,
+        totalDelivery: delivery,
+        totalPayment: price + delivery,
+        totalCount: checkItems.length,
+      });
+    }
+  }, [status, checkItems]);
+
   // 체크박스 개별 선택
-  const handleSingleCheck = (checked, id) => {
+  const handleSingleCheck = (checked, cart) => {
     if (checked) {
-      setCheckItems([...checkItems, id]);
+      setCheckItems([...checkItems, cart]);
     } else {
-      setCheckItems(checkItems.filter((el) => el !== id));
+      setCheckItems(checkItems.filter((el) => el.id !== cart.id));
     }
   };
 
@@ -36,7 +58,7 @@ const CartPage = () => {
       const idArray = [];
       // 전체 체크 박스가 체크 되면 id를 가진 모든 elements를 배열에 넣어주어서,
       // 전체 체크 박스 체크
-      carts.items.forEach((el) => idArray.push(el.id));
+      carts.items.forEach((el) => idArray.push(el));
       setCheckItems(idArray);
     }
 
@@ -50,7 +72,7 @@ const CartPage = () => {
     status !== "loading" && (
       <Wrapper>
         <Header>
-          <CartBox {...carts} totalCount={carts.items.length} />
+          <CartBox {...items} />
         </Header>
         <div className="contents">
           <Title>
@@ -75,9 +97,12 @@ const CartPage = () => {
                 <ItemInfoBox
                   key={cart.id}
                   {...cart}
-                  checked={checkItems.includes(cart.id)}
+                  checked={checkItems.find((i) => i.id === cart.id)}
                   handleCheck={() =>
-                    handleSingleCheck(!checkItems.includes(cart.id), cart.id)
+                    handleSingleCheck(
+                      !checkItems.find((i) => i.id === cart.id),
+                      cart
+                    )
                   }
                   checkboxVisible
                 />

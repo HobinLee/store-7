@@ -64,7 +64,9 @@ const ItemInfoBox = ({
         <div>{OUTPUT.deliveryOutput}</div>
       </div>
 
-      <Close onClick={() => handleDelete(id)} className="close-btn" />
+      {checkboxVisible && (
+        <Close onClick={() => handleDelete(id)} className="close-btn" />
+      )}
     </Wrapper>
   );
 };
