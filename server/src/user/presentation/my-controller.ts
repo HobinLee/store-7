@@ -26,14 +26,14 @@ export class MyController {
 
   @Get("/info")
   async getMyInfo(
-    @Param("userId") userId: number
+    @Body("userId") userId: number
   ): Promise<MyBasicInfoResponse> {
     return await this.myService.getMyInfo(userId);
   }
 
   @Get("/destinations")
   async getMyDestionation(
-    @Param("userId") userId: number
+    @Body("userId") userId: number
   ): Promise<DestinationResponse[]> {
     return await this.myService.findMyDestionation(1);
   }
@@ -45,14 +45,14 @@ export class MyController {
 
   @Get("/reviews")
   async getMyReviews(
-    @Param("userId") userId: number
+    @Body("userId") userId: number
   ): Promise<MyReviewResponse[]> {
     return await this.myService.getMyReviews(userId);
   }
 
   @Get("/questions")
   async getMyQuestions(
-    @Param("userId") userId: number
+    @Body("userId") userId: number
   ): Promise<QuestionResponse[]> {
     return await this.myService.getMyQeustions(userId);
   }
@@ -60,7 +60,7 @@ export class MyController {
   @Get("/orders")
   async getMyOrdersByTarget(
     @Query("target") target: string,
-    @Param("userId") userId: number
+    @Body("userId") userId: number
   ): Promise<MyOredersResponse[] | MyCurrentOredersResponse[] | string> {
     console.log("target :", target);
     return target === "current"
