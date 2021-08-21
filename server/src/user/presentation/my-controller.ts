@@ -1,9 +1,10 @@
 import { Body, Controller, Get, Patch, Query } from "@nestjs/common";
 import {
-  MyBasicInfoResponse,
+  MyInfoResponse,
   MyCartsResponse,
   MyCurrentOredersResponse,
   MyOredersResponse,
+  MyWishResponse,
 } from "../dto/my-response";
 import { QuestionResponse } from "@/product/dto/question-response";
 import { MyReviewResponse } from "@/product/dto/review-my-response";
@@ -23,9 +24,7 @@ export class MyController {
   }
 
   @Get("/info")
-  async getMyInfo(
-    @Body("userId") userId: number
-  ): Promise<MyBasicInfoResponse> {
+  async getMyInfo(@Body("userId") userId: number): Promise<MyInfoResponse> {
     return await this.myService.getMyInfo(userId);
   }
 
@@ -69,7 +68,7 @@ export class MyController {
   }
 
   @Get("/wishes")
-  async getWishes() {
-    return "";
+  async getWishes(@Body("userId") userId: number): Promise<MyWishResponse[]> {
+    return await this.myService.getMyWishes(userId);
   }
 }

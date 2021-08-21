@@ -1,20 +1,26 @@
+import { User } from "@/user/entity/user";
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from "typeorm";
+import { Product } from "./product";
 
 @Entity("qna")
 export class Question {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ name: "user_id", type: "int" })
-  userId: number;
+  @ManyToOne(() => User, (user) => user.questions)
+  @JoinColumn({ name: "user_id" })
+  user: User;
 
-  @Column({ name: "product_id", type: "int" })
-  productId: number;
+  @ManyToOne(() => Product, (product) => product.questions)
+  @JoinColumn({ name: "product_id" })
+  product: Product;
 
   @Column({ type: "char", length: 5 })
   type: string;

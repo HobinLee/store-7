@@ -11,6 +11,8 @@ import { ProductOption } from "./option";
 import { ProductDetailImage } from "./product-detail-image";
 import { ProductUploadRequest } from "@/product/dto/product-upload-request";
 import { Cart } from "@/cart/entity/cart";
+import { Question } from "./question";
+import { Wish } from "@/user/entity/wish";
 
 @Entity()
 export class Product {
@@ -26,7 +28,7 @@ export class Product {
   @Column({ name: "delivery_cost" })
   deliveryCost: number;
 
-  @Column({ name: "discount_rate" })
+  @Column({ name: "discount_rate", default: 0 })
   discountRate: number;
 
   @Column()
@@ -54,6 +56,12 @@ export class Product {
 
   @OneToMany(() => Cart, (cart) => cart.product)
   carts: Cart[];
+
+  @OneToMany(() => Question, (question) => question.product)
+  questions: Question[];
+
+  @OneToMany(() => Wish, (wish) => wish.user)
+  wishes: Wish[];
 
   @CreateDateColumn({
     type: "timestamp",

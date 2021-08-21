@@ -13,7 +13,7 @@ export class MyReviewResponse {
       rate = review.rate,
       content = review.content,
       image = review.image,
-      authorName = review.author.name,
+      authorName = review.order.user.name,
       createdAt = review.createdAt;
 
     return {
