@@ -4,6 +4,7 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
 } from "typeorm";
+import { Product } from "./product";
 
 @Entity("qna")
 export class Question {
@@ -13,8 +14,9 @@ export class Question {
   @Column({ name: "user_id", type: "int" })
   userId: number;
 
-  @Column({ name: "product_id", type: "int" })
-  productId: number;
+  @ManyToOne(() => Product, (product) => product.questions)
+  @JoinColumn({ name: "product_id" })
+  product: Product;
 
   @Column({ type: "char", length: 5 })
   type: string;
