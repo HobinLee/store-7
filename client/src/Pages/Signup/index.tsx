@@ -49,6 +49,9 @@ const SignupPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log(isExist);
+    return;
+
     try {
       await signup({
         email: email.value,
@@ -66,7 +69,7 @@ const SignupPage = () => {
   const handleCheckEmail = async () => {
     const { isExist } = await checkEmailExist(email.value);
     if (isExist) emailValidation.setIsValid(!isExist);
-    setIsExist(isExist);
+    setIsExist(isExist ? 1 : 0);
   };
 
   const handleEmailInput = () => {
@@ -75,14 +78,13 @@ const SignupPage = () => {
   };
 
   const isSubmittable =
-    isExist > 0 &&
+    isExist === 0 &&
     emailValidation.isValid &&
     pwValidation.isValid &&
     confirmValidation.isValid &&
     nameValidation.isValid &&
     phoneValidation.isValid &&
     !!address.postCode;
-
   return (
     <Wrapper>
       <h2 className="signup__title">회원가입</h2>
