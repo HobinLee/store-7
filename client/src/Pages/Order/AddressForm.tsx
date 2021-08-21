@@ -42,8 +42,6 @@ const AddressForm = ({
     setAddress(address);
   };
 
-  console.log(addressToEdit);
-
   const handleSubmit = async () => {
     try {
       if (!addressToEdit) {
