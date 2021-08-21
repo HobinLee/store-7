@@ -8,21 +8,14 @@ import { gap } from "@/styles/theme";
 export type AddressBoxProps = {
   setPage: Dispatch<SetStateAction<"select" | "add" | "edit">>;
   address: DestinationType;
-  user: UserType;
+  setAddress: Dispatch<SetStateAction<DestinationType>>;
 };
 
-const AddressBox = ({ setPage, address, user }: AddressBoxProps) => {
-  const handleChangeaddress = (address: DestinationType) => {
-    console.log(address);
-  };
-
+const AddressBox = ({ setPage, address, setAddress }: AddressBoxProps) => {
   return (
     <Wrapper>
       <div className="name">{address.name}</div>
       <div>{address.detailAddress}</div>
-      <div className="user">
-        <span>{user.name}</span> <span>{user.phoneNumber}</span>
-      </div>
       <div className="buttons">
         <div>
           <Button size="small">삭제</Button>
@@ -30,7 +23,7 @@ const AddressBox = ({ setPage, address, user }: AddressBoxProps) => {
             수정
           </Button>
         </div>
-        <Button size="small" primary>
+        <Button size="small" primary onClick={() => setAddress(address)}>
           선택
         </Button>
       </div>

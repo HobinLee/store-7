@@ -9,18 +9,11 @@ const ADDRESS: DestinationType = {
   postCode: "1234",
   address: "postcodeAddress",
 };
-const USER = {
-  name: "userName",
-  phoneNumber: "phone",
-  email: "email",
-  profile: "image",
-  destinations: [ADDRESS],
-};
 
 const addressBoxProps: AddressBoxProps = {
   setPage: () => {},
   address: ADDRESS,
-  user: USER,
+  setAddress: () => {},
 };
 
 describe("<AddressBox />", () => {
@@ -29,8 +22,6 @@ describe("<AddressBox />", () => {
     expect(container).toBeInTheDocument();
     expect(screen.queryByText(ADDRESS.name)).toBeInTheDocument();
     expect(screen.queryByText(ADDRESS.detailAddress)).toBeInTheDocument();
-    expect(screen.queryByText(USER.name)).toBeInTheDocument();
-    expect(screen.queryByText(USER.phoneNumber)).toBeInTheDocument();
 
     expect(screen.queryByText("삭제")).toBeInTheDocument();
     expect(screen.queryByText("수정")).toBeInTheDocument();

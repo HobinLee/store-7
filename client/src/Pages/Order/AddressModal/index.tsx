@@ -9,11 +9,7 @@ import { Back } from "@/assets";
 import AddressForm from "../AddressForm";
 import { gap } from "@/styles/theme";
 
-const AddressModal = ({ closeModal }) => {
-  const handleChangeAddress = (address: DestinationType) => {
-    console.log(address);
-  };
-
+const AddressModal = ({ closeModal, setAddress }) => {
   const [page, setPage] = useState<"select" | "add" | "edit">("select");
   const title =
     (page === "select" && "배송지 선택") ||
@@ -34,11 +30,7 @@ const AddressModal = ({ closeModal }) => {
         {page === "select" ? (
           <Contents>
             {sampleUser.destinations.map((address, idx) => (
-              <AddressBox
-                key={idx}
-                {...{ setPage, address }}
-                user={sampleUser}
-              />
+              <AddressBox key={idx} {...{ setPage, address, setAddress }} />
             ))}
           </Contents>
         ) : (

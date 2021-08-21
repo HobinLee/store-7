@@ -37,7 +37,11 @@ const OrderPage = () => {
   const phone = useInput("");
   const phoneValidation = useValidation(validatePhoneNumber);
 
+  const [address, setAddress] = useState(sampleUser.destinations[0]);
+
   const [isAddressModalOpened, setIsAddressModalOpened] = useState(false);
+
+  // TODO: 기본배송지 가져오기
 
   return (
     <Wrapper>
@@ -104,8 +108,8 @@ const OrderPage = () => {
             </div>
 
             <div className="address-info">
-              <div className="name">{sampleUser.destinations[0].name}</div>
-              <div>{sampleUser.destinations[0].detailAddress}</div>
+              <div className="name">{address.name}</div>
+              <div>{address.detailAddress}</div>
               <select className="order-input">
                 <option>배송시 요청사항을 선택해주세요.</option>
                 <option>부재시 문 앞에 놓아주세요.</option>
@@ -125,7 +129,10 @@ const OrderPage = () => {
       </div>
       <Footer />
       {isAddressModalOpened && (
-        <AddressModal closeModal={() => setIsAddressModalOpened(false)} />
+        <AddressModal
+          {...{ setAddress }}
+          closeModal={() => setIsAddressModalOpened(false)}
+        />
       )}
     </Wrapper>
   );
