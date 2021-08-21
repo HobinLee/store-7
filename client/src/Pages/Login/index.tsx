@@ -1,45 +1,14 @@
 import { PageWrapper } from "@/shared/styled";
 import styled from "styled-components";
 import Input from "@/Components/Input";
-import { Link, moveTo } from "@/Router";
 import Button from "@/Components/Button";
 import useInput from "@/hooks/useInput";
 import { gap } from "@/styles/theme";
-import { useSetRecoilState } from "recoil";
-import { loginState } from "@/store/state";
-import { signIn } from "@/api/auth";
-import APIButton from "@/Components/APIButton";
+import LoginSection from "./LoginSection";
 
 const LoginPage = () => {
-  const email = useInput("");
-  const password = useInput("");
   const name = useInput("");
   const phoneNumber = useInput("");
-  const setLoginState = useSetRecoilState(loginState);
-
-  const handleSignin = async () => {
-    await signIn({
-      email: email.value,
-      password: password.value,
-    });
-
-    setLoginState(true);
-  };
-
-  const handleDemoSignin = async () => {
-    await signIn({
-      email: process.env.DEMO_EMAIL,
-      password: process.env.DEMO_PW,
-    });
-
-    setLoginState(true);
-  };
-
-  const checkSignupable = (): boolean => {
-    //TODO: validion Check하기(?)
-    return email.value.length > 0 && password.value.length > 0;
-  };
-
   const checkLookupable = (): boolean => {
     //TODO: validion Check하기(?)
     return name.value.length > 0 && phoneNumber.value.length > 0;
@@ -48,43 +17,7 @@ const LoginPage = () => {
   return (
     <LoginPageWrapper>
       <LoginContent>
-        <Form onSubmit={() => handleSignin()}>
-          <Title>회원 로그인</Title>
-          <Input
-            placeholder="아이디 입력"
-            value={email.value}
-            onChange={email.onChange}
-          />
-          <Input
-            placeholder="비밀번호 입력"
-            value={password.value}
-            type="password"
-            onChange={password.onChange}
-          />
-          <div>아이디 저장</div>
-          <APIButton
-            api={handleSignin}
-            primary
-            disabled={!checkSignupable()}
-            className={"login-form__login"}
-          >
-            로그인
-          </APIButton>
-          <Button onClick={handleDemoSignin} className={"login-form__demo"}>
-            시연용 아이디로 로그인
-          </Button>
-          <div className="login-form__oauth">
-            <button>깃허브</button>
-            <button>구글</button>
-            <button>네이버</button>
-            <button>카카오</button>
-          </div>
-          <div className="login-form__footer">
-            <Link to="/signup">회원가입</Link>
-            <Link to="/findid">아이디 찾기</Link>
-            <Link to="/findpw">비밀번호 찾기</Link>
-          </div>
-        </Form>
+        <LoginSection />
         <Form>
           <Title>비회원 주문조회 하기</Title>
           <Input
@@ -165,13 +98,6 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   ${gap("2rem", "column")}
-  .login-form__login {
-    height: 5rem;
-  }
-
-  .login-form__demo {
-    color: ${({ theme }) => theme.color.primary3};
-  }
 `;
 
 export default LoginPage;

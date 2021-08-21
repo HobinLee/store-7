@@ -95,8 +95,16 @@ const APIButtonWrapper = styled.button<{
 
   .spinner {
     width: 20px;
-    filter: invert(98%) sepia(12%) saturate(78%) hue-rotate(137deg)
-      brightness(124%) contrast(100%);
+    ${({ primary }) =>
+      primary
+        ? css`
+            filter: invert(98%) sepia(12%) saturate(78%) hue-rotate(137deg)
+              brightness(124%) contrast(100%);
+          `
+        : css`
+            filter: invert(88%);
+          `}
+
     animation: rotate 0.8s ease infinite;
   }
 `;
