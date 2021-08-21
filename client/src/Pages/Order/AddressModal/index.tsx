@@ -17,6 +17,8 @@ const AddressModal = ({ closeModal, setAddress }) => {
     (page === "edit" && "배송지 수정") ||
     (page === "add" && "배송지 추가");
 
+  const [addressToEdit, setAddressToEdit] = useState();
+
   return (
     <Wrapper {...{ closeModal, title }} hideCloseBtn={page !== "select"}>
       <>
@@ -34,12 +36,15 @@ const AddressModal = ({ closeModal, setAddress }) => {
               destinations.map((address) => (
                 <AddressBox
                   key={address.id}
-                  {...{ setPage, address, setAddress }}
+                  {...{ setPage, address, setAddress, setAddressToEdit }}
                 />
               ))}
           </Contents>
         ) : (
-          <AddressForm gotoBack={() => setPage("select")} />
+          <AddressForm
+            gotoBack={() => setPage("select")}
+            {...{ addressToEdit }}
+          />
         )}
 
         {page === "select" && (

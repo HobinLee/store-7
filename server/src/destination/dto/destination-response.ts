@@ -7,6 +7,8 @@ export class DestinationResponse {
   address: string;
   detailAddress: string;
   isDefault: boolean;
+  addressee: string;
+  phoneNumber: string;
 
   static of(destination: Destination): DestinationResponse {
     const id = destination.id,
@@ -14,7 +16,9 @@ export class DestinationResponse {
       postCode = destination.postCode,
       address = destination.address,
       detailAddress = destination.detailAddress,
-      isDefault = destination.isDefault === 1 ? true : false;
+      isDefault = destination.isDefault === 1 ? true : false,
+      addressee = destination.addressee,
+      phoneNumber = destination.phoneNumber;
 
     return {
       id,
@@ -22,8 +26,9 @@ export class DestinationResponse {
       postCode,
       address,
       detailAddress,
-      // userId,
       isDefault,
+      addressee,
+      phoneNumber,
     } as DestinationResponse;
   }
 }

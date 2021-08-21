@@ -54,13 +54,14 @@ export interface UserType {
   phoneNumber: string;
   email: string;
   profile: string;
-  destinations: DestinationType[];
+  // destinations: DestinationType[];
 }
 
 export interface DestinationType extends AddressType {
-  id?: number;
-  name?: string;
+  id: number;
+  name: string;
   isDefault?: boolean;
+  addressee: string;
 }
 
 export interface AddressType {

@@ -4,6 +4,8 @@ export interface DestinationRequest {
   address: string;
   detailAddress: string;
   isDefault: number;
+  addressee?: string;
+  phoneNumber?: string;
 }
 
 export interface CreateDestinationRequest extends DestinationRequest {

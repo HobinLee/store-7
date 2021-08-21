@@ -23,6 +23,12 @@ export class Destination {
   @Column({ length: 36 })
   address: string;
 
+  @Column({ length: 20 })
+  addressee: string;
+
+  @Column({ type: "char", length: 11, name: "phone_number" })
+  phoneNumber: string;
+
   @Column({ length: 11, name: "detail_address" })
   detailAddress: string;
 

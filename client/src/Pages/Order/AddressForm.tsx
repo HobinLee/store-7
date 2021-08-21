@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { AddressType, UserType, DestinationType } from "@/shared/type";
+import { AddressType, DestinationType } from "@/shared/type";
 import Button from "@/Components/Button";
 import useInput from "@/hooks/useInput";
 import useValidation from "@/hooks/useValidation";
@@ -13,14 +13,14 @@ import { gap } from "@/styles/theme";
 import { postDestination } from "@/api/destinations";
 
 type AddressFormProps = {
-  address?: AddressType;
-  user?: UserType;
+  addressToEdit?: DestinationType;
+  gotoBack: Function;
 };
 
-const AddressForm = ({ gotoBack }) => {
-  const name = useInput("");
+const AddressForm = ({ addressToEdit, gotoBack }: AddressFormProps) => {
+  const addressee = useInput(addressToEdit.addressee);
   const nameValidation = useValidation((name: string) => !!name.length);
-  const addressName = useInput("");
+  const addressName = useInput(addressToEdit.name);
   const addressNameValidation = useValidation(
     (addressName: string) => !!addressName.length
   );
@@ -65,7 +65,7 @@ const AddressForm = ({ gotoBack }) => {
         </InputSection>
         <InputSection title="받는 사람">
           <ValidationInput
-            input={name}
+            input={addressee}
             validation={nameValidation}
             placeholder="이름"
             message={VALIDATION_ERR_MSG.INVALID_NAME}
