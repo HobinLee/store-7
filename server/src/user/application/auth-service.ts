@@ -11,6 +11,10 @@ import {
   getGithubUserInfo,
 } from "../infrastructure/github-login";
 import { CreateUserDTO } from "../dto/create-user";
+import {
+  getGoogleAccessToken,
+  getGoogleUserInfo,
+} from "../infrastructure/google-login";
 
 @Injectable()
 export class AuthService {
@@ -53,10 +57,11 @@ export class AuthService {
     return !!this.jwtService.verifyAsync(token);
   }
 
+  //*-------------------------- Github Login --------------------------------
+
   async githubLogin(code: string, @Res() res: Response) {
     try {
       const accessToken = await getGithubAccessToken(code);
-
       if (!accessToken) throw Error(messages.failed.FAIL_GET_ACCESS_TOKEN);
 
       const info = await getGithubUserInfo(accessToken);
@@ -66,8 +71,6 @@ export class AuthService {
       if (!token) throw Error(messages.failed.FAILED_TO_GEN_JWT);
 
       res.cookie(properties.auth.tokenKey, token);
-
-      console.log(token);
     } catch (e) {
       throw Error(e);
     }
@@ -75,9 +78,7 @@ export class AuthService {
 
   getGithubUserId = async ({ id, node_id, avatar_url, name, login, email }) => {
     const existUser = await this.users.findUserByEmail(id);
-    if (existUser) {
-      return existUser.id;
-    }
+    if (existUser) return existUser.id;
 
     const user: CreateUserDTO = {
       email: id,
@@ -89,13 +90,39 @@ export class AuthService {
     return await this.users.createAndGetUserId(user);
   };
 
-  createNewGithubUser = async (email: string, pw: string) => {
-    // const insertUserResult = await User.create({ email, pw });
-    // const paymentResult = await insertInitPayment(insertUserResult.id);
-    // return paymentResult ? insertUserResult.id : null;
-  };
+  //*-------------------------- Google Login --------------------------------
 
-  googleLogin(@Req() request: Request) {
-    return;
+  async googleLogin(code: string, @Res() res: Response) {
+    try {
+      const accessToken = await getGoogleAccessToken(code);
+      if (!accessToken) throw Error(messages.failed.FAIL_GET_ACCESS_TOKEN);
+
+      const info = await getGoogleUserInfo(accessToken);
+      const userId = await this.getGoogleUserId(info);
+      if (!userId) throw Error(messages.failed.FAILED_TO_SIGN_IN);
+
+      const token: string = await this.jwtService.signAsync({ userId });
+      if (!token) throw Error(messages.failed.FAILED_TO_GEN_JWT);
+
+      res.cookie(properties.auth.tokenKey, token);
+    } catch (e) {
+      throw Error(e);
+    }
+  }
+
+  async getGoogleUserId({ id, name, picture }) {
+    const existUser = await this.users.findUserByEmail(id);
+    if (existUser) {
+      return existUser.id;
+    }
+
+    const user: CreateUserDTO = {
+      email: id,
+      password: PasswordEncoder.encode(id),
+      name: name,
+      //profile: picture, TODO: 이미지 변환 후 저장
+    };
+
+    return await this.users.createAndGetUserId(user);
   }
 }

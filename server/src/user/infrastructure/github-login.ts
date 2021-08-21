@@ -1,11 +1,12 @@
+import properties from "@/config/properties/properties";
 import axios from "axios";
 
 export const getGithubAccessToken = async (code: string) => {
   const url = `https://github.com/login/oauth/access_token`;
 
   const data = {
-    client_id: process.env.GITHUB_CLIENT_ID,
-    client_secret: process.env.GITHUB_CLIENT_SECRET,
+    client_id: properties.github.id,
+    client_secret: properties.github.secret,
     code,
   };
 

@@ -48,9 +48,12 @@ export class AuthController {
       return messages.failed.FAILED_TO_SIGN_OUT;
     }
   }
-  @Get("/google")
-  async googleSiginin() {
-    return;
+
+  @Get("/githubLogin")
+  async redirectToGithubSignin(@Res({ passthrough: true }) response: Response) {
+    const url = `https://github.com/login/oauth/authorize?redirect_uri=${properties.github.redirect}&client_id=${properties.github.id}`;
+
+    response.redirect(url);
   }
 
   @Get("/github")
@@ -66,19 +69,25 @@ export class AuthController {
       return e.message;
     }
   }
-
   @Get("/googleLogin")
   async redirectToGoogleSignin(@Res({ passthrough: true }) response: Response) {
-    const url = `https://github.com/login/oauth/authorize?redirect_uri=${properties.github.redirect}&client_id=${properties.github.id}`;
+    const url = `https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=${properties.google.redirect}&client_id=${properties.google.id}&response_type=code&include_granted_scopes=true&scope=profile`;
 
     response.redirect(url);
   }
 
-  @Get("/githubLogin")
-  async redirectToGithubSignin(@Res({ passthrough: true }) response: Response) {
-    const url = `https://github.com/login/oauth/authorize?redirect_uri=${properties.github.redirect}&client_id=${properties.github.id}`;
-
-    response.redirect(url);
+  @Get("/google")
+  async googleSignin(
+    @Query("code") code: string,
+    @Res({ passthrough: true }) response: Response
+  ) {
+    try {
+      await this.authService.googleLogin(code, response);
+      response.redirect(properties.local);
+    } catch (e) {
+      console.error(e);
+      return e.message;
+    }
   }
 
   @Get()
