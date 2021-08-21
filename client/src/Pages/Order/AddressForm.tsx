@@ -15,9 +15,14 @@ import { patchDestination, postDestination } from "@/api/destinations";
 type AddressFormProps = {
   addressToEdit?: DestinationType;
   gotoBack: Function;
+  refetch: Function;
 };
 
-const AddressForm = ({ addressToEdit, gotoBack }: AddressFormProps) => {
+const AddressForm = ({
+  addressToEdit,
+  gotoBack,
+  refetch,
+}: AddressFormProps) => {
   const addressee = useInput(addressToEdit?.addressee || "");
   const nameValidation = useValidation((name: string) => !!name.length);
   const addressName = useInput(addressToEdit?.name || "");
@@ -56,12 +61,14 @@ const AddressForm = ({ addressToEdit, gotoBack }: AddressFormProps) => {
             name: addressName.value,
             addressee: addressee.value,
             phoneNumber: phone.value,
+            isDefault: addressToEdit.isDefault,
           },
         });
       }
     } catch (error) {
     } finally {
       gotoBack();
+      refetch();
     }
   };
 

@@ -18,6 +18,7 @@ const addressBoxProps: AddressBoxProps = {
   setPage: () => {},
   address: ADDRESS,
   setAddress: () => {},
+  refetch: () => {},
 };
 
 describe("<AddressBox />", () => {

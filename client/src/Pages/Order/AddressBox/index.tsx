@@ -11,6 +11,7 @@ export type AddressBoxProps = {
   address: DestinationType;
   setAddress: Dispatch<SetStateAction<DestinationType>>;
   setAddressToEdit?: Dispatch<SetStateAction<DestinationType>>;
+  refetch;
 };
 
 const AddressBox = ({
@@ -18,9 +19,12 @@ const AddressBox = ({
   address,
   setAddress,
   setAddressToEdit,
+  refetch,
 }: AddressBoxProps) => {
   const handleDelete = async (id: number) => {
     await deleteDestination(id);
+    setPage("select");
+    refetch();
   };
   const handleEdit = () => {
     setAddressToEdit(address);

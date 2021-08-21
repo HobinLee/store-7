@@ -40,7 +40,7 @@ const OrderPage = () => {
   useEffect(() => {
     if (status !== "loading")
       setAddress(destinations.find((i) => i.isDefault === true));
-  }, [status]);
+  }, [destinations]);
 
   const [isAddressModalOpened, setIsAddressModalOpened] = useState(false);
 

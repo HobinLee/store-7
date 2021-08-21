@@ -9,7 +9,7 @@ import { gap } from "@/styles/theme";
 import { useMyDestinations } from "@/api/my";
 
 const AddressModal = ({ closeModal, setAddress }) => {
-  const { status, data: destinations, error } = useMyDestinations();
+  const { status, data: destinations, error, refetch } = useMyDestinations();
 
   const [page, setPage] = useState<"select" | "add" | "edit">("select");
   const title =
@@ -36,14 +36,20 @@ const AddressModal = ({ closeModal, setAddress }) => {
               destinations.map((address) => (
                 <AddressBox
                   key={address.id}
-                  {...{ setPage, address, setAddress, setAddressToEdit }}
+                  {...{
+                    setPage,
+                    address,
+                    setAddress,
+                    setAddressToEdit,
+                    refetch,
+                  }}
                 />
               ))}
           </Contents>
         ) : (
           <AddressForm
             gotoBack={() => setPage("select")}
-            {...{ addressToEdit }}
+            {...{ addressToEdit, refetch }}
           />
         )}
 
