@@ -63,7 +63,7 @@ export class AuthController {
   ) {
     try {
       await this.authService.githubLogin(code, response);
-      response.redirect(properties.local);
+      response.redirect(properties.client);
     } catch (e) {
       console.error(e);
       return e.message;
@@ -83,7 +83,7 @@ export class AuthController {
   ) {
     try {
       await this.authService.googleLogin(code, response);
-      response.redirect(properties.local);
+      response.redirect(properties.client);
     } catch (e) {
       console.error(e);
       return e.message;

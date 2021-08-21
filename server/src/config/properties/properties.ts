@@ -2,7 +2,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 export default {
-  local: process.env.LOCAL || "http://localhost:3000",
+  local: process.env.CLIENT || "http://localhost:3000",
   server: {
     port: process.env.SERVER_PORT || 8080,
   },

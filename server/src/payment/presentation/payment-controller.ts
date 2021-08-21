@@ -68,7 +68,7 @@ export class PaymentController {
       return json.aid
         ? {
             status: 301,
-            url: properties.local + "/order/success",
+            url: properties.client + "/order/success",
           }
         : {
             status: 500,
