@@ -59,7 +59,7 @@ export class Products {
   }
 
   addImages(images, product) {
-    images.forEach((image) => {
+    images?.forEach((image) => {
       const fileName = generateRandomFileName();
       this.s3Repository.putObject(fileName, image);
       this.productImageRepository.insert({
@@ -70,7 +70,7 @@ export class Products {
   }
 
   addDetailImages(detailImages, product) {
-    detailImages.forEach((image) => {
+    detailImages?.forEach((image) => {
       const fileName = generateRandomFileName();
       this.s3Repository.putObject(fileName, image);
       this.productDetailImageRepository.insert({
