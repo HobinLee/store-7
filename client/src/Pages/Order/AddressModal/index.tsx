@@ -3,7 +3,6 @@ import ModalWrapper from "@/Components/ModalWrapper";
 import { useState } from "react";
 import AddressBox from "../AddressBox";
 import { sampleUser } from "@/shared/dummy";
-import { DestinationType } from "@/shared/type";
 import Button from "@/Components/Button";
 import { Back } from "@/assets";
 import AddressForm from "../AddressForm";
@@ -34,7 +33,7 @@ const AddressModal = ({ closeModal, setAddress }) => {
             ))}
           </Contents>
         ) : (
-          <AddressForm />
+          <AddressForm gotoBack={() => setPage("select")} />
         )}
 
         {page === "select" && (

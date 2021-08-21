@@ -11,7 +11,7 @@ export type ChangeAddressHandler = (address: DestinationType) => {};
 
 const Address = ({ onChangeAddress }) => {
   const [isPopupOpen, setPopup] = useState(false);
-  const [address, setAddress] = useState<AddressType>({});
+  const [address, setAddress] = useState<Partial<AddressType>>({});
   const addressDetail = useInput("");
 
   const handleSearchAddress = (postData: AddressType) => {
@@ -28,7 +28,7 @@ const Address = ({ onChangeAddress }) => {
   };
 
   const handleChangeDetail = () => {
-    const addressData: AddressType = {
+    const addressData: Partial<AddressType> = {
       ...address,
       detailAddress: addressDetail.value,
     };

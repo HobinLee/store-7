@@ -1,7 +1,12 @@
 import { DELETE, PATCH, POST } from "@/utils/axios";
 
 // POST /destinations 배송지 추가
-export const postDestinations = ({ data }) => POST("/destinations", data);
+export const postDestination = (data: {
+  name: string;
+  postCode: string;
+  address: string;
+  detailAddress: string;
+}) => POST("/destinations", { ...data, isDefault: false });
 
 // PATCH /destinations/:id 배송지 수정
 export const patchDestination = ({ id, data }) =>

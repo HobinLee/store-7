@@ -130,7 +130,7 @@ const OrderPage = () => {
       <Footer />
       {isAddressModalOpened && (
         <AddressModal
-          {...{ setAddress }}
+          {...{ setAddress, address }}
           closeModal={() => setIsAddressModalOpened(false)}
         />
       )}

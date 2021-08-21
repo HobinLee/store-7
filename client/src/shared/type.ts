@@ -64,9 +64,9 @@ export interface DestinationType extends AddressType {
 }
 
 export interface AddressType {
-  postCode?: string;
-  address?: string;
-  detailAddress?: string;
+  postCode: string;
+  address: string;
+  detailAddress: string;
 }
 
 export interface ItemBannerType {

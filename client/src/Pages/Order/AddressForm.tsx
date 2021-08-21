@@ -10,13 +10,14 @@ import Address from "@/Components/Address";
 
 import { validatePhoneNumber, VALIDATION_ERR_MSG } from "@/utils/validations";
 import { gap } from "@/styles/theme";
+import { postDestination } from "@/api/destinations";
 
 type AddressFormProps = {
   address?: AddressType;
   user?: UserType;
 };
 
-const AddressForm = ({ address: addressToEdit, user }: AddressFormProps) => {
+const AddressForm = ({ gotoBack }) => {
   const name = useInput("");
   const nameValidation = useValidation((name: string) => !!name.length);
   const addressName = useInput("");
@@ -36,8 +37,13 @@ const AddressForm = ({ address: addressToEdit, user }: AddressFormProps) => {
     setAddress(address);
   };
 
-  const handleSubmit = () => {
-    //TODO: API 요청 보낸 후 리디렉션
+  const handleCreateDestination = async () => {
+    try {
+      await postDestination({ ...address, name: addressName.value });
+    } catch (error) {
+    } finally {
+      gotoBack();
+    }
   };
 
   const isSubmittable =
@@ -48,7 +54,7 @@ const AddressForm = ({ address: addressToEdit, user }: AddressFormProps) => {
 
   return (
     <Wrapper>
-      <Form onSubmit={handleSubmit}>
+      <Form>
         <InputSection title="배송지명">
           <ValidationInput
             input={addressName}
@@ -73,12 +79,17 @@ const AddressForm = ({ address: addressToEdit, user }: AddressFormProps) => {
             message={VALIDATION_ERR_MSG.INVALID_PHONE}
           />
         </InputSection>
-        <InputSection title="주소" brief="기본 배송지로 저장됩니다">
+        <InputSection title="주소">
           <Address onChangeAddress={handleChangeAddress} />
         </InputSection>
 
         <div className="save-btn">
-          <Button type="submit" size="large" primary disabled={!isSubmittable}>
+          <Button
+            onClick={handleCreateDestination}
+            size="large"
+            primary
+            disabled={!isSubmittable}
+          >
             저장
           </Button>
         </div>
@@ -107,7 +118,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const Form = styled.form`
+const Form = styled.div`
   max-width: 40rem;
   margin: 3rem auto;
   display: flex;
