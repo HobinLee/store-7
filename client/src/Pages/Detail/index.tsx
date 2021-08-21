@@ -122,7 +122,7 @@ const DetailPage = () => {
 
               <OptionBox
                 key="option-box"
-                {...{ numValue, handleClickNumVal }}
+                {...{ numValue, handleClickNumVal, product }}
               />
             </Info>
           </InfoBox>
@@ -150,7 +150,7 @@ const DetailPage = () => {
 
             {yOffset > topHeight && selectedTab === "first" && (
               <div className="option-box">
-                <OptionBox {...{ numValue, handleClickNumVal }} />
+                <OptionBox {...{ numValue, handleClickNumVal, product }} />
               </div>
             )}
           </Scroll>

@@ -5,6 +5,7 @@ import { ProductModule } from "./product/product-module";
 import { DestinationModule } from "./destination/destination-module";
 import { CartModule } from "./cart/cart-module";
 import { OrderModule } from "./order/order-module";
+import { PaymentModule } from "./payment/payment-module";
 import { LoggerMiddleware } from "./jwt-middleware";
 import { JwtModule } from "@nestjs/jwt";
 import properties from "./config/properties/properties";
@@ -23,6 +24,7 @@ const jwtConfig = properties.auth;
     CartModule,
     OrderModule,
     UserModule,
+    PaymentModule,
   ],
 })
 export class AppModule {

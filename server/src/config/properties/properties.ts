@@ -4,7 +4,7 @@ dotenv.config();
 export default {
   local: process.env.LOCAL || "http://localhost:3000",
   server: {
-    port: 8080,
+    port: process.env.SERVER_PORT || 8080,
   },
   mysql: {
     host: process.env.MYSQL_HOST || "localhost",

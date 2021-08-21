@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { AddressType, UserType, DestinationType } from "@/shared/type";
+import { AddressType, DestinationType } from "@/shared/type";
 import Button from "@/Components/Button";
 import useInput from "@/hooks/useInput";
 import useValidation from "@/hooks/useValidation";
@@ -10,34 +10,66 @@ import Address from "@/Components/Address";
 
 import { validatePhoneNumber, VALIDATION_ERR_MSG } from "@/utils/validations";
 import { gap } from "@/styles/theme";
+import { patchDestination, postDestination } from "@/api/destinations";
 
 type AddressFormProps = {
-  address?: AddressType;
-  user?: UserType;
+  addressToEdit?: DestinationType;
+  gotoBack: Function;
+  refetch: Function;
 };
 
-const AddressForm = ({ address: addressToEdit, user }: AddressFormProps) => {
-  const name = useInput("");
+const AddressForm = ({
+  addressToEdit,
+  gotoBack,
+  refetch,
+}: AddressFormProps) => {
+  const addressee = useInput(addressToEdit?.addressee || "");
   const nameValidation = useValidation((name: string) => !!name.length);
-  const addressName = useInput("");
+  const addressName = useInput(addressToEdit?.name || "");
   const addressNameValidation = useValidation(
     (addressName: string) => !!addressName.length
   );
-  const phone = useInput("");
+  const phone = useInput(addressToEdit?.phoneNumber || "");
   const phoneValidation = useValidation(validatePhoneNumber);
 
   const [address, setAddress] = useState<AddressType>({
-    address: "",
-    postCode: "",
-    detailAddress: "",
+    address: addressToEdit?.address || "",
+    postCode: addressToEdit?.postCode || "",
+    detailAddress: addressToEdit?.detailAddress || "",
   });
 
   const handleChangeAddress = (address: DestinationType) => {
     setAddress(address);
   };
 
-  const handleSubmit = () => {
-    //TODO: API 요청 보낸 후 리디렉션
+  console.log(addressToEdit);
+
+  const handleSubmit = async () => {
+    try {
+      if (!addressToEdit) {
+        await postDestination({
+          ...address,
+          name: addressName.value,
+          addressee: addressee.value,
+          phoneNumber: phone.value,
+        });
+      } else {
+        await patchDestination({
+          id: addressToEdit.id,
+          data: {
+            ...address,
+            name: addressName.value,
+            addressee: addressee.value,
+            phoneNumber: phone.value,
+            isDefault: addressToEdit.isDefault,
+          },
+        });
+      }
+    } catch (error) {
+    } finally {
+      gotoBack();
+      refetch();
+    }
   };
 
   const isSubmittable =
@@ -48,7 +80,7 @@ const AddressForm = ({ address: addressToEdit, user }: AddressFormProps) => {
 
   return (
     <Wrapper>
-      <Form onSubmit={handleSubmit}>
+      <Form>
         <InputSection title="배송지명">
           <ValidationInput
             input={addressName}
@@ -59,7 +91,7 @@ const AddressForm = ({ address: addressToEdit, user }: AddressFormProps) => {
         </InputSection>
         <InputSection title="받는 사람">
           <ValidationInput
-            input={name}
+            input={addressee}
             validation={nameValidation}
             placeholder="이름"
             message={VALIDATION_ERR_MSG.INVALID_NAME}
@@ -73,12 +105,20 @@ const AddressForm = ({ address: addressToEdit, user }: AddressFormProps) => {
             message={VALIDATION_ERR_MSG.INVALID_PHONE}
           />
         </InputSection>
-        <InputSection title="주소" brief="기본 배송지로 저장됩니다">
-          <Address onChangeAddress={handleChangeAddress} />
+        <InputSection title="주소">
+          <Address
+            onChangeAddress={handleChangeAddress}
+            defaultAddress={address}
+          />
         </InputSection>
 
         <div className="save-btn">
-          <Button type="submit" size="large" primary disabled={!isSubmittable}>
+          <Button
+            onClick={handleSubmit}
+            size="large"
+            primary
+            disabled={!isSubmittable}
+          >
             저장
           </Button>
         </div>
@@ -107,7 +147,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const Form = styled.form`
+const Form = styled.div`
   max-width: 40rem;
   margin: 3rem auto;
   display: flex;

@@ -15,9 +15,13 @@ export class DestinationService {
     return destinations.map(DestinationResponse.of);
   }
 
-  createDestination(destination: DestinationRequest): string {
+  createDestination(userId: number, destination: DestinationRequest): string {
     try {
-      this.destinations.createDestination(destination);
+      this.destinations.createDestination({
+        ...destination,
+        user: { id: userId },
+        isDefault: destination.isDefault ? 1 : 0,
+      });
     } catch (e) {
       return e;
     }

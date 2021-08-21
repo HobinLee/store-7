@@ -21,8 +21,8 @@ const fetchWrap = async ({
     };
     const { data } =
       (method === "get" && (await axios.get(url, config))) ||
-      ((method === "post" || method === "patch") &&
-        (await axios.post(url, body, config))) ||
+      (method === "post" && (await axios.post(url, body, config))) ||
+      (method === "patch" && (await axios.patch(url, body, config))) ||
       (method === "delete" && (await axios.delete(url, config))) ||
       {};
     !!data.message && alert(data.message);
@@ -35,7 +35,7 @@ const fetchWrap = async ({
 export const GET = (url: string, params?: {}) =>
   fetchWrap({ method: "get", url, params });
 
-export const POST = (url: string, body?: {}) =>
+export const POST = (url: string, body?: {}, params?: {}) =>
   fetchWrap({ method: "post", url, body });
 
 export const PATCH = (url: string, body?: {}) =>
