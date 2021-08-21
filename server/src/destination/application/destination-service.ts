@@ -20,6 +20,7 @@ export class DestinationService {
       this.destinations.createDestination({
         ...destination,
         user: { id: userId },
+        isDefault: destination.isDefault ? 1 : 0,
       });
     } catch (e) {
       return e;

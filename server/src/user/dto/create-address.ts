@@ -16,6 +16,6 @@ export const createFirstDestination = (
     postCode: address.postCode,
     address: address.address,
     detailAddress: address.detailAddress,
-    isDefault: true,
+    isDefault: 1,
   };
 };

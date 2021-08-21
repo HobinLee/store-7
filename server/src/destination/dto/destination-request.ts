@@ -3,13 +3,14 @@ export interface DestinationRequest {
   postCode: string;
   address: string;
   detailAddress: string;
-  isDefault: boolean;
+  isDefault: number;
 }
 
 export interface CreateDestinationRequest extends DestinationRequest {
   user: {
     id: number;
   };
+  isDefault: number;
 }
 
 export interface DestinationModifyRequest {

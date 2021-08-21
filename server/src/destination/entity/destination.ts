@@ -31,7 +31,7 @@ export class Destination {
   user: User;
 
   @Column({ type: "tinyint", name: "is_default" })
-  isDefault: boolean;
+  isDefault: number;
 
   @CreateDateColumn({
     type: "timestamp",

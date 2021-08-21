@@ -6,7 +6,6 @@ export class DestinationResponse {
   postCode: string;
   address: string;
   detailAddress: string;
-  // userId: number;
   isDefault: boolean;
 
   static of(destination: Destination): DestinationResponse {
@@ -15,8 +14,7 @@ export class DestinationResponse {
       postCode = destination.postCode,
       address = destination.address,
       detailAddress = destination.detailAddress,
-      // userId = destination.user.id,
-      isDefault = destination.isDefault;
+      isDefault = destination.isDefault === 1 ? true : false;
 
     return {
       id,

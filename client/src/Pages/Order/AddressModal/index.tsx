@@ -2,13 +2,15 @@ import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
 import { useState } from "react";
 import AddressBox from "../AddressBox";
-import { sampleUser } from "@/shared/dummy";
 import Button from "@/Components/Button";
 import { Back } from "@/assets";
 import AddressForm from "../AddressForm";
 import { gap } from "@/styles/theme";
+import { useMyDestinations } from "@/api/my";
 
 const AddressModal = ({ closeModal, setAddress }) => {
+  const { status, data: destinations, error } = useMyDestinations();
+
   const [page, setPage] = useState<"select" | "add" | "edit">("select");
   const title =
     (page === "select" && "배송지 선택") ||
@@ -28,9 +30,13 @@ const AddressModal = ({ closeModal, setAddress }) => {
 
         {page === "select" ? (
           <Contents>
-            {sampleUser.destinations.map((address, idx) => (
-              <AddressBox key={idx} {...{ setPage, address, setAddress }} />
-            ))}
+            {status !== "loading" &&
+              destinations.map((address) => (
+                <AddressBox
+                  key={address.id}
+                  {...{ setPage, address, setAddress }}
+                />
+              ))}
           </Contents>
         ) : (
           <AddressForm gotoBack={() => setPage("select")} />

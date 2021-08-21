@@ -15,6 +15,7 @@ const AddressBox = ({ setPage, address, setAddress }: AddressBoxProps) => {
   return (
     <Wrapper>
       <div className="name">{address.name}</div>
+      <div>{address.address}</div>
       <div>{address.detailAddress}</div>
       <div className="buttons">
         <div>
