@@ -2,7 +2,7 @@ export class ReviewDTO {
   id: number;
   rate: number;
   content: string;
-  image: string;
+  image?: string;
   authorName: string;
-  isMine: boolean;
+  createdAt: Date;
 }

@@ -4,33 +4,51 @@ import Button from "@/Components/Button";
 import { SetStateAction } from "react";
 import { Dispatch } from "react";
 import { gap } from "@/styles/theme";
+import { deleteDestination } from "@/api/destinations";
 
 export type AddressBoxProps = {
   setPage: Dispatch<SetStateAction<"select" | "add" | "edit">>;
   address: DestinationType;
-  user: UserType;
+  setAddress: Dispatch<SetStateAction<DestinationType>>;
+  setAddressToEdit?: Dispatch<SetStateAction<DestinationType>>;
+  refetch;
 };
 
-const AddressBox = ({ setPage, address, user }: AddressBoxProps) => {
-  const handleChangeaddress = (address: DestinationType) => {
-    console.log(address);
+const AddressBox = ({
+  setPage,
+  address,
+  setAddress,
+  setAddressToEdit,
+  refetch,
+}: AddressBoxProps) => {
+  const handleDelete = async (id: number) => {
+    await deleteDestination(id);
+    setPage("select");
+    refetch();
+  };
+  const handleEdit = () => {
+    setAddressToEdit(address);
+    setPage("edit");
   };
 
   return (
     <Wrapper>
       <div className="name">{address.name}</div>
+      <div>{address.address}</div>
       <div>{address.detailAddress}</div>
       <div className="user">
-        <span>{user.name}</span> <span>{user.phoneNumber}</span>
+        {address.addressee} {address.phoneNumber}
       </div>
       <div className="buttons">
         <div>
-          <Button size="small">삭제</Button>
-          <Button size="small" onClick={() => setPage("edit")}>
+          <Button onClick={() => handleDelete(address.id)} size="small">
+            삭제
+          </Button>
+          <Button size="small" onClick={handleEdit}>
             수정
           </Button>
         </div>
-        <Button size="small" primary>
+        <Button size="small" primary onClick={() => setAddress(address)}>
           선택
         </Button>
       </div>

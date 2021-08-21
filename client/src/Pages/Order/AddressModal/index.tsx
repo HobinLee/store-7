@@ -2,23 +2,22 @@ import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
 import { useState } from "react";
 import AddressBox from "../AddressBox";
-import { sampleUser } from "@/shared/dummy";
-import { DestinationType } from "@/shared/type";
 import Button from "@/Components/Button";
 import { Back } from "@/assets";
 import AddressForm from "../AddressForm";
 import { gap } from "@/styles/theme";
+import { useMyDestinations } from "@/api/my";
 
-const AddressModal = ({ closeModal }) => {
-  const handleChangeAddress = (address: DestinationType) => {
-    console.log(address);
-  };
+const AddressModal = ({ closeModal, setAddress }) => {
+  const { status, data: destinations, error, refetch } = useMyDestinations();
 
   const [page, setPage] = useState<"select" | "add" | "edit">("select");
   const title =
     (page === "select" && "배송지 선택") ||
     (page === "edit" && "배송지 수정") ||
     (page === "add" && "배송지 추가");
+
+  const [addressToEdit, setAddressToEdit] = useState();
 
   return (
     <Wrapper {...{ closeModal, title }} hideCloseBtn={page !== "select"}>
@@ -33,16 +32,25 @@ const AddressModal = ({ closeModal }) => {
 
         {page === "select" ? (
           <Contents>
-            {sampleUser.destinations.map((address, idx) => (
-              <AddressBox
-                key={idx}
-                {...{ setPage, address }}
-                user={sampleUser}
-              />
-            ))}
+            {status !== "loading" &&
+              destinations.map((address) => (
+                <AddressBox
+                  key={address.id}
+                  {...{
+                    setPage,
+                    address,
+                    setAddress,
+                    setAddressToEdit,
+                    refetch,
+                  }}
+                />
+              ))}
           </Contents>
         ) : (
-          <AddressForm />
+          <AddressForm
+            gotoBack={() => setPage("select")}
+            {...{ addressToEdit, refetch }}
+          />
         )}
 
         {page === "select" && (

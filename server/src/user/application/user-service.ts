@@ -2,7 +2,6 @@ import { Injectable, Res } from "@nestjs/common";
 import { Users } from "../domain/users";
 import { SignupRequest } from "../dto/signup-request";
 import { JwtService } from "@nestjs/jwt";
-import { JwtPayload } from "jsonwebtoken";
 import { Response } from "express";
 import properties from "../../config/properties/properties";
 import { CheckEmailResponse } from "../dto/check-email-response";
@@ -67,7 +66,8 @@ export class UserService {
   async createNewAddress(address: FirstDestinationDTO, userId: number) {
     try {
       return await this.destinationService.createDestination(
-        createFirstDestination(userId, address)
+        userId,
+        createFirstDestination(address)
       );
     } catch (error) {
       throw Error(error);

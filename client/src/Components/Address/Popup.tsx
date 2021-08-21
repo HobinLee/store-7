@@ -23,7 +23,7 @@ const getFullAddress = (data): string => {
 
 const PopupPostcode = ({ onComplete }) => {
   const handleComplete = (data) => {
-    const sendData: AddressType = {
+    const sendData = {
       postCode: data.zonecode,
       address: getFullAddress(data),
     };

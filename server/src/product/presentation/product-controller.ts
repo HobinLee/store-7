@@ -46,40 +46,39 @@ export class ProductController {
     return await this.productService.getProduct(id);
   }
 
-  @Get("/:productId/reviews")
+  @Get("/:id/reviews")
   async getReviews(
     @Param("productId") productId: number
   ): Promise<ReviewResponse> {
-    return await this.productService.getReviews(productId);
+    return await this.productService.getProductReviews(productId);
   }
 
-  @Get("/:productId/questions")
+  @Get("/:id/questions")
   async getProductQuestions(
-    @Param("productId") productId: number
+    @Param("id") productId: number
   ): Promise<QuestionResponse[]> {
     return await this.productService.getProductQuestions(productId);
   }
 
-  @Get("/my/questions")
-  async getMyQuestions(
-    @Param("userId") userId: number
-  ): Promise<QuestionResponse[]> {
-    return await this.productService.getUserQuestions(userId);
+  @Post("/:id/questions")
+  async postQuestion(
+    @Param("id") productId: number,
+    @Body() question: QuestionPostRequest
+  ) {
+    return await this.productService.registerQuestion(productId, question);
   }
 
-  @Post("/:questions")
-  async postQuestion(@Body() question: QuestionPostRequest) {
-    return await this.productService.postQuestion(question);
+  @Patch("/:productId/questions/:questionId")
+  async patchQuestion(
+    @Param("questionId") questionId: number,
+    @Body() request: QuestionPatchRequest
+  ) {
+    return await this.productService.editQuestion(questionId, request);
   }
 
-  @Patch("/questions/:id")
-  async patchQuestion(@Body() request: QuestionPatchRequest) {
-    return await this.productService.patchQuestion(request);
-  }
-
-  @Delete("/questions/:id")
-  async deleteQuestion(@Body("id") id: number) {
-    await this.productService.deleteQuestion(id);
+  @Delete("/:productId/questions/:questionId")
+  async deleteQuestion(@Param("questionId") questionId: number) {
+    await this.productService.deleteQuestion(questionId);
   }
 
   @UseInterceptors(

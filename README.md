@@ -16,6 +16,7 @@
 [![styled Badge](https://img.shields.io/badge/Styled-DB7093?style=flat-square&logo=styled-components&logoColor=white)]()
 [![webpack Badge](https://img.shields.io/badge/webpack-8DD6F9?style=flat-square&logo=webpack&logoColor=white)]()
 [![babel Badge](https://img.shields.io/badge/babel-F9DC3E?style=flat-square&logo=babel&logoColor=black)]()
+[![react-query Badge](https://img.shields.io/badge/reactQuery-000?style=flat-square&logo=recoil&logoColor=white)]()
 [![recoil Badge](https://img.shields.io/badge/recoil-000?style=flat-square&logo=recoil&logoColor=white)]()
 
 ### Back
@@ -23,7 +24,7 @@
 [![TypeScript Badge](https://img.shields.io/badge/Typescript-235A97?style=flat-square&logo=Typescript&logoColor=white)]()
 [![nextjs Badge](https://img.shields.io/badge/NestJS-E0234E?style=flat-square&logo=nestjs&logoColor=white)]()
 [![elasticsearch Badge](https://img.shields.io/badge/elasticsearch-005571?style=flat-square&logo=elasticsearch&logoColor=white)]()
-[![typeorm Badge](https://img.shields.io/badge/recoil-000?style=flat-square&logo=typeorm&logoColor=white)]()
+[![typeorm Badge](https://img.shields.io/badge/typeorm-000?style=flat-square&logo=typeorm&logoColor=white)]()
 
 
 ## Contributors

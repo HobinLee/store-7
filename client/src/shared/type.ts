@@ -58,15 +58,17 @@ export interface UserType {
 }
 
 export interface DestinationType extends AddressType {
-  id?: number;
-  name?: string;
-  isDefault?: boolean;
+  id: number;
+  name: string;
+  isDefault: boolean;
+  addressee: string;
+  phoneNumber: string;
 }
 
 export interface AddressType {
-  postCode?: string;
-  address?: string;
-  detailAddress?: string;
+  postCode: string;
+  address: string;
+  detailAddress: string;
 }
 
 export interface ItemBannerType {
@@ -102,13 +104,15 @@ export interface CartType {
   totalPrice: number;
   totalDelivery: number;
   totalPayment: number;
-  items: {
-    id: number;
-    name: string;
-    price: number;
-    deliveryCost: number;
-    images: string[];
-    productOptionId: number;
-    amount: number;
-  }[];
+  items: ICart[];
 }
+interface ICart {
+  id: number;
+  name: string;
+  price: number;
+  deliveryCost: number;
+  images: string[];
+  productOptionId: number;
+  amount: number;
+}
+export type PartialCart = Partial<ICart>;

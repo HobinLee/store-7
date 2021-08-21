@@ -19,6 +19,12 @@ export class Orders {
     return await this.orderRepository.find({ where: { userId } });
   }
 
+  async findCurrentOrdersByUserId(userId: number) {
+    return await this.orderRepository.find({
+      where: { userId, status: "배송중" },
+    });
+  }
+
   async findOrderById(id: number) {
     return await this.orderRepository.find({ where: { id } });
   }

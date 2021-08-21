@@ -4,7 +4,6 @@ import { convertToKRW } from "@/utils/util";
 import { gap } from "@/styles/theme";
 import { Close } from "@/assets";
 import { deleteCart } from "@/api/carts";
-import { ChangeEventHandler } from "react";
 
 export type ItemInfoBoxProps = {
   id: number;
@@ -13,7 +12,7 @@ export type ItemInfoBoxProps = {
   price: number;
   deliveryCost: number;
   images?: string[];
-  checked?: boolean;
+  isChecked?: boolean;
   handleCheck?: Function;
   checkboxVisible?: boolean;
 };
@@ -33,15 +32,15 @@ const ItemInfoBox = ({
   price,
   deliveryCost,
   images,
-  checked,
+  isChecked,
   handleCheck,
   checkboxVisible = false,
 }: ItemInfoBoxProps) => {
   const OUTPUT = output({ ...{ amount, price, deliveryCost } });
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: number) => {
     try {
-      deleteCart(parseInt(id));
+      deleteCart(id);
     } catch (error) {
       console.log(error);
     }
@@ -51,7 +50,7 @@ const ItemInfoBox = ({
   return (
     <Wrapper>
       <div className="info">
-        {checkboxVisible && <Checkbox {...{ checked, handleCheck }} />}
+        {checkboxVisible && <Checkbox {...{ isChecked, handleCheck }} />}
         <img role="img" src={process.env.IMG_URL + images[0]} />
         <div>
           <div className="info__name">{name}</div>
