@@ -13,4 +13,4 @@ export const signup = async (data: signupRequestBody) =>
   await POST("/users", data);
 
 // GET /users?email 이메일 중복확인
-export const verifyEmail = ({ params }) => GET("/users", params);
+export const checkEmailExist = (email: string) => GET("/users", { email });

@@ -17,9 +17,10 @@ import {
 } from "@/utils/validations";
 import { gap } from "@/styles/theme";
 import { useSetRecoilState } from "recoil";
-import { signup } from "@/api/users";
+import { checkEmailExist, signup } from "@/api/users";
 import { loginState } from "@/store/state";
 import { convertToNumber, convertToPhoneNumber } from "@/utils/util";
+import APIButton from "@/Components/APIButton";
 
 const SignupPage = () => {
   const email = useInput("");
@@ -33,6 +34,7 @@ const SignupPage = () => {
   const phoneNumber = useInput("", convertToPhoneNumber);
   const phoneValidation = useValidation(validatePhoneNumber);
   const setLoginState = useSetRecoilState(loginState);
+  const [isExist, setIsExist] = useState(-1);
 
   const [address, setAddress] = useState<AddressType>({
     address: "",
@@ -61,7 +63,19 @@ const SignupPage = () => {
     } catch (e) {}
   };
 
+  const handleCheckEmail = async () => {
+    const { isExist } = await checkEmailExist(email.value);
+    if (isExist) emailValidation.setIsValid(!isExist);
+    setIsExist(isExist);
+  };
+
+  const handleEmailInput = () => {
+    emailValidation.setIsValid(true);
+    setIsExist(-1);
+  };
+
   const isSubmittable =
+    isExist > 0 &&
     emailValidation.isValid &&
     pwValidation.isValid &&
     confirmValidation.isValid &&
@@ -74,12 +88,34 @@ const SignupPage = () => {
       <h2 className="signup__title">회원가입</h2>
       <SignupForm onSubmit={handleSubmit}>
         <InputSection title="이메일">
-          <ValidationInput
-            input={email}
-            validation={emailValidation}
-            placeholder="이메일을 입력해주세요"
-            message={VALIDATION_ERR_MSG.INVALID_EMAIL}
-          />
+          <div
+            className={
+              isExist >= 0
+                ? isExist
+                  ? "signup__email-check invalid"
+                  : "signup__email-check valid"
+                : "signup__email-check"
+            }
+          >
+            <ValidationInput
+              input={email}
+              validation={emailValidation}
+              placeholder="이메일을 입력해주세요"
+              onChange={handleEmailInput}
+              message={
+                isExist > 0
+                  ? VALIDATION_ERR_MSG.DUPLICATE_EMAIL
+                  : VALIDATION_ERR_MSG.INVALID_EMAIL
+              }
+            />
+            <APIButton
+              size="small"
+              api={handleCheckEmail}
+              disabled={!emailValidation.isValid}
+            >
+              중복확인
+            </APIButton>
+          </div>
         </InputSection>
         <InputSection
           title="비밀번호"
@@ -126,9 +162,15 @@ const SignupPage = () => {
             <Button size="large">취소</Button>
           </Link>
 
-          <Button type="submit" size="large" primary disabled={!isSubmittable}>
+          <APIButton
+            type="submit"
+            size="large"
+            primary
+            api={handleSubmit}
+            disabled={!isSubmittable}
+          >
             회원가입
-          </Button>
+          </APIButton>
         </div>
       </SignupForm>
     </Wrapper>
@@ -161,10 +203,43 @@ const SignupForm = styled.form`
     width: 100%;
     display: flex;
     flex-direction: row;
-    ${gap("5rem")}
+    ${gap("2rem")}
 
     a {
       width: 100%;
+    }
+  }
+
+  .signup__email-check {
+    display: flex;
+    flex-direction: row;
+    ${gap("2rem")}
+
+    button {
+      width: 16rem;
+      height: 4rem;
+      transition: 0.5s;
+    }
+  }
+  .valid {
+    input {
+      border: 2px solid ${({ theme }) => theme.color.primary1};
+    }
+    button {
+      color: ${({ theme }) => theme.color.white};
+      background-color: ${({ theme }) => theme.color.primary1};
+      border: none;
+    }
+  }
+
+  .invalid {
+    input {
+      border: 2px solid ${({ theme }) => theme.color.error_color};
+    }
+    button {
+      color: ${({ theme }) => theme.color.white};
+      background-color: ${({ theme }) => theme.color.error_color};
+      border: none;
     }
   }
 `;
