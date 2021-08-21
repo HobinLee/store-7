@@ -49,9 +49,6 @@ const SignupPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(isExist);
-    return;
-
     try {
       await signup({
         email: email.value,
