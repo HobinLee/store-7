@@ -9,10 +9,17 @@ import { gap } from "@/styles/theme";
 
 export type ChangeAddressHandler = (address: DestinationType) => {};
 
-const Address = ({ onChangeAddress }) => {
+interface AddressProps {
+  onChangeAddress;
+  defaultAddress?: AddressType;
+}
+
+const Address = ({ onChangeAddress, defaultAddress }: AddressProps) => {
   const [isPopupOpen, setPopup] = useState(false);
-  const [address, setAddress] = useState<Partial<AddressType>>({});
-  const addressDetail = useInput("");
+  const [address, setAddress] = useState<Partial<AddressType>>(
+    defaultAddress || {}
+  );
+  const addressDetail = useInput(defaultAddress.detailAddress || "");
 
   const handleSearchAddress = (postData: AddressType) => {
     setAddress(postData);

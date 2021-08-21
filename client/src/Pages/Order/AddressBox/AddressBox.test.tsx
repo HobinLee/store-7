@@ -4,10 +4,14 @@ import { screen } from "@testing-library/react";
 import AddressBox, { AddressBoxProps } from "./index";
 
 const ADDRESS: DestinationType = {
+  id: 1,
   name: "addressName",
   detailAddress: "detailAddress",
   postCode: "1234",
   address: "postcodeAddress",
+  addressee: "addressee",
+  phoneNumber: "1234",
+  isDefault: true,
 };
 
 const addressBoxProps: AddressBoxProps = {

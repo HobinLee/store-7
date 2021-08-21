@@ -18,19 +18,19 @@ type AddressFormProps = {
 };
 
 const AddressForm = ({ addressToEdit, gotoBack }: AddressFormProps) => {
-  const addressee = useInput(addressToEdit.addressee);
+  const addressee = useInput(addressToEdit?.addressee || "");
   const nameValidation = useValidation((name: string) => !!name.length);
-  const addressName = useInput(addressToEdit.name);
+  const addressName = useInput(addressToEdit?.name || "");
   const addressNameValidation = useValidation(
     (addressName: string) => !!addressName.length
   );
-  const phone = useInput("");
+  const phone = useInput(addressToEdit?.phoneNumber || "");
   const phoneValidation = useValidation(validatePhoneNumber);
 
   const [address, setAddress] = useState<AddressType>({
-    address: "",
-    postCode: "",
-    detailAddress: "",
+    address: addressToEdit?.address || "",
+    postCode: addressToEdit?.postCode || "",
+    detailAddress: addressToEdit?.detailAddress || "",
   });
 
   const handleChangeAddress = (address: DestinationType) => {
@@ -39,7 +39,12 @@ const AddressForm = ({ addressToEdit, gotoBack }: AddressFormProps) => {
 
   const handleCreateDestination = async () => {
     try {
-      await postDestination({ ...address, name: addressName.value });
+      await postDestination({
+        ...address,
+        name: addressName.value,
+        addressee: addressee.value,
+        phoneNumber: phone.value,
+      });
     } catch (error) {
     } finally {
       gotoBack();
@@ -80,7 +85,10 @@ const AddressForm = ({ addressToEdit, gotoBack }: AddressFormProps) => {
           />
         </InputSection>
         <InputSection title="주소">
-          <Address onChangeAddress={handleChangeAddress} />
+          <Address
+            onChangeAddress={handleChangeAddress}
+            defaultAddress={address}
+          />
         </InputSection>
 
         <div className="save-btn">

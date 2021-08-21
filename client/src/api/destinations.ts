@@ -6,6 +6,8 @@ export const postDestination = (data: {
   postCode: string;
   address: string;
   detailAddress: string;
+  addressee: string;
+  phoneNumber: string;
 }) => POST("/destinations", { ...data, isDefault: false });
 
 // PATCH /destinations/:id 배송지 수정

@@ -32,6 +32,9 @@ const AddressBox = ({
       <div className="name">{address.name}</div>
       <div>{address.address}</div>
       <div>{address.detailAddress}</div>
+      <div className="user">
+        {address.addressee} {address.phoneNumber}
+      </div>
       <div className="buttons">
         <div>
           <Button onClick={() => handleDelete(address.id)} size="small">
