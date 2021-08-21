@@ -3,6 +3,7 @@ import { useState } from "react";
 export type ValidationType = {
   isValid: boolean;
   onCheck: (input: string) => void;
+  setIsValid: (boolean) => void;
 };
 
 export default (
@@ -15,5 +16,5 @@ export default (
     setIsValid(checkValidation(input));
   };
 
-  return { isValid, onCheck };
+  return { isValid, onCheck, setIsValid };
 };
