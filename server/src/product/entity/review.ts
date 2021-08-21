@@ -4,6 +4,7 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
+  CreateDateColumn,
 } from "typeorm";
 import { User } from "@/user/entity/user";
 
@@ -30,6 +31,13 @@ export class Review {
 
   @Column({ length: 100 })
   content: string;
+
+  @CreateDateColumn({
+    type: "timestamp",
+    name: "created_at",
+    default: () => "CURRENT_TIMESTAMP(6)",
+  })
+  createdAt: Date;
 
   getAverageRate(reviews) {
     return Number(

@@ -6,13 +6,15 @@ export class MyReviewResponse {
   content: string;
   image?: string;
   authorName: string;
+  createdAt: Date;
 
   static of(review: Review): MyReviewResponse {
     const id = review.id,
       rate = review.rate,
       content = review.content,
       image = review.image,
-      authorName = review.author.name;
+      authorName = review.author.name,
+      createdAt = review.createdAt;
 
     return {
       id,
@@ -20,6 +22,7 @@ export class MyReviewResponse {
       content,
       image,
       authorName,
+      createdAt,
     };
   }
 }
