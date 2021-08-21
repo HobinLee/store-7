@@ -22,6 +22,8 @@ import { orders } from "@/store/state";
 import { useEffect } from "react";
 import { useMyDestinations } from "@/api/my";
 import { DestinationType } from "@/shared/type";
+import axios from "axios";
+import { postPaymentReady } from "@/api/payment";
 
 const OrderPage = () => {
   // const { status, data: carts, error } = useMyCarts();
@@ -44,6 +46,20 @@ const OrderPage = () => {
 
   const [isAddressModalOpened, setIsAddressModalOpened] = useState(false);
 
+  const handlePay = async () => {
+    const res = await postPaymentReady({
+      cid: "TC0ONETIME",
+      item_name: "item",
+      quantity: "1",
+      total_amount: "11",
+      tax_free_amount: "11",
+      approval_url: `${process.env.BASE_URL}/payment/approve`,
+      cancel_url: process.env.BASE_URL,
+      fail_url: process.env.BASE_URL,
+    });
+    // const tid = res.tid;
+    window.open(res.url);
+  };
   // TODO: 기본배송지 가져오기
 
   return (
@@ -132,6 +148,7 @@ const OrderPage = () => {
           <Info>
             <div className="label">결제수단</div>
             <div>공짜는 업나여</div>
+            <div onClick={handlePay}>카카오페이</div>
           </Info>
         </Content>
       </div>
