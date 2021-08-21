@@ -14,7 +14,9 @@ export default (
   defaultValue: string,
   filter?: (text: string) => string
 ): InputType => {
-  const [value, setValue] = useState(defaultValue);
+  const [value, setValue] = useState(
+    filter ? filter(defaultValue) : defaultValue
+  );
 
   const onChange = ({
     target,

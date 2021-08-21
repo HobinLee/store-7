@@ -8,7 +8,6 @@ import { gap } from "@/styles/theme";
 import { DELETE } from "@/utils/axios";
 import { useRecoilState } from "recoil";
 import { loginState } from "@/store/state";
-import { alert } from "../Alert";
 
 const Header = ({ children }: { children?: ReactChild }) => {
   const [isLogined, setLoginState] = useRecoilState(loginState);

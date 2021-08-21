@@ -12,14 +12,12 @@ export class LoggerMiddleware implements NestMiddleware {
     @Next() next: NextFunction
   ): any {
     try {
-      console.log(req.path);
       const token = req.cookies[properties.auth.tokenKey];
       if (token) {
         req.body.userId = this.jwtService.decode(token)["userId"];
       }
     } catch (e) {
       res.clearCookie(properties.auth.tokenKey);
-      console.log("no token");
     } finally {
       next();
     }

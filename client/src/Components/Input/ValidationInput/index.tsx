@@ -3,6 +3,7 @@ import { ChangeEvent, useState } from "react";
 import { InputType } from "@/hooks/useInput";
 import { ValidationType } from "@/hooks/useValidation";
 import { gap } from "@/styles/theme";
+import { useEffect } from "react";
 
 type VIPropsType = {
   input: InputType;
@@ -23,6 +24,8 @@ const ValidationInput = ({
 }: VIPropsType) => {
   const [isFirstType, setIsFirstType] = useState(true);
   const checkValidStyle = isFirstType || validation.isValid;
+
+  useEffect(() => validation.onCheck(input.value), []);
 
   const handleBlurInput = () => {
     setIsFirstType(false);

@@ -115,4 +115,5 @@ interface ICart {
   productOptionId: number;
   amount: number;
 }
+
 export type PartialCart = Partial<ICart>;
