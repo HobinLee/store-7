@@ -1,9 +1,12 @@
+import { User } from "@/user/entity/user";
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from "typeorm";
 
 @Entity()
@@ -23,8 +26,9 @@ export class Destination {
   @Column({ length: 11, name: "detail_address" })
   detailAddress: string;
 
-  @Column({ type: "int", name: "user_id" })
-  userId: number;
+  @ManyToOne(() => User, (user) => user.destinations, { nullable: false })
+  @JoinColumn({ name: "user_id" })
+  user: User;
 
   @Column({ type: "tinyint", name: "is_default" })
   isDefault: boolean;
