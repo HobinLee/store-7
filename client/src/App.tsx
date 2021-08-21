@@ -16,7 +16,8 @@ import "dayjs/locale/ko";
 import SignupPage from "@/Pages/Signup";
 import { useSetRecoilState } from "recoil";
 import { loginState } from "./store/state";
-import { GET } from "./utils/axios";
+import Alert from "./Components/Alert";
+import { verifyToken } from "./api/auth";
 
 type route = [string, JSX.Element, boolean?];
 
@@ -43,7 +44,7 @@ const App = () => {
 
   const auth = async () => {
     try {
-      await GET("/auth");
+      await verifyToken();
       setLogined(true);
     } catch (e) {
       setLogined(false);
@@ -74,6 +75,7 @@ const App = () => {
           </Route>
         ))}
       </Router>
+      <Alert />
     </ThemeProvider>
   );
 };

@@ -17,9 +17,9 @@ interface AddressProps {
 const Address = ({ onChangeAddress, defaultAddress }: AddressProps) => {
   const [isPopupOpen, setPopup] = useState(false);
   const [address, setAddress] = useState<Partial<AddressType>>(
-    defaultAddress || {}
+    defaultAddress ?? {}
   );
-  const addressDetail = useInput(defaultAddress.detailAddress || "");
+  const addressDetail = useInput(defaultAddress?.detailAddress ?? "");
 
   const handleSearchAddress = (postData: AddressType) => {
     setAddress(postData);

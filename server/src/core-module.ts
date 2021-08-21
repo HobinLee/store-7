@@ -32,7 +32,9 @@ export class AppModule {
     consumer
       .apply(LoggerMiddleware)
       .exclude("/auth")
+      .exclude("/auth/*")
       .exclude("/users")
+      .exclude("/users/*")
       .forRoutes("*");
   }
 }

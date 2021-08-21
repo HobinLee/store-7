@@ -2,6 +2,6 @@ export interface CreateUserDTO {
   email: string;
   password: string; //encoded password
   name: string;
-  phoneNumer: string;
+  phoneNumber?: string;
   profile?: string;
 }

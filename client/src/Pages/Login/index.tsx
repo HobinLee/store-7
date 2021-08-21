@@ -1,40 +1,14 @@
 import { PageWrapper } from "@/shared/styled";
 import styled from "styled-components";
 import Input from "@/Components/Input";
-import { Link, moveTo } from "@/Router";
 import Button from "@/Components/Button";
 import useInput from "@/hooks/useInput";
 import { gap } from "@/styles/theme";
-import { POST } from "@/utils/axios";
-import { useSetRecoilState } from "recoil";
-import { loginState } from "@/store/state";
+import LoginSection from "./LoginSection";
 
 const LoginPage = () => {
-  const email = useInput("");
-  const password = useInput("");
   const name = useInput("");
   const phoneNumber = useInput("");
-  const setLoginState = useSetRecoilState(loginState);
-
-  const handleSignin = async () => {
-    try {
-      await POST("/auth", {
-        email: email.value,
-        password: password.value,
-      });
-      alert("로그인 성공");
-      setLoginState(true);
-      moveTo("/");
-    } catch (e) {
-      setLoginState(false);
-    }
-  };
-
-  const checkSignupable = (): boolean => {
-    //TODO: validion Check하기(?)
-    return email.value.length > 0 && email.value.length > 0;
-  };
-
   const checkLookupable = (): boolean => {
     //TODO: validion Check하기(?)
     return name.value.length > 0 && phoneNumber.value.length > 0;
@@ -43,34 +17,7 @@ const LoginPage = () => {
   return (
     <LoginPageWrapper>
       <LoginContent>
-        <Form onSubmit={() => handleSignin()}>
-          <Title>회원 로그인</Title>
-          <Input
-            placeholder="아이디 입력"
-            value={email.value}
-            onChange={email.onChange}
-          />
-          <Input
-            placeholder="비밀번호 입력"
-            value={password.value}
-            type="password"
-            onChange={password.onChange}
-          />
-          <div>아이디 저장</div>
-          <Button
-            onClick={() => handleSignin()}
-            primary
-            disabled={!checkSignupable()}
-          >
-            로그인
-          </Button>
-          <Button>Github 로그인</Button>
-          <div className="login-form__footer">
-            <Link to="/signup">회원가입</Link>
-            <Link to="/findid">아이디 찾기</Link>
-            <Link to="/findpw">비밀번호 찾기</Link>
-          </div>
-        </Form>
+        <LoginSection />
         <Form>
           <Title>비회원 주문조회 하기</Title>
           <Input

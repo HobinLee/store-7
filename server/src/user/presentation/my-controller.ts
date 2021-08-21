@@ -7,10 +7,10 @@ import {
 } from "../dto/my-response";
 import { QuestionResponse } from "@/product/dto/question-response";
 import { MyReviewResponse } from "@/product/dto/review-my-response";
-import { MyService } from "@/user/application/my-service";
 import { MyInfoEditRequest } from "../dto/my-reqeust";
 import { ProductService } from "@/product/application/product-service";
 import { DestinationResponse } from "@/destination/dto/destination-response";
+import { MyService } from "../application/my-service";
 
 @Controller("/my")
 export class MyController {
@@ -20,22 +20,20 @@ export class MyController {
   ) {}
 
   @Get("/carts")
-  async checkEmailExist(
-    @Param("userId") userId: number
-  ): Promise<MyCartsResponse> {
+  async checkEmailExist(): Promise<MyCartsResponse> {
     return await this.myService.findMyCarts(1);
   }
 
   @Get("/info")
   async getMyInfo(
-    @Param("userId") userId: number
+    @Body("userId") userId: number
   ): Promise<MyBasicInfoResponse> {
     return await this.myService.getMyInfo(userId);
   }
 
   @Get("/destinations")
   async getMyDestionation(
-    @Param("userId") userId: number
+    @Body("userId") userId: number
   ): Promise<DestinationResponse[]> {
     return await this.myService.findMyDestionation(1);
   }
@@ -47,14 +45,14 @@ export class MyController {
 
   @Get("/reviews")
   async getMyReviews(
-    @Param("userId") userId: number
+    @Body("userId") userId: number
   ): Promise<MyReviewResponse[]> {
     return await this.myService.getMyReviews(userId);
   }
 
   @Get("/questions")
   async getMyQuestions(
-    @Param("userId") userId: number
+    @Body("userId") userId: number
   ): Promise<QuestionResponse[]> {
     return await this.myService.getMyQeustions(userId);
   }
@@ -62,7 +60,7 @@ export class MyController {
   @Get("/orders")
   async getMyOrdersByTarget(
     @Query("target") target: string,
-    @Param("userId") userId: number
+    @Body("userId") userId: number
   ): Promise<MyOredersResponse[] | MyCurrentOredersResponse[] | string> {
     console.log("target :", target);
     return target === "current"

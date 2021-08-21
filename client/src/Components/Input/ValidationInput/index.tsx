@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { InputType } from "@/hooks/useInput";
 import { ValidationType } from "@/hooks/useValidation";
 import { gap } from "@/styles/theme";
@@ -10,6 +10,7 @@ type VIPropsType = {
   placeholder?: string;
   message?: string;
   type?: string;
+  onChange?: (e: ChangeEvent) => void;
 };
 
 const ValidationInput = ({
@@ -18,6 +19,7 @@ const ValidationInput = ({
   message,
   placeholder,
   type = "text",
+  onChange = null,
 }: VIPropsType) => {
   const [isFirstType, setIsFirstType] = useState(true);
   const checkValidStyle = isFirstType || validation.isValid;
@@ -32,7 +34,10 @@ const ValidationInput = ({
       <input
         className={checkValidStyle ? "valid-input" : "invalid-input"}
         value={input.value}
-        onChange={input.onChange}
+        onChange={(e) => {
+          onChange && onChange(e);
+          input.onChange(e);
+        }}
         onBlur={handleBlurInput}
         placeholder={placeholder}
         type={type}

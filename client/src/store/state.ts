@@ -11,6 +11,14 @@ export const orders = atom({
   },
 });
 
+export const alertState = atom({
+  key: "isOpen",
+  default: {
+    isOpened: false,
+    message: "",
+  },
+});
+
 export const loginState = atom({
   key: "isLogined",
   default: false,

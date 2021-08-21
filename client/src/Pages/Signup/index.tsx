@@ -16,9 +16,11 @@ import {
   VALIDATION_ERR_MSG,
 } from "@/utils/validations";
 import { gap } from "@/styles/theme";
-import { POST } from "@/utils/axios";
 import { useSetRecoilState } from "recoil";
+import { checkEmailExist, signup } from "@/api/users";
 import { loginState } from "@/store/state";
+import { convertToNumber, convertToPhoneNumber } from "@/utils/util";
+import APIButton from "@/Components/APIButton";
 
 const SignupPage = () => {
   const email = useInput("");
@@ -29,9 +31,10 @@ const SignupPage = () => {
   const confirmValidation = useValidation((confirm) => pw.value === confirm);
   const name = useInput("");
   const nameValidation = useValidation((name: string) => !!name.length);
-  const phoneNumber = useInput("");
+  const phoneNumber = useInput("", convertToPhoneNumber);
   const phoneValidation = useValidation(validatePhoneNumber);
   const setLoginState = useSetRecoilState(loginState);
+  const [isExist, setIsExist] = useState(-1);
 
   const [address, setAddress] = useState<AddressType>({
     address: "",
@@ -46,54 +49,76 @@ const SignupPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const userInfo: UserType = {
-      email: email.value,
-      name: name.value,
-      phoneNumber: phoneNumber.value,
-      profile: "",
-      destinations: [],
-    };
-
-    //TODO: 나중에 DTO 빼기~
-    const signupDTO = {
-      ...userInfo,
-      password: pw.value,
-      address,
-    };
-
     try {
-      await POST("/users", signupDTO);
-      alert("회원가입 성공");
+      await signup({
+        email: email.value,
+        password: pw.value,
+        name: name.value,
+        phoneNumber: convertToNumber(phoneNumber.value),
+        address,
+      });
+
       setLoginState(true);
       moveTo("/");
-    } catch (e) {
-      alert("회원가입에 실패했습니다");
-    }
+    } catch (e) {}
+  };
+
+  const handleCheckEmail = async () => {
+    const { isExist } = await checkEmailExist(email.value);
+    if (isExist) emailValidation.setIsValid(!isExist);
+    setIsExist(isExist ? 1 : 0);
+  };
+
+  const handleEmailInput = () => {
+    emailValidation.setIsValid(true);
+    setIsExist(-1);
   };
 
   const isSubmittable =
+    isExist === 0 &&
     emailValidation.isValid &&
     pwValidation.isValid &&
     confirmValidation.isValid &&
     nameValidation.isValid &&
     phoneValidation.isValid &&
     !!address.postCode;
-
   return (
     <Wrapper>
       <h2 className="signup__title">회원가입</h2>
       <SignupForm onSubmit={handleSubmit}>
         <InputSection title="이메일">
-          <ValidationInput
-            input={email}
-            validation={emailValidation}
-            placeholder="이메일을 입력해주세요"
-            message={VALIDATION_ERR_MSG.INVALID_EMAIL}
-          />
+          <div
+            className={
+              isExist >= 0
+                ? isExist
+                  ? "signup__email-check invalid"
+                  : "signup__email-check valid"
+                : "signup__email-check"
+            }
+          >
+            <ValidationInput
+              input={email}
+              validation={emailValidation}
+              placeholder="이메일을 입력해주세요"
+              onChange={handleEmailInput}
+              message={
+                isExist > 0
+                  ? VALIDATION_ERR_MSG.DUPLICATE_EMAIL
+                  : VALIDATION_ERR_MSG.INVALID_EMAIL
+              }
+            />
+            <APIButton
+              size="small"
+              api={handleCheckEmail}
+              disabled={!emailValidation.isValid}
+            >
+              중복확인
+            </APIButton>
+          </div>
         </InputSection>
         <InputSection
           title="비밀번호"
-          brief="알파벳, 숫자, 문자 중 2종류 이상의 조합으로 10자 이상으로 이루어져있어야 합니다"
+          brief="2종류 이상의 알파벳, 숫자, 문자 조합이 10자 이상으로 이루어져있어야 합니다"
         >
           <ValidationInput
             input={pw}
@@ -136,9 +161,15 @@ const SignupPage = () => {
             <Button size="large">취소</Button>
           </Link>
 
-          <Button type="submit" size="large" primary disabled={!isSubmittable}>
+          <APIButton
+            type="submit"
+            size="large"
+            primary
+            api={handleSubmit}
+            disabled={!isSubmittable}
+          >
             회원가입
-          </Button>
+          </APIButton>
         </div>
       </SignupForm>
     </Wrapper>
@@ -171,10 +202,43 @@ const SignupForm = styled.form`
     width: 100%;
     display: flex;
     flex-direction: row;
-    ${gap("5rem")}
+    ${gap("2rem")}
 
     a {
       width: 100%;
+    }
+  }
+
+  .signup__email-check {
+    display: flex;
+    flex-direction: row;
+    ${gap("2rem")}
+
+    button {
+      width: 16rem;
+      height: 4rem;
+      transition: 0.5s;
+    }
+  }
+  .valid {
+    input {
+      border: 2px solid ${({ theme }) => theme.color.primary1};
+    }
+    button {
+      color: ${({ theme }) => theme.color.white};
+      background-color: ${({ theme }) => theme.color.primary1};
+      border: none;
+    }
+  }
+
+  .invalid {
+    input {
+      border: 2px solid ${({ theme }) => theme.color.error_color};
+    }
+    button {
+      color: ${({ theme }) => theme.color.white};
+      background-color: ${({ theme }) => theme.color.error_color};
+      border: none;
     }
   }
 `;

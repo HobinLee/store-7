@@ -1,3 +1,4 @@
+import properties from "@/config/properties/properties";
 import { Body, Controller, Query, Post, Get, Redirect } from "@nestjs/common";
 import fetch from "node-fetch";
 import { URLSearchParams } from "url";
@@ -67,7 +68,7 @@ export class PaymentController {
       return json.aid
         ? {
             status: 301,
-            url: "http://localhost:3000/order/success",
+            url: properties.client + "/order/success",
           }
         : {
             status: 500,

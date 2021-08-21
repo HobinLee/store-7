@@ -1,12 +1,20 @@
-import { Body, Controller, Delete, Get, Post, Req, Res } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpStatus,
+  Post,
+  Query,
+  Req,
+  Res,
+} from "@nestjs/common";
 import { AuthService } from "../application/auth-service";
 import { SigninRequest } from "../dto/signin-request";
 import { Request, Response } from "express";
+import messages from "@/config/messages";
+import properties from "@/config/properties/properties";
 
-const STATUS = {
-  SUCCESS: 200,
-  AUTH_REQUIRED: 407,
-};
 @Controller("/auth")
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -18,11 +26,11 @@ export class AuthController {
   ) {
     try {
       await this.authService.signIn(signinRequest, signinResponse);
-      signinResponse.status(STATUS.SUCCESS);
+      signinResponse.status(HttpStatus.OK);
+      return { message: messages.success.SUCCESS_TO_SIGN_IN };
     } catch (e) {
-      signinResponse.status(STATUS.AUTH_REQUIRED);
-    } finally {
-      return;
+      signinResponse.status(HttpStatus.NOT_ACCEPTABLE);
+      return e.message;
     }
   }
 
@@ -31,15 +39,54 @@ export class AuthController {
     @Res({ passthrough: true }) signoutResponse: Response,
     @Res({ passthrough: true }) res: Response
   ) {
-    console.log("try to sign out");
     try {
       await this.authService.signOut(signoutResponse);
-      res.status(STATUS.SUCCESS);
+      res.status(HttpStatus.OK);
+      return { message: messages.success.SUCCESS_TO_SIGN_OUT };
+    } catch (e) {
+      res.status(HttpStatus.BAD_REQUEST);
+      return messages.failed.FAILED_TO_SIGN_OUT;
+    }
+  }
+
+  @Get("/githubLogin")
+  async redirectToGithubSignin(@Res({ passthrough: true }) response: Response) {
+    const url = `https://github.com/login/oauth/authorize?redirect_uri=${properties.github.redirect}&client_id=${properties.github.id}`;
+
+    response.redirect(url);
+  }
+
+  @Get("/github")
+  async githubSignin(
+    @Query("code") code: string,
+    @Res({ passthrough: true }) response: Response
+  ) {
+    try {
+      await this.authService.githubLogin(code, response);
+      response.redirect(properties.client);
     } catch (e) {
       console.error(e);
-      res.status(STATUS.AUTH_REQUIRED);
-    } finally {
-      return;
+      return e.message;
+    }
+  }
+  @Get("/googleLogin")
+  async redirectToGoogleSignin(@Res({ passthrough: true }) response: Response) {
+    const url = `https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=${properties.google.redirect}&client_id=${properties.google.id}&response_type=code&include_granted_scopes=true&scope=profile`;
+
+    response.redirect(url);
+  }
+
+  @Get("/google")
+  async googleSignin(
+    @Query("code") code: string,
+    @Res({ passthrough: true }) response: Response
+  ) {
+    try {
+      await this.authService.googleLogin(code, response);
+      response.redirect(properties.client);
+    } catch (e) {
+      console.error(e);
+      return e.message;
     }
   }
 
@@ -49,8 +96,8 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response
   ) {
     (await this.authService.verifyToken(req))
-      ? response.status(STATUS.SUCCESS)
-      : response.status(STATUS.AUTH_REQUIRED);
+      ? response.status(HttpStatus.OK)
+      : response.status(HttpStatus.PROXY_AUTHENTICATION_REQUIRED);
     return;
   }
 }

@@ -12,15 +12,7 @@ import {
   createFirstDestination,
   FirstDestinationDTO,
 } from "../dto/create-address";
-
-const RESULT_MSG = {
-  SUCCESS_TO_SIGN_UP: "success to sign up",
-
-  FAILED_TO_SIGN_UP: "계정생성에 실패했습니다.",
-  FAILED_TO_GEN_JWT: "json web token 생성 실패",
-  FAILED_TO_ADD_DESTINATION: "주소 생성 실패",
-};
-
+import messages from "@/config/messages";
 @Injectable()
 export class UserService {
   constructor(
@@ -33,33 +25,29 @@ export class UserService {
     { address, ...user }: SignupRequest,
     @Res({ passthrough: true }) signupResponse: Response
   ): Promise<string | Error> {
-    try {
-      const userId = await this.createNewUser(user);
-      if (!userId) throw new Error(RESULT_MSG.FAILED_TO_SIGN_UP);
+    const userId = await this.createNewUser(user);
+    if (!userId) throw new Error(messages.failed.FAILED_TO_SIGN_UP);
 
-      const newAddress = await this.createNewAddress(address, userId);
-      if (!newAddress) throw new Error(RESULT_MSG.FAILED_TO_ADD_DESTINATION);
+    const newAddress = await this.createNewAddress(address, userId);
+    if (!newAddress) throw new Error(messages.failed.FAILED_TO_ADD_DESTINATION);
 
-      const token: string = await this.jwtService.signAsync({ userId });
-      if (!token) throw new Error(RESULT_MSG.FAILED_TO_GEN_JWT);
+    const token: string = await this.jwtService.signAsync({ userId });
+    if (!token) throw new Error(messages.failed.FAILED_TO_GEN_JWT);
 
-      signupResponse.cookie(properties.auth.tokenKey, token);
+    signupResponse.cookie(properties.auth.tokenKey, token);
 
-      return RESULT_MSG.SUCCESS_TO_SIGN_UP;
-    } catch (error) {
-      throw Error(error);
-    }
+    return messages.success.SUCCESS_TO_SIGN_UP;
   }
 
   async createNewUser(user: CreateUserDTO): Promise<number> {
     try {
       //TODO: validation 체크
-
       user.password = PasswordEncoder.encode(user.password);
 
       return await this.users.createAndGetUserId(user);
     } catch (error) {
-      return 0;
+      console.error(error);
+      throw Error(messages.failed.FAILED_TO_SIGN_UP);
     }
   }
 

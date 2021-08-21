@@ -11,7 +11,7 @@ export class User {
   @Column({ length: 64 })
   password: string;
 
-  @Column({ length: 10 })
+  @Column({ length: 10, default: "반가운분" })
   grade: string;
 
   @Column({ length: 20 })
@@ -20,7 +20,7 @@ export class User {
   @Column({ length: 40, unique: true })
   email: string;
 
-  @Column({ type: "char", length: 11, name: "phone_number" })
+  @Column({ type: "char", length: 11, name: "phone_number", nullable: true })
   phoneNumber: string;
 
   @Column({ type: "char", length: 32, nullable: true })

@@ -1,4 +1,6 @@
+import { alert } from "@/Components/Alert";
 import axios from "axios";
+import { handleHttpError } from "./error";
 
 const fetchWrap = async ({
   method,
@@ -23,9 +25,10 @@ const fetchWrap = async ({
       (method === "patch" && (await axios.patch(url, body, config))) ||
       (method === "delete" && (await axios.delete(url, config))) ||
       {};
+    !!data.message && alert(data.message);
     return data;
   } catch (error) {
-    throw Error(error);
+    handleHttpError(error);
   }
 };
 
