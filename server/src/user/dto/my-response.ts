@@ -2,6 +2,8 @@ import { CartResponse } from "@/cart/dto/cart-response";
 import { Review } from "@/product/entity/review";
 import { User } from "../entity/user";
 import { Order } from "@/order/entity/order";
+import { Destination } from "@/destination/entity/destination";
+import { Wish } from "../entity/wish";
 
 export interface MyCartsResponse {
   totalPrice: number;
@@ -10,33 +12,28 @@ export interface MyCartsResponse {
   items: CartResponse[];
 }
 
-export interface Destination {
-  name: string;
-  postCode: string;
-  address: string;
-  detailAddress: string;
-  isDefault: boolean;
-}
-
-export class MyBasicInfoResponse {
+export class MyInfoResponse {
   name: string;
   grage: string;
+  phoneNumber: string;
+  profile: string;
+  destinations: Destination[];
 
-  static of(user: User): MyBasicInfoResponse {
+  static of(user: User): MyInfoResponse {
     const name = user.name,
-      grage = user.grade;
+      grage = user.grade,
+      phoneNumber = user.phoneNumber,
+      profile = user.profile,
+      destinations = user.destinations;
 
     return {
       name,
       grage,
+      phoneNumber,
+      profile,
+      destinations,
     };
   }
-}
-
-export interface MyInfoResponse extends MyBasicInfoResponse {
-  phoneNumber: string;
-  profile: string;
-  destinations: Destination[];
 }
 
 export class MyReviewResponse {
@@ -51,7 +48,7 @@ export class MyReviewResponse {
       rate = review.rate,
       content = review.content,
       image = review.image,
-      authorName = review.author.name;
+      authorName = review.order.user.name;
 
     return {
       id,
@@ -77,7 +74,7 @@ export class MyOredersResponse {
   static of(order: Order): MyOredersResponse {
     const id = order.id,
       productId = order.productId,
-      userId = order.userId,
+      userId = order.user.id,
       addressee = order.addressee,
       productOptionId = order.productOptionId,
       amount = order.amount,
@@ -114,7 +111,7 @@ export class MyCurrentOredersResponse {
   static of(order: Order): MyCurrentOredersResponse {
     const id = order.id,
       productId = order.productId,
-      userId = order.userId,
+      userId = order.user.id,
       addressee = order.addressee,
       productOptionId = order.productOptionId,
       amount = order.amount,
@@ -135,5 +132,41 @@ export class MyCurrentOredersResponse {
       createdAt,
       reviewId,
     };
+  }
+}
+
+export class MyWishResponse {
+  id: number;
+  name: string;
+  price: number;
+  originPrice: number;
+  discountRate: number;
+  isWish: boolean;
+  amount: number;
+  image: string;
+
+  static of(wishes: Wish[]): MyWishResponse[] {
+    return wishes.map((wish) => {
+      const {
+        id,
+        name,
+        price,
+        discountRate,
+        getDiscountedPrice,
+        stock,
+        getThumbnailImage,
+      } = wish.product;
+
+      return {
+        id,
+        name,
+        price: getDiscountedPrice(),
+        originPrice: price,
+        discountRate,
+        amount: stock,
+        image: getThumbnailImage(),
+        isWish: true,
+      };
+    });
   }
 }

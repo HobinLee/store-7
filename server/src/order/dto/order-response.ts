@@ -14,7 +14,7 @@ export class OrderResponse {
   static of(order: Order): OrderResponse {
     const id = order.id,
       productId = order.productId,
-      userId = order.userId,
+      userId = order.user.id,
       addressee = order.addressee,
       productOptionId = order.productOptionId,
       amount = order.amount,
