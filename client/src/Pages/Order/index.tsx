@@ -18,8 +18,7 @@ import {
 } from "@/utils/validations";
 import { sampleUser } from "@/shared/dummy";
 import { gap } from "@/styles/theme";
-import { useMyCarts } from "@/api/my";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { orders } from "@/store/state";
 import { useEffect } from "react";
 

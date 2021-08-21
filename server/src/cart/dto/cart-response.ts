@@ -12,7 +12,7 @@ export class CartResponse {
   static of(cart: Cart): CartResponse {
     const id = cart.id,
       name = cart.product.name,
-      price = cart.product.getDiscountedPrice(),
+      price = cart.product.getDiscountedPrice() * cart.amount,
       deliveryCost = cart.product.deliveryCost,
       images = cart.product.getImagesAsString(),
       productOptionId = cart.productOptionId,

@@ -102,13 +102,15 @@ export interface CartType {
   totalPrice: number;
   totalDelivery: number;
   totalPayment: number;
-  items: {
-    id: number;
-    name: string;
-    price: number;
-    deliveryCost: number;
-    images: string[];
-    productOptionId: number;
-    amount: number;
-  }[];
+  items: ICart[];
 }
+interface ICart {
+  id: number;
+  name: string;
+  price: number;
+  deliveryCost: number;
+  images: string[];
+  productOptionId: number;
+  amount: number;
+}
+export type PartialCart = Partial<ICart>;
