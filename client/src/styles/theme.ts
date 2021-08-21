@@ -44,19 +44,19 @@ const borderRadius = {
 
 const tags = {
   new: css`
-    background: #2ac1bc;
+    background: #07c7d1;
     color: white;
   `,
   best: css`
-    background: #242424;
+    background: black;
     color: white;
   `,
   sale: css`
-    background: #f45452;
+    background: #e63b3b;
     color: white;
   `,
   green: css`
-    background: #1a8b26;
+    background: #06b788;
     color: white;
   `,
 };

@@ -45,9 +45,20 @@ const Item = ({
             </div>
             <WishBox isWishState={isWishState}>
               {isWishState ? (
-                <Wish opacity="1" fill="#2ac1bc" onClick={toggleWish} />
+                <Wish
+                  width="36"
+                  height="36"
+                  opacity="1"
+                  fill="#13d8d1"
+                  onClick={toggleWish}
+                />
               ) : (
-                <Wish fill="white" onClick={toggleWish} />
+                <Wish
+                  width="36"
+                  height="36"
+                  fill="white"
+                  onClick={toggleWish}
+                />
               )}
             </WishBox>
           </div>
@@ -70,11 +81,15 @@ const Item = ({
 };
 
 const ItemWrapper = styled.div`
+  padding-bottom: 2rem;
+  ${({ theme }) => theme.borderRadius.medium}
   &:hover {
     /* box-shadow: 0 0 10px 1px ${({ theme }) => theme.color.primary3}; */
-    box-shadow: 0 0 10px 3px #a1dbcb;
+    /* box-shadow: 0 0 10px 5px #afefdd; */
+    box-shadow: 0 0 10px 2px #d4d4d4;
     transition: all 0.2s;
   }
+
   .thumbnail {
     position: relative;
 
@@ -94,7 +109,7 @@ const ItemWrapper = styled.div`
         stroke-width: 3rem;
       }
       & > svg:active {
-        transform: scale(1.1);
+        transform: scale(1.2);
       }
     }
   }
@@ -169,7 +184,7 @@ const Tag = styled.div<{
   `};
 
   font-weight: bold;
-  padding: 0.3rem 1rem;
+  padding: 0.7rem 1rem 0.2rem 1rem;
   & + & {
     margin-left: 1rem;
   }
