@@ -3,9 +3,10 @@ import { CartResponse } from "@/cart/dto/cart-response";
 import { Injectable } from "@nestjs/common";
 import {
   MyCartsResponse,
-  MyBasicInfoResponse,
+  MyInfoResponse,
   MyCurrentOredersResponse,
   MyOredersResponse,
+  MyWishResponse,
 } from "../dto/my-response";
 import { Questions } from "@/product/domain/questions";
 import { Reviews } from "@/product/domain/reviews";
@@ -16,6 +17,7 @@ import { MyInfoEditRequest } from "../dto/my-reqeust";
 import { Orders } from "@/order/domain/orders";
 import { Destinations } from "@/destination/domain/destinations";
 import { DestinationResponse } from "@/destination/dto/destination-response";
+import { Wishes } from "../domain/wishes";
 
 @Injectable()
 export class MyService {
@@ -25,7 +27,8 @@ export class MyService {
     private readonly destinations: Destinations,
     private readonly questions: Questions,
     private readonly users: Users,
-    private readonly orders: Orders
+    private readonly orders: Orders,
+    private readonly wishes: Wishes
   ) {}
 
   async findMyCarts(userId: number): Promise<MyCartsResponse> {
@@ -49,7 +52,7 @@ export class MyService {
   async getMyInfo(userId) {
     userId = 1;
     const user = await this.users.findUserById(userId);
-    return MyBasicInfoResponse.of(user);
+    return MyInfoResponse.of(user);
   }
 
   async editMyInfo(request: MyInfoEditRequest) {
@@ -85,5 +88,11 @@ export class MyService {
     userId = 1;
     const orders = await this.orders.findOrdersByUserId(userId);
     return orders.map(MyOredersResponse.of);
+  }
+
+  async getMyWishes(userId: number) {
+    userId = 1;
+    const wishes = await this.wishes.findWishesByUserId(userId);
+    return MyWishResponse.of(wishes);
   }
 }
