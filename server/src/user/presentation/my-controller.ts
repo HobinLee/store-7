@@ -24,7 +24,7 @@ export class MyController {
   }
 
   @Get("/info")
-  async getMyInfo(@Param("userId") userId: number): Promise<MyInfoResponse> {
+  async getMyInfo(@Body("userId") userId: number): Promise<MyInfoResponse> {
     return await this.myService.getMyInfo(userId);
   }
 
@@ -68,7 +68,7 @@ export class MyController {
   }
 
   @Get("/wishes")
-  async getWishes(@Query("userId") userId: number): Promise<MyWishResponse[]> {
+  async getWishes(@Body("userId") userId: number): Promise<MyWishResponse[]> {
     return await this.myService.getMyWishes(userId);
   }
 }
