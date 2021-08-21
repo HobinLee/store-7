@@ -43,13 +43,13 @@ const Item = ({
                 </Tag>
               ))}
             </div>
-            <div className="thumbnail__wish">
+            <WishBox isWishState={isWishState}>
               {isWishState ? (
                 <Wish opacity="1" fill="#2ac1bc" onClick={toggleWish} />
               ) : (
                 <Wish fill="white" onClick={toggleWish} />
               )}
-            </div>
+            </WishBox>
           </div>
           <div className="info">
             <div className="info__name">{name}</div>
@@ -73,7 +73,7 @@ const ItemWrapper = styled.div`
   &:hover {
     /* box-shadow: 0 0 10px 1px ${({ theme }) => theme.color.primary3}; */
     box-shadow: 0 0 10px 3px #a1dbcb;
-    transition: box-shadow 0.2s;
+    transition: all 0.2s;
   }
   .thumbnail {
     position: relative;
@@ -89,7 +89,9 @@ const ItemWrapper = styled.div`
       bottom: 1rem;
       right: 1rem;
       & > svg:hover {
-        opacity: 0.7;
+        opacity: 1;
+        stroke: #2ac1bc;
+        stroke-width: 3rem;
       }
       & > svg:active {
         transform: scale(1.1);
@@ -133,6 +135,27 @@ const ItemWrapper = styled.div`
         text-decoration: line-through;
       }
     }
+  }
+`;
+const WishBox = styled.div<{ isWishState: boolean }>`
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  & > svg:hover {
+    opacity: 1;
+    ${({ isWishState }) =>
+      isWishState
+        ? css`
+            fill: #2ac1bc;
+          `
+        : css`
+            fill: none;
+            stroke: #2ac1bc;
+            stroke-width: 3rem;
+          `}
+  }
+  & > svg:active {
+    transform: scale(1.1);
   }
 `;
 
