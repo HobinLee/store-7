@@ -55,6 +55,12 @@ export class MyService {
     return MyInfoResponse.of(user);
   }
 
+  async getMyDetailInfo(userId) {
+    userId = 1;
+    const user = await this.users.findUserById(userId);
+    return MyDetailInfoResponse.of(user);
+  }
+
   async editMyInfo(request: MyInfoEditRequest) {
     await this.users.updateUserInfo(request);
   }

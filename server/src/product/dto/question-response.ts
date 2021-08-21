@@ -18,7 +18,7 @@ export class QuestionResponse {
 
   static of(q: Question): QuestionResponse {
     const id = q.id,
-      authorName = "q.userId",
+      authorName = q.user.name,
       type = q.type,
       title = q.title,
       question = q.question,

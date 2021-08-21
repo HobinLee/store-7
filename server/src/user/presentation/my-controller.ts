@@ -59,7 +59,6 @@ export class MyController {
     @Query("target") target: string,
     @Body("userId") userId: number
   ): Promise<MyOredersResponse[] | MyCurrentOredersResponse[] | string> {
-    console.log("target :", target);
     return target === "current"
       ? await this.myService.getMyCurrentOrders(userId)
       : target === "all"
