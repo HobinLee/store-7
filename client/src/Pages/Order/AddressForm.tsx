@@ -10,7 +10,7 @@ import Address from "@/Components/Address";
 
 import { validatePhoneNumber, VALIDATION_ERR_MSG } from "@/utils/validations";
 import { gap } from "@/styles/theme";
-import { postDestination } from "@/api/destinations";
+import { patchDestination, postDestination } from "@/api/destinations";
 
 type AddressFormProps = {
   addressToEdit?: DestinationType;
@@ -37,14 +37,28 @@ const AddressForm = ({ addressToEdit, gotoBack }: AddressFormProps) => {
     setAddress(address);
   };
 
-  const handleCreateDestination = async () => {
+  console.log(addressToEdit);
+
+  const handleSubmit = async () => {
     try {
-      await postDestination({
-        ...address,
-        name: addressName.value,
-        addressee: addressee.value,
-        phoneNumber: phone.value,
-      });
+      if (!addressToEdit) {
+        await postDestination({
+          ...address,
+          name: addressName.value,
+          addressee: addressee.value,
+          phoneNumber: phone.value,
+        });
+      } else {
+        await patchDestination({
+          id: addressToEdit.id,
+          data: {
+            ...address,
+            name: addressName.value,
+            addressee: addressee.value,
+            phoneNumber: phone.value,
+          },
+        });
+      }
     } catch (error) {
     } finally {
       gotoBack();
@@ -93,7 +107,7 @@ const AddressForm = ({ addressToEdit, gotoBack }: AddressFormProps) => {
 
         <div className="save-btn">
           <Button
-            onClick={handleCreateDestination}
+            onClick={handleSubmit}
             size="large"
             primary
             disabled={!isSubmittable}
