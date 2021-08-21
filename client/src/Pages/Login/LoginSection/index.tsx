@@ -15,7 +15,7 @@ const LoginSection = () => {
   const password = useInput("");
   const setLoginState = useSetRecoilState(loginState);
 
-  const handleSignin = async (isDemo = false) => {
+  const handleSignin = async (isDemo) => {
     await signIn({
       email: isDemo ? process.env.DEMO_EMAIL : email.value,
       password: isDemo ? process.env.DEMO_PW : password.value,
@@ -44,7 +44,7 @@ const LoginSection = () => {
         onChange={password.onChange}
       />
       <APIButton
-        api={() => handleSignin()}
+        api={() => handleSignin(false)}
         primary
         disabled={!checkSignupable()}
         className={"login-form__login"}

@@ -14,7 +14,7 @@ const OAuthLoginSection = () => {
 
   return (
     <Wrapper>
-      <APIButton api={() => handleGithubLogin()} className="github-login">
+      <APIButton api={handleGithubLogin} className="github-login">
         <GithubSVG height="100%" filter="invert(100%)" />
       </APIButton>
       <APIButton api={handleGoogleLogin} className="google-login">
