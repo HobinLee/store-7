@@ -4,6 +4,7 @@ import Button from "@/Components/Button";
 import { SetStateAction } from "react";
 import { Dispatch } from "react";
 import { gap } from "@/styles/theme";
+import { deleteDestination } from "@/api/destinations";
 
 export type AddressBoxProps = {
   setPage: Dispatch<SetStateAction<"select" | "add" | "edit">>;
@@ -12,6 +13,9 @@ export type AddressBoxProps = {
 };
 
 const AddressBox = ({ setPage, address, setAddress }: AddressBoxProps) => {
+  const handleDelete = async (id) => {
+    await deleteDestination(id);
+  };
   return (
     <Wrapper>
       <div className="name">{address.name}</div>
@@ -19,7 +23,9 @@ const AddressBox = ({ setPage, address, setAddress }: AddressBoxProps) => {
       <div>{address.detailAddress}</div>
       <div className="buttons">
         <div>
-          <Button size="small">삭제</Button>
+          <Button onClick={() => handleDelete(address.id)} size="small">
+            삭제
+          </Button>
           <Button size="small" onClick={() => setPage("edit")}>
             수정
           </Button>

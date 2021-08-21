@@ -30,6 +30,6 @@ export class Destinations {
   }
 
   async deleteDestination(id: number) {
-    await this.destinationRepository.delete({ id });
+    return await this.destinationRepository.delete({ id });
   }
 }
