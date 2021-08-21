@@ -5,6 +5,7 @@ import {
   Get,
   HttpStatus,
   Post,
+  Query,
   Req,
   Res,
 } from "@nestjs/common";
@@ -12,6 +13,7 @@ import { AuthService } from "../application/auth-service";
 import { SigninRequest } from "../dto/signin-request";
 import { Request, Response } from "express";
 import messages from "@/config/messages";
+import properties from "@/config/properties/properties";
 
 @Controller("/auth")
 export class AuthController {
@@ -45,6 +47,38 @@ export class AuthController {
       res.status(HttpStatus.BAD_REQUEST);
       return messages.failed.FAILED_TO_SIGN_OUT;
     }
+  }
+  @Get("/google")
+  async googleSiginin() {
+    return;
+  }
+
+  @Get("/github")
+  async githubSignin(
+    @Query("code") code: string,
+    @Res({ passthrough: true }) response: Response
+  ) {
+    try {
+      await this.authService.githubLogin(code, response);
+      response.redirect(properties.local);
+    } catch (e) {
+      console.error(e);
+      return e.message;
+    }
+  }
+
+  @Get("/googleLogin")
+  async redirectToGoogleSignin(@Res({ passthrough: true }) response: Response) {
+    const url = `https://github.com/login/oauth/authorize?redirect_uri=${properties.github.redirect}&client_id=${properties.github.id}`;
+
+    response.redirect(url);
+  }
+
+  @Get("/githubLogin")
+  async redirectToGithubSignin(@Res({ passthrough: true }) response: Response) {
+    const url = `https://github.com/login/oauth/authorize?redirect_uri=${properties.github.redirect}&client_id=${properties.github.id}`;
+
+    response.redirect(url);
   }
 
   @Get()

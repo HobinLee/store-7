@@ -11,5 +11,6 @@ export default {
     FAILED_TO_SIGN_OUT: "로그아웃에 실패했습니다.",
     FAILED_TO_ADD_DESTINATION: "주소 생성 실패",
     EMAIL_EXIST: "이미 존재하는 이메일입니다",
+    FAIL_GET_ACCESS_TOKEN: "엑세스 토큰을 얻어오는 데 실패했습니다",
   },
 };

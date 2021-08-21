@@ -6,6 +6,11 @@ import { Request, Response } from "express";
 import properties from "../../config/properties/properties";
 import PasswordEncoder from "../infrastructure/password-encoder";
 import messages from "@/config/messages";
+import {
+  getGithubAccessToken,
+  getGithubUserInfo,
+} from "../infrastructure/github-login";
+import { CreateUserDTO } from "../dto/create-user";
 
 @Injectable()
 export class AuthService {
@@ -46,5 +51,51 @@ export class AuthService {
     if (!token) return false;
 
     return !!this.jwtService.verifyAsync(token);
+  }
+
+  async githubLogin(code: string, @Res() res: Response) {
+    try {
+      const accessToken = await getGithubAccessToken(code);
+
+      if (!accessToken) throw Error(messages.failed.FAIL_GET_ACCESS_TOKEN);
+
+      const info = await getGithubUserInfo(accessToken);
+      const userId = await this.getGithubUserId(info);
+
+      const token: string = await this.jwtService.signAsync({ userId });
+      if (!token) throw Error(messages.failed.FAILED_TO_GEN_JWT);
+
+      res.cookie(properties.auth.tokenKey, token);
+
+      console.log(token);
+    } catch (e) {
+      throw Error(e);
+    }
+  }
+
+  getGithubUserId = async ({ id, node_id, avatar_url, name, login, email }) => {
+    const existUser = await this.users.findUserByEmail(id);
+    if (existUser) {
+      return existUser.id;
+    }
+
+    const user: CreateUserDTO = {
+      email: id,
+      password: node_id,
+      name: name ?? login ?? email,
+      //profile: avatar_url, TODO: 이미지 변환 후 저장
+    };
+
+    return await this.users.createAndGetUserId(user);
+  };
+
+  createNewGithubUser = async (email: string, pw: string) => {
+    // const insertUserResult = await User.create({ email, pw });
+    // const paymentResult = await insertInitPayment(insertUserResult.id);
+    // return paymentResult ? insertUserResult.id : null;
+  };
+
+  googleLogin(@Req() request: Request) {
+    return;
   }
 }
