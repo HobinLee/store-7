@@ -48,10 +48,12 @@ const AddressForm = ({
     try {
       if (!addressToEdit) {
         await postDestination({
-          ...address,
-          name: addressName.value,
-          addressee: addressee.value,
-          phoneNumber: phone.value,
+          data: {
+            ...address,
+            name: addressName.value,
+            addressee: addressee.value,
+            phoneNumber: phone.value,
+          },
         });
       } else {
         await patchDestination({

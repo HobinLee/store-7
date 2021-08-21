@@ -2,11 +2,13 @@ import { POST, DELETE } from "@/utils/axios";
 
 // POST /carts 장바구니 담기
 export const postCart = (data: {
-  product: {
-    id: number;
+  data: {
+    product: {
+      id: number;
+    };
+    productOptionId?: number;
+    amount: number;
   };
-  productOptionId?: number;
-  amount: number;
 }) => POST("/carts", data);
 
 // PATCH /carts/:id 장바구니 아이템 옵션/개수 변경

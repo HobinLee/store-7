@@ -7,11 +7,9 @@ export class CartController {
   constructor(private readonly cartService: CartService) {}
 
   @Post()
-  createCart(
-    @Param("userId") userId: number,
-    @Body() cart: CartRequest
-  ): string {
-    return this.cartService.createCart(1, cart);
+  createCart(@Body() body: { data: CartRequest; userId: number }): string {
+    console.log(body);
+    return this.cartService.createCart(body.userId, body.data);
   }
 
   @Patch("/:id")

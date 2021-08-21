@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Query } from "@nestjs/common";
+import { Body, Controller, Get, Patch, Query } from "@nestjs/common";
 import {
   MyBasicInfoResponse,
   MyCartsResponse,
@@ -8,20 +8,18 @@ import {
 import { QuestionResponse } from "@/product/dto/question-response";
 import { MyReviewResponse } from "@/product/dto/review-my-response";
 import { MyInfoEditRequest } from "../dto/my-reqeust";
-import { ProductService } from "@/product/application/product-service";
 import { DestinationResponse } from "@/destination/dto/destination-response";
 import { MyService } from "../application/my-service";
 
 @Controller("/my")
 export class MyController {
-  constructor(
-    private readonly myService: MyService,
-    private readonly productService: ProductService
-  ) {}
+  constructor(private readonly myService: MyService) {}
 
   @Get("/carts")
-  async checkEmailExist(): Promise<MyCartsResponse> {
-    return await this.myService.findMyCarts(1);
+  async checkEmailExist(
+    @Body("userId") userId: number
+  ): Promise<MyCartsResponse> {
+    return await this.myService.findMyCarts(userId);
   }
 
   @Get("/info")
@@ -35,7 +33,7 @@ export class MyController {
   async getMyDestionation(
     @Body("userId") userId: number
   ): Promise<DestinationResponse[]> {
-    return await this.myService.findMyDestionation(1);
+    return await this.myService.findMyDestionation(userId);
   }
 
   @Patch("/info")

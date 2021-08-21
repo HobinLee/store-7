@@ -11,10 +11,9 @@ export class DestinationController {
 
   @Post()
   createDestination(
-    @Param("userId") userId: number,
-    @Body() destination: DestinationRequest
+    @Body() body: { data: DestinationRequest; userId: number }
   ): string {
-    return this.destinationService.createDestination(1, destination);
+    return this.destinationService.createDestination(body.userId, body.data);
   }
 
   //   @Get()
@@ -28,9 +27,9 @@ export class DestinationController {
   @Patch("/:id")
   updateDestination(
     @Param("id") id: number,
-    @Body() modifiedDestination: DestinationModifyRequest
+    @Body() body: { data: DestinationModifyRequest; userId: number }
   ): string {
-    return this.destinationService.updateDestination(id, modifiedDestination);
+    return this.destinationService.updateDestination(id, body.data);
   }
 
   @Delete("/:id")

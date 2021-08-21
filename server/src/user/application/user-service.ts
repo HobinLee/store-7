@@ -28,7 +28,10 @@ export class UserService {
     const userId = await this.createNewUser(user);
     if (!userId) throw new Error(messages.failed.FAILED_TO_SIGN_UP);
 
-    const newAddress = await this.createNewAddress(address, userId);
+    const newAddress = await this.createNewAddress(
+      { ...address, addressee: user.name, phoneNumber: user.phoneNumber },
+      userId
+    );
     if (!newAddress) throw new Error(messages.failed.FAILED_TO_ADD_DESTINATION);
 
     const token: string = await this.jwtService.signAsync({ userId });

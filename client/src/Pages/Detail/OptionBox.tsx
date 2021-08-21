@@ -32,8 +32,10 @@ const OptionBox = ({
     try {
       if (status !== "loading") {
         await postCart({
-          product: { id: parseInt(productId) },
-          amount: parseInt(numValue.value),
+          data: {
+            product: { id: parseInt(productId) },
+            amount: parseInt(numValue.value),
+          },
         });
       }
     } catch (error) {
