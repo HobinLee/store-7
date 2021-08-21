@@ -4,4 +4,5 @@ export class ReviewDTO {
   content: string;
   image?: string;
   authorName: string;
+  createdAt: Date;
 }
