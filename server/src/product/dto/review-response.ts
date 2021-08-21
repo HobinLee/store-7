@@ -38,7 +38,7 @@ export class ReviewResponse {
         rate: review.id,
         content: review.content,
         image: review.image,
-        authorName: review.author.name,
+        authorName: review.order.user.name,
         createdAt: review.createdAt,
       };
     });

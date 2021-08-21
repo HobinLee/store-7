@@ -1,7 +1,9 @@
 import { Cart } from "@/cart/entity/cart";
 import { Destination } from "@/destination/entity/destination";
-import { Review } from "@/product/entity/review";
+import { Order } from "@/order/entity/order";
+import { Question } from "@/product/entity/question";
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { Wish } from "./wish";
 
 @Entity()
 export class User {
@@ -32,6 +34,12 @@ export class User {
   @OneToMany(() => Destination, (destination) => destination.user)
   destinations: Destination[];
 
-  @OneToMany(() => Review, (review) => review.author)
-  reviews: Review[];
+  @OneToMany(() => Question, (question) => question.user)
+  questions: Question[];
+
+  @OneToMany(() => Order, (order) => order.user)
+  orders: Order[];
+
+  @OneToMany(() => Wish, (wish) => wish.user)
+  wishes: Wish[];
 }

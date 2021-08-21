@@ -6,22 +6,16 @@ import {
   JoinColumn,
   CreateDateColumn,
 } from "typeorm";
-import { User } from "@/user/entity/user";
+import { Order } from "@/order/entity/order";
 
 @Entity("review")
 export class Review {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ name: "order_id", type: "int" })
-  orderId: number;
-
-  @Column({ name: "product_id", type: "int" })
-  productId: number;
-
-  @ManyToOne(() => User, (user) => user.reviews)
-  @JoinColumn({ name: "author_id" })
-  author: User;
+  @ManyToOne(() => Order, (order) => order.reviews)
+  @JoinColumn({ name: "order_id" })
+  order: Order;
 
   @Column({ type: "char", length: 32, nullable: true })
   image: string;

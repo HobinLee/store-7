@@ -22,12 +22,14 @@ import { Product } from "@/product/entity/product";
 import { Orders } from "@/order/domain/orders";
 import { Order } from "@/order/entity/order";
 import { ProductModule } from "@/product/product-module";
+import { Wishes } from "./domain/wishes";
+import { Wish } from "./entity/wish";
 
 const jwtConfig = properties.auth;
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Review, Question, Product, Order]),
+    TypeOrmModule.forFeature([User, Review, Question, Product, Order, Wish]),
     JwtModule.register({
       secret: jwtConfig.secret,
       signOptions: { expiresIn: jwtConfig.expiresIn },
@@ -47,6 +49,7 @@ const jwtConfig = properties.auth;
     Reviews,
     Questions,
     Orders,
+    Wishes,
   ],
 })
 export class UserModule {}
