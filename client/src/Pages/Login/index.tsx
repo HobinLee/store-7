@@ -8,6 +8,7 @@ import { gap } from "@/styles/theme";
 import { useSetRecoilState } from "recoil";
 import { loginState } from "@/store/state";
 import { signIn } from "@/api/auth";
+import APIButton from "@/Components/APIButton";
 
 const LoginPage = () => {
   const email = useInput("");
@@ -26,7 +27,6 @@ const LoginPage = () => {
   };
 
   const handleDemoSignin = async () => {
-    console.log(process.env.DEMO_EMAIL, process.env.DEMO_PW);
     await signIn({
       email: process.env.DEMO_EMAIL,
       password: process.env.DEMO_PW,
@@ -62,10 +62,17 @@ const LoginPage = () => {
             onChange={password.onChange}
           />
           <div>아이디 저장</div>
-          <Button onClick={handleSignin} primary disabled={!checkSignupable()}>
+          <APIButton
+            api={handleSignin}
+            primary
+            disabled={!checkSignupable()}
+            className={"login-form__login"}
+          >
             로그인
+          </APIButton>
+          <Button onClick={handleDemoSignin} className={"login-form__demo"}>
+            시연용 아이디로 로그인
           </Button>
-          <Button onClick={handleDemoSignin}>시연용 아이디로 로그인</Button>
           <div className="login-form__oauth">
             <button>깃허브</button>
             <button>구글</button>
@@ -158,6 +165,13 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   ${gap("2rem", "column")}
+  .login-form__login {
+    height: 5rem;
+  }
+
+  .login-form__demo {
+    color: ${({ theme }) => theme.color.primary3};
+  }
 `;
 
 export default LoginPage;

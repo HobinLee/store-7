@@ -1,6 +1,6 @@
 import { ReactChild } from "react";
 import { useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import spinner from "@/assets/spinner.png";
 
 interface APIButtonProps {
@@ -25,14 +25,17 @@ const APIButton = ({
   const [isAPICalling, setIsAPICalling] = useState(false);
 
   const handleClick = async (e) => {
-    setIsAPICalling(true);
-    await api(e);
-    setIsAPICalling(false);
+    try {
+      setIsAPICalling(true);
+      await api(e);
+    } finally {
+      setIsAPICalling(false);
+    }
   };
 
   return (
     <APIButtonWrapper
-      {...{ type, primary, size, className }}
+      {...{ type, primary, size, className, isAPICalling }}
       onClick={handleClick}
       disabled={disabled || isAPICalling}
     >
@@ -41,7 +44,11 @@ const APIButton = ({
   );
 };
 
-const APIButtonWrapper = styled.button<{ primary: boolean; size: string }>`
+const APIButtonWrapper = styled.button<{
+  primary: boolean;
+  size: string;
+  isAPICalling: boolean;
+}>`
   ${({ theme, size }) => theme.font[size]};
   ${({ theme, size }) =>
     size === "small" ? theme.borderRadius.small : theme.borderRadius.medium};
@@ -59,13 +66,22 @@ const APIButtonWrapper = styled.button<{ primary: boolean; size: string }>`
   width: ${({ size }) => size === "large" && "100%"};
   border: 1px solid ${({ theme }) => theme.color.light_grey2};
   padding: 1rem 2rem;
-
   cursor: pointer;
+  transition: 0.5s;
+  opacity: 1;
+
   &:disabled {
-    color: ${({ theme }) => theme.color.white};
-    background-color: ${({ theme }) => theme.color.light_grey1};
-    border: none;
-    cursor: default;
+    ${({ theme, isAPICalling }) =>
+      isAPICalling
+        ? css`
+            opacity: 0.75;
+          `
+        : css`
+            color: ${theme.color.white};
+            background-color: ${theme.color.light_grey1};
+            border: none;
+            cursor: default;
+          `}
   }
 
   @keyframes rotate {
@@ -80,7 +96,7 @@ const APIButtonWrapper = styled.button<{ primary: boolean; size: string }>`
   .spinner {
     width: 20px;
     filter: invert(98%) sepia(12%) saturate(78%) hue-rotate(137deg)
-      brightness(84%) contrast(100%);
+      brightness(124%) contrast(100%);
     animation: rotate 0.8s ease infinite;
   }
 `;
