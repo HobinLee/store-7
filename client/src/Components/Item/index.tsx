@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link } from "@/Router";
 import styled, { css } from "styled-components";
-import MagnifiedImage from "./MagnifiedImage";
-import { Wish } from "@/assets";
+import ToggleImageWrapper from "../ToggleImageWrapper";
+import { Loading, Wish } from "@/assets";
 import { getCurrentPrice, convertToKRW } from "@/utils/util";
 
 type ItemType = {
@@ -35,7 +35,7 @@ const Item = ({
       <Link to={`/detail/${id}`}>
         <ItemWrapper>
           <div className="thumbnail">
-            <MagnifiedImage src="https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg" />
+            <ToggleImageWrapper src="https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg" />
             <div className="thumbnail__tags">
               {tags.map((tag, idx) => (
                 <Tag tag={tag} key={idx}>
@@ -70,8 +70,14 @@ const Item = ({
 };
 
 const ItemWrapper = styled.div`
+  &:hover {
+    /* box-shadow: 0 0 10px 1px ${({ theme }) => theme.color.primary3}; */
+    box-shadow: 0 0 10px 3px #a1dbcb;
+    transition: box-shadow 0.2s;
+  }
   .thumbnail {
     position: relative;
+
     &__tags {
       position: absolute;
       top: 1rem;
@@ -82,10 +88,12 @@ const ItemWrapper = styled.div`
       position: absolute;
       bottom: 1rem;
       right: 1rem;
-    }
-    .active {
-    }
-    .inactive {
+      & > svg:hover {
+        opacity: 0.7;
+      }
+      & > svg:active {
+        transform: scale(1.1);
+      }
     }
   }
 

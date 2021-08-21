@@ -1,18 +1,18 @@
+import { Loading, Search } from "@/assets";
 import styled from "styled-components";
-type MagnifiedImageType = {
-  src: string;
-};
 
-const MagnifiedImage = ({ src }: MagnifiedImageType) => {
+const ToggleImageWrapper = ({ src }: { src: string }) => {
   return (
-    <MagnifiedImageWrapper>
+    <Wrapper>
       <img src={src} />
-    </MagnifiedImageWrapper>
+    </Wrapper>
   );
 };
 
-const MagnifiedImageWrapper = styled.div`
+const Wrapper = styled.div`
   overflow: hidden;
+  ${({ theme }) => theme.borderRadius.medium}
+
   & > img {
     display: block;
     width: 100%;
@@ -24,4 +24,4 @@ const MagnifiedImageWrapper = styled.div`
   }
 `;
 
-export default MagnifiedImage;
+export default ToggleImageWrapper;
