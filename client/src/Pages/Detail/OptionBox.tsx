@@ -8,9 +8,24 @@ import { convertToKRW } from "@/utils/util";
 import { gap } from "@/styles/theme";
 import { postCart } from "@/api/carts";
 import { moveTo } from "@/Router";
+import { useSetRecoilState } from "recoil";
+import { orders } from "@/store/state";
+import { ProductType } from "@/shared/type";
+import { InputType } from "@/hooks/useInput";
 
-const OptionBox = ({ numValue, handleClickNumVal }) => {
+type OptionBoxProps = {
+  numValue: InputType;
+  handleClickNumVal: Function;
+  product: ProductType;
+};
+
+const OptionBox = ({
+  numValue,
+  handleClickNumVal,
+  product,
+}: OptionBoxProps) => {
   const [isCartAlertShown, setIsCartAlertShown] = useState(false);
+  const setOrders = useSetRecoilState(orders);
   const productId = location.pathname.split("detail/")[1];
 
   const handlePostCart = async () => {
@@ -26,6 +41,25 @@ const OptionBox = ({ numValue, handleClickNumVal }) => {
     } finally {
       setIsCartAlertShown(true);
     }
+  };
+
+  const handleBuyImmediately = () => {
+    setOrders({
+      items: [
+        {
+          ...product,
+          amount: numValue.value,
+          price: product.price * parseInt(numValue.value),
+        },
+      ],
+      totalPrice: product.price * parseInt(numValue.value),
+      totalDelivery: product.deliveryCost,
+      totalPayment:
+        product.price * parseInt(numValue.value) + product.deliveryCost,
+      totalCount: parseInt(numValue.value),
+    });
+
+    moveTo("/order");
   };
 
   return (
@@ -44,7 +78,7 @@ const OptionBox = ({ numValue, handleClickNumVal }) => {
               </button>
             </div>
           </div>
-          10,000원
+          {convertToKRW(product.price)}
         </div>
       </div>
 
@@ -56,7 +90,7 @@ const OptionBox = ({ numValue, handleClickNumVal }) => {
       <div className="buttons">
         <Button>찜</Button>
         <Button onClick={handlePostCart}>장바구니</Button>
-        <Button onClick={() => moveTo("/order")} primary>
+        <Button onClick={handleBuyImmediately} primary>
           바로 구매
         </Button>
       </div>

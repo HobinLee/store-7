@@ -2,8 +2,8 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import {
+  CreateDestinationRequest,
   DestinationModifyRequest,
-  DestinationRequest,
 } from "../dto/destination-request";
 import { Destination } from "../entity/destination";
 
@@ -15,10 +15,13 @@ export class Destinations {
   ) {}
 
   async findDestinationsByUserId(userId: number) {
-    return await this.destinationRepository.find({ where: { userId } });
+    return await this.destinationRepository.find({
+      where: { user: { id: userId } },
+      relations: ["user"],
+    });
   }
 
-  async createDestination(destination: DestinationRequest) {
+  async createDestination(destination: CreateDestinationRequest) {
     return this.destinationRepository.insert(destination);
   }
 
@@ -27,6 +30,6 @@ export class Destinations {
   }
 
   async deleteDestination(id: number) {
-    await this.destinationRepository.delete({ id });
+    return await this.destinationRepository.delete({ id });
   }
 }

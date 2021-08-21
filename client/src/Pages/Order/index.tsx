@@ -16,20 +16,16 @@ import {
   validatePhoneNumber,
   VALIDATION_ERR_MSG,
 } from "@/utils/validations";
-import { sampleUser } from "@/shared/dummy";
 import { gap } from "@/styles/theme";
-import { useMyCarts } from "@/api/my";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { orders } from "@/store/state";
 import { useEffect } from "react";
+import { useMyDestinations } from "@/api/my";
+import { DestinationType } from "@/shared/type";
 
 const OrderPage = () => {
   // const { status, data: carts, error } = useMyCarts();
   const orderItems = useRecoilValue(orders);
-
-  useEffect(() => {
-    console.log("order", orderItems);
-  }, [orderItems]);
 
   const email = useInput("");
   const emailValidation = useValidation(validateEmail);
@@ -38,7 +34,17 @@ const OrderPage = () => {
   const phone = useInput("");
   const phoneValidation = useValidation(validatePhoneNumber);
 
+  const { status, data: destinations, error } = useMyDestinations();
+
+  const [address, setAddress] = useState<Partial<DestinationType>>();
+  useEffect(() => {
+    if (status !== "loading")
+      setAddress(destinations.find((i) => i.isDefault === true));
+  }, [destinations]);
+
   const [isAddressModalOpened, setIsAddressModalOpened] = useState(false);
+
+  // TODO: 기본배송지 가져오기
 
   return (
     <Wrapper>
@@ -105,8 +111,13 @@ const OrderPage = () => {
             </div>
 
             <div className="address-info">
-              <div className="name">{sampleUser.destinations[0].name}</div>
-              <div>{sampleUser.destinations[0].detailAddress}</div>
+              <div className="name">{address?.name}</div>
+              <div>
+                {address?.addressee} {address?.phoneNumber}
+              </div>
+              <div>
+                {address?.address} {address?.detailAddress}
+              </div>
               <select className="order-input">
                 <option>배송시 요청사항을 선택해주세요.</option>
                 <option>부재시 문 앞에 놓아주세요.</option>
@@ -126,7 +137,10 @@ const OrderPage = () => {
       </div>
       <Footer />
       {isAddressModalOpened && (
-        <AddressModal closeModal={() => setIsAddressModalOpened(false)} />
+        <AddressModal
+          {...{ setAddress, address }}
+          closeModal={() => setIsAddressModalOpened(false)}
+        />
       )}
     </Wrapper>
   );

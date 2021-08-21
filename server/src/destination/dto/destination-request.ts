@@ -1,10 +1,18 @@
 export interface DestinationRequest {
-  userId: number;
   name: string;
   postCode: string;
   address: string;
   detailAddress: string;
-  isDefault: boolean;
+  isDefault: number;
+  addressee?: string;
+  phoneNumber?: string;
+}
+
+export interface CreateDestinationRequest extends DestinationRequest {
+  user: {
+    id: number;
+  };
+  isDefault: number;
 }
 
 export interface DestinationModifyRequest {

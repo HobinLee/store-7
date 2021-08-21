@@ -14,12 +14,15 @@ import { MyReviewResponse } from "@/product/dto/review-my-response";
 import { Users } from "../domain/users";
 import { MyInfoEditRequest } from "../dto/my-reqeust";
 import { Orders } from "@/order/domain/orders";
+import { Destinations } from "@/destination/domain/destinations";
+import { DestinationResponse } from "@/destination/dto/destination-response";
 
 @Injectable()
 export class MyService {
   constructor(
     private readonly carts: Carts,
     private readonly reviews: Reviews,
+    private readonly destinations: Destinations,
     private readonly questions: Questions,
     private readonly users: Users,
     private readonly orders: Orders
@@ -57,6 +60,13 @@ export class MyService {
     userId = 1;
     const reviews = await this.reviews.findReviewByUserId(userId);
     return reviews.map(MyReviewResponse.of);
+  }
+
+  async findMyDestionation(userId) {
+    const destinations = await this.destinations.findDestinationsByUserId(
+      userId
+    );
+    return destinations.map(DestinationResponse.of);
   }
 
   async getMyQeustions(userId: number) {

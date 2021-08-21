@@ -10,6 +10,7 @@ import { MyReviewResponse } from "@/product/dto/review-my-response";
 import { MyService } from "@/user/application/my-service";
 import { MyInfoEditRequest } from "../dto/my-reqeust";
 import { ProductService } from "@/product/application/product-service";
+import { DestinationResponse } from "@/destination/dto/destination-response";
 
 @Controller("/my")
 export class MyController {
@@ -30,6 +31,13 @@ export class MyController {
     @Param("userId") userId: number
   ): Promise<MyBasicInfoResponse> {
     return await this.myService.getMyInfo(userId);
+  }
+
+  @Get("/destinations")
+  async getMyDestionation(
+    @Param("userId") userId: number
+  ): Promise<DestinationResponse[]> {
+    return await this.myService.findMyDestionation(1);
   }
 
   @Patch("/info")

@@ -4,11 +4,16 @@ import { UserType } from "@/shared/type";
 import AddressForm, { AddressFormProps } from "./index";
 
 const ADDRESS = {
+  id: 1,
   name: "addressName",
   detailAddress: "detailAddress",
   postCode: "1234",
   address: "postcodeAddress",
+  addressee: "addressee",
+  phoneNumber: "1234",
+  isDefault: true,
 };
+
 const USER: UserType = {
   name: "userName",
   phoneNumber: "phone",

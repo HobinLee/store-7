@@ -7,7 +7,7 @@ const IS_CHECKED = false;
 
 const checkboxProps: CheckboxProps = {
   label: LABEL,
-  checked: IS_CHECKED,
+  isChecked: IS_CHECKED,
   handleCheck: () => {},
 };
 
