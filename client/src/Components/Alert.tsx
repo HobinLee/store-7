@@ -1,4 +1,3 @@
-import { AlertType } from "@/shared/type";
 import { alertState } from "@/store/state";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";

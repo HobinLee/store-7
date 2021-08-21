@@ -1,4 +1,3 @@
-import { AlertType } from "@/shared/type";
 import { atom } from "recoil";
 
 export const orders = atom({
@@ -12,7 +11,7 @@ export const orders = atom({
   },
 });
 
-export const alertState = atom<AlertType>({
+export const alertState = atom({
   key: "isOpen",
   default: {
     isOpened: false,
