@@ -20,6 +20,5 @@ export interface DestinationModifyRequest {
   postCode?: string;
   address?: string;
   detailAddress?: string;
-  userId?: number;
   isDetault?: boolean;
 }

@@ -4,6 +4,8 @@ export interface FirstDestinationDTO {
   postCode: string;
   address: string;
   detailAddress: string;
+  addressee: string;
+  phoneNumber: string;
 }
 
 export const createFirstDestination = (
@@ -17,5 +19,7 @@ export const createFirstDestination = (
     address: address.address,
     detailAddress: address.detailAddress,
     isDefault: 1,
+    addressee: address.addressee,
+    phoneNumber: address.phoneNumber,
   };
 };
