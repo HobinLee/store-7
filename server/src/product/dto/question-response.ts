@@ -27,7 +27,7 @@ export class QuestionResponse {
       isSecret = q.isSecret,
       createdAt = q.createdAt,
       answeredAt = q.answeredAt,
-      product = { id: q.product.id, name: "name" };
+      product = { id: q.product.id, name: q.product.name };
 
     return {
       id,
