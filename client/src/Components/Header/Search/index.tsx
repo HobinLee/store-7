@@ -5,6 +5,7 @@ import { DropdownWrapper, DropdownItem } from "@/shared/styled";
 import useInput from "@/hooks/useInput";
 import SearchList from "./DropDown/SearchedList";
 import AutoList from "./DropDown/AutoCompleteList";
+import { debounce } from "@material-ui/core";
 
 const LS_SEARCH = "search";
 
@@ -45,6 +46,7 @@ const Search = () => {
 
     return newList.slice(0, MAX_LIST_COUNT);
   };
+
   const handleSearch = (keyword: string = searchValue.value) => {
     if (keyword === "") return;
 
@@ -59,9 +61,12 @@ const Search = () => {
       : setNewSearchList([]);
   };
 
-  useEffect(() => {
-    // 자동완성?
-  }, [searchValue]);
+  const debounceAutoComplete = debounce(() => {}, 200);
+
+  const onChangeKeyword = (e) => {
+    searchValue.onChange(e);
+    debounceAutoComplete();
+  };
 
   return (
     <SearchWrapper
@@ -85,7 +90,7 @@ const Search = () => {
         <SearchInput
           placeholder="검색어를 입력해주세요."
           value={searchValue.value}
-          onChange={searchValue.onChange}
+          onChange={onChangeKeyword}
         />
         {searchValue.value.length > 0 && (
           <ResetButton onClick={() => searchValue.setValue("")} />
@@ -144,6 +149,7 @@ const SearchInput = styled(Input)`
   ::placeholder {
     color: ${({ theme }) => theme.color.light_grey2};
   }
+  color: ${({ theme }) => theme.color.light_grey1};
   border: none;
   padding: 1rem 1.5rem;
   width: 30rem;
