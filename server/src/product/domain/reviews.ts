@@ -16,17 +16,18 @@ export class Reviews {
 
   async findReviewsByProjectId(productId: number) {
     return this.reviewRepository.find({
-      relations: ["author"],
+      relations: ["order"],
       where: {
         productId,
       },
     });
   }
 
-  async findReviewByUserId(userId) {
-    return this.reviewRepository.find({
-      relations: ["author"],
-      where: { author: userId },
+  //TODO : 해결하쇼 유저 아이디로 order찾기
+  async findReviewsByUserId(userId) {
+    return await this.reviewRepository.find({
+      relations: ["order", "order.user"],
+      where: { order: { user: userId } },
     });
   }
 
