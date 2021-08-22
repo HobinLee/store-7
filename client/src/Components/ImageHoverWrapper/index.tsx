@@ -1,7 +1,7 @@
 import { Loading, Search } from "@/assets";
 import styled from "styled-components";
 
-const ToggleImageWrapper = ({ src }: { src: string }) => {
+const ImageHoverWrapper = ({ src }: { src: string }) => {
   return (
     <Wrapper>
       <img src={src} />
@@ -25,4 +25,4 @@ const Wrapper = styled.div`
   }
 `;
 
-export default ToggleImageWrapper;
+export default ImageHoverWrapper;
