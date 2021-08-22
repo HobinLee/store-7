@@ -6,18 +6,16 @@ import Header from "@/Components/Header";
 import Sidebar from "./Sidebar";
 import ContentArea from "./ContentArea";
 
+import { useUserInfo } from "@/api/my";
+
 const MyPage = () => {
   const [current, setCurrent] = useState("/");
-  const user: User = {
-    username: "홍영준",
-    grade: "쭈굴회원",
-  };
 
   return (
     <MyPageWrapper>
       <Header />
       <Contents>
-        <ContentHeader {...user} />
+        <ContentHeader />
         <ContentBody>
           <Sidebar setCurrent={setCurrent} />
           <ContentArea current={current} />
@@ -33,21 +31,24 @@ const ContentBody = styled.div`
   display: flex;
 `;
 
-export interface User {
-  username: string;
-  grade: string;
-}
+export const ContentHeader = () => {
+  const { status, data: userInfo } = useUserInfo();
 
-export const ContentHeader = ({ username, grade }: User) => {
   return (
     <ContentHeaderWrapper data-testid="test__content-header">
-      <div className="greeting">반가워요,</div>
-      <p>
-        <span>{username}</span> 님의
-      </p>
-      <p>
-        회원등급은 <span>{grade}</span>입니다.
-      </p>
+      {status !== "loading" ? (
+        <>
+          <div className="greeting">반가워요,</div>
+          <p>
+            <span>{userInfo.name}</span> 님의
+          </p>
+          <p>
+            회원등급은 <span>{userInfo.grade}</span>입니다.
+          </p>{" "}
+        </>
+      ) : (
+        <div>스켈레톤 UI</div>
+      )}
     </ContentHeaderWrapper>
   );
 };
