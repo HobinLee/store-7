@@ -20,6 +20,8 @@ const addressBoxProps: AddressBoxProps = {
   setAddress: () => {},
   refetch: () => {},
   closeModal: () => {},
+  isChecked: false,
+  handleCheck: () => {},
 };
 
 describe("<AddressBox />", () => {

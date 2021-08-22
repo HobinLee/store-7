@@ -5,14 +5,17 @@ import { SetStateAction } from "react";
 import { Dispatch } from "react";
 import { gap } from "@/styles/theme";
 import { deleteDestination } from "@/api/destinations";
+import Checkbox from "@/Components/Checkbox";
 
 export type AddressBoxProps = {
   setPage: Dispatch<SetStateAction<"select" | "add" | "edit">>;
   address: DestinationType;
   setAddress: Dispatch<SetStateAction<DestinationType>>;
   setAddressToEdit?: Dispatch<SetStateAction<DestinationType>>;
-  refetch;
-  closeModal;
+  refetch: Function;
+  closeModal: Function;
+  isChecked: boolean;
+  handleCheck: Function;
 };
 
 const AddressBox = ({
@@ -22,6 +25,8 @@ const AddressBox = ({
   setAddressToEdit,
   refetch,
   closeModal,
+  isChecked,
+  handleCheck,
 }: AddressBoxProps) => {
   const handleDelete = async (id: number) => {
     await deleteDestination(id);
@@ -39,6 +44,11 @@ const AddressBox = ({
 
   return (
     <Wrapper>
+      <div className="checkbox">
+        <div>{isChecked && "기본배송지"}</div>
+        <Checkbox size="small" {...{ isChecked, handleCheck }} />
+      </div>
+
       <div className="name">{address.name}</div>
       <div>{address.address}</div>
       <div>{address.detailAddress}</div>
@@ -65,12 +75,23 @@ const AddressBox = ({
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  ${gap("1rem", "column")}
+  ${gap("1rem", "column")};
   background: #fff;
   border-radius: 1rem;
   padding: 2rem;
   box-sizing: border-box;
   ${({ theme }) => theme.font.medium};
+  position: relative;
+
+  .checkbox {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    ${gap("0.5rem")};
+    ${({ theme }) => theme.font.small};
+  }
 
   .name {
     ${({ theme }) => theme.font.large};

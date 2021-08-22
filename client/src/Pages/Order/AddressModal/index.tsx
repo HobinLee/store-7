@@ -23,6 +23,14 @@ const AddressModal = ({ closeModal, setAddress }) => {
     setAddressToEdit(null);
   }, [page]);
 
+  // 기본배송지
+  const [defaultId, setDefaultId] = useState(
+    destinations?.find((i) => i.isDefault).id
+  );
+  const handleCheck = (id: number) => {
+    setDefaultId(id);
+  };
+
   return (
     <Wrapper {...{ closeModal, title }} hideCloseBtn={page !== "select"}>
       <>
@@ -49,6 +57,8 @@ const AddressModal = ({ closeModal, setAddress }) => {
                       refetch,
                       closeModal,
                     }}
+                    isChecked={defaultId === address.id}
+                    handleCheck={() => handleCheck(address.id)}
                   />
                 ))
               ) : (
