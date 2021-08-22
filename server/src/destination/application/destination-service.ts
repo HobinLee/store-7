@@ -40,6 +40,22 @@ export class DestinationService {
     return "Updated!";
   }
 
+  async updateDefaultDestination(userId: number, id: number): Promise<string> {
+    try {
+      const allDestinations = await this.destinations.findDestinationsByUserId(
+        userId
+      );
+      allDestinations.forEach(async (d) => {
+        if (d.id !== id)
+          await this.destinations.updateDestinationIsDefault(d.id, false);
+      });
+      await this.destinations.updateDestinationIsDefault(id, true);
+    } catch (e) {
+      return e;
+    }
+    return "Updated!";
+  }
+
   deleteDestination(id: number): string {
     try {
       this.destinations.deleteDestination(id);

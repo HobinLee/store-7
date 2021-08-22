@@ -8,6 +8,7 @@ import AddressForm from "../AddressForm";
 import { gap } from "@/styles/theme";
 import { useMyDestinations } from "@/api/my";
 import { useEffect } from "react";
+import { patchDefaultDestination } from "@/api/destinations";
 
 const AddressModal = ({ closeModal, setAddress }) => {
   const { status, data: destinations, error, refetch } = useMyDestinations();
@@ -27,8 +28,10 @@ const AddressModal = ({ closeModal, setAddress }) => {
   const [defaultId, setDefaultId] = useState(
     destinations?.find((i) => i.isDefault).id
   );
-  const handleCheck = (id: number) => {
+  const handleCheck = async (id: number) => {
     setDefaultId(id);
+    await patchDefaultDestination(id);
+    refetch();
   };
 
   return (

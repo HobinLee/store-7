@@ -29,6 +29,13 @@ export class Destinations {
     return await this.destinationRepository.update({ id }, { ...destination });
   }
 
+  async updateDestinationIsDefault(id: number, isDefault: boolean) {
+    return await this.destinationRepository.update(
+      { id },
+      { isDefault: isDefault ? 1 : 0 }
+    );
+  }
+
   async deleteDestination(id: number) {
     return await this.destinationRepository.delete({ id });
   }
