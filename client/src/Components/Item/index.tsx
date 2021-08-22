@@ -84,8 +84,6 @@ const ItemWrapper = styled.div`
   padding-bottom: 2rem;
   ${({ theme }) => theme.borderRadius.medium}
   &:hover {
-    /* box-shadow: 0 0 10px 1px ${({ theme }) => theme.color.primary3}; */
-    /* box-shadow: 0 0 10px 5px #afefdd; */
     box-shadow: 0 0 10px 2px #d4d4d4;
     transition: all 0.2s;
   }
@@ -185,6 +183,7 @@ const Tag = styled.div<{
 
   font-weight: bold;
   padding: 0.7rem 1rem 0.2rem 1rem;
+  box-shadow: 2px 2px 5px #7d8181;
   & + & {
     margin-left: 1rem;
   }
