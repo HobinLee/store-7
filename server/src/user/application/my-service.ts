@@ -18,6 +18,7 @@ import { Orders } from "@/order/domain/orders";
 import { Destinations } from "@/destination/domain/destinations";
 import { DestinationResponse } from "@/destination/dto/destination-response";
 import { Wishes } from "../domain/wishes";
+import { WishRequest } from "../dto/wish-request";
 
 @Injectable()
 export class MyService {
@@ -84,15 +85,23 @@ export class MyService {
     return orders.map(MyCurrentOredersResponse.of);
   }
 
-  async getMyOrders(userId: number) {
-    userId = 1;
-    const orders = await this.orders.findOrdersByUserId(userId);
-    return orders.map(MyOredersResponse.of);
-  }
-
   async getMyWishes(userId: number) {
     userId = 1;
     const wishes = await this.wishes.findWishesByUserId(userId);
     return MyWishResponse.of(wishes);
+  }
+
+  async postWishProduct(wish: WishRequest) {
+    await this.wishes.createWish(wish);
+  }
+
+  async deleteWishProduct(wish: WishRequest) {
+    await this.wishes.deleteWish(wish);
+  }
+
+  async getMyOrders(userId: number) {
+    userId = 1;
+    const orders = await this.orders.findOrdersByUserId(userId);
+    return orders.map(MyOredersResponse.of);
   }
 }
