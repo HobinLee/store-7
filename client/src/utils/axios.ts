@@ -1,5 +1,6 @@
 import { alert } from "@/Components/Alert";
 import axios from "axios";
+import properties from "@/config/properties";
 import { handleHttpError } from "./error";
 
 const fetchWrap = async ({
@@ -15,7 +16,7 @@ const fetchWrap = async ({
 }) => {
   try {
     const config = {
-      baseURL: process.env.BASE_URL,
+      baseURL: properties.baseURL,
       withCredentials: true,
       params,
     };
