@@ -11,7 +11,8 @@ const nestApplication = async () => {
     "origin": "https://store-7.woowahan-techcamp.shop",
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
     "preflightContinue": false,
-    "optionsSuccessStatus": 204
+    "optionsSuccessStatus": 204,
+    credentials: true
   });
   app.use(cookieParser());
   await app.listen(serverPort);
