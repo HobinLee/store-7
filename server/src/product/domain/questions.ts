@@ -25,7 +25,7 @@ export class Questions {
   async findQuestionsByUserId(userId): Promise<Question[]> {
     return await this.questionRepository.find({
       relations: ["user", "product"],
-      where: { user: userId },
+      where: { user: { id: userId } },
     });
   }
 
