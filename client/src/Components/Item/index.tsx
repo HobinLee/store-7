@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Link } from "@/Router";
 import styled, { css } from "styled-components";
 import ToggleImageWrapper from "../ToggleImageWrapper";
-import { Loading, Wish } from "@/assets";
+import { Wish } from "@/assets";
 import { getCurrentPrice, convertToKRW } from "@/utils/util";
+import { postWishProduct, deleteWishProduct } from "@/api/my";
 
 type ItemType = {
   id: number;
@@ -22,13 +23,13 @@ const Item = ({
   price,
   isWish,
 }: ItemType) => {
-  const toggleWish = (e: Event) => {
+  const [isWishState, setIsWish] = useState(isWish);
+
+  const handleClickWish = (apiCallback) => async (e: Event) => {
     e.stopPropagation();
-    //TODO: 서버 좋아요 변경
-    // console.log(`${id} 아이템 wish를 ${boolean}으로`);
+    await apiCallback({ productId: id });
     setIsWish(!isWishState);
   };
-  const [isWishState, setIsWish] = useState(isWish);
 
   return (
     <li data-testid="test__itme">
@@ -50,14 +51,14 @@ const Item = ({
                   height="36"
                   opacity="1"
                   fill="#13d8d1"
-                  onClick={toggleWish}
+                  onClick={handleClickWish(deleteWishProduct)}
                 />
               ) : (
                 <Wish
                   width="36"
                   height="36"
                   fill="white"
-                  onClick={toggleWish}
+                  onClick={handleClickWish(postWishProduct)}
                 />
               )}
             </WishBox>

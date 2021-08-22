@@ -5,8 +5,11 @@ import Item from "@/Components/Item";
 import { recent, sampleMain } from "@/shared/dummy";
 import RecentOrder from "../../../Table/rows/RecentOrder";
 import { ItemList } from "@/shared/styled";
+import { useMyOrders } from "@/api/my";
 
 const Root = () => {
+  const { status, data: orders } = useMyOrders({ target: "current" });
+
   return (
     <Wrapper data-testid="test__root">
       <Section
