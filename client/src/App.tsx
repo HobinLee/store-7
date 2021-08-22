@@ -69,8 +69,8 @@ const App = () => {
       </button>
 
       <Router>
-        {routes.map(([path, component, exact]: route, idx) => (
-          <Route path={path} exact={exact ?? false} key={idx}>
+        {routes.map(([path, component, exact]: route) => (
+          <Route path={path} exact={exact ?? false} key={path}>
             {component}
           </Route>
         ))}
