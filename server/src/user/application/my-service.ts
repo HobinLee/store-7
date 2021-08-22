@@ -4,7 +4,6 @@ import { Injectable } from "@nestjs/common";
 import {
   MyCartsResponse,
   MyInfoResponse,
-  MyCurrentOredersResponse,
   MyOredersResponse,
   MyWishResponse,
 } from "../dto/my-response";
@@ -85,15 +84,20 @@ export class MyService {
   }
 
   // orders
-  async getMyCurrentOrders(userId: number) {
-    userId = 1;
-    const orders = await this.orders.findCurrentOrdersByUserId(userId);
-    return orders.map(MyCurrentOredersResponse.of);
-  }
-
   async getMyOrders(userId: number) {
     userId = 1;
     const orders = await this.orders.findOrdersByUserId(userId);
+    return orders.map(MyOredersResponse.of);
+  }
+
+  async getMyOrdersByDateRange(
+    userId: number,
+    range: { from: Date; to: Date }
+  ) {
+    const orders = await this.orders.findOrdersByUserIdByDateRange(
+      userId,
+      range
+    );
     return orders.map(MyOredersResponse.of);
   }
 

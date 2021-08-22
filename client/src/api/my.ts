@@ -2,6 +2,7 @@ import {
   CartType,
   DestinationType,
   MyInfoType,
+  MyOrderType,
   ReviewType,
 } from "@/shared/type";
 import { DELETE, GET, PATCH, POST } from "@/utils/axios";
@@ -33,16 +34,15 @@ export const useMyQuestions = () =>
   useQuery(["questions"], () => getMyQuestions());
 
 // GET /my/orders?target 내 현재 주문목록
-const getMyOrders = ({ target }) => GET(`/my/orders/${target}`);
-export const useMyOrders = ({ target }) =>
-  useQuery([], () => getMyOrders({ target }));
+const getMyOrders = (): Promise<MyOrderType[]> => GET(`/my/orders`);
+export const useMyOrders = () => useQuery([], () => getMyOrders());
 
 // GET /my/wishes 내 찜목록
 const getMyWishes = () => GET("/my/wishes");
 export const useMyWishes = () => useQuery(["wishes"], () => getMyWishes());
 
 export const postWishProduct = ({ productId }) =>
-  POST("my/wishes", { productId });
+  POST("/my/wishes", { productId });
 
 export const deleteWishProduct = ({ productId }: { productId: number }) =>
-  DELETE(`my/wishes/${productId}`);
+  DELETE(`/my/wishes/${productId}`);

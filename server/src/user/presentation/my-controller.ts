@@ -6,11 +6,11 @@ import {
   Param,
   Post,
   Delete,
+  Query,
 } from "@nestjs/common";
 import {
   MyInfoResponse,
   MyCartsResponse,
-  MyCurrentOredersResponse,
   MyOredersResponse,
   MyWishResponse,
 } from "../dto/my-response";
@@ -69,16 +69,20 @@ export class MyController {
   }
 
   // orders
-  @Get("/orders/:target")
-  async getMyOrdersByTarget(
-    @Param("target") target: string,
+  @Get("/orders")
+  async getMyOrders(
     @Body("userId") userId: number
-  ): Promise<MyOredersResponse[] | MyCurrentOredersResponse[] | string> {
-    return target === "current"
-      ? await this.myService.getMyCurrentOrders(userId)
-      : target === "all"
-      ? await this.myService.getMyOrders(userId)
-      : "";
+  ): Promise<MyOredersResponse[]> {
+    return await this.myService.getMyOrders(userId);
+  }
+
+  @Get("/orders")
+  async getMyOrdersByDateRange(
+    @Body("userId") userId: number,
+    @Query("from") from: Date,
+    @Query("to") to: Date
+  ): Promise<MyOredersResponse[]> {
+    return await this.myService.getMyOrdersByDateRange(userId, { from, to });
   }
 
   // wishes

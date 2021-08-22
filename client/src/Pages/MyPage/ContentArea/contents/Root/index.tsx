@@ -1,14 +1,13 @@
 import styled from "styled-components";
 import Section from "../../../Section";
-import Table from "../../../Table";
 import Item from "@/Components/Item";
-import { recent, sampleMain } from "@/shared/dummy";
-import RecentOrder from "../../../Table/rows/RecentOrder";
+import { sampleMain } from "@/shared/dummy";
 import { ItemList } from "@/shared/styled";
 import { useMyOrders } from "@/api/my";
+import Orders from "../Orders";
 
 const Root = () => {
-  const { status, data: orders } = useMyOrders({ target: "current" });
+  const { status, data: orders } = useMyOrders();
 
   return (
     <Wrapper data-testid="test__root">
@@ -17,27 +16,7 @@ const Root = () => {
         description="최근 30일 내에 진행중인 주문정보입니다."
         lineType="long1"
       >
-        <div></div>
-      </Section>
-      <Section
-        title="최근 주문 정보"
-        description="최근 30일 내에 주문하신 내역입니다."
-        lineType="long2"
-      >
-        <Table
-          ths={[
-            "날짜/주문번호",
-            "상품명/옵션	",
-            "상품금액/수량",
-            "주문상태",
-            "확인리뷰",
-          ]}
-          ratio={[1, 3, 1, 0.5, 0.5]}
-        >
-          {recent.map((re) => (
-            <RecentOrder {...re} key={re.id} />
-          ))}
-        </Table>
+        {status !== "loading" && <Orders orders={orders} />}
       </Section>
       <Section
         title="최근 본 상품"
