@@ -9,7 +9,7 @@ import { gap } from "@/styles/theme";
 import { postCart } from "@/api/carts";
 import { moveTo } from "@/Router";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { loginState, orders } from "@/store/state";
+import { loginState } from "@/store/state";
 import { CartType, ProductType } from "@/shared/type";
 import { InputType } from "@/hooks/useInput";
 
@@ -25,7 +25,7 @@ const OptionBox = ({
   product,
 }: OptionBoxProps) => {
   const [isCartAlertShown, setIsCartAlertShown] = useState(false);
-  const setOrders = useSetRecoilState(orders);
+
   const productId = location.pathname.split("detail/")[1];
 
   const isLogined = useRecoilValue(loginState);
@@ -68,20 +68,23 @@ const OptionBox = ({
   };
 
   const handleBuyImmediately = () => {
-    setOrders({
-      items: [
-        {
-          ...product,
-          amount: numValue.value,
-          price: product.price * parseInt(numValue.value),
-        },
-      ],
-      totalPrice: product.price * parseInt(numValue.value),
-      totalDelivery: product.deliveryCost,
-      totalPayment:
-        product.price * parseInt(numValue.value) + product.deliveryCost,
-      totalCount: parseInt(numValue.value),
-    });
+    localStorage.setItem(
+      "orders",
+      JSON.stringify({
+        items: [
+          {
+            ...product,
+            amount: numValue.value,
+            price: product.price * parseInt(numValue.value),
+          },
+        ],
+        totalPrice: product.price * parseInt(numValue.value),
+        totalDelivery: product.deliveryCost,
+        totalPayment:
+          product.price * parseInt(numValue.value) + product.deliveryCost,
+        totalCount: parseInt(numValue.value),
+      })
+    );
 
     moveTo("/order");
   };

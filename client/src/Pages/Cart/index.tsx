@@ -9,9 +9,9 @@ import Checkbox from "@/Components/Checkbox";
 import { gap } from "@/styles/theme";
 import { useMyCarts } from "@/api/my";
 import { useState, useEffect } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { loginState, orders } from "@/store/state";
-import { CartType, ICart, PartialCart } from "@/shared/type";
+import { useRecoilValue } from "recoil";
+import { loginState } from "@/store/state";
+import { CartType, ICart, OrderType, PartialCart } from "@/shared/type";
 
 const CartPage = () => {
   const isLogined = useRecoilValue(loginState);
@@ -20,7 +20,7 @@ const CartPage = () => {
   const { status, data: carts, error } = useMyCarts();
 
   const [checkItems, setCheckItems] = useState([]);
-  const [items, setOrders] = useRecoilState(orders);
+  // const [orders, setOrders] = useState<OrderType>();
 
   useEffect(() => {
     if (isLogined && status !== "loading") {
@@ -50,14 +50,16 @@ const CartPage = () => {
         (sum, cart) => sum + cart.deliveryCost,
         0
       );
-      // TODO: localstorage에 저장해서 새로고침시에도 불러오기
-      setOrders({
-        items: checkItems,
-        totalPrice: price,
-        totalDelivery: delivery,
-        totalPayment: price + delivery,
-        totalCount: checkItems.length,
-      });
+      localStorage.setItem(
+        "orders",
+        JSON.stringify({
+          items: checkItems,
+          totalPrice: price,
+          totalDelivery: delivery,
+          totalPayment: price + delivery,
+          totalCount: checkItems.length,
+        })
+      );
     }
   }, [status, checkItems]);
 
@@ -84,7 +86,7 @@ const CartPage = () => {
     status !== "loading" && (
       <Wrapper>
         <Header>
-          <CartBox {...items} />
+          <CartBox />
         </Header>
         <div className="contents">
           <Title>

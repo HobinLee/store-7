@@ -17,17 +17,15 @@ import {
   VALIDATION_ERR_MSG,
 } from "@/utils/validations";
 import { gap } from "@/styles/theme";
-import { useRecoilValue } from "recoil";
-import { orders } from "@/store/state";
 import { useEffect } from "react";
 import { useMyDestinations } from "@/api/my";
 import { DestinationType } from "@/shared/type";
 import { postPaymentReady } from "@/api/payment";
 import properties from "@/config/properties";
+import CartBox from "../Cart/CartBox";
 
 const OrderPage = () => {
-  // const { status, data: carts, error } = useMyCarts();
-  const orderItems = useRecoilValue(orders);
+  const orderItems = JSON.parse(localStorage.getItem("orders"));
 
   const email = useInput("");
   const emailValidation = useValidation(validateEmail);
@@ -57,15 +55,13 @@ const OrderPage = () => {
       cancel_url: properties.baseURL,
       fail_url: properties.baseURL,
     });
-    // const tid = res.tid;
     window.open(res.url);
   };
-  // TODO: 기본배송지 가져오기
 
   return (
     <Wrapper>
       <Header>
-        <OrderBox {...orderItems} totalCount={orderItems.items.length} />
+        <CartBox />
       </Header>
       <div className="contents">
         <Title>

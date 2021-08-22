@@ -4,14 +4,14 @@ import { convertToKRW } from "@/utils/util";
 import { gap } from "@/styles/theme";
 import { moveTo } from "@/Router";
 
-export type CartBoxProps = {
+export type CartBoxInput = {
   totalPrice: number;
   totalDelivery: number;
   totalPayment: number;
   totalCount: number;
 };
 
-export const output = (props: CartBoxProps) => {
+export const output = (props: CartBoxInput) => {
   return {
     priceOutput: convertToKRW(props.totalPrice),
     deliveryOutput: convertToKRW(props.totalDelivery),
@@ -20,12 +20,11 @@ export const output = (props: CartBoxProps) => {
   };
 };
 
-const CartBox = ({
-  totalPrice,
-  totalDelivery,
-  totalPayment,
-  totalCount,
-}: CartBoxProps) => {
+const CartBox = () => {
+  const { totalPrice, totalDelivery, totalPayment, totalCount } = JSON.parse(
+    localStorage.getItem("orders")
+  ) || { totalCount: 0, totalPrice: 0, totalDelivery: 0, totalPayment: 0 };
+
   const OUTPUT = output({
     totalPrice,
     totalDelivery,

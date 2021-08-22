@@ -1,8 +1,8 @@
 import { render } from "@/utils/test-util";
 import { screen } from "@testing-library/react";
-import CartBox, { CartBoxProps, output } from "./index";
+import CartBox, { CartBoxInput, output } from "./index";
 
-const CartBoxProps: CartBoxProps = {
+const cartBoxInput: CartBoxInput = {
   totalPrice: 20000,
   totalDelivery: 30000,
   totalPayment: 50000,
@@ -10,10 +10,10 @@ const CartBoxProps: CartBoxProps = {
 };
 
 describe("<CartBox />", () => {
-  const OUTPUT = output(CartBoxProps);
+  const OUTPUT = output(cartBoxInput);
 
   it("should render component in document", () => {
-    const { container } = render(<CartBox {...CartBoxProps} />);
+    const { container } = render(<CartBox />);
     expect(container).toBeInTheDocument();
 
     expect(screen.queryByText("총 상품금액")).toBeInTheDocument();

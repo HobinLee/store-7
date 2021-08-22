@@ -115,7 +115,9 @@ export interface ICart {
   productOptionId: number;
   amount: number;
 }
-
+export interface OrderType extends CartType {
+  totalCount: number;
+}
 export type PartialCart = Partial<ICart>;
 
 export interface MyInfoType {
