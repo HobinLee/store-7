@@ -23,7 +23,10 @@ export class Questions {
   }
 
   async findQuestionsByUserId(userId): Promise<Question[]> {
-    return await this.questionRepository.find({ where: { userId } });
+    return await this.questionRepository.find({
+      relations: ["user", "product"],
+      where: { user: { id: userId } },
+    });
   }
 
   async insertQuestion(productId: number, question: QuestionPostRequest) {

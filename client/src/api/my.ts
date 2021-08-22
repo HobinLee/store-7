@@ -1,9 +1,14 @@
-import { CartType, DestinationType } from "@/shared/type";
+import {
+  CartType,
+  DestinationType,
+  MyInfoType,
+  ReviewType,
+} from "@/shared/type";
 import { GET, PATCH } from "@/utils/axios";
 import { useQuery } from "react-query";
 
-// GET /my/info 내 정보
-export const getMe = () => GET("/my/info");
+const getMyInfo = (): Promise<MyInfoType> => GET("/my/info");
+export const useMyInfo = () => useQuery(["userInfo"], () => getMyInfo());
 
 // PATCH /my/info 내 정보 수정
 export const patchMe = ({ data }) => PATCH("/my/info", data);
@@ -19,13 +24,18 @@ export const useMyDestinations = () =>
   useQuery(["destinations"], () => getMyDestinations());
 
 // GET /my/reviews 내 리뷰
-export const getMyReviews = () => GET("/my/reviews");
+const getMyReviews = () => GET("/my/reviews");
+export const useMyReviews = () => useQuery(["reviews"], () => getMyReviews());
 
 // GET /my/questions 내 문의
-export const getMyQuestions = () => GET("/my/questions");
+const getMyQuestions = () => GET("/my/questions");
+export const useMyQuestions = () =>
+  useQuery(["questions"], () => getMyQuestions());
 
 // GET /my/orders?target 내 현재 주문목록
-export const getMyOrders = ({ params }) => GET("/my/orders", params);
+// const getMyOrders = ({ params }) => GET("/my/orders", params);
+// export const useMyOrders = () => useQuery([], () => getMyOrders());
 
 // GET /my/wishes 내 찜목록
-export const getMyWishes = () => GET("/my/wishes");
+const getMyWishes = () => GET("/my/wishes");
+export const useMyWishes = () => useQuery(["wishes"], () => getMyWishes());

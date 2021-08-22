@@ -8,7 +8,7 @@ const ReviewBox = (review: ReviewType) => {
   return (
     <Wrapper data-testid="test__review-box">
       <Header>
-        <div className="author">{review.author}</div>
+        <div className="author">{review.authorName}</div>
         <div className="info">
           <div className="info__rate">
             <Rating value={review.rate} readOnly />

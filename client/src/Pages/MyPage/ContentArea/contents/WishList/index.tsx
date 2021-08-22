@@ -2,10 +2,12 @@ import styled from "styled-components";
 
 import Section from "../../../Section";
 import Item from "@/Components/Item";
-import { sampleCategory } from "@/shared/dummy";
 import { ItemWrapList } from "@/shared/styled";
+import { useMyWishes } from "@/api/my";
 
 const WishList = () => {
+  const { status, data: wishes } = useMyWishes();
+
   return (
     <Wrapper data-testid="test__wishlist">
       <Section
@@ -14,11 +16,13 @@ const WishList = () => {
         lineType="long1"
         data-testid="test__section"
       >
-        <ItemWrapList>
-          {sampleCategory.map((item) => (
-            <Item {...item} key={item.id} />
-          ))}
-        </ItemWrapList>
+        {status !== "loading" && (
+          <ItemWrapList>
+            {wishes.map((wish) => (
+              <Item {...wish} key={wish.id} />
+            ))}
+          </ItemWrapList>
+        )}
       </Section>
     </Wrapper>
   );

@@ -12,7 +12,7 @@ describe("<ReviewList />", () => {
     expect(container).toBeInTheDocument();
 
     reviewListProps.reviews.forEach((review) => {
-      expectText(review.author);
+      expectText(review.authorName);
       expectText(review.content);
     });
   });

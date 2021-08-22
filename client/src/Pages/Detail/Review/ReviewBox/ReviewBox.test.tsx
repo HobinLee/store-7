@@ -12,7 +12,7 @@ const reviewBoxProps: ReviewType = {
   id: 1,
   rate: 3,
   content: CONTENT,
-  author: AUTHOR,
+  authorName: AUTHOR,
   date: DATE,
 };
 

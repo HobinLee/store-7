@@ -70,7 +70,7 @@ const App = () => {
 
       <Router>
         {routes.map(([path, component, exact]: route) => (
-          <Route path={path} exact={exact ?? false}>
+          <Route path={path} exact={exact ?? false} key={path}>
             {component}
           </Route>
         ))}

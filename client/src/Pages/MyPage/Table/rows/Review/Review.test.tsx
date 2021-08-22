@@ -12,7 +12,7 @@ const ReviewProps: ReviewType = {
   content: "test-content",
   image:
     "https://store.baemin.com/data/board/upload/goodsreview/eea0b21ff31b55a0",
-  author: "testAuthor",
+  authorName: "testAuthor",
   date: new Date(),
 };
 

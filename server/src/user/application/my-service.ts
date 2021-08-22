@@ -61,7 +61,7 @@ export class MyService {
 
   async getMyReviews(userId) {
     userId = 1;
-    const reviews = await this.reviews.findReviewByUserId(userId);
+    const reviews = await this.reviews.findReviewsByUserId(userId);
     return reviews.map(MyReviewResponse.of);
   }
 
