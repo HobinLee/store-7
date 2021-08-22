@@ -3,11 +3,10 @@ import { useState } from "react";
 import styled from "styled-components";
 import Header from "@/Components/Header";
 import Footer from "@/Components/Footer";
-import OrderBox from "./OrderBox";
 import useInput from "@/hooks/useInput";
 import AddressModal from "./AddressModal";
 import ItemInfoBox from "@/Components/ItemInfoBox";
-import { Arrow } from "@/assets";
+import { Arrow, KakaoPay } from "@/assets";
 import InputSection from "@/Components/Input/InputSection";
 import useValidation from "@/hooks/useValidation";
 import ValidationInput from "@/Components/Input/ValidationInput";
@@ -22,7 +21,7 @@ import { useMyDestinations } from "@/api/my";
 import { DestinationType } from "@/shared/type";
 import { postPaymentReady } from "@/api/payment";
 import properties from "@/config/properties";
-import CartBox from "../Cart/CartBox";
+import CartOrderBox from "../../Components/CartOrderBox";
 
 const OrderPage = () => {
   const orderItems = JSON.parse(localStorage.getItem("orders"));
@@ -61,7 +60,7 @@ const OrderPage = () => {
   return (
     <Wrapper>
       <Header>
-        <CartBox />
+        <CartOrderBox />
       </Header>
       <div className="contents">
         <Title>
@@ -143,8 +142,15 @@ const OrderPage = () => {
 
           <Info>
             <div className="label">결제수단</div>
-            <div>공짜는 업나여</div>
-            <div onClick={handlePay}>카카오페이</div>
+
+            <div className="payments">
+              <div className="payments__item" onClick={handlePay}>
+                <img src={KakaoPay} />
+              </div>
+              <div className="payments__item" onClick={() => {}}>
+                ET페이
+              </div>
+            </div>
           </Info>
         </Content>
       </div>
@@ -202,7 +208,7 @@ const Content = styled.div`
   align-items: flex-start;
   width: 100%;
   ${gap("8rem", "column")}
-  margin-top: 4rem;
+  margin: 4rem 0;
 `;
 
 const Info = styled.div`
@@ -249,6 +255,13 @@ const Info = styled.div`
     :hover {
       font-weight: bolder;
       color: ${({ theme }) => theme.color.primary1};
+    }
+  }
+  .payments {
+    display: flex;
+    &__item {
+      width: 5rem;
+      height: 5rem;
     }
   }
 `;

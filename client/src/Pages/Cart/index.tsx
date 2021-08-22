@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Header from "@/Components/Header";
 import Footer from "@/Components/Footer";
 import ItemInfoBox from "@/Components/ItemInfoBox";
-import CartBox from "./CartBox";
+import CartOrderBox from "../../Components/CartOrderBox";
 import { Arrow } from "@/assets";
 import Checkbox from "@/Components/Checkbox";
 import { gap } from "@/styles/theme";
@@ -86,7 +86,7 @@ const CartPage = () => {
     status !== "loading" && (
       <Wrapper>
         <Header>
-          <CartBox />
+          <CartOrderBox />
         </Header>
         <div className="contents">
           <Title>
