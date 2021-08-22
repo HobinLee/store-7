@@ -8,10 +8,11 @@ import { convertToKRW } from "@/utils/util";
 import { gap } from "@/styles/theme";
 import { postCart } from "@/api/carts";
 import { moveTo } from "@/Router";
-import { useSetRecoilState } from "recoil";
-import { orders } from "@/store/state";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { loginState, orders } from "@/store/state";
 import { ProductType } from "@/shared/type";
 import { InputType } from "@/hooks/useInput";
+import LoginPage from "../Login";
 
 type OptionBoxProps = {
   numValue: InputType;
@@ -28,15 +29,43 @@ const OptionBox = ({
   const setOrders = useSetRecoilState(orders);
   const productId = location.pathname.split("detail/")[1];
 
+  const isLogined = useRecoilValue(loginState);
+
   const handlePostCart = async () => {
     try {
-      if (status !== "loading") {
+      if (isLogined && status !== "loading") {
         await postCart({
           data: {
             product: { id: parseInt(productId) },
             amount: parseInt(numValue.value),
           },
         });
+      } else {
+        const exist = localStorage.getItem("carts")
+          ? JSON.parse(localStorage.getItem("carts"))
+          : {
+              totalPrice: 0,
+              totalPayment: 0,
+              totalDelivery: 0,
+              items: [],
+            };
+
+        exist.items = [
+          ...exist.items,
+          {
+            ...product,
+            amount: numValue.value,
+            price: product.price * parseInt(numValue.value),
+          },
+        ];
+
+        exist.totalPrice = product.price * parseInt(numValue.value);
+        exist.totalDelivery = product.deliveryCost;
+        exist.totalPayment =
+          product.price * parseInt(numValue.value) + product.deliveryCost;
+        exist.totalCount = parseInt(numValue.value);
+
+        localStorage.setItem("carts", JSON.stringify(exist));
       }
     } catch (error) {
       console.log(error);
