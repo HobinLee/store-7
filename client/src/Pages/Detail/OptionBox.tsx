@@ -56,6 +56,7 @@ const OptionBox = ({
             id: (exist.items[exist.items.length - 1]?.id || 0) + 1,
             amount: parseInt(numValue.value),
             price: product.price * parseInt(numValue.value),
+            productId: parseInt(productId),
           },
         ];
         localStorage.setItem("carts", JSON.stringify(exist));
@@ -76,6 +77,7 @@ const OptionBox = ({
             ...product,
             amount: numValue.value,
             price: product.price * parseInt(numValue.value),
+            productId,
           },
         ],
         totalPrice: product.price * parseInt(numValue.value),

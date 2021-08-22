@@ -18,41 +18,82 @@ import {
 import { gap } from "@/styles/theme";
 import { useEffect } from "react";
 import { useMyDestinations } from "@/api/my";
-import { DestinationType } from "@/shared/type";
+import {
+  AddressType,
+  DestinationType,
+  ICart,
+  OrderType,
+  PartialCart,
+} from "@/shared/type";
 import { postPaymentReady } from "@/api/payment";
 import properties from "@/config/properties";
 import CartOrderBox from "../../Components/CartOrderBox";
 import { useRecoilValue } from "recoil";
 import { loginState } from "@/store/state";
 import Address from "@/Components/Address";
+import { convertToPhoneNumber } from "@/utils/util";
+import { postOrder } from "@/api/orders";
+import { moveTo } from "@/Router";
 
 const OrderPage = () => {
   const isLogined = useRecoilValue(loginState);
 
   // 상품목록
-  const orderItems = JSON.parse(localStorage.getItem("orders"));
+  const orderItems: { items: PartialCart[] } = JSON.parse(
+    localStorage.getItem("orders")
+  );
 
   // form
   const email = useInput("");
   const emailValidation = useValidation(validateEmail);
-  const name = useInput("");
+  const addressee = useInput("");
   const nameValidation = useValidation((name: string) => !!name.length);
-  const phone = useInput("");
+  const phone = useInput("", convertToPhoneNumber);
   const phoneValidation = useValidation(validatePhoneNumber);
 
   // 결제수단
-  type paymentType = "kakaopay" | "etpay" | "";
-  const [payment, setPayment] = useState<paymentType>("");
+  type paymentType = "kakaopay" | "etpay" | null;
+  const [payment, setPayment] = useState<paymentType>(null);
+
+  // 비로그인시 배송지
+  const [destination, setDestination] = useState<AddressType>({
+    address: "",
+    postCode: "",
+    detailAddress: "",
+  });
+  const handleChangeAddress = (address: DestinationType) => {
+    setDestination(address);
+  };
 
   // 배송지
   const { status, data: destinations, error } = useMyDestinations();
   const [address, setAddress] = useState<Partial<DestinationType>>();
   useEffect(() => {
-    if (status !== "loading")
+    if (isLogined && status !== "loading")
       setAddress(destinations.find((i) => i.isDefault === true));
   }, [destinations]);
-
   const [isAddressModalOpened, setIsAddressModalOpened] = useState(false);
+
+  // 요청사항
+  const [request, setRequest] = useState("");
+
+  // create order
+  const handlePostOrder = () => {
+    orderItems.items.forEach(async (item) => {
+      await postOrder({
+        data: {
+          productId: item.productId,
+          addressee: addressee.value,
+          // productOptionId?: number,
+          amount: item.amount,
+          destination: isLogined
+            ? `${address.address} ${address.detailAddress}`
+            : `${destination.address} ${destination.detailAddress}`,
+          // request,
+        },
+      });
+    });
+  };
 
   // 카카오페이
   const handleKakaoPay = async () => {
@@ -66,18 +107,42 @@ const OrderPage = () => {
       cancel_url: properties.baseURL,
       fail_url: properties.baseURL,
     });
-    window.open(res.url);
+    if (res) {
+      try {
+        handlePostOrder();
+      } finally {
+        window.open(res.url);
+      }
+    }
   };
 
   // 결제 버튼 클릭
   const handlePay = () => {
     if (payment === "kakaopay") handleKakaoPay();
+    else {
+      try {
+        handlePostOrder();
+      } finally {
+        moveTo("/order/success");
+      }
+    }
   };
+
+  const isOrderable =
+    emailValidation.isValid &&
+    nameValidation.isValid &&
+    phoneValidation.isValid &&
+    !!payment &&
+    ((isLogined && !!address) || !!destination.postCode);
+
+  useEffect(() => {
+    console.log("isOrderable", isOrderable);
+  }, [isOrderable]);
 
   return (
     <Wrapper>
       <Header>
-        <CartOrderBox />
+        <CartOrderBox {...{ handlePay }} isButtonDisabled={!isOrderable} />
       </Header>
       <div className="contents">
         <Title>
@@ -89,7 +154,7 @@ const OrderPage = () => {
             <div className="label">주문상품</div>
             <div className="items">
               {orderItems.items.map((cart) => (
-                <ItemInfoBox key={cart.id} {...cart} />
+                <ItemInfoBox key={cart.id} {...(cart as ICart)} />
               ))}
             </div>
           </Info>
@@ -99,7 +164,7 @@ const OrderPage = () => {
             <div className="user-info">
               <InputSection title="이름">
                 <ValidationInput
-                  input={name}
+                  input={addressee}
                   validation={nameValidation}
                   placeholder="이름"
                   message={VALIDATION_ERR_MSG.INVALID_NAME}
@@ -156,17 +221,27 @@ const OrderPage = () => {
                   <div>배송지를 추가해주세요</div>
                 )
               ) : (
-                <Address onChangeAddress={setAddress} />
+                <Address onChangeAddress={handleChangeAddress} />
               )}
 
               <div style={{ marginTop: "3rem" }}>
-                <select className="order-input">
-                  <option>배송시 요청사항을 선택해주세요.</option>
-                  <option>부재시 문 앞에 놓아주세요.</option>
-                  <option>배송전에 미리 연락주세요.</option>
-                  <option>부재시 경비실에 맡겨주세요.</option>
-                  <option>부재시 전화주시거나 문자 남겨 주세요.</option>
-                  <option>직접입력</option>
+                <select className="order-input" value={request}>
+                  <option value="배송시 요청사항을 선택해주세요.">
+                    배송시 요청사항을 선택해주세요.
+                  </option>
+                  <option value="부재시 문 앞에 놓아주세요.">
+                    부재시 문 앞에 놓아주세요.
+                  </option>
+                  <option value="배송전에 미리 연락주세요.">
+                    배송전에 미리 연락주세요.
+                  </option>
+                  <option value="부재시 경비실에 맡겨주세요.">
+                    부재시 경비실에 맡겨주세요.
+                  </option>
+                  <option value="부재시 전화주시거나 문자 남겨 주세요.">
+                    부재시 전화주시거나 문자 남겨 주세요.
+                  </option>
+                  {/* <option>직접입력</option> */}
                 </select>
               </div>
             </div>

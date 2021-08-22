@@ -20,7 +20,6 @@ const CartPage = () => {
   const { status, data: carts, error } = useMyCarts();
 
   const [checkItems, setCheckItems] = useState([]);
-  // const [orders, setOrders] = useState<OrderType>();
 
   useEffect(() => {
     if (isLogined && status !== "loading") {
@@ -42,6 +41,10 @@ const CartPage = () => {
     if (isLogined && status !== "loading") setCheckItems(carts.items);
     else setCheckItems(cartItems?.items);
   }, [cartItems]);
+
+  useEffect(() => {
+    console.log("checkItems", checkItems);
+  }, [checkItems]);
 
   useEffect(() => {
     if (status !== "loading") {

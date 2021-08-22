@@ -3,6 +3,7 @@ import Button from "@/Components/Button";
 import { convertToKRW } from "@/utils/util";
 import { gap } from "@/styles/theme";
 import { moveTo } from "@/Router";
+import { MouseEventHandler } from "react";
 
 export type CartOrderBoxInput = {
   totalPrice: number;
@@ -25,7 +26,13 @@ export const output = (props: CartOrderBoxInput) => {
   };
 };
 
-const CartOrderBox = () => {
+const CartOrderBox = ({
+  isButtonDisabled,
+  handlePay,
+}: {
+  isButtonDisabled?: boolean;
+  handlePay?: MouseEventHandler<HTMLButtonElement>;
+}) => {
   const { totalPrice, totalDelivery, totalPayment, totalCount } = JSON.parse(
     localStorage.getItem("orders")
   ) || { totalCount: 0, totalPrice: 0, totalDelivery: 0, totalPayment: 0 };
@@ -36,6 +43,7 @@ const CartOrderBox = () => {
     totalPayment,
     totalCount,
   });
+  const pathmane = location.pathname.split("/")[1];
 
   return (
     <Wrapper>
@@ -58,8 +66,8 @@ const CartOrderBox = () => {
         className="order-btn"
         primary
         size="large"
-        disabled={totalCount === 0}
-        onClick={() => moveTo("/order")}
+        disabled={totalCount === 0 || isButtonDisabled}
+        onClick={pathmane === "cart" ? () => moveTo("/order") : handlePay}
       >
         {OUTPUT.buttonText}
       </Button>

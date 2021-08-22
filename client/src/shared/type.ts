@@ -114,6 +114,7 @@ export interface ICart {
   images: string[];
   productOptionId: number;
   amount: number;
+  productId: number;
 }
 export interface OrderType extends CartType {
   totalCount: number;
