@@ -7,7 +7,6 @@ ENV DEMO_PW=$DEMO_PW
 WORKDIR /app
 COPY . .
 RUN npm install
-RUN echo $BASE_URL
 RUN npm run build
 
 FROM nginx:stable-alpine
