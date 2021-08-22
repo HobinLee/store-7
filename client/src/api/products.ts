@@ -4,6 +4,8 @@ import { useQuery } from "react-query";
 
 // GET /products?order?category?subcategory?keyword? 상품 목록
 export const getProducts = ({ params }) => GET("/products", params);
+export const useProducts = ({ params }) =>
+  useQuery(["product", { params }], () => getProducts(params));
 
 // GET /products/:id 상품 상세 정보
 const getProduct = (id: number): Promise<ProductType> => GET(`/products/${id}`);
