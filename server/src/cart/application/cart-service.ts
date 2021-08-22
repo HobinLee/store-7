@@ -16,7 +16,7 @@ export class CartService {
     try {
       this.carts.createCart({ ...cart, user: { id: userId } });
     } catch (e) {
-      return e;
+      throw Error(e.message);
     }
     return "Created!";
   }
@@ -25,7 +25,7 @@ export class CartService {
     try {
       this.carts.updateCart(id, modifiedCart);
     } catch (e) {
-      return e;
+      throw Error(e.message);
     }
     return "Updated!";
   }
@@ -34,7 +34,7 @@ export class CartService {
     try {
       this.carts.deleteCart(id);
     } catch (e) {
-      return e;
+      throw Error(e.message);
     }
     return "Deleted!";
   }

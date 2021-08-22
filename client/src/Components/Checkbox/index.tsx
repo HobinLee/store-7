@@ -5,7 +5,7 @@ export type CheckboxProps = {
   label?: string;
   isChecked: boolean;
   handleCheck: Function;
-  size?: "small" | "big";
+  size?: "small" | "large";
 };
 
 const Checkbox = ({ label, isChecked, handleCheck, size }: CheckboxProps) => {
@@ -25,7 +25,7 @@ const Wrapper = styled.div`
   ${({ theme }) => theme.font.medium};
 `;
 
-const Box = styled.div<{ isChecked: boolean; size: "small" | "big" }>`
+const Box = styled.div<{ isChecked: boolean; size: "small" | "large" }>`
   ${({ theme }) => theme.flexCenter}
   cursor: pointer;
   display: flex;
@@ -34,7 +34,7 @@ const Box = styled.div<{ isChecked: boolean; size: "small" | "big" }>`
   height: ${({ size }) => (size === "small" ? "1.5rem" : "2.5rem")};
   margin-right: 1rem;
   cursor: pointer;
-  border-radius: 20%;
+  border-radius: ${({ size }) => (size === "small" ? "0.2rem" : "0.5rem")};
   background-color: ${({ theme, isChecked }) =>
     isChecked ? theme.color.primary1 : "#fff"};
   border: 0.1rem solid

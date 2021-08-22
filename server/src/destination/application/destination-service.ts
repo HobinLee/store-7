@@ -23,7 +23,7 @@ export class DestinationService {
         isDefault: destination.isDefault ? 1 : 0,
       });
     } catch (e) {
-      return e;
+      throw Error(e.message);
     }
     return "Created!";
   }
@@ -35,7 +35,7 @@ export class DestinationService {
     try {
       this.destinations.updateDestination(id, destinationModifyRequest);
     } catch (e) {
-      return e;
+      throw Error(e.message);
     }
     return "Updated!";
   }
@@ -51,7 +51,7 @@ export class DestinationService {
       });
       await this.destinations.updateDestinationIsDefault(id, true);
     } catch (e) {
-      return e;
+      throw Error(e.message);
     }
     return "Updated!";
   }
@@ -60,7 +60,7 @@ export class DestinationService {
     try {
       this.destinations.deleteDestination(id);
     } catch (e) {
-      return e;
+      throw Error(e.message);
     }
     return "Deleted!";
   }

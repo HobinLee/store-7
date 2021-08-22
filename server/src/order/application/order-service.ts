@@ -43,7 +43,7 @@ export class OrderService {
         status: "배송준비중",
       });
     } catch (e) {
-      console.log(e);
+      throw Error(e.message);
       return e;
     }
     return "Created!";
@@ -53,7 +53,7 @@ export class OrderService {
     try {
       this.orders.updateOrderStatus(id, status);
     } catch (e) {
-      return e;
+      throw Error(e.message);
     }
     return "Updated!";
   }
