@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Patch, Query } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  Patch,
+  Param,
+  Post,
+  Delete,
+} from "@nestjs/common";
 import {
   MyInfoResponse,
   MyCartsResponse,
@@ -11,6 +19,7 @@ import { MyReviewResponse } from "@/product/dto/review-my-response";
 import { MyInfoEditRequest } from "../dto/my-reqeust";
 import { DestinationResponse } from "@/destination/dto/destination-response";
 import { MyService } from "../application/my-service";
+import { WishRequest } from "../dto/wish-request";
 
 @Controller("/my")
 export class MyController {
@@ -54,9 +63,9 @@ export class MyController {
     return await this.myService.getMyQeustions(userId);
   }
 
-  @Get("/orders")
+  @Get("/orders/:target")
   async getMyOrdersByTarget(
-    @Query("target") target: string,
+    @Param("target") target: string,
     @Body("userId") userId: number
   ): Promise<MyOredersResponse[] | MyCurrentOredersResponse[] | string> {
     return target === "current"
@@ -69,5 +78,21 @@ export class MyController {
   @Get("/wishes")
   async getWishes(@Body("userId") userId: number): Promise<MyWishResponse[]> {
     return await this.myService.getMyWishes(userId);
+  }
+
+  @Post("/wishes")
+  async postWishProduct(@Body() body: WishRequest) {
+    body.userId = 1;
+    return await this.myService.postWishProduct(body);
+  }
+
+  @Delete("/wishes/:productId")
+  async deleteWishProduct(
+    @Param("productId") productId: number,
+    @Body("userId")
+    userId: number
+  ) {
+    userId = 1;
+    return await this.myService.deleteWishProduct({ userId, productId });
   }
 }

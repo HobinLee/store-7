@@ -4,7 +4,7 @@ import {
   MyInfoType,
   ReviewType,
 } from "@/shared/type";
-import { GET, PATCH } from "@/utils/axios";
+import { DELETE, GET, PATCH, POST } from "@/utils/axios";
 import { useQuery } from "react-query";
 
 const getMyInfo = (): Promise<MyInfoType> => GET("/my/info");
@@ -24,7 +24,7 @@ export const useMyDestinations = () =>
   useQuery(["destinations"], () => getMyDestinations());
 
 // GET /my/reviews 내 리뷰
-const getMyReviews = () => GET("/my/reviews");
+const getMyReviews = (): Promise<ReviewType[]> => GET("/my/reviews");
 export const useMyReviews = () => useQuery(["reviews"], () => getMyReviews());
 
 // GET /my/questions 내 문의
@@ -33,9 +33,16 @@ export const useMyQuestions = () =>
   useQuery(["questions"], () => getMyQuestions());
 
 // GET /my/orders?target 내 현재 주문목록
-// const getMyOrders = ({ params }) => GET("/my/orders", params);
-// export const useMyOrders = () => useQuery([], () => getMyOrders());
+const getMyOrders = ({ target }) => GET(`/my/orders/${target}`);
+export const useMyOrders = ({ target }) =>
+  useQuery([], () => getMyOrders({ target }));
 
 // GET /my/wishes 내 찜목록
 const getMyWishes = () => GET("/my/wishes");
 export const useMyWishes = () => useQuery(["wishes"], () => getMyWishes());
+
+export const postWishProduct = ({ productId }) =>
+  POST("my/wishes", { productId });
+
+export const deleteWishProduct = ({ productId }: { productId: number }) =>
+  DELETE(`my/wishes/${productId}`);
