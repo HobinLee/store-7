@@ -55,19 +55,13 @@ export class MyService {
     return MyInfoResponse.of(user);
   }
 
-  async getMyDetailInfo(userId) {
-    userId = 1;
-    const user = await this.users.findUserById(userId);
-    return MyDetailInfoResponse.of(user);
-  }
-
   async editMyInfo(request: MyInfoEditRequest) {
     await this.users.updateUserInfo(request);
   }
 
   async getMyReviews(userId) {
     userId = 1;
-    const reviews = await this.reviews.findReviewByUserId(userId);
+    const reviews = await this.reviews.findReviewsByUserId(userId);
     return reviews.map(MyReviewResponse.of);
   }
 
