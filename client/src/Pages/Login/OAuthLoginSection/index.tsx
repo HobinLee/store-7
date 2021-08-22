@@ -3,13 +3,14 @@ import GoogleSVG from "@/assets/googleLogin.svg";
 import { gap } from "@/styles/theme";
 import styled from "styled-components";
 import APIButton from "@/Components/APIButton";
+import properties from "@/config/properties";
 
 const OAuthLoginSection = () => {
   const handleGithubLogin = async () => {
-    window.location.href = process.env.BASE_URL + "/auth/githubLogin";
+    window.location.href = properties.baseURL + "/auth/githubLogin";
   };
   const handleGoogleLogin = async () => {
-    window.location.href = process.env.BASE_URL + "/auth/googleLogin";
+    window.location.href = properties.baseURL + "/auth/googleLogin";
   };
 
   return (

@@ -9,6 +9,7 @@ import APIButton from "@/Components/APIButton";
 import OAuthLoginSection from "../OAuthLoginSection";
 import { gap } from "@/styles/theme";
 import Input from "@/Components/Input";
+import properties from "@/config/properties";
 
 const LoginSection = () => {
   const email = useInput("");
@@ -17,8 +18,8 @@ const LoginSection = () => {
 
   const handleSignin = async (isDemo) => {
     await signIn({
-      email: isDemo ? process.env.DEMO_EMAIL : email.value,
-      password: isDemo ? process.env.DEMO_PW : password.value,
+      email: isDemo ? properties.demo.email : email.value,
+      password: isDemo ? properties.demo.password : password.value,
     });
 
     setLoginState(true);

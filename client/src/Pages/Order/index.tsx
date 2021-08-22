@@ -22,8 +22,8 @@ import { orders } from "@/store/state";
 import { useEffect } from "react";
 import { useMyDestinations } from "@/api/my";
 import { DestinationType } from "@/shared/type";
-import axios from "axios";
 import { postPaymentReady } from "@/api/payment";
+import properties from "@/config/properties";
 
 const OrderPage = () => {
   // const { status, data: carts, error } = useMyCarts();
@@ -53,9 +53,9 @@ const OrderPage = () => {
       quantity: "1",
       total_amount: "11",
       tax_free_amount: "11",
-      approval_url: `${process.env.BASE_URL}/payment/approve`,
-      cancel_url: process.env.BASE_URL,
-      fail_url: process.env.BASE_URL,
+      approval_url: `${properties.baseURL}/payment/approve`,
+      cancel_url: properties.baseURL,
+      fail_url: properties.baseURL,
     });
     // const tid = res.tid;
     window.open(res.url);
