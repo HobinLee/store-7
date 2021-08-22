@@ -1,46 +1,24 @@
+import { useKeywords } from "@/api/search";
+import useDebounce from "@/hooks/useDebounce";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import styled from "styled-components";
-
-// TODO: 그냥 테스트용 데이터고 화요일에 바로 Elastic Search 적용해볼 거에요..!
-const RandomList = [
-  "물품1",
-  "물품2",
-  "물품3",
-  "물품4",
-  "물품5",
-  "물품6",
-  "물품7",
-  "책",
-  "매거진",
-  "펜",
-  "연필",
-  "지우개",
-  "색연필",
-];
 
 const AutoList = ({ keyword, handleSearch }) => {
   const handleClick = (v) => {
     handleSearch(v);
   };
-  const [autoList, setAutoList] = useState<string[]>([]);
+  const debouncedSearchInput = useDebounce(keyword, 200);
+  const { data: autoList } = useKeywords(debouncedSearchInput);
 
-  useEffect(() => {
-    setAutoList(
-      RandomList.filter((v) => v.includes(keyword)).sort(
-        (a, b) => a.length - b.length
-      )
-    );
-  }, [keyword]);
-
-  const generateAutoList = autoList.map((value, idx) => (
+  const generateAutoList = autoList?.map((value, idx) => (
     <li key={idx} onClick={() => handleClick(value)}>
       {value}
     </li>
   ));
   return (
     <AutoListWrapper>
-      {autoList.length ? (
+      {autoList?.length ? (
         generateAutoList
       ) : (
         <div className="no-list">관련 상품이 없습니다</div>

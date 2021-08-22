@@ -12,13 +12,16 @@ import {
   QuestionPatchRequest,
 } from "../dto/question-request";
 import { Reviews } from "../domain/reviews";
+import { SearchService } from "./search-service";
+import { SearchProduct } from "../dto/product-search-response";
 
 @Injectable()
 export class ProductService {
   constructor(
     private readonly products: Products,
     private readonly questions: Questions,
-    private readonly reviews: Reviews
+    private readonly reviews: Reviews,
+    private readonly serachService: SearchService
   ) {}
 
   async getProducts(
@@ -57,7 +60,8 @@ export class ProductService {
 
   async createProduct(productBody: ProductUploadRequest, images, detailImages) {
     const productEntity = Product.toEntity(productBody);
-    const product = await this.products.createProduct(productEntity);
+    const product: Product = await this.products.createProduct(productEntity);
+    this.serachService.createProduct(SearchProduct.of(product));
     this.products.addImages(images, product);
     this.products.addDetailImages(detailImages, product);
     if (productBody.option) {

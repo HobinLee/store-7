@@ -14,6 +14,11 @@ import { ImageService } from "@/product/application/image-service";
 import { ImageController } from "@/product/presentation/image-controller";
 import { Reviews } from "./domain/reviews";
 import { Review } from "./entity/review";
+import { ElasticsearchModule } from "@nestjs/elasticsearch";
+import properties from "@/config/properties/properties";
+import { SearchService } from "./application/search-service";
+
+const elasticsearchConfig = properties.elastic;
 
 @Module({
   imports: [
@@ -25,16 +30,24 @@ import { Review } from "./entity/review";
       Question,
       Review,
     ]),
+    ElasticsearchModule.register({
+      node: elasticsearchConfig.node,
+      auth: {
+        username: elasticsearchConfig.username,
+        password: elasticsearchConfig.password,
+      },
+    }),
   ],
   controllers: [ProductController, ImageController],
   providers: [
     Products,
     ProductService,
+    SearchService,
     S3Repository,
     Questions,
     Reviews,
     ImageService,
   ],
-  exports: [Products],
+  exports: [Products, ElasticsearchModule, SearchService],
 })
 export class ProductModule {}

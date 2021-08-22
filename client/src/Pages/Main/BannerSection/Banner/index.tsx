@@ -11,7 +11,7 @@ const Banner = ({ banners }: BannerProps) => {
   return (
     <BannerWrapper>
       <div className="banner-content">
-        <Link to={`/detail/`}>
+        <Link to={`/detail/${banners[0].id}`}>
           <div className="banner__info-wrapper">
             <div className="banner__info">
               <h3 className="banner__title">{banners[0].title}</h3>

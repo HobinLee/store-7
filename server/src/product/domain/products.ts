@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Like, Repository } from "typeorm";
+import { In, Like, Repository } from "typeorm";
 import { Product } from "@/product/entity/product";
 import { S3Repository } from "@/product/infrastructure/s3-repository";
 import { ProductImage } from "@/product/entity/product-image";
@@ -97,6 +97,18 @@ export class Products {
 
   async deleteProduct(id: number) {
     await this.productRepository.delete(id);
+  }
+
+  async findProductsByIds(productIds: number[]): Promise<Product[]> {
+    return await this.productRepository.find({ id: In(productIds) });
+  }
+
+  async findAllProducts(): Promise<Product[]> {
+    return await this.productRepository.find({
+      order: {
+        id: "DESC",
+      },
+    });
   }
 }
 

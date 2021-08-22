@@ -12,5 +12,6 @@ export default {
     FAILED_TO_ADD_DESTINATION: "주소 생성 실패",
     EMAIL_EXIST: "이미 존재하는 이메일입니다",
     FAIL_GET_ACCESS_TOKEN: "엑세스 토큰을 얻어오는 데 실패했습니다",
+    FAILED_TO_INSERT_ES: "검색 DB에 저장 실패",
   },
 };

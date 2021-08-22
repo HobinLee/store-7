@@ -18,6 +18,7 @@ import { useSetRecoilState } from "recoil";
 import { loginState } from "./store/state";
 import Alert from "./Components/Alert";
 import { verifyToken } from "./api/auth";
+import SearchPage from "./Pages/Search";
 
 type route = [string, JSX.Element, boolean?];
 
@@ -31,6 +32,7 @@ const routes: route[] = [
   ["/detail", <DetailPage />],
   ["/cart", <CartPage />],
   ["/mypage", <MyPage />],
+  ["/search", <SearchPage />],
 ];
 
 const App = () => {
