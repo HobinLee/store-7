@@ -7,6 +7,11 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    env:
+      BASE_URL: ${{ secrets.CLIENT_BASE_URL }}
+      IMG_URL: ${{ secrets.CLIENT_IMG_URL }}
+      DEMO_EMAIL: ${{ secrets.CLIENT_DEMO_EMAIL }}
+      DEMO_PW: ${{ secrets.CLIENT_DEMO_PW }}
     defaults:
       run:
         shell: bash
@@ -14,17 +19,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
-      - name: test
-        run: echo $BASE_URL
-        working-directory: ./client
 
       - name: build docker image
-        env:
-            BASE_URL: https://api.store-7.woowahan-techcamp.shop 
-            IMG_URL: ${{ secrets.CLIENT_IMG_URL }}
-            DEMO_EMAIL: ${{ secrets.CLIENT_DEMO_EMAIL }}
-            DEMO_PW: ${{ secrets.CLIENT_DEMO_PW }}
         run: docker build -t leaguelugas/store-7-client .
         working-directory: ./client
 
