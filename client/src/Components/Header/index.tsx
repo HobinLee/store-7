@@ -9,7 +9,7 @@ import { DELETE } from "@/utils/axios";
 import { useRecoilState } from "recoil";
 import { loginState } from "@/store/state";
 
-const Header = ({ children }: { children?: ReactChild }) => {
+const Header = ({ children }: { children?: ReactChild | JSX.Element }) => {
   const [isLogined, setLoginState] = useRecoilState(loginState);
 
   const handleSignout = async () => {
