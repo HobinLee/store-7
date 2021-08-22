@@ -8,11 +8,12 @@ const serverPort = properties.server.port;
 const nestApplication = async () => {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    "origin": "https://store-7.woowahan-techcamp.shop",
-    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-    "preflightContinue": false,
-    "optionsSuccessStatus": 204,
-    credentials: true
+    // "origin": "https://store-7.woowahan-techcamp.shop",
+    origin: properties.client,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+    credentials: true,
   });
   app.use(cookieParser());
   await app.listen(serverPort);
