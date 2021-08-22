@@ -22,10 +22,17 @@ import { DestinationType } from "@/shared/type";
 import { postPaymentReady } from "@/api/payment";
 import properties from "@/config/properties";
 import CartOrderBox from "../../Components/CartOrderBox";
+import { useRecoilValue } from "recoil";
+import { loginState } from "@/store/state";
+import Address from "@/Components/Address";
 
 const OrderPage = () => {
+  const isLogined = useRecoilValue(loginState);
+
+  // 상품목록
   const orderItems = JSON.parse(localStorage.getItem("orders"));
 
+  // form
   const email = useInput("");
   const emailValidation = useValidation(validateEmail);
   const name = useInput("");
@@ -33,8 +40,12 @@ const OrderPage = () => {
   const phone = useInput("");
   const phoneValidation = useValidation(validatePhoneNumber);
 
-  const { status, data: destinations, error } = useMyDestinations();
+  // 결제수단
+  type paymentType = "kakaopay" | "etpay" | "";
+  const [payment, setPayment] = useState<paymentType>("");
 
+  // 배송지
+  const { status, data: destinations, error } = useMyDestinations();
   const [address, setAddress] = useState<Partial<DestinationType>>();
   useEffect(() => {
     if (status !== "loading")
@@ -43,7 +54,8 @@ const OrderPage = () => {
 
   const [isAddressModalOpened, setIsAddressModalOpened] = useState(false);
 
-  const handlePay = async () => {
+  // 카카오페이
+  const handleKakaoPay = async () => {
     const res = await postPaymentReady({
       cid: "TC0ONETIME",
       item_name: "item",
@@ -55,6 +67,11 @@ const OrderPage = () => {
       fail_url: properties.baseURL,
     });
     window.open(res.url);
+  };
+
+  // 결제 버튼 클릭
+  const handlePay = () => {
+    if (payment === "kakaopay") handleKakaoPay();
   };
 
   return (
@@ -113,30 +130,45 @@ const OrderPage = () => {
           <Info>
             <div className="label">
               배송지
-              <div
-                className="address-btn"
-                onClick={() => setIsAddressModalOpened(true)}
-              >
-                변경
-              </div>
+              {isLogined && (
+                <div
+                  className="address-btn"
+                  onClick={() => setIsAddressModalOpened(true)}
+                >
+                  변경
+                </div>
+              )}
             </div>
 
             <div className="address-info">
-              <div className="name">{address?.name}</div>
-              <div>
-                {address?.addressee} {address?.phoneNumber}
+              {isLogined ? (
+                address ? (
+                  <>
+                    <div className="name">{address?.name}</div>
+                    <div>
+                      {address?.addressee} {address?.phoneNumber}
+                    </div>
+                    <div>
+                      {address?.address} {address?.detailAddress}
+                    </div>
+                  </>
+                ) : (
+                  <div>배송지를 추가해주세요</div>
+                )
+              ) : (
+                <Address onChangeAddress={setAddress} />
+              )}
+
+              <div style={{ marginTop: "3rem" }}>
+                <select className="order-input">
+                  <option>배송시 요청사항을 선택해주세요.</option>
+                  <option>부재시 문 앞에 놓아주세요.</option>
+                  <option>배송전에 미리 연락주세요.</option>
+                  <option>부재시 경비실에 맡겨주세요.</option>
+                  <option>부재시 전화주시거나 문자 남겨 주세요.</option>
+                  <option>직접입력</option>
+                </select>
               </div>
-              <div>
-                {address?.address} {address?.detailAddress}
-              </div>
-              <select className="order-input">
-                <option>배송시 요청사항을 선택해주세요.</option>
-                <option>부재시 문 앞에 놓아주세요.</option>
-                <option>배송전에 미리 연락주세요.</option>
-                <option>부재시 경비실에 맡겨주세요.</option>
-                <option>부재시 전화주시거나 문자 남겨 주세요.</option>
-                <option>직접입력</option>
-              </select>
             </div>
           </Info>
 
@@ -144,12 +176,22 @@ const OrderPage = () => {
             <div className="label">결제수단</div>
 
             <div className="payments">
-              <div className="payments__item" onClick={handlePay}>
-                <img src={KakaoPay} />
-              </div>
-              <div className="payments__item" onClick={() => {}}>
-                ET페이
-              </div>
+              <Payment
+                className="payments__item"
+                onClick={() => setPayment("kakaopay")}
+                isClicked={payment === "kakaopay"}
+              >
+                <img width={70} src={KakaoPay} />
+                <div>카카오페이</div>
+              </Payment>
+              <Payment
+                className="payments__item"
+                onClick={() => setPayment("etpay")}
+                isClicked={payment === "etpay"}
+              >
+                <img width={70} src={KakaoPay} />
+                <div>ET페이</div>
+              </Payment>
             </div>
           </Info>
         </Content>
@@ -175,7 +217,7 @@ const Wrapper = styled(PageWrapper)`
     cursor: pointer;
   }
   .order-input {
-    width: 30rem;
+    width: 37rem;
     border: 0.1rem solid ${({ theme }) => theme.color.line};
     padding: 0.8rem 1rem;
     border-radius: 0.5rem;
@@ -259,11 +301,22 @@ const Info = styled.div`
   }
   .payments {
     display: flex;
-    &__item {
-      width: 5rem;
-      height: 5rem;
-    }
+    ${gap("1rem")}
   }
+`;
+
+const Payment = styled.div<{ isClicked: boolean }>`
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 1rem;
+  width: 10rem;
+  height: 10rem;
+  border: 0.2rem solid
+    ${({ theme, isClicked }) =>
+      isClicked ? theme.color.primary1 : theme.color.line};
 `;
 
 export default OrderPage;
