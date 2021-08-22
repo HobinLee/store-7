@@ -2,6 +2,7 @@ import { Product } from "@/product/entity/product";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
+import { WishRequest } from "../dto/wish-request";
 import { Wish } from "../entity/wish";
 
 @Injectable()
@@ -12,9 +13,30 @@ export class Wishes {
   ) {}
 
   async findWishesByUserId(userId: number): Promise<Wish[]> {
-    return this.wishRepository.find({
+    return await this.wishRepository.find({
       relations: ["product", "user"],
       where: { user: { id: userId } },
+    });
+  }
+  async createWish(wish: WishRequest) {
+    await this.wishRepository.insert({
+      user: {
+        id: wish.userId,
+      },
+      product: {
+        id: wish.productId,
+      },
+    });
+  }
+
+  async deleteWish(wish: WishRequest) {
+    await this.wishRepository.delete({
+      user: {
+        id: wish.userId,
+      },
+      product: {
+        id: wish.productId,
+      },
     });
   }
 }
