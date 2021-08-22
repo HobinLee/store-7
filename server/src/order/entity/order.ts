@@ -1,3 +1,4 @@
+import { Product } from "@/product/entity/product";
 import { Review } from "@/product/entity/review";
 import { User } from "@/user/entity/user";
 import {
@@ -16,8 +17,9 @@ export class Order {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @ManyToOne(() => Product, (product) => product.orders)
   @Column({ type: "int", name: "product_id" })
-  productId: number;
+  product: Product;
 
   @ManyToOne(() => User, (user) => user.orders)
   @JoinColumn({ name: "user_id" })
@@ -44,6 +46,9 @@ export class Order {
 
   @Column({ type: "char", length: 5 })
   status: string;
+
+  @Column({ length: 20, nullable: true })
+  request: string;
 
   @CreateDateColumn({
     type: "timestamp",

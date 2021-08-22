@@ -17,12 +17,14 @@ export interface AddressFormProps {
   addressToEdit?: DestinationType;
   gotoBack: Function;
   refetch: Function;
+  isFirst: boolean;
 }
 
 const AddressForm = ({
   addressToEdit,
   gotoBack,
   refetch,
+  isFirst,
 }: AddressFormProps) => {
   const addressee = useInput(addressToEdit?.addressee || "");
   const nameValidation = useValidation((name: string) => !!name.length);
@@ -55,6 +57,7 @@ const AddressForm = ({
             name: addressName.value,
             addressee: addressee.value,
             phoneNumber: convertToNumber(phone.value),
+            isDefault: isFirst,
           },
         });
       } else {

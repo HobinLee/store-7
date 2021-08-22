@@ -8,6 +8,7 @@ export class CartResponse {
   images: string[];
   productOptionId: number;
   amount: number;
+  productId: number;
 
   static of(cart: Cart): CartResponse {
     const id = cart.id,
@@ -16,7 +17,8 @@ export class CartResponse {
       deliveryCost = cart.product.deliveryCost,
       images = cart.product.getImagesAsString(),
       productOptionId = cart.productOptionId,
-      amount = cart.amount;
+      amount = cart.amount,
+      productId = cart.product.id;
 
     return {
       id,
@@ -26,6 +28,7 @@ export class CartResponse {
       images,
       productOptionId,
       amount,
+      productId,
     } as CartResponse;
   }
 }

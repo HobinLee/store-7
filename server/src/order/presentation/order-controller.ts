@@ -9,16 +9,9 @@ export class OrderController {
 
   @Post()
   createOrder(@Body() body: { userId: number; data: OrderRequest }): string {
+    console.log(body);
     return this.orderService.createOrder(body.userId, body.data);
   }
-
-  //   @Get()
-  //   async findOrdersByUserId(
-  //     @Body()
-  //     userId: number
-  //   ): Promise<OrderResponse[]> {
-  //     return await this.orderService.findOrdersByUserId(userId);
-  //   }
 
   @Get()
   async findOrders(): Promise<OrderResponse[]> {

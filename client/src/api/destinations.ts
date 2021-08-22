@@ -9,8 +9,9 @@ export const postDestination = (data: {
     detailAddress: string;
     addressee: string;
     phoneNumber: string;
+    isDefault: boolean;
   };
-}) => POST("/destinations", { ...data, isDefault: false });
+}) => POST("/destinations", { ...data });
 
 // PATCH /destinations/:id 배송지 수정
 export const patchDestination = ({ id, data }) =>

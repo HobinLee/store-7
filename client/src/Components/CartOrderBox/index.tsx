@@ -2,35 +2,48 @@ import styled from "styled-components";
 import Button from "@/Components/Button";
 import { convertToKRW } from "@/utils/util";
 import { gap } from "@/styles/theme";
+import { moveTo } from "@/Router";
+import { MouseEventHandler } from "react";
 
-export type OrderBoxProps = {
+export type CartOrderBoxInput = {
   totalPrice: number;
   totalDelivery: number;
   totalPayment: number;
   totalCount: number;
 };
 
-export const output = (props: OrderBoxProps) => {
+export const output = (props: CartOrderBoxInput) => {
+  const pathname = location.pathname.split("/")[1];
+
   return {
     priceOutput: convertToKRW(props.totalPrice),
     deliveryOutput: convertToKRW(props.totalDelivery),
     paymentOutput: convertToKRW(props.totalPayment),
-    buttonText: `${convertToKRW(props.totalPrice)} 결제하기`,
+    buttonText:
+      pathname === "cart"
+        ? `${props.totalCount}개 상품 구매하기`
+        : `${convertToKRW(props.totalPayment)} 결제하기`,
   };
 };
 
-const OrderBox = ({
-  totalPrice,
-  totalDelivery,
-  totalPayment,
-  totalCount,
-}: OrderBoxProps) => {
+const CartOrderBox = ({
+  isButtonDisabled,
+  handlePay,
+}: {
+  isButtonDisabled?: boolean;
+  handlePay?: MouseEventHandler<HTMLButtonElement>;
+}) => {
+  const { totalPrice, totalDelivery, totalPayment, totalCount } = JSON.parse(
+    localStorage.getItem("orders")
+  ) || { totalCount: 0, totalPrice: 0, totalDelivery: 0, totalPayment: 0 };
+
   const OUTPUT = output({
     totalPrice,
     totalDelivery,
     totalPayment,
     totalCount,
   });
+  const pathname = location.pathname.split("/")[1];
 
   return (
     <Wrapper>
@@ -53,7 +66,8 @@ const OrderBox = ({
         className="order-btn"
         primary
         size="large"
-        onClick={() => (window.location.href = "/order")}
+        disabled={totalCount === 0 || isButtonDisabled}
+        onClick={pathname === "cart" ? () => moveTo("/order") : handlePay}
       >
         {OUTPUT.buttonText}
       </Button>
@@ -97,4 +111,4 @@ const Result = styled.div`
   }
 `;
 
-export default OrderBox;
+export default CartOrderBox;

@@ -4,6 +4,9 @@ import { convertToKRW } from "@/utils/util";
 import { gap } from "@/styles/theme";
 import { Close } from "@/assets";
 import { deleteCart } from "@/api/carts";
+import { useRecoilValue } from "recoil";
+import { loginState } from "@/store/state";
+import { CartType } from "@/shared/type";
 
 export type ItemInfoBoxProps = {
   id: number;
@@ -38,9 +41,19 @@ const ItemInfoBox = ({
 }: ItemInfoBoxProps) => {
   const OUTPUT = output({ ...{ amount, price, deliveryCost } });
 
-  const handleDelete = async (id: number) => {
+  const isLogined = useRecoilValue(loginState);
+
+  const handleDeleteCart = async (id: number) => {
     try {
-      deleteCart(id);
+      if (isLogined) deleteCart(id);
+      else {
+        const exist: CartType = JSON.parse(localStorage.getItem("carts"));
+        const itemIdxToDelete = exist.items.findIndex((i) => i.id === id);
+
+        exist.items.splice(itemIdxToDelete, 1);
+
+        localStorage.setItem("carts", JSON.stringify(exist));
+      }
     } catch (error) {
       console.log(error);
     }
@@ -64,7 +77,7 @@ const ItemInfoBox = ({
       </div>
 
       {checkboxVisible && (
-        <Close onClick={() => handleDelete(id)} className="close-btn" />
+        <Close onClick={() => handleDeleteCart(id)} className="close-btn" />
       )}
     </Wrapper>
   );

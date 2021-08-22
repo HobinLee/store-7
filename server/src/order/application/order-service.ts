@@ -33,8 +33,18 @@ export class OrderService {
 
   createOrder(userId: number, order: OrderRequest): string {
     try {
-      this.orders.createOrder({ ...order, userId });
+      // 비회원은 id 1
+      console.log("service", order);
+      this.orders.createOrder({
+        ...order,
+        product: { id: order.productId },
+        user: {
+          id: userId ?? 1,
+        },
+        status: "배송준비중",
+      });
     } catch (e) {
+      console.log(e);
       return e;
     }
     return "Created!";
