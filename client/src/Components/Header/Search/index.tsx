@@ -6,6 +6,7 @@ import useInput from "@/hooks/useInput";
 import SearchList from "./DropDown/SearchedList";
 import AutoList from "./DropDown/AutoCompleteList";
 import { debounce } from "@material-ui/core";
+import { moveTo } from "@/Router";
 
 const LS_SEARCH = "search";
 
@@ -53,6 +54,7 @@ const Search = () => {
     searchValue.setValue(keyword);
 
     setNewSearchList(makeNewSearchedList(keyword));
+    moveTo(`/search?category=${category}&keyword=${keyword}`);
   };
 
   const handleDeleteSearchList = (keyword?: string) => {
