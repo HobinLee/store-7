@@ -21,10 +21,15 @@ import {
   QuestionPatchRequest,
   QuestionPostRequest,
 } from "../dto/question-request";
+import { SearchService } from "../application/search-service";
+import { SearchProduct } from "../dto/product-search-response";
 
 @Controller("/products")
 export class ProductController {
-  constructor(private readonly productService: ProductService) {}
+  constructor(
+    private readonly productService: ProductService,
+    private readonly searchService: SearchService
+  ) {}
 
   @Get()
   async getProducts(
@@ -40,6 +45,24 @@ export class ProductController {
       keyword
     );
   }
+
+  //auto complete
+  @Get("/search/:keyword")
+  async searchProducts(@Param("keyword") keyword: string) {
+    return this.searchService.searchProducts(keyword);
+  }
+
+  //search result
+  @Get("/keywords/:keyword")
+  async getKeywords(@Param("keyword") keyword: string) {
+    return this.searchService.findKeywords(keyword);
+  }
+
+  // TODO: 데이터를 만들었는데, ES에 저장 안했을 때 불러주면 되는 것
+  // @Get("/init")
+  // async createAllKeyword() {
+  //   return await this.searchService.setAllProductsIntoElasticSearch();
+  // }
 
   @Get("/:id")
   async getProduct(@Param("id") id: number): Promise<ProductResponse> {

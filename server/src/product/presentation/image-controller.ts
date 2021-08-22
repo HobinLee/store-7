@@ -1,7 +1,6 @@
-import { Controller, Get, Header, Param, Res } from "@nestjs/common";
+import { Controller, Get, Param, Res } from "@nestjs/common";
 import { Response } from "express";
 import { ImageService } from "@/product/application/image-service";
-import { createReadStream } from "fs";
 
 @Controller("/images")
 export class ImageController {
