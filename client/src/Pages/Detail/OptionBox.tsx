@@ -53,16 +53,11 @@ const OptionBox = ({
           ...exist.items,
           {
             ...product,
+            id: (exist.items[exist.items.length - 1]?.id || 0) + 1,
             amount: parseInt(numValue.value),
             price: product.price * parseInt(numValue.value),
           },
         ];
-
-        exist.totalPrice = product.price * parseInt(numValue.value);
-        exist.totalDelivery = product.deliveryCost;
-        exist.totalPayment =
-          product.price * parseInt(numValue.value) + product.deliveryCost;
-
         localStorage.setItem("carts", JSON.stringify(exist));
       }
     } catch (error) {

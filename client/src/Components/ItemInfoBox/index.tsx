@@ -48,16 +48,9 @@ const ItemInfoBox = ({
       if (isLogined) deleteCart(id);
       else {
         const exist: CartType = JSON.parse(localStorage.getItem("carts"));
-
-        const itemToDelete = exist.items.find((i) => i.id === id);
         const itemIdxToDelete = exist.items.findIndex((i) => i.id === id);
 
-        exist.items = exist.items.splice(itemIdxToDelete, 1);
-
-        exist.totalPrice -= itemToDelete.price * itemToDelete.amount;
-        exist.totalDelivery -= itemToDelete.deliveryCost;
-        exist.totalPayment -=
-          itemToDelete.price * itemToDelete.amount + itemToDelete.deliveryCost;
+        exist.items.splice(itemIdxToDelete, 1);
 
         localStorage.setItem("carts", JSON.stringify(exist));
       }
