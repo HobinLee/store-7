@@ -65,6 +65,13 @@ module.exports = (env) => {
       /*new dotenv({
         path: env.production ? "./env/.env" : "./env/dev.env",
       }),*/
+      new webpack.DefinePlugin({
+        'process.env.BASE_URL': process.env.BASE_URL,
+        'process.env.IMG_URL': process.env.IMG_URL,
+        'process.env.DEMO_EMAIL': process.env.DEMO_EMAIL,
+        'process.env.DEMO_PW': process.env.DEMO_PW
+      }),
+      new webpack.EnvironmentPlugin(['BASE_URL', 'IMG_URL', 'DEMO_EMAIL', 'DEMO_PW']),
       new forkTsCheckerWebpackPlugin(),
     ],
   };
