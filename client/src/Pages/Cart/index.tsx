@@ -11,7 +11,7 @@ import { useMyCarts } from "@/api/my";
 import { useState, useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { loginState, orders } from "@/store/state";
-import { CartType, PartialCart } from "@/shared/type";
+import { CartType, ICart, PartialCart } from "@/shared/type";
 
 const CartPage = () => {
   const isLogined = useRecoilValue(loginState);
@@ -108,7 +108,7 @@ const CartPage = () => {
               {cartItems.items.map((cart) => (
                 <ItemInfoBox
                   key={cart.id}
-                  {...cart}
+                  {...(cart as ICart)}
                   isChecked={checkItems.find((i) => i.id === cart.id)}
                   handleCheck={() =>
                     handleSingleCheck(

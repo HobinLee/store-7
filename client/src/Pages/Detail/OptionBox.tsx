@@ -10,9 +10,8 @@ import { postCart } from "@/api/carts";
 import { moveTo } from "@/Router";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { loginState, orders } from "@/store/state";
-import { ProductType } from "@/shared/type";
+import { CartType, ProductType } from "@/shared/type";
 import { InputType } from "@/hooks/useInput";
-import LoginPage from "../Login";
 
 type OptionBoxProps = {
   numValue: InputType;
@@ -41,7 +40,7 @@ const OptionBox = ({
           },
         });
       } else {
-        const exist = localStorage.getItem("carts")
+        const exist: CartType = localStorage.getItem("carts")
           ? JSON.parse(localStorage.getItem("carts"))
           : {
               totalPrice: 0,
@@ -54,7 +53,7 @@ const OptionBox = ({
           ...exist.items,
           {
             ...product,
-            amount: numValue.value,
+            amount: parseInt(numValue.value),
             price: product.price * parseInt(numValue.value),
           },
         ];
@@ -63,7 +62,6 @@ const OptionBox = ({
         exist.totalDelivery = product.deliveryCost;
         exist.totalPayment =
           product.price * parseInt(numValue.value) + product.deliveryCost;
-        exist.totalCount = parseInt(numValue.value);
 
         localStorage.setItem("carts", JSON.stringify(exist));
       }
