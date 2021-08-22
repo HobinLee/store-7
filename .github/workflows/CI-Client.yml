@@ -20,6 +20,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: create env file folder
+        run: mkdir env
+        working-directory: ./client
+        
+      - name: create env file
+        run: echo "BASE_URL=${{ secrets.CLIENT_BASE_URL }}"
+        working-directory: ./client
+
       - name: build docker image
         run: docker build -t leaguelugas/store-7-client .
         working-directory: ./client
