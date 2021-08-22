@@ -1,9 +1,8 @@
 import styled from "styled-components";
 
 import Section from "../../../Section";
-import Item from "@/Components/Item";
-import { ItemWrapList } from "@/shared/styled";
 import { useMyWishes } from "@/api/my";
+import ProductList from "@/Components/ProductList";
 
 const WishList = () => {
   const { status, data: wishes } = useMyWishes();
@@ -16,13 +15,7 @@ const WishList = () => {
         lineType="long1"
         data-testid="test__section"
       >
-        {status !== "loading" && (
-          <ItemWrapList>
-            {wishes.map((wish) => (
-              <Item {...wish} key={wish.id} />
-            ))}
-          </ItemWrapList>
-        )}
+        {status !== "loading" && <ProductList products={wishes} />}
       </Section>
     </Wrapper>
   );

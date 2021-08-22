@@ -57,7 +57,7 @@ export const ItemList = styled.ul`
   ${gap("1rem")}
 `;
 
-export const ItemWrapList = styled.ul`
+export const ProductWrapList = styled.ul`
   width: 100%;
   display: grid;
   grid-template-columns: repeat(4, 1fr);

@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import Section from "../../../Section";
-import Item from "@/Components/Item";
-import { sampleMain } from "@/shared/dummy";
-import { ItemList } from "@/shared/styled";
 import { useMyOrders } from "@/api/my";
 import Orders from "../Orders";
+import { useState } from "react";
+import ProductList from "@/Components/ProductList";
 
 const Root = () => {
   const { status, data: orders } = useMyOrders();
+  const [products, setProducts] = useState([]);
 
   return (
     <Wrapper data-testid="test__root">
@@ -23,11 +23,7 @@ const Root = () => {
         description="ET님께서 본 최근 상품입니다."
         lineType="long2"
       >
-        <ItemList>
-          {sampleMain.map((item) => (
-            <Item {...item} key={item.id} />
-          ))}
-        </ItemList>
+        <ProductList products={products} />
       </Section>
     </Wrapper>
   );
