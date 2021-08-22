@@ -9,9 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BASE_URL: ${{ secret.CLIENT_BASE_URL }} 
-      IMG_URL: ${{.secret.CLIENT_IMG_URL }}
-      DEMO_EMAIL: ${{.secret.CLIENT_DEMO_EMAIL }}
-      DEMO_PW: ${{.secret.CLIENT_DEMO_PW }}
+      IMG_URL: ${{ secret.CLIENT_IMG_URL }}
+      DEMO_EMAIL: ${{ secret.CLIENT_DEMO_EMAIL }}
+      DEMO_PW: ${{ secret.CLIENT_DEMO_PW }}
     defaults:
       run:
         shell: bash
