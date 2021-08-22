@@ -84,7 +84,7 @@ const ItemWrapper = styled.div`
   padding-bottom: 2rem;
   ${({ theme }) => theme.borderRadius.medium}
   &:hover {
-    box-shadow: 0 0 10px 2px #d4d4d4;
+    ${({ theme }) => theme.shadow}
     transition: all 0.2s;
   }
 
@@ -96,19 +96,6 @@ const ItemWrapper = styled.div`
       top: 1rem;
       left: 1rem;
       display: flex;
-    }
-    &__wish {
-      position: absolute;
-      bottom: 1rem;
-      right: 1rem;
-      & > svg:hover {
-        opacity: 1;
-        stroke: #2ac1bc;
-        stroke-width: 3rem;
-      }
-      & > svg:active {
-        transform: scale(1.2);
-      }
     }
   }
 
