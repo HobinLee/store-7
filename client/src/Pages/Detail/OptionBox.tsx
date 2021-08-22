@@ -8,7 +8,7 @@ import { convertToKRW } from "@/utils/util";
 import { gap } from "@/styles/theme";
 import { postCart } from "@/api/carts";
 import { moveTo } from "@/Router";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { loginState } from "@/store/state";
 import { CartType, ProductType } from "@/shared/type";
 import { InputType } from "@/hooks/useInput";

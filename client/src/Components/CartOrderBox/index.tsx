@@ -13,14 +13,14 @@ export type CartOrderBoxInput = {
 };
 
 export const output = (props: CartOrderBoxInput) => {
-  const pathmane = location.pathname.split("/")[1];
+  const pathname = location.pathname.split("/")[1];
 
   return {
     priceOutput: convertToKRW(props.totalPrice),
     deliveryOutput: convertToKRW(props.totalDelivery),
     paymentOutput: convertToKRW(props.totalPayment),
     buttonText:
-      pathmane === "cart"
+      pathname === "cart"
         ? `${props.totalCount}개 상품 구매하기`
         : `${convertToKRW(props.totalPayment)} 결제하기`,
   };
@@ -43,7 +43,7 @@ const CartOrderBox = ({
     totalPayment,
     totalCount,
   });
-  const pathmane = location.pathname.split("/")[1];
+  const pathname = location.pathname.split("/")[1];
 
   return (
     <Wrapper>
@@ -67,7 +67,7 @@ const CartOrderBox = ({
         primary
         size="large"
         disabled={totalCount === 0 || isButtonDisabled}
-        onClick={pathmane === "cart" ? () => moveTo("/order") : handlePay}
+        onClick={pathname === "cart" ? () => moveTo("/order") : handlePay}
       >
         {OUTPUT.buttonText}
       </Button>
