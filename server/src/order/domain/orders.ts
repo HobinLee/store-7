@@ -16,12 +16,16 @@ export class Orders {
   }
 
   async findOrdersByUserId(userId: number) {
-    return await this.orderRepository.find({ where: { userId } });
+    return await this.orderRepository.find({
+      relations: ["user"],
+      where: { user: { id: userId } },
+    });
   }
 
   async findCurrentOrdersByUserId(userId: number) {
     return await this.orderRepository.find({
-      where: { userId, status: "배송중" },
+      relations: ["user"],
+      where: { user: { id: userId }, status: "배송중" },
     });
   }
 
