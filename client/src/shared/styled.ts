@@ -5,8 +5,10 @@ import { gap } from "@/styles/theme";
 export const PageWrapper = styled.div`
   position: relative;
   width: 100%;
-  margin-top: 22rem;
+  padding-top: 22rem;
   padding-bottom: 30rem;
+  min-height: 100vh;
+  box-sizing: border-box;
 `;
 
 export const Contents = styled.div`
