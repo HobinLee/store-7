@@ -7,6 +7,7 @@ ENV DEMO_PW=$DEMO_PW
 WORKDIR /app
 COPY . .
 
+RUN rm -rf env
 RUN mkdir env
 RUN echo "BASE_URL=$BASE_URL" >> .env
 RUN echo "IMG_URL=$IMG_URL" >> .env
