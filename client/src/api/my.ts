@@ -8,7 +8,7 @@ import { GET, PATCH } from "@/utils/axios";
 import { useQuery } from "react-query";
 
 const getMyInfo = (): Promise<MyInfoType> => GET("/my/info");
-export const useUserInfo = () => useQuery(["userInfo"], () => getMyInfo());
+export const useMyInfo = () => useQuery(["userInfo"], () => getMyInfo());
 
 // PATCH /my/info 내 정보 수정
 export const patchMe = ({ data }) => PATCH("/my/info", data);

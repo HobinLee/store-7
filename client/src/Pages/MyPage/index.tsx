@@ -6,7 +6,7 @@ import Header from "@/Components/Header";
 import Sidebar from "./Sidebar";
 import ContentArea from "./ContentArea";
 
-import { useUserInfo } from "@/api/my";
+import { useMyInfo } from "@/api/my";
 
 const MyPage = () => {
   const [current, setCurrent] = useState("/");
@@ -32,7 +32,7 @@ const ContentBody = styled.div`
 `;
 
 export const ContentHeader = () => {
-  const { status, data: userInfo } = useUserInfo();
+  const { status, data: userInfo } = useMyInfo();
 
   return (
     <ContentHeaderWrapper data-testid="test__content-header">
