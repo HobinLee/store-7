@@ -3,7 +3,7 @@ export interface ReviewType {
   rate: number;
   content: string;
   image?: string;
-  author: string;
+  authorName: string;
   date: Date;
 }
 
@@ -17,7 +17,7 @@ export interface ReviewListType {
 export interface QuestionType {
   id: number;
   question: {
-    author: string;
+    authorName: string;
     content: string;
     date: Date;
     category?: string;
@@ -116,3 +116,20 @@ interface ICart {
   amount: number;
 }
 export type PartialCart = Partial<ICart>;
+
+export interface MyInfoType {
+  name: string;
+  grade: string;
+  phoneNumber: string;
+  profile: string;
+  destinations: DestinationType[];
+}
+
+export interface MyReviewType {
+  id: number;
+  rate: number;
+  content: string;
+  image?: string;
+  authorName: string;
+  date: Date;
+}
