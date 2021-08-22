@@ -9,7 +9,6 @@ export class OrderController {
 
   @Post()
   createOrder(@Body() body: { userId: number; data: OrderRequest }): string {
-    console.log(body);
     return this.orderService.createOrder(body.userId, body.data);
   }
 

@@ -25,7 +25,6 @@ const CartPage = () => {
     if (isLogined && status !== "loading") {
       setCartItems(carts);
     } else {
-      console.log(JSON.parse(localStorage.getItem("carts")));
       setCartItems(
         JSON.parse(localStorage.getItem("carts")) || {
           totalPrice: 0,
@@ -41,10 +40,6 @@ const CartPage = () => {
     if (isLogined && status !== "loading") setCheckItems(carts.items);
     else setCheckItems(cartItems?.items);
   }, [cartItems]);
-
-  useEffect(() => {
-    console.log("checkItems", checkItems);
-  }, [checkItems]);
 
   useEffect(() => {
     if (status !== "loading") {

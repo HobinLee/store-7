@@ -8,7 +8,6 @@ export class CartController {
 
   @Post()
   createCart(@Body() body: { data: CartRequest; userId: number }): string {
-    console.log(body);
     return this.cartService.createCart(body.userId, body.data);
   }
 

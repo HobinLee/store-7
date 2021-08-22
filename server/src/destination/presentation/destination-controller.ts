@@ -24,6 +24,14 @@ export class DestinationController {
     return this.destinationService.updateDestination(id, body.data);
   }
 
+  @Patch("/:id/default")
+  async updateDefaultDestination(
+    @Body("userId") userId: number,
+    @Param("id") id: number
+  ): Promise<string> {
+    return await this.destinationService.updateDefaultDestination(userId, id);
+  }
+
   @Delete("/:id")
   deleteDestination(@Param("id") id: number): string {
     return this.destinationService.deleteDestination(id);

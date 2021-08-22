@@ -26,7 +26,7 @@ const flexCenter = css`
 `;
 
 const shadow = css`
-  box-shadow: 0 0 10px 2px #d4d4d4;
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
 `;
 
 const borderRadius = {

@@ -23,7 +23,7 @@ export class DestinationService {
         isDefault: destination.isDefault ? 1 : 0,
       });
     } catch (e) {
-      return e;
+      throw Error(e.message);
     }
     return "Created!";
   }
@@ -35,7 +35,23 @@ export class DestinationService {
     try {
       this.destinations.updateDestination(id, destinationModifyRequest);
     } catch (e) {
-      return e;
+      throw Error(e.message);
+    }
+    return "Updated!";
+  }
+
+  async updateDefaultDestination(userId: number, id: number): Promise<string> {
+    try {
+      const allDestinations = await this.destinations.findDestinationsByUserId(
+        userId
+      );
+      allDestinations.forEach(async (d) => {
+        if (d.id !== id)
+          await this.destinations.updateDestinationIsDefault(d.id, false);
+      });
+      await this.destinations.updateDestinationIsDefault(id, true);
+    } catch (e) {
+      throw Error(e.message);
     }
     return "Updated!";
   }
@@ -44,7 +60,7 @@ export class DestinationService {
     try {
       this.destinations.deleteDestination(id);
     } catch (e) {
-      return e;
+      throw Error(e.message);
     }
     return "Deleted!";
   }

@@ -17,12 +17,11 @@ import {
 } from "@/utils/validations";
 import { gap } from "@/styles/theme";
 import { useEffect } from "react";
-import { useMyDestinations } from "@/api/my";
+import { useMyDestinations, useMyInfo } from "@/api/my";
 import {
   AddressType,
   DestinationType,
   ICart,
-  OrderType,
   PartialCart,
 } from "@/shared/type";
 import { postPaymentReady } from "@/api/payment";
@@ -42,6 +41,8 @@ const OrderPage = () => {
   const orderItems: { items: PartialCart[] } = JSON.parse(
     localStorage.getItem("orders")
   );
+
+  const { status: myInfoStatus, data: myInfo, error } = useMyInfo();
 
   // form
   const email = useInput("");
@@ -66,10 +67,11 @@ const OrderPage = () => {
   };
 
   // 배송지
-  const { status, data: destinations, error } = useMyDestinations();
+  const { status: destinationsStatus, data: destinations } =
+    useMyDestinations();
   const [address, setAddress] = useState<Partial<DestinationType>>();
   useEffect(() => {
-    if (isLogined && status !== "loading")
+    if (isLogined && destinationsStatus !== "loading")
       setAddress(destinations.find((i) => i.isDefault === true));
   }, [destinations]);
   const [isAddressModalOpened, setIsAddressModalOpened] = useState(false);
@@ -85,6 +87,7 @@ const OrderPage = () => {
           productId: item.productId,
           addressee: addressee.value,
           // productOptionId?: number,
+          price: item.price,
           amount: item.amount,
           destination: isLogined
             ? `${address.address} ${address.detailAddress}`
@@ -136,8 +139,14 @@ const OrderPage = () => {
     ((isLogined && !!address) || !!destination.postCode);
 
   useEffect(() => {
-    console.log("isOrderable", isOrderable);
-  }, [isOrderable]);
+    email.setValue(myInfo?.email);
+    addressee.setValue(myInfo?.name);
+    phone.setValue(convertToPhoneNumber(myInfo?.phoneNumber ?? ""));
+    // isOrderable = true;
+    emailValidation.onCheck(myInfo?.email ?? "");
+    nameValidation.onCheck(myInfo?.name ?? "");
+    phoneValidation.onCheck(convertToPhoneNumber(myInfo?.phoneNumber ?? ""));
+  }, [myInfoStatus]);
 
   return (
     <Wrapper>

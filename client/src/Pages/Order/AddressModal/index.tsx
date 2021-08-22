@@ -7,6 +7,8 @@ import { Back } from "@/assets";
 import AddressForm from "../AddressForm";
 import { gap } from "@/styles/theme";
 import { useMyDestinations } from "@/api/my";
+import { useEffect } from "react";
+import { patchDefaultDestination } from "@/api/destinations";
 
 const AddressModal = ({ closeModal, setAddress }) => {
   const { status, data: destinations, error, refetch } = useMyDestinations();
@@ -18,6 +20,19 @@ const AddressModal = ({ closeModal, setAddress }) => {
     (page === "add" && "배송지 추가");
 
   const [addressToEdit, setAddressToEdit] = useState();
+  useEffect(() => {
+    setAddressToEdit(null);
+  }, [page]);
+
+  // 기본배송지
+  const [defaultId, setDefaultId] = useState(
+    destinations?.find((i) => i.isDefault).id
+  );
+  const handleCheck = async (id: number) => {
+    setDefaultId(id);
+    await patchDefaultDestination(id);
+    refetch();
+  };
 
   return (
     <Wrapper {...{ closeModal, title }} hideCloseBtn={page !== "select"}>
@@ -43,7 +58,10 @@ const AddressModal = ({ closeModal, setAddress }) => {
                       setAddress,
                       setAddressToEdit,
                       refetch,
+                      closeModal,
                     }}
+                    isChecked={defaultId === address.id}
+                    handleCheck={() => handleCheck(address.id)}
                   />
                 ))
               ) : (
@@ -56,7 +74,7 @@ const AddressModal = ({ closeModal, setAddress }) => {
           <AddressForm
             isFirst={destinations.length === 0}
             gotoBack={() => setPage("select")}
-            {...{ addressToEdit, refetch }}
+            {...{ addressToEdit, refetch, setAddressToEdit }}
           />
         )}
 

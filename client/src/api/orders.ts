@@ -10,6 +10,7 @@ export const postOrder = ({
     productOptionId?: number;
     amount: number;
     destination: string;
+    price: number;
     // request: string;
   };
 }) => POST("/orders", { data });

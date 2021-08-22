@@ -19,6 +19,9 @@ const addressBoxProps: AddressBoxProps = {
   address: ADDRESS,
   setAddress: () => {},
   refetch: () => {},
+  closeModal: () => {},
+  isChecked: false,
+  handleCheck: () => {},
 };
 
 describe("<AddressBox />", () => {
