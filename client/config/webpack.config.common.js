@@ -62,9 +62,9 @@ module.exports = (env) => {
       new HtmlWebpackPlugin({
         template: "./src/index.html",
       }),
-      new dotenv({
+      /*new dotenv({
         path: env.production ? "./env/.env" : "./env/dev.env",
-      }),
+      }),*/
       new forkTsCheckerWebpackPlugin(),
     ],
   };
