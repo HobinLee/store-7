@@ -1,4 +1,3 @@
-import { Product } from "@/product/entity/product";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";

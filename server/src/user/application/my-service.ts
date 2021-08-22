@@ -32,6 +32,18 @@ export class MyService {
     private readonly wishes: Wishes
   ) {}
 
+  // info
+  async getMyInfo(userId) {
+    userId = 1;
+    const user = await this.users.findUserById(userId);
+    return MyInfoResponse.of(user);
+  }
+
+  async editMyInfo(request: MyInfoEditRequest) {
+    await this.users.updateUserInfo(request);
+  }
+
+  // carts
   async findMyCarts(userId: number): Promise<MyCartsResponse> {
     const data = await this.carts.findCartsByUserId(userId);
 
@@ -50,22 +62,7 @@ export class MyService {
     };
   }
 
-  async getMyInfo(userId) {
-    userId = 1;
-    const user = await this.users.findUserById(userId);
-    return MyInfoResponse.of(user);
-  }
-
-  async editMyInfo(request: MyInfoEditRequest) {
-    await this.users.updateUserInfo(request);
-  }
-
-  async getMyReviews(userId) {
-    userId = 1;
-    const reviews = await this.reviews.findReviewsByUserId(userId);
-    return reviews.map(MyReviewResponse.of);
-  }
-
+  // destinations
   async findMyDestionation(userId) {
     const destinations = await this.destinations.findDestinationsByUserId(
       userId
@@ -73,18 +70,34 @@ export class MyService {
     return destinations.map(DestinationResponse.of);
   }
 
+  // reviews
+  async getMyReviews(userId) {
+    userId = 1;
+    const reviews = await this.reviews.findReviewsByUserId(userId);
+    return reviews.map(MyReviewResponse.of);
+  }
+
+  // qeustions
   async getMyQeustions(userId: number) {
     userId = 1;
     const questions = await this.questions.findQuestionsByUserId(userId);
     return questions.map(QuestionResponse.of);
   }
 
+  // orders
   async getMyCurrentOrders(userId: number) {
     userId = 1;
     const orders = await this.orders.findCurrentOrdersByUserId(userId);
     return orders.map(MyCurrentOredersResponse.of);
   }
 
+  async getMyOrders(userId: number) {
+    userId = 1;
+    const orders = await this.orders.findOrdersByUserId(userId);
+    return orders.map(MyOredersResponse.of);
+  }
+
+  // wishes
   async getMyWishes(userId: number) {
     userId = 1;
     const wishes = await this.wishes.findWishesByUserId(userId);
@@ -97,11 +110,5 @@ export class MyService {
 
   async deleteWishProduct(wish: WishRequest) {
     await this.wishes.deleteWish(wish);
-  }
-
-  async getMyOrders(userId: number) {
-    userId = 1;
-    const orders = await this.orders.findOrdersByUserId(userId);
-    return orders.map(MyOredersResponse.of);
   }
 }

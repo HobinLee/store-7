@@ -25,23 +25,10 @@ import { WishRequest } from "../dto/wish-request";
 export class MyController {
   constructor(private readonly myService: MyService) {}
 
-  @Get("/carts")
-  async checkEmailExist(
-    @Body("userId") userId: number
-  ): Promise<MyCartsResponse> {
-    return await this.myService.findMyCarts(userId);
-  }
-
+  // info
   @Get("/info")
   async getMyInfo(@Body("userId") userId: number): Promise<MyInfoResponse> {
     return await this.myService.getMyInfo(userId);
-  }
-
-  @Get("/destinations")
-  async getMyDestionation(
-    @Body("userId") userId: number
-  ): Promise<DestinationResponse[]> {
-    return await this.myService.findMyDestionation(userId);
   }
 
   @Patch("/info")
@@ -49,6 +36,23 @@ export class MyController {
     return await this.myService.editMyInfo(request);
   }
 
+  // carts
+  @Get("/carts")
+  async checkEmailExist(
+    @Body("userId") userId: number
+  ): Promise<MyCartsResponse> {
+    return await this.myService.findMyCarts(userId);
+  }
+
+  // destinations
+  @Get("/destinations")
+  async getMyDestionation(
+    @Body("userId") userId: number
+  ): Promise<DestinationResponse[]> {
+    return await this.myService.findMyDestionation(userId);
+  }
+
+  // reviews
   @Get("/reviews")
   async getMyReviews(
     @Body("userId") userId: number
@@ -56,6 +60,7 @@ export class MyController {
     return await this.myService.getMyReviews(userId);
   }
 
+  // questions
   @Get("/questions")
   async getMyQuestions(
     @Body("userId") userId: number
@@ -63,6 +68,7 @@ export class MyController {
     return await this.myService.getMyQeustions(userId);
   }
 
+  // orders
   @Get("/orders/:target")
   async getMyOrdersByTarget(
     @Param("target") target: string,
@@ -75,6 +81,7 @@ export class MyController {
       : "";
   }
 
+  // wishes
   @Get("/wishes")
   async getWishes(@Body("userId") userId: number): Promise<MyWishResponse[]> {
     return await this.myService.getMyWishes(userId);

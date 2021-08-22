@@ -17,6 +17,7 @@ export class MyInfoResponse {
   grade: string;
   phoneNumber: string;
   profile: string;
+  email: string;
   destinations: Destination[];
 
   static of(user: User): MyInfoResponse {
@@ -24,6 +25,7 @@ export class MyInfoResponse {
       grade = user.grade,
       phoneNumber = user.phoneNumber,
       profile = user.profile,
+      email = user.email,
       destinations = user.destinations;
 
     return {
@@ -31,6 +33,7 @@ export class MyInfoResponse {
       grade,
       phoneNumber,
       profile,
+      email,
       destinations,
     };
   }
@@ -70,44 +73,9 @@ export class MyOredersResponse {
   destination: string;
   status: string;
   createdAt: Date;
-
-  static of(order: Order): MyOredersResponse {
-    const id = order.id,
-      productId = order.product.id,
-      userId = order.user.id,
-      addressee = order.addressee,
-      productOptionId = order.productOptionId,
-      amount = order.amount,
-      destination = order.destination,
-      status = order.status,
-      createdAt = order.createdAt;
-
-    return {
-      id,
-      productId,
-      userId,
-      addressee,
-      productOptionId,
-      amount,
-      destination,
-      status,
-      createdAt,
-    };
-  }
-}
-export class MyCurrentOredersResponse {
-  id: number;
-  productId: number;
-  userId: number;
-  addressee: string;
-  productOptionId: number;
-  amount: number;
-  destination: string;
-  status: string;
-  createdAt: Date;
   reviewId: number;
 
-  static of(order: Order): MyCurrentOredersResponse {
+  static of(order: Order): MyOredersResponse {
     const id = order.id,
       productId = order.product.id,
       userId = order.user.id,
