@@ -45,7 +45,6 @@ export class PaymentController {
   @Redirect()
   async postPaymentApprove(@Query("pg_token") pg_token) {
     const params = new URLSearchParams();
-    console.log("pgtoken", pg_token);
     params.append("cid", "TC0ONETIME");
     params.append("tid", tid);
     params.append("pg_token", pg_token);

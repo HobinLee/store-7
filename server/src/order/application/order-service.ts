@@ -34,7 +34,6 @@ export class OrderService {
   createOrder(userId: number, order: OrderRequest): string {
     try {
       // 비회원은 id 1
-      console.log("service", order);
       this.orders.createOrder({
         ...order,
         product: { id: order.productId },
