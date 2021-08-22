@@ -47,6 +47,7 @@ const AddressModal = ({ closeModal, setAddress }) => {
                       setAddress,
                       setAddressToEdit,
                       refetch,
+                      closeModal,
                     }}
                   />
                 ))

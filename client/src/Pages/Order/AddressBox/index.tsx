@@ -12,6 +12,7 @@ export type AddressBoxProps = {
   setAddress: Dispatch<SetStateAction<DestinationType>>;
   setAddressToEdit?: Dispatch<SetStateAction<DestinationType>>;
   refetch;
+  closeModal;
 };
 
 const AddressBox = ({
@@ -20,6 +21,7 @@ const AddressBox = ({
   setAddress,
   setAddressToEdit,
   refetch,
+  closeModal,
 }: AddressBoxProps) => {
   const handleDelete = async (id: number) => {
     await deleteDestination(id);
@@ -29,6 +31,10 @@ const AddressBox = ({
   const handleEdit = () => {
     setAddressToEdit(address);
     setPage("edit");
+  };
+  const handleSelect = () => {
+    setAddress(address);
+    closeModal();
   };
 
   return (
@@ -48,7 +54,7 @@ const AddressBox = ({
             수정
           </Button>
         </div>
-        <Button size="small" primary onClick={() => setAddress(address)}>
+        <Button size="small" primary onClick={handleSelect}>
           선택
         </Button>
       </div>

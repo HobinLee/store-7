@@ -22,7 +22,6 @@ import {
   AddressType,
   DestinationType,
   ICart,
-  OrderType,
   PartialCart,
 } from "@/shared/type";
 import { postPaymentReady } from "@/api/payment";
@@ -52,12 +51,6 @@ const OrderPage = () => {
   const nameValidation = useValidation((name: string) => !!name.length);
   const phone = useInput("", convertToPhoneNumber);
   const phoneValidation = useValidation(validatePhoneNumber);
-
-  useEffect(() => {
-    email.setValue(myInfo?.email);
-    addressee.setValue(myInfo?.name);
-    phone.setValue(convertToPhoneNumber(myInfo?.phoneNumber ?? ""));
-  }, [myInfoStatus]);
 
   // 결제수단
   type paymentType = "kakaopay" | "etpay" | null;
@@ -146,8 +139,14 @@ const OrderPage = () => {
     ((isLogined && !!address) || !!destination.postCode);
 
   useEffect(() => {
-    console.log("isOrderable", isOrderable);
-  }, [isOrderable]);
+    email.setValue(myInfo?.email);
+    addressee.setValue(myInfo?.name);
+    phone.setValue(convertToPhoneNumber(myInfo?.phoneNumber ?? ""));
+    // isOrderable = true;
+    emailValidation.onCheck(myInfo?.email ?? "");
+    nameValidation.onCheck(myInfo?.name ?? "");
+    phoneValidation.onCheck(convertToPhoneNumber(myInfo?.phoneNumber ?? ""));
+  }, [myInfoStatus]);
 
   return (
     <Wrapper>

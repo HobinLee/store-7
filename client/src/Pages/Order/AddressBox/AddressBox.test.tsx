@@ -19,6 +19,7 @@ const addressBoxProps: AddressBoxProps = {
   address: ADDRESS,
   setAddress: () => {},
   refetch: () => {},
+  closeModal: () => {},
 };
 
 describe("<AddressBox />", () => {
