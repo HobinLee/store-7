@@ -137,3 +137,16 @@ export interface MyReviewType {
   authorName: string;
   date: Date;
 }
+
+export interface MyOrderType {
+  id: number;
+  productId: number;
+  userId: number;
+  addressee: string;
+  productOptionId: number;
+  amount: number;
+  destination: string;
+  status: string;
+  createdAt: Date;
+  reviewId: number;
+}
