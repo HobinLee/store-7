@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import MainPage from "@/Pages/Main";
 import LoginPage from "@/Pages/Login";
-import { Router, Route } from "./Router";
+import { Router, Route, PageComponentType, RouteSetType } from "./Router";
 import CategoryPage from "./Pages/Category";
 import DetailPage from "./Pages/Detail";
 import CartPage from "./Pages/Cart";
@@ -20,19 +20,17 @@ import Alert from "./Components/Alert";
 import { verifyToken } from "./api/auth";
 import SearchPage from "./Pages/Search";
 
-type route = [string, JSX.Element, boolean?];
-
-const routes: route[] = [
-  ["/", <MainPage />, true],
-  ["/login", <LoginPage />, true],
-  ["/signup", <SignupPage />],
-  ["/category", <CategoryPage />],
-  ["/order", <OrderPage />, true],
-  ["/order/success", <OrderSuccess />],
-  ["/detail", <DetailPage />],
-  ["/cart", <CartPage />],
-  ["/mypage", <MyPage />],
-  ["/search", <SearchPage />],
+const routes: RouteSetType[] = [
+  ["/", MainPage, true],
+  ["/login", LoginPage, true],
+  ["/signup", SignupPage],
+  ["/category", CategoryPage],
+  ["/order", OrderPage, true],
+  ["/order/success", OrderSuccess],
+  ["/detail", DetailPage],
+  ["/cart", CartPage],
+  ["/mypage", MyPage],
+  ["/search", SearchPage],
 ];
 
 const App = () => {
@@ -71,10 +69,13 @@ const App = () => {
       </button>
 
       <Router>
-        {routes.map(([path, component, exact]: route) => (
-          <Route path={path} exact={exact ?? false} key={path}>
-            {component}
-          </Route>
+        {routes.map(([path, component, exact]: RouteSetType) => (
+          <Route
+            path={path}
+            exact={exact ?? false}
+            key={path}
+            component={component}
+          />
         ))}
       </Router>
       <Alert />

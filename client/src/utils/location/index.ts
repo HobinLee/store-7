@@ -1,4 +1,4 @@
-type URIParameterType = {
+export type URIParameterType = {
   [key: string]: any;
 };
 
@@ -17,7 +17,7 @@ export const encodeParams = (params: URIParameterType): string => {
 
 export const decodeParams = (
   encoded = window.location.search
-): URIParameterType => {
+): URIParameterType | null => {
   const params = {};
 
   const query = encoded.substring(1);
