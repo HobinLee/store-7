@@ -8,9 +8,9 @@ import { convertToKRW } from "@/utils/util";
 import { gap } from "@/styles/theme";
 import { postCart } from "@/api/carts";
 import { moveTo } from "@/Router";
-import { useSetRecoilState } from "recoil";
-import { orders } from "@/store/state";
-import { ProductType } from "@/shared/type";
+import { useRecoilValue } from "recoil";
+import { loginState } from "@/store/state";
+import { CartType, ProductType } from "@/shared/type";
 import { InputType } from "@/hooks/useInput";
 
 type OptionBoxProps = {
@@ -25,18 +25,41 @@ const OptionBox = ({
   product,
 }: OptionBoxProps) => {
   const [isCartAlertShown, setIsCartAlertShown] = useState(false);
-  const setOrders = useSetRecoilState(orders);
+
   const productId = location.pathname.split("detail/")[1];
+
+  const isLogined = useRecoilValue(loginState);
 
   const handlePostCart = async () => {
     try {
-      if (status !== "loading") {
+      if (isLogined && status !== "loading") {
         await postCart({
           data: {
             product: { id: parseInt(productId) },
             amount: parseInt(numValue.value),
           },
         });
+      } else {
+        const exist: CartType = localStorage.getItem("carts")
+          ? JSON.parse(localStorage.getItem("carts"))
+          : {
+              totalPrice: 0,
+              totalPayment: 0,
+              totalDelivery: 0,
+              items: [],
+            };
+
+        exist.items = [
+          ...exist.items,
+          {
+            ...product,
+            id: (exist.items[exist.items.length - 1]?.id || 0) + 1,
+            amount: parseInt(numValue.value),
+            price: product.price * parseInt(numValue.value),
+            productId: parseInt(productId),
+          },
+        ];
+        localStorage.setItem("carts", JSON.stringify(exist));
       }
     } catch (error) {
       console.log(error);
@@ -46,20 +69,24 @@ const OptionBox = ({
   };
 
   const handleBuyImmediately = () => {
-    setOrders({
-      items: [
-        {
-          ...product,
-          amount: numValue.value,
-          price: product.price * parseInt(numValue.value),
-        },
-      ],
-      totalPrice: product.price * parseInt(numValue.value),
-      totalDelivery: product.deliveryCost,
-      totalPayment:
-        product.price * parseInt(numValue.value) + product.deliveryCost,
-      totalCount: parseInt(numValue.value),
-    });
+    localStorage.setItem(
+      "orders",
+      JSON.stringify({
+        items: [
+          {
+            ...product,
+            amount: numValue.value,
+            price: product.price * parseInt(numValue.value),
+            productId,
+          },
+        ],
+        totalPrice: product.price * parseInt(numValue.value),
+        totalDelivery: product.deliveryCost,
+        totalPayment:
+          product.price * parseInt(numValue.value) + product.deliveryCost,
+        totalCount: parseInt(numValue.value),
+      })
+    );
 
     moveTo("/order");
   };

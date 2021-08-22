@@ -1,19 +1,19 @@
 import { render } from "@/utils/test-util";
 import { screen } from "@testing-library/react";
-import OrderBox, { OrderBoxProps, output } from "./index";
+import CartOrderBox, { CartOrderBoxInput, output } from "./index";
 
-const orderBoxProps: OrderBoxProps = {
+const CartOrderBoxInput: CartOrderBoxInput = {
   totalPrice: 20000,
   totalDelivery: 30000,
   totalPayment: 50000,
   totalCount: 3,
 };
 
-describe("<OrderBox />", () => {
-  const OUTPUT = output(orderBoxProps);
+describe("<CartOrderBox />", () => {
+  const OUTPUT = output(CartOrderBoxInput);
 
   it("should render component in document", () => {
-    const { container } = render(<OrderBox {...orderBoxProps} />);
+    const { container } = render(<CartOrderBox />);
     expect(container).toBeInTheDocument();
 
     expect(screen.queryByText("총 상품금액")).toBeInTheDocument();

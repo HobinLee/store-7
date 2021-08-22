@@ -73,7 +73,7 @@ export class MyOredersResponse {
 
   static of(order: Order): MyOredersResponse {
     const id = order.id,
-      productId = order.productId,
+      productId = order.product.id,
       userId = order.user.id,
       addressee = order.addressee,
       productOptionId = order.productOptionId,
@@ -109,7 +109,7 @@ export class MyCurrentOredersResponse {
 
   static of(order: Order): MyCurrentOredersResponse {
     const id = order.id,
-      productId = order.productId,
+      productId = order.product.id,
       userId = order.user.id,
       addressee = order.addressee,
       productOptionId = order.productOptionId,

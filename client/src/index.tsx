@@ -5,6 +5,8 @@ import { RecoilRoot } from "recoil";
 
 const queryClient = new QueryClient();
 
+console.log(process.env.BASE_URL);
+
 ReactDOM.render(
   <RecoilRoot>
     <QueryClientProvider client={queryClient}>

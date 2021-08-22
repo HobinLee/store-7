@@ -16,14 +16,6 @@ export class DestinationController {
     return this.destinationService.createDestination(body.userId, body.data);
   }
 
-  //   @Get()
-  //   async findDestinationsByUserId(
-  //     @Body()
-  //     userId: number
-  //   ): Promise<DestinationResponse[]> {
-  //     return await this.destinationService.findDestinationsByUserId(userId);
-  //   }
-
   @Patch("/:id")
   updateDestination(
     @Param("id") id: number,

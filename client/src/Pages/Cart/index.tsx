@@ -3,25 +3,48 @@ import styled from "styled-components";
 import Header from "@/Components/Header";
 import Footer from "@/Components/Footer";
 import ItemInfoBox from "@/Components/ItemInfoBox";
-import CartBox from "./CartBox";
+import CartOrderBox from "../../Components/CartOrderBox";
 import { Arrow } from "@/assets";
 import Checkbox from "@/Components/Checkbox";
 import { gap } from "@/styles/theme";
 import { useMyCarts } from "@/api/my";
 import { useState, useEffect } from "react";
-import { useRecoilState } from "recoil";
-import { orders } from "@/store/state";
-import { PartialCart } from "@/shared/type";
+import { useRecoilValue } from "recoil";
+import { loginState } from "@/store/state";
+import { CartType, ICart, OrderType, PartialCart } from "@/shared/type";
 
 const CartPage = () => {
+  const isLogined = useRecoilValue(loginState);
+
+  const [cartItems, setCartItems] = useState<CartType>();
   const { status, data: carts, error } = useMyCarts();
 
   const [checkItems, setCheckItems] = useState([]);
-  const [items, setOrders] = useRecoilState(orders);
 
   useEffect(() => {
-    if (status !== "loading") setCheckItems(carts.items);
-  }, [carts]);
+    if (isLogined && status !== "loading") {
+      setCartItems(carts);
+    } else {
+      console.log(JSON.parse(localStorage.getItem("carts")));
+      setCartItems(
+        JSON.parse(localStorage.getItem("carts")) || {
+          totalPrice: 0,
+          totalPayment: 0,
+          totalDelivery: 0,
+          items: [],
+        }
+      );
+    }
+  }, [status]);
+
+  useEffect(() => {
+    if (isLogined && status !== "loading") setCheckItems(carts.items);
+    else setCheckItems(cartItems?.items);
+  }, [cartItems]);
+
+  useEffect(() => {
+    console.log("checkItems", checkItems);
+  }, [checkItems]);
 
   useEffect(() => {
     if (status !== "loading") {
@@ -30,14 +53,16 @@ const CartPage = () => {
         (sum, cart) => sum + cart.deliveryCost,
         0
       );
-      // TODO: localstorage에 저장해서 새로고침시에도 불러오기
-      setOrders({
-        items: checkItems,
-        totalPrice: price,
-        totalDelivery: delivery,
-        totalPayment: price + delivery,
-        totalCount: checkItems.length,
-      });
+      localStorage.setItem(
+        "orders",
+        JSON.stringify({
+          items: checkItems,
+          totalPrice: price,
+          totalDelivery: delivery,
+          totalPayment: price + delivery,
+          totalCount: checkItems.length,
+        })
+      );
     }
   }, [status, checkItems]);
 
@@ -53,7 +78,7 @@ const CartPage = () => {
   // 체크박스 전체 선택
   const handleAllCheck = (isChecked: boolean) => {
     if (isChecked) {
-      const idArray = carts.items.map((el) => el);
+      const idArray = cartItems.items.map((el) => el);
       setCheckItems(idArray);
     } else {
       setCheckItems([]);
@@ -64,7 +89,7 @@ const CartPage = () => {
     status !== "loading" && (
       <Wrapper>
         <Header>
-          <CartBox {...items} />
+          <CartOrderBox />
         </Header>
         <div className="contents">
           <Title>
@@ -79,16 +104,16 @@ const CartPage = () => {
               <div>
                 <Checkbox
                   label="모두선택"
-                  isChecked={checkItems.length === carts.items.length}
+                  isChecked={checkItems.length === cartItems.items.length}
                   handleCheck={() =>
-                    handleAllCheck(checkItems.length !== carts.items.length)
+                    handleAllCheck(checkItems.length !== cartItems.items.length)
                   }
                 />
               </div>
-              {carts.items.map((cart) => (
+              {cartItems.items.map((cart) => (
                 <ItemInfoBox
                   key={cart.id}
-                  {...cart}
+                  {...(cart as ICart)}
                   isChecked={checkItems.find((i) => i.id === cart.id)}
                   handleCheck={() =>
                     handleSingleCheck(

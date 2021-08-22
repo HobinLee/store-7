@@ -12,7 +12,7 @@ export class Orders {
   ) {}
 
   async findOrders() {
-    return await this.orderRepository.find();
+    return await this.orderRepository.find({ relations: ["user", "product"] });
   }
 
   async findOrdersByUserId(userId: number) {

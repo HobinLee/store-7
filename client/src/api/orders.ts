@@ -1,7 +1,18 @@
 import { GET, PATCH, POST } from "@/utils/axios";
 
 // POST /orders 주문하기
-export const postOrder = ({ data }) => POST("/orders", data);
+export const postOrder = ({
+  data,
+}: {
+  data: {
+    productId: number;
+    addressee: string;
+    productOptionId?: number;
+    amount: number;
+    destination: string;
+    // request: string;
+  };
+}) => POST("/orders", { data });
 
 // GET /orders/:orderNum 주문번호로 주문 가져오기
 export const getOrdersByOrderNum = ({ orderNum }) => GET(`/orders/${orderNum}`);

@@ -3,11 +3,10 @@ import { useState } from "react";
 import styled from "styled-components";
 import Header from "@/Components/Header";
 import Footer from "@/Components/Footer";
-import OrderBox from "./OrderBox";
 import useInput from "@/hooks/useInput";
 import AddressModal from "./AddressModal";
 import ItemInfoBox from "@/Components/ItemInfoBox";
-import { Arrow } from "@/assets";
+import { Arrow, KakaoPay } from "@/assets";
 import InputSection from "@/Components/Input/InputSection";
 import useValidation from "@/hooks/useValidation";
 import ValidationInput from "@/Components/Input/ValidationInput";
@@ -17,36 +16,87 @@ import {
   VALIDATION_ERR_MSG,
 } from "@/utils/validations";
 import { gap } from "@/styles/theme";
-import { useRecoilValue } from "recoil";
-import { orders } from "@/store/state";
 import { useEffect } from "react";
 import { useMyDestinations } from "@/api/my";
-import { DestinationType } from "@/shared/type";
+import {
+  AddressType,
+  DestinationType,
+  ICart,
+  OrderType,
+  PartialCart,
+} from "@/shared/type";
 import { postPaymentReady } from "@/api/payment";
 import properties from "@/config/properties";
+import CartOrderBox from "../../Components/CartOrderBox";
+import { useRecoilValue } from "recoil";
+import { loginState } from "@/store/state";
+import Address from "@/Components/Address";
+import { convertToPhoneNumber } from "@/utils/util";
+import { postOrder } from "@/api/orders";
+import { moveTo } from "@/Router";
 
 const OrderPage = () => {
-  // const { status, data: carts, error } = useMyCarts();
-  const orderItems = useRecoilValue(orders);
+  const isLogined = useRecoilValue(loginState);
 
+  // 상품목록
+  const orderItems: { items: PartialCart[] } = JSON.parse(
+    localStorage.getItem("orders")
+  );
+
+  // form
   const email = useInput("");
   const emailValidation = useValidation(validateEmail);
-  const name = useInput("");
+  const addressee = useInput("");
   const nameValidation = useValidation((name: string) => !!name.length);
-  const phone = useInput("");
+  const phone = useInput("", convertToPhoneNumber);
   const phoneValidation = useValidation(validatePhoneNumber);
 
-  const { status, data: destinations, error } = useMyDestinations();
+  // 결제수단
+  type paymentType = "kakaopay" | "etpay" | null;
+  const [payment, setPayment] = useState<paymentType>(null);
 
+  // 비로그인시 배송지
+  const [destination, setDestination] = useState<AddressType>({
+    address: "",
+    postCode: "",
+    detailAddress: "",
+  });
+  const handleChangeAddress = (address: DestinationType) => {
+    setDestination(address);
+  };
+
+  // 배송지
+  const { status, data: destinations, error } = useMyDestinations();
   const [address, setAddress] = useState<Partial<DestinationType>>();
   useEffect(() => {
-    if (status !== "loading")
+    if (isLogined && status !== "loading")
       setAddress(destinations.find((i) => i.isDefault === true));
   }, [destinations]);
-
   const [isAddressModalOpened, setIsAddressModalOpened] = useState(false);
 
-  const handlePay = async () => {
+  // 요청사항
+  const [request, setRequest] = useState("");
+
+  // create order
+  const handlePostOrder = () => {
+    orderItems.items.forEach(async (item) => {
+      await postOrder({
+        data: {
+          productId: item.productId,
+          addressee: addressee.value,
+          // productOptionId?: number,
+          amount: item.amount,
+          destination: isLogined
+            ? `${address.address} ${address.detailAddress}`
+            : `${destination.address} ${destination.detailAddress}`,
+          // request,
+        },
+      });
+    });
+  };
+
+  // 카카오페이
+  const handleKakaoPay = async () => {
     const res = await postPaymentReady({
       cid: "TC0ONETIME",
       item_name: "item",
@@ -57,15 +107,42 @@ const OrderPage = () => {
       cancel_url: properties.baseURL,
       fail_url: properties.baseURL,
     });
-    // const tid = res.tid;
-    window.open(res.url);
+    if (res) {
+      try {
+        handlePostOrder();
+      } finally {
+        window.open(res.url);
+      }
+    }
   };
-  // TODO: 기본배송지 가져오기
+
+  // 결제 버튼 클릭
+  const handlePay = () => {
+    if (payment === "kakaopay") handleKakaoPay();
+    else {
+      try {
+        handlePostOrder();
+      } finally {
+        moveTo("/order/success");
+      }
+    }
+  };
+
+  const isOrderable =
+    emailValidation.isValid &&
+    nameValidation.isValid &&
+    phoneValidation.isValid &&
+    !!payment &&
+    ((isLogined && !!address) || !!destination.postCode);
+
+  useEffect(() => {
+    console.log("isOrderable", isOrderable);
+  }, [isOrderable]);
 
   return (
     <Wrapper>
       <Header>
-        <OrderBox {...orderItems} totalCount={orderItems.items.length} />
+        <CartOrderBox {...{ handlePay }} isButtonDisabled={!isOrderable} />
       </Header>
       <div className="contents">
         <Title>
@@ -77,7 +154,7 @@ const OrderPage = () => {
             <div className="label">주문상품</div>
             <div className="items">
               {orderItems.items.map((cart) => (
-                <ItemInfoBox key={cart.id} {...cart} />
+                <ItemInfoBox key={cart.id} {...(cart as ICart)} />
               ))}
             </div>
           </Info>
@@ -87,7 +164,7 @@ const OrderPage = () => {
             <div className="user-info">
               <InputSection title="이름">
                 <ValidationInput
-                  input={name}
+                  input={addressee}
                   validation={nameValidation}
                   placeholder="이름"
                   message={VALIDATION_ERR_MSG.INVALID_NAME}
@@ -118,37 +195,79 @@ const OrderPage = () => {
           <Info>
             <div className="label">
               배송지
-              <div
-                className="address-btn"
-                onClick={() => setIsAddressModalOpened(true)}
-              >
-                변경
-              </div>
+              {isLogined && (
+                <div
+                  className="address-btn"
+                  onClick={() => setIsAddressModalOpened(true)}
+                >
+                  변경
+                </div>
+              )}
             </div>
 
             <div className="address-info">
-              <div className="name">{address?.name}</div>
-              <div>
-                {address?.addressee} {address?.phoneNumber}
+              {isLogined ? (
+                address ? (
+                  <>
+                    <div className="name">{address?.name}</div>
+                    <div>
+                      {address?.addressee} {address?.phoneNumber}
+                    </div>
+                    <div>
+                      {address?.address} {address?.detailAddress}
+                    </div>
+                  </>
+                ) : (
+                  <div>배송지를 추가해주세요</div>
+                )
+              ) : (
+                <Address onChangeAddress={handleChangeAddress} />
+              )}
+
+              <div style={{ marginTop: "3rem" }}>
+                <select className="order-input" value={request}>
+                  <option value="배송시 요청사항을 선택해주세요.">
+                    배송시 요청사항을 선택해주세요.
+                  </option>
+                  <option value="부재시 문 앞에 놓아주세요.">
+                    부재시 문 앞에 놓아주세요.
+                  </option>
+                  <option value="배송전에 미리 연락주세요.">
+                    배송전에 미리 연락주세요.
+                  </option>
+                  <option value="부재시 경비실에 맡겨주세요.">
+                    부재시 경비실에 맡겨주세요.
+                  </option>
+                  <option value="부재시 전화주시거나 문자 남겨 주세요.">
+                    부재시 전화주시거나 문자 남겨 주세요.
+                  </option>
+                  {/* <option>직접입력</option> */}
+                </select>
               </div>
-              <div>
-                {address?.address} {address?.detailAddress}
-              </div>
-              <select className="order-input">
-                <option>배송시 요청사항을 선택해주세요.</option>
-                <option>부재시 문 앞에 놓아주세요.</option>
-                <option>배송전에 미리 연락주세요.</option>
-                <option>부재시 경비실에 맡겨주세요.</option>
-                <option>부재시 전화주시거나 문자 남겨 주세요.</option>
-                <option>직접입력</option>
-              </select>
             </div>
           </Info>
 
           <Info>
             <div className="label">결제수단</div>
-            <div>공짜는 업나여</div>
-            <div onClick={handlePay}>카카오페이</div>
+
+            <div className="payments">
+              <Payment
+                className="payments__item"
+                onClick={() => setPayment("kakaopay")}
+                isClicked={payment === "kakaopay"}
+              >
+                <img width={70} src={KakaoPay} />
+                <div>카카오페이</div>
+              </Payment>
+              <Payment
+                className="payments__item"
+                onClick={() => setPayment("etpay")}
+                isClicked={payment === "etpay"}
+              >
+                <img width={70} src={KakaoPay} />
+                <div>ET페이</div>
+              </Payment>
+            </div>
           </Info>
         </Content>
       </div>
@@ -173,7 +292,7 @@ const Wrapper = styled(PageWrapper)`
     cursor: pointer;
   }
   .order-input {
-    width: 30rem;
+    width: 37rem;
     border: 0.1rem solid ${({ theme }) => theme.color.line};
     padding: 0.8rem 1rem;
     border-radius: 0.5rem;
@@ -206,7 +325,7 @@ const Content = styled.div`
   align-items: flex-start;
   width: 100%;
   ${gap("8rem", "column")}
-  margin-top: 4rem;
+  margin: 4rem 0;
 `;
 
 const Info = styled.div`
@@ -255,6 +374,24 @@ const Info = styled.div`
       color: ${({ theme }) => theme.color.primary1};
     }
   }
+  .payments {
+    display: flex;
+    ${gap("1rem")}
+  }
+`;
+
+const Payment = styled.div<{ isClicked: boolean }>`
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 1rem;
+  width: 10rem;
+  height: 10rem;
+  border: 0.2rem solid
+    ${({ theme, isClicked }) =>
+      isClicked ? theme.color.primary1 : theme.color.line};
 `;
 
 export default OrderPage;

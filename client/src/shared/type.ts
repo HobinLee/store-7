@@ -104,9 +104,9 @@ export interface CartType {
   totalPrice: number;
   totalDelivery: number;
   totalPayment: number;
-  items: ICart[];
+  items: PartialCart[];
 }
-interface ICart {
+export interface ICart {
   id: number;
   name: string;
   price: number;
@@ -114,8 +114,11 @@ interface ICart {
   images: string[];
   productOptionId: number;
   amount: number;
+  productId: number;
 }
-
+export interface OrderType extends CartType {
+  totalCount: number;
+}
 export type PartialCart = Partial<ICart>;
 
 export interface MyInfoType {

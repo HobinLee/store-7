@@ -9,17 +9,19 @@ export class OrderResponse {
   amount: number;
   destination: string;
   status: string;
+  request: string;
   createdAt: Date;
 
   static of(order: Order): OrderResponse {
     const id = order.id,
-      productId = order.productId,
+      productId = order.product.id,
       userId = order.user.id,
       addressee = order.addressee,
       productOptionId = order.productOptionId,
       amount = order.amount,
       destination = order.destination,
-      status = order.status;
+      status = order.status,
+      request = order.request;
 
     return {
       id,
@@ -30,6 +32,7 @@ export class OrderResponse {
       amount,
       destination,
       status,
+      request,
     } as OrderResponse;
   }
 }

@@ -5,8 +5,14 @@ export interface OrderRequest {
   amount: number;
   destination: string;
   status: string;
+  request?: string;
 }
 
 export interface CreateOrderRequest extends OrderRequest {
-  userId: number;
+  user: {
+    id: number;
+  };
+  product: {
+    id: number;
+  };
 }

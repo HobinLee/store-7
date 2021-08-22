@@ -33,21 +33,28 @@ const AddressModal = ({ closeModal, setAddress }) => {
         {page === "select" ? (
           <Contents>
             {status !== "loading" &&
-              destinations.map((address) => (
-                <AddressBox
-                  key={address.id}
-                  {...{
-                    setPage,
-                    address,
-                    setAddress,
-                    setAddressToEdit,
-                    refetch,
-                  }}
-                />
+              (destinations.length > 0 ? (
+                destinations.map((address) => (
+                  <AddressBox
+                    key={address.id}
+                    {...{
+                      setPage,
+                      address,
+                      setAddress,
+                      setAddressToEdit,
+                      refetch,
+                    }}
+                  />
+                ))
+              ) : (
+                <div className="empty">
+                  첫 배송지 추가시 기본배송지로 설정됩니다.
+                </div>
               ))}
           </Contents>
         ) : (
           <AddressForm
+            isFirst={destinations.length === 0}
             gotoBack={() => setPage("select")}
             {...{ addressToEdit, refetch }}
           />
@@ -78,6 +85,8 @@ const Wrapper = styled(ModalWrapper)`
     padding: 2rem;
     width: 100%;
     box-sizing: border-box;
+    position: absolute;
+    bottom: 0;
   }
   .back-btn {
     cursor: pointer;
@@ -89,6 +98,7 @@ const Wrapper = styled(ModalWrapper)`
 
 const Contents = styled.div`
   width: 100%;
+  height: 55rem;
   padding: 2rem;
   box-sizing: border-box;
   display: flex;
@@ -96,6 +106,11 @@ const Contents = styled.div`
   ${gap("1rem", "column")}
   background: ${({ theme }) => theme.color.background};
   overflow-y: scroll;
+  .empty {
+    height: 100%;
+    ${({ theme }) => theme.font.medium};
+    ${({ theme }) => theme.flexCenter};
+  }
 `;
 
 export default AddressModal;
