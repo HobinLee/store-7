@@ -127,6 +127,7 @@ export interface MyInfoType {
   phoneNumber: string;
   profile: string;
   destinations: DestinationType[];
+  email: string;
 }
 
 export interface MyReviewType {

@@ -7,6 +7,7 @@ import { Back } from "@/assets";
 import AddressForm from "../AddressForm";
 import { gap } from "@/styles/theme";
 import { useMyDestinations } from "@/api/my";
+import { useEffect } from "react";
 
 const AddressModal = ({ closeModal, setAddress }) => {
   const { status, data: destinations, error, refetch } = useMyDestinations();
@@ -18,6 +19,9 @@ const AddressModal = ({ closeModal, setAddress }) => {
     (page === "add" && "배송지 추가");
 
   const [addressToEdit, setAddressToEdit] = useState();
+  useEffect(() => {
+    setAddressToEdit(null);
+  }, [page]);
 
   return (
     <Wrapper {...{ closeModal, title }} hideCloseBtn={page !== "select"}>
@@ -56,7 +60,7 @@ const AddressModal = ({ closeModal, setAddress }) => {
           <AddressForm
             isFirst={destinations.length === 0}
             gotoBack={() => setPage("select")}
-            {...{ addressToEdit, refetch }}
+            {...{ addressToEdit, refetch, setAddressToEdit }}
           />
         )}
 

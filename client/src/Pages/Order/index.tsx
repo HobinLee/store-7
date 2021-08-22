@@ -17,7 +17,7 @@ import {
 } from "@/utils/validations";
 import { gap } from "@/styles/theme";
 import { useEffect } from "react";
-import { useMyDestinations } from "@/api/my";
+import { useMyDestinations, useMyInfo } from "@/api/my";
 import {
   AddressType,
   DestinationType,
@@ -43,6 +43,8 @@ const OrderPage = () => {
     localStorage.getItem("orders")
   );
 
+  const { status: myInfoStatus, data: myInfo, error } = useMyInfo();
+
   // form
   const email = useInput("");
   const emailValidation = useValidation(validateEmail);
@@ -50,6 +52,12 @@ const OrderPage = () => {
   const nameValidation = useValidation((name: string) => !!name.length);
   const phone = useInput("", convertToPhoneNumber);
   const phoneValidation = useValidation(validatePhoneNumber);
+
+  useEffect(() => {
+    email.setValue(myInfo?.email);
+    addressee.setValue(myInfo?.name);
+    phone.setValue(convertToPhoneNumber(myInfo?.phoneNumber ?? ""));
+  }, [myInfoStatus]);
 
   // 결제수단
   type paymentType = "kakaopay" | "etpay" | null;
@@ -66,10 +74,11 @@ const OrderPage = () => {
   };
 
   // 배송지
-  const { status, data: destinations, error } = useMyDestinations();
+  const { status: destinationsStatus, data: destinations } =
+    useMyDestinations();
   const [address, setAddress] = useState<Partial<DestinationType>>();
   useEffect(() => {
-    if (isLogined && status !== "loading")
+    if (isLogined && destinationsStatus !== "loading")
       setAddress(destinations.find((i) => i.isDefault === true));
   }, [destinations]);
   const [isAddressModalOpened, setIsAddressModalOpened] = useState(false);
@@ -85,6 +94,7 @@ const OrderPage = () => {
           productId: item.productId,
           addressee: addressee.value,
           // productOptionId?: number,
+          price: item.price,
           amount: item.amount,
           destination: isLogined
             ? `${address.address} ${address.detailAddress}`
