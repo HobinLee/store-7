@@ -1,5 +1,5 @@
 import { ItemBannerType } from "@/shared/type";
-import { gap } from "@/styles/theme";
+import { gap, media } from "@/styles/theme";
 import styled from "styled-components";
 import GiftItem from "../Gift";
 
@@ -22,6 +22,15 @@ const GiftListWrapper = styled.ul`
   flex-direction: row;
   flex: 1 1 50%;
   ${gap("2rem")}
+
+  ${media.custom(620)} {
+    flex-direction: column;
+    flex: 0 0 100%;
+    li {
+      margin: 0;
+      padding: 0.5rem 0;
+    }
+  }
 `;
 
 export default GiftList;

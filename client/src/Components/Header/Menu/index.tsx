@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { getSiblingIndex } from "@/utils/node";
 import { Link } from "@/Router";
 import { categories } from "@/shared/dummy";
+import { media } from "@/styles/theme";
 
 export type CategoryType = {
   name: string;
@@ -130,6 +131,9 @@ const Wrapper = styled.div`
     &:hover {
       opacity: 0.5;
     }
+  }
+  ${media[768]} {
+    padding: 0 1rem;
   }
 `;
 

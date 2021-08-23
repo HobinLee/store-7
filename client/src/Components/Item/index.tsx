@@ -5,6 +5,7 @@ import ToggleImageWrapper from "../ToggleImageWrapper";
 import { WishIcon } from "@/assets";
 import { getCurrentPrice, convertToKRW } from "@/utils/util";
 import { postWishProduct, deleteWishProduct } from "@/api/my";
+import { media } from "@/styles/theme";
 
 type ItemType = {
   id: number;
@@ -135,6 +136,13 @@ const ItemWrapper = styled.div`
         margin-left: 0.5rem;
         text-decoration: line-through;
       }
+    }
+  }
+  ${media[768]} {
+    .thumbnail {
+      max-width: 46vw;
+      max-height: 46vw;
+      overflow: hidden;
     }
   }
 `;

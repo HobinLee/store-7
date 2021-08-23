@@ -7,6 +7,7 @@ import SearchList from "./DropDown/SearchedList";
 import AutoList from "./DropDown/AutoCompleteList";
 import { debounce } from "@material-ui/core";
 import { moveTo } from "@/Router";
+import { media } from "@/styles/theme";
 
 const LS_SEARCH = "search";
 
@@ -131,6 +132,9 @@ const SearchWrapper = styled.form`
     width: 11rem;
     box-sizing: border-box;
     height: 100%;
+  }
+  ${media[768]} {
+    display: none;
   }
 `;
 

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link } from "@/Router";
 import { ItemBannerType } from "@/shared/type";
-import { gap } from "@/styles/theme";
+import { gap, media } from "@/styles/theme";
 
 export interface BannerProps {
   banners: ItemBannerType[];
@@ -103,6 +103,29 @@ const BannerWrapper = styled.div`
       font-weight: bolder;
       border: 1px solid ${({ theme }) => theme.color.primary1};
       background: ${({ theme }) => theme.color.primary1};
+    }
+  }
+
+  ${media[768]} {
+    padding: 0;
+    height: 20rem;
+    .banner-content {
+      border-radius: 0;
+    }
+
+    .banner__info-wrapper {
+      padding: 2rem;
+    }
+    .banner__title {
+      ${({ theme }) => theme.font.large}
+    }
+
+    .banner__brief {
+      ${({ theme }) => theme.font.small}
+    }
+
+    .banner__button {
+      display: none;
     }
   }
 `;
