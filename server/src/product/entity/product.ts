@@ -45,15 +45,13 @@ export class Product {
   @Column({ length: 16, nullable: true })
   option: string;
 
-  @OneToMany(() => ProductOption, (option) => option.product, { cascade: true })
+  @OneToMany(() => ProductOption, (option) => option.product)
   options: ProductOption[];
 
-  @OneToMany(() => ProductImage, (image) => image.product, { cascade: true })
+  @OneToMany(() => ProductImage, (image) => image.product)
   images: ProductImage[];
 
-  @OneToMany(() => ProductDetailImage, (detailImage) => detailImage.product, {
-    cascade: true,
-  })
+  @OneToMany(() => ProductDetailImage, (detailImage) => detailImage.product)
   detailImages: ProductDetailImage[];
 
   @OneToMany(() => Cart, (cart) => cart.product)
@@ -106,7 +104,7 @@ export class Product {
   }
 
   getThumbnailImage() {
-    if (!this.images) return "";
+    if (!this.images || this.images.length == 0) return "";
     return this.images[0].id;
   }
 

@@ -125,7 +125,6 @@ export class MyWishResponse {
 
   static of(wishes: Wish[]): MyWishResponse[] {
     return wishes.map((wish) => {
-      console.log(2, wish);
       const {
         id,
         name,

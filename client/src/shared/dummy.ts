@@ -4,18 +4,6 @@ import { ItemType, ReviewListType, UserType } from "./type";
 export const IMAGE_DUMMY =
   "https://store.baemin.com/data/board/upload/goodsreview/eea0b21ff31b55a0";
 
-export const sampleMypage = {
-  shopping: [
-    { title: "주문목록/배송조회", path: "orderlist" },
-    { title: "찜리스트", path: "wishlist" },
-  ],
-  userInfo: [
-    { title: "회원정보 변경", path: "userinfo" },
-    { title: "나의 상품문의", path: "question" },
-    { title: "나의 상품후기", path: "review" },
-  ],
-};
-
 export const sampleMain = [
   {
     id: 1,

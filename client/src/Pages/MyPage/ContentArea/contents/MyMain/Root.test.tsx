@@ -1,14 +1,14 @@
 import "jest-styled-components";
 import { render } from "@/utils/test-util";
 import { screen } from "@testing-library/react";
-import Root from "./index";
+import MyMain from "./index";
 import { expectText } from "@/utils/test-util";
 import { recent, sampleMain } from "@/shared/dummy";
 
 describe("<Root />", () => {
   let page;
   beforeEach(() => {
-    const { container } = render(<Root />);
+    const { container } = render(<MyMain />);
     page = container;
   });
 

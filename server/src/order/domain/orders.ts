@@ -12,20 +12,36 @@ export class Orders {
   ) {}
 
   async findOrders() {
-    return await this.orderRepository.find({ relations: ["user", "product"] });
+    return await this.orderRepository.find({
+      relations: ["user", "product", "product.images"],
+    });
   }
 
   async findOrdersByUserId(userId: number) {
     return await this.orderRepository.find({
-      relations: ["user"],
+      relations: ["user", "product", "product.images"],
       where: { user: { id: userId } },
     });
   }
 
   async findCurrentOrdersByUserId(userId: number) {
     return await this.orderRepository.find({
-      relations: ["user"],
+      relations: ["user", "product", "product.images"],
       where: { user: { id: userId }, status: "배송중" },
+    });
+  }
+
+  async findDeliverdOrdersByUserId(userId: number) {
+    return await this.orderRepository.find({
+      relations: ["user", "product", "product.images"],
+      where: { user: { id: userId }, status: "배송완료" },
+    });
+  }
+
+  async findReviewedOrdersByUserId(userId: number) {
+    return await this.orderRepository.find({
+      relations: ["user", "product", "product.images"],
+      where: { user: { id: userId }, status: "구매확정" },
     });
   }
 
