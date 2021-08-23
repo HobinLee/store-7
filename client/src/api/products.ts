@@ -1,4 +1,4 @@
-import { ProductType } from "@/shared/type";
+import { ProductType, ReviewListType } from "@/shared/type";
 import { DELETE, GET, POST } from "@/utils/axios";
 import { useQuery } from "react-query";
 
@@ -13,7 +13,10 @@ export const useProduct = (id: number) =>
   useQuery(["product", id], () => getProduct(id));
 
 // GET /products/:id/reviews 리뷰 리스트
-export const getProductReviews = ({ id }) => GET(`/products/${id}/reviews`);
+const getProductReviews = (id: number): Promise<ReviewListType> =>
+  GET(`/products/${id}/reviews`);
+export const useProductReviews = (id: number) =>
+  useQuery(["reviews", id], () => getProductReviews(id));
 
 // GET /products/:id/questions 문의 리스트
 export const getProductQuestions = ({ id }) => GET(`/products/${id}/questions`);

@@ -1,12 +1,12 @@
 import { ReviewType } from "@/shared/type";
 import styled from "styled-components";
 import ReviewList from "./ReviewList";
-import { reviews } from "@/shared/dummy";
+// import { reviews } from "@/shared/dummy";
 
 const ReviewSection = () => (
   <SectionWrapper>
     <div className="title">유저들의 상품 후기</div>
-    <ReviewList reviews={reviews.reviews} />
+    {/* <ReviewList reviews={reviews.reviews} /> */}
   </SectionWrapper>
 );
 

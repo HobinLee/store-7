@@ -69,17 +69,15 @@ export class ProductController {
   }
 
   @Get("/:id/reviews")
-  async getReviews(
-    @Param("productId") productId: number
-  ): Promise<ReviewResponse> {
-    return await this.productService.getProductReviews(productId);
+  async getReviews(@Param("id") id: number): Promise<ReviewResponse> {
+    return await this.productService.getProductReviews(id);
   }
 
   @Get("/:id/questions")
   async getProductQuestions(
-    @Param("id") productId: number
+    @Param("id") id: number
   ): Promise<QuestionResponse[]> {
-    return await this.productService.getProductQuestions(productId);
+    return await this.productService.getProductQuestions(id);
   }
 
   @Post("/:id/questions")

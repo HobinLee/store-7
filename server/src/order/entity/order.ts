@@ -26,7 +26,6 @@ export class Order {
   user: User;
 
   @OneToOne(() => Review, (review) => review.order)
-  @JoinColumn({ name: "review_id" })
   review: Review;
 
   @Column({ length: 20 })

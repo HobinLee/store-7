@@ -8,7 +8,6 @@ export interface ReviewType {
 }
 
 export interface ReviewListType {
-  totalCount: number;
   averageRate: number;
   rates: { rate: number; count: number }[];
   reviews: ReviewType[];
