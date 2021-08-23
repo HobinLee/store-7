@@ -11,6 +11,8 @@ import { useState } from "react";
 import { Triangle } from "@/assets";
 import useInput from "@/hooks/useInput";
 import Input from "../Input";
+import useDebounce from "@/hooks/useDebounce";
+import { useEffect } from "react";
 
 export type ItemInfoBoxProps = {
   id: number;
@@ -25,7 +27,7 @@ export type ItemInfoBoxProps = {
   refetch?: Function;
 };
 
-export const output = ({ amount, price, deliveryCost }) => {
+export const output = ({ price, deliveryCost }) => {
   return {
     priceOutput: `총 ${convertToKRW(price)}`,
     deliveryOutput: `배송비 ${convertToKRW(deliveryCost)}`,
@@ -66,17 +68,25 @@ const ItemInfoBox = ({
   };
 
   const numValue = useInput(amount.toString());
+  const debouncedNumValue = useDebounce(numValue.value);
+
   const handleClickNumVal = async (val: 1 | -1) => {
     let num = parseInt(numValue.value);
     if (val === 1) {
       numValue.setValue((num + 1).toString());
-      await patchCart(id, { amount: amount + 1 });
     } else {
       if (num > 1) numValue.setValue((num - 1).toString());
-      await patchCart(id, { amount: amount - 1 });
     }
     refetch();
   };
+
+  const handlePatchCart = async () => {
+    await patchCart(id, { amount: parseInt(debouncedNumValue) });
+    refetch();
+  };
+  useEffect(() => {
+    handlePatchCart();
+  }, [debouncedNumValue]);
 
   return (
     <Wrapper>

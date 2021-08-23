@@ -1,6 +1,6 @@
 import { Link } from "@/Router";
-import { Logo } from "@/assets";
-import { ReactChild, useState } from "react";
+import { HeaderLogo } from "@/assets";
+import { ReactChild } from "react";
 import styled from "styled-components";
 import SearchBar from "./Search";
 import Menu from "./Menu";
@@ -21,7 +21,7 @@ const Header = ({ children }: { children?: ReactChild | JSX.Element }) => {
     <TopWrapper>
       <Wrapper>
         <Link to="/">
-          <img width="150" src={Logo} />
+          <img width="170" style={{ marginTop: "1rem" }} src={HeaderLogo} />
         </Link>
         <SearchBar />
         <div className="header__buttons">

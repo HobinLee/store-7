@@ -18,6 +18,8 @@ export { default as Loading } from "./loading.svg";
 export { default as UserIcon } from "./user.svg";
 export { default as AddUser } from "./addUser.svg";
 export { default as KakaoPay } from "./kakaopay.png";
+export { default as ETPay } from "./etpay.png";
+export { default as HeaderLogo } from "./header_logo.png";
 export { default as DeleveryIcon } from "./delivery.svg";
 export { default as Info } from "./info.svg";
 export { default as QuestionIcon } from "./question.svg";
