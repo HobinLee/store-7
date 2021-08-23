@@ -28,7 +28,7 @@ const Item = ({
 
   const handleClickWish = (apiCallback) => async (e: Event) => {
     e.stopPropagation();
-    await apiCallback({ productId: id });
+    await apiCallback(id);
     setIsWish(!isWishState);
   };
 
