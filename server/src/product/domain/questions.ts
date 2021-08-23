@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Question } from "@/product/entity/question";
 import {
-  QuestionPostRequest,
+  CreateQuestionPostRequest,
   QuestionPatchRequest,
 } from "@/product/dto/question-request";
 
@@ -29,15 +29,15 @@ export class Questions {
     });
   }
 
-  async createQuestion(productId: number, question: QuestionPostRequest) {
+  async createQuestion(question: CreateQuestionPostRequest) {
     await this.questionRepository.insert({
-      product: { id: productId },
+      product: { id: question.product.id },
       ...question,
     });
   }
 
   async updateQuestion(id: number, question: QuestionPatchRequest) {
-    await this.questionRepository.update({ id }, question);
+    await this.questionRepository.update({ id }, { ...question });
   }
 
   async deleteQuestion(id: number) {
