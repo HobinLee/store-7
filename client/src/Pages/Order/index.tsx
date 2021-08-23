@@ -6,7 +6,7 @@ import Footer from "@/Components/Footer";
 import useInput from "@/hooks/useInput";
 import AddressModal from "./AddressModal";
 import ItemInfoBox from "@/Components/ItemInfoBox";
-import { Arrow, KakaoPay } from "@/assets";
+import { Arrow, ETPay, KakaoPay } from "@/assets";
 import InputSection from "@/Components/Input/InputSection";
 import useValidation from "@/hooks/useValidation";
 import ValidationInput from "@/Components/Input/ValidationInput";
@@ -273,7 +273,7 @@ const OrderPage = () => {
                 onClick={() => setPayment("etpay")}
                 isClicked={payment === "etpay"}
               >
-                <img width={70} src={KakaoPay} />
+                <img width={70} src={ETPay} />
                 <div>ET페이</div>
               </Payment>
             </div>
