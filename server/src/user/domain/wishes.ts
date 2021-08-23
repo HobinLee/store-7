@@ -11,7 +11,17 @@ export class Wishes {
     private readonly wishRepository: Repository<Wish>
   ) {}
 
-  async findWishesByUserId(userId: number): Promise<Wish[]> {
+  async findMyWishByProductId(
+    userId: number,
+    productId: number
+  ): Promise<Wish> {
+    return await this.wishRepository.findOne({
+      relations: ["product", "user"],
+      where: { user: { id: userId }, product: { id: productId } },
+    });
+  }
+
+  async findMyWishesByUserId(userId: number): Promise<Wish[]> {
     return await this.wishRepository.find({
       relations: ["product", "user"],
       where: { user: { id: userId } },
@@ -29,7 +39,7 @@ export class Wishes {
   }
 
   async deleteWish(wish: WishRequest) {
-    await this.wishRepository.delete({
+    return await this.wishRepository.delete({
       user: {
         id: wish.userId,
       },
