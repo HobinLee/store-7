@@ -9,7 +9,7 @@ export const PageWrapper = styled.div`
   padding-bottom: 30rem;
   min-height: 100vh;
   box-sizing: border-box;
-  ${media[768]} {
+  ${media.mobile} {
     padding-top: 12rem;
     max-width: 100vw;
   }
@@ -24,7 +24,7 @@ export const Contents = styled.div`
   padding: 0 5rem;
   box-sizing: border-box;
 
-  ${media[768]} {
+  ${media.mobile} {
     padding: 0 1rem;
   }
 `;
@@ -77,7 +77,7 @@ export const ProductWrapList = styled.ul`
     box-sizing: border-box;
     flex: 0 0 25%;
   }
-  ${media[768]} {
+  ${media.mobile} {
     li {
       padding: 0.5rem;
       flex: 0 0 50%;

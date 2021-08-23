@@ -132,7 +132,7 @@ const Wrapper = styled.div`
       color: ${({ theme }) => theme.color.primary3};
     }
   }
-  ${media[768]} {
+  ${media.mobile} {
     padding: 0 1rem;
   }
 `;
@@ -194,7 +194,7 @@ const SubCategoryWrapper = styled.ul<{ padding: number; width: number }>`
   z-index: 30;
 
   ${({ padding, width }) => setPadding(padding, width)}
-  ${media[768]} {
+  ${media.mobile} {
     width: 100%;
     padding: 0;
     justify-content: flex-start;

@@ -83,13 +83,13 @@ const TopWrapper = styled.div`
     height: auto;
     margin-top: 2rem;
   }
-  ${media.custom(1000)} {
+  ${media.tablet} {
     img {
       width: 11rem;
       height: auto;
     }
   }
-  ${media[768]} {
+  ${media.mobile} {
     max-width: 100vw;
     border-radius: 0;
     img {
@@ -117,7 +117,7 @@ const Wrapper = styled.div`
     cursor: pointer;
   }
 
-  ${media[768]} {
+  ${media.mobile} {
     max-width: 100vw;
     padding: 0;
     height: 6rem;

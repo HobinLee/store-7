@@ -38,7 +38,7 @@ const FilterWrapper = styled.div<{
   & > div:nth-child(1) {
     background: ${({ theme }) => theme.color.white};
   }
-  ${media[768]} {
+  ${media.mobile} {
     top: ${({ category }) => (category === "0" ? 10.6 : 13.8)}rem;
   }
 `;

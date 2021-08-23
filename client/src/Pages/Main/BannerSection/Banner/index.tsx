@@ -106,7 +106,7 @@ const BannerWrapper = styled.div`
     }
   }
 
-  ${media[768]} {
+  ${media.mobile} {
     padding: 0;
     height: 20rem;
     .banner-content {

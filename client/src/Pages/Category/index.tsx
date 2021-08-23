@@ -36,7 +36,7 @@ const Wrapper = styled(PageWrapper)`
     background: white;
   }
   padding-top: 10rem;
-  ${media[768]} {
+  ${media.mobile} {
     padding-top: 10rem;
   }
 `;

@@ -138,7 +138,7 @@ const ItemWrapper = styled.div`
       }
     }
   }
-  ${media[768]} {
+  ${media.mobile} {
     .thumbnail {
       max-width: 46vw;
       max-height: 46vw;

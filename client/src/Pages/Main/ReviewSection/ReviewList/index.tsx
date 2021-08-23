@@ -85,7 +85,7 @@ const ReviewListWrapper = styled.ul`
     }
   }
 
-  ${media[768]} {
+  ${media.mobile} {
     width: auto;
     flex-direction: column;
     li {

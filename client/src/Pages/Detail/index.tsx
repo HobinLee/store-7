@@ -217,7 +217,7 @@ const Info = styled.div`
 const Scroll = styled.div<{ selectedTab: string }>`
   width: 100%;
   padding-right: ${({ selectedTab }) => selectedTab === "first" && "25rem"};
-  ${media[768]} {
+  ${media.mobile} {
     padding: 0;
   }
   box-sizing: border-box;
@@ -259,7 +259,7 @@ const Tab = styled.div`
   top: 14.6rem;
   background: ${({ theme }) => theme.color.background};
   z-index: 1;
-  ${media[768]} {
+  ${media.mobile} {
     top: 10.6rem;
   }
 `;

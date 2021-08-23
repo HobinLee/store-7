@@ -57,7 +57,6 @@ const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   ${gap("1rem", "column")}
-  position: relative;
 
   input {
     box-sizing: border-box;
@@ -85,10 +84,6 @@ const InputWrapper = styled.div`
 
   .input__err-message {
     color: ${({ theme }) => theme.color.error_color};
-    position: absolute;
-    left: 0;
-    ${({ theme }) => theme.font.small};
-    top: 3.5rem;
   }
 `;
 

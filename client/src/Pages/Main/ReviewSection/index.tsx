@@ -12,7 +12,7 @@ const ReviewSection = () => (
 );
 
 const SectionWrapper = styled.div`
-  ${media[768]} {
+  ${media.mobile} {
     overflow-x: scroll;
   }
 `;

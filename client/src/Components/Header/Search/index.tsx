@@ -132,7 +132,7 @@ const SearchWrapper = styled.form`
     height: 100%;
   }
 
-  ${media[768]} {
+  ${media.mobile} {
     display: none;
   }
 `;
@@ -159,7 +159,7 @@ const SearchInput = styled(Input)`
   width: 34rem;
   text-align: left;
 
-  ${media.custom(1000)} {
+  ${media.tablet} {
     width: 22vw;
   }
 `;

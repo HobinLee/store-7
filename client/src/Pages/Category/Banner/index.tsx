@@ -80,7 +80,7 @@ const Wrapper = styled.div<{
       }
     }
   }
-  ${media[768]} {
+  ${media.mobile} {
     height: 17rem;
 
     .category-info {
