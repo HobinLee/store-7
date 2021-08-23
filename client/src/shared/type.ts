@@ -141,6 +141,10 @@ export interface MyOrderType {
   amount: number;
   destination: string;
   status: string;
+  request: string;
+  price: number;
+  productName: string;
   createdAt: Date;
   reviewId: number;
+  image: string;
 }

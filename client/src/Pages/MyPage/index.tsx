@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { PageWrapper, Contents } from "@/shared/styled";
 import Header from "@/Components/Header";
-import Sidebar from "./Sidebar";
+import Nav from "./Nav";
 import ContentArea from "./ContentArea";
 
 import { useMyInfo } from "@/api/my";
@@ -15,9 +15,8 @@ const MyPage = () => {
     <MyPageWrapper>
       <Header />
       <Contents>
-        <ContentHeader />
+        <ContentHeader setCurrent={setCurrent} current={current} />
         <ContentBody>
-          <Sidebar setCurrent={setCurrent} />
           <ContentArea current={current} />
         </ContentBody>
       </Contents>
@@ -31,11 +30,25 @@ const ContentBody = styled.div`
   display: flex;
 `;
 
-export const ContentHeader = () => {
-  const { status, data: userInfo } = useMyInfo();
-
+const ContentHeader = ({ setCurrent, current }) => {
   return (
-    <ContentHeaderWrapper data-testid="test__content-header">
+    <ContentHeaderWrapper>
+      <Greeting />
+      <Nav setCurrent={setCurrent} current={current} />
+    </ContentHeaderWrapper>
+  );
+};
+
+const ContentHeaderWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  margin-bottom: 5rem;
+`;
+
+export const Greeting = () => {
+  const { status, data: userInfo } = useMyInfo();
+  return (
+    <GreetingWrapper data-testid="test__content-header">
       {status !== "loading" ? (
         <>
           <div className="greeting">반가워요,</div>
@@ -49,14 +62,12 @@ export const ContentHeader = () => {
       ) : (
         <div>스켈레톤 UI</div>
       )}
-    </ContentHeaderWrapper>
+    </GreetingWrapper>
   );
 };
 
-const ContentHeaderWrapper = styled.div`
-  width: 100%;
-  margin-bottom: 8rem;
-
+const GreetingWrapper = styled.div`
+  margin-right: 10em;
   .greeting {
     font-size: 4rem;
     font-weight: bold;
