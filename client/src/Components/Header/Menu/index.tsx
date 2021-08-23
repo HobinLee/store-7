@@ -9,9 +9,12 @@ export type CategoryType = {
   name: string;
   subCategories?: CategoryType[];
 };
-
+const getCurrentCategoryIndex = (category: string) =>
+  categories.findIndex((c) => c.name === category);
 const Menu = ({ category }: { category?: string }) => {
-  const [currentCategoryIndex, setCurrentCategory] = useState(category ?? 0);
+  const [currentCategoryIndex, setCurrentCategory] = useState(
+    getCurrentCategoryIndex(category) ?? 0
+  );
   const [padding, setPadding] = useState(0);
 
   const checkChangeCategory = ({

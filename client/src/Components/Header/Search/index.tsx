@@ -5,7 +5,6 @@ import { DropdownWrapper, DropdownItem } from "@/shared/styled";
 import useInput from "@/hooks/useInput";
 import SearchList from "./DropDown/SearchedList";
 import AutoList from "./DropDown/AutoCompleteList";
-import { debounce } from "@material-ui/core";
 import { moveTo } from "@/Router";
 import { media } from "@/styles/theme";
 
@@ -64,11 +63,8 @@ const Search = () => {
       : setNewSearchList([]);
   };
 
-  const debounceAutoComplete = debounce(() => {}, 200);
-
   const onChangeKeyword = (e) => {
     searchValue.onChange(e);
-    debounceAutoComplete();
   };
 
   return (
