@@ -129,10 +129,12 @@ const SearchWrapper = styled.form`
     position: relative;
     border-right: 0.2rem solid ${({ theme }) => theme.color.light_grey2};
     padding: 0 1.5rem;
-    width: 11rem;
+    width: 25%;
+    max-width: 11rem;
     box-sizing: border-box;
     height: 100%;
   }
+
   ${media[768]} {
     display: none;
   }
@@ -161,6 +163,10 @@ const SearchInput = styled(Input)`
   width: 30rem;
   text-align: left;
   background: none;
+
+  ${media.custom(1000)} {
+    width: 25vw;
+  }
 `;
 
 const ResetButton = styled.button`

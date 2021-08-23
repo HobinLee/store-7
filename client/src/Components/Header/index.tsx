@@ -73,7 +73,7 @@ const TopWrapper = styled.div`
   }
 
   img {
-    margin-top: 3rem;
+    margin-top: 2rem;
   }
   ${media[768]} {
     max-width: 100vw;

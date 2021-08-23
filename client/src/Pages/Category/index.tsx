@@ -1,3 +1,6 @@
+import CategoryBanner from "./Banner";
+import Filter from "./Filter";
+
 import Header from "@/Components/Header";
 import { PageWrapper, Contents } from "@/shared/styled";
 import styled from "styled-components";
@@ -10,40 +13,28 @@ const CategoryPage = ({ params }) => {
   return (
     <Wrapper>
       <Header />
-      <Contents>
-        <Filter>
-          <div className="total">총 233개</div>
-          <div className="buttons">
-            <div className="buttons__btn">추천순</div>
-            <div className="buttons__btn">인기순</div>
-            <div className="buttons__btn">최신순</div>
-            <div className="buttons__btn">낮은가격순</div>
-            <div className="buttons__btn">높은가격순</div>
-          </div>
-        </Filter>
+      <div className="page_contents">
+        <CategoryBanner />
+        <Filter />
         <ProductList products={products} />
-      </Contents>
+      </div>
       <Footer />
     </Wrapper>
   );
 };
 
-const Wrapper = styled(PageWrapper)``;
-
-const Filter = styled.div`
-  ${({ theme }) => theme.flexCenter}
-  ${({ theme }) => theme.font.medium}
-  justify-content: space-between;
-  padding: 3rem 0;
-  .total {
-  }
-  .buttons {
+const Wrapper = styled(PageWrapper)`
+  .page_contents {
     ${({ theme }) => theme.flexCenter}
-    &__btn {
-      cursor: pointer;
-      padding: 0 2rem;
-    }
+    flex-direction: column;
+    margin: 0 auto;
+    max-width: 120rem;
+    width: 100%;
+    padding: 0 5rem;
+    box-sizing: border-box;
+    background: white;
   }
+  margin-top: 10rem;
 `;
 
 export default CategoryPage;
