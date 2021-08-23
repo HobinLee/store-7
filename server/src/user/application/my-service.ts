@@ -117,12 +117,13 @@ export class MyService {
     const wishes = await this.wishes.findMyWishesByUserId(userId);
     return MyWishResponse.of(wishes);
   }
+
   async findMyWishByProductId(userId: number, productId: number) {
     const wish = await this.wishes.findMyWishByProductId(userId, productId);
-    console.log(wish);
-    return !!wish;
+    return wish;
   }
-  async postWishProduct(wish: WishRequest) {
+
+  async createWishProduct(wish: WishRequest) {
     await this.wishes.createWish(wish);
   }
 
