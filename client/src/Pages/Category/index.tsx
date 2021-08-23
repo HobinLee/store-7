@@ -7,6 +7,7 @@ import styled from "styled-components";
 import Footer from "@/Components/Footer";
 import { useProducts } from "@/api/products";
 import ProductList from "@/Components/ProductList";
+import { media } from "@/styles/theme";
 
 const CategoryPage = ({ params }) => {
   const { data: products } = useProducts(params);
@@ -34,7 +35,10 @@ const Wrapper = styled(PageWrapper)`
     box-sizing: border-box;
     background: white;
   }
-  margin-top: 10rem;
+  padding-top: 10rem;
+  ${media[768]} {
+    padding-top: 10rem;
+  }
 `;
 
 export default CategoryPage;

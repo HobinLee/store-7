@@ -129,7 +129,7 @@ const Wrapper = styled.div`
     cursor: pointer;
     text-align: center;
     &:hover {
-      opacity: 0.5;
+      color: ${({ theme }) => theme.color.primary3};
     }
   }
   ${media[768]} {
@@ -144,7 +144,7 @@ const MainCategoryWrapper = styled.ul`
   display: flex;
   flex-direction: row;
   overflow-x: scroll;
-  color: #fff;
+  color: ${({ theme }) => theme.color.grey2};
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
   &::-webkit-scrollbar {
@@ -158,7 +158,7 @@ const MainCategoryWrapper = styled.ul`
   .selected {
     font-weight: bolder;
     a {
-      color: ${({ theme }) => theme.color.primary1};
+      color: ${({ theme }) => theme.color.primary3};
     }
   }
 `;
@@ -203,7 +203,7 @@ const SubCategoryWrapper = styled.ul<{ padding: number; width: number }>`
   overflow-x: scroll;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
-  color: #fff;
+  color: ${({ theme }) => theme.color.grey1};
 
   &::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/

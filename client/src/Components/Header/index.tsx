@@ -1,4 +1,4 @@
-import { Link } from "@/Router";
+import { Link, moveTo } from "@/Router";
 import { HeaderLogo } from "@/assets";
 import { ReactChild } from "react";
 import styled from "styled-components";
@@ -20,6 +20,7 @@ const Header = ({ children, category }: HeaderPropsType) => {
   const handleSignout = async () => {
     await DELETE("/auth");
     setLoginState(false);
+    moveTo("/");
   };
 
   return (
@@ -60,7 +61,7 @@ const TopWrapper = styled.div`
   max-width: 100vw;
   z-index: 10;
   border-radius: 0 0 2rem 2rem;
-  background: #333;
+  background: ${({ theme }) => theme.color.light_grey1};
 
   .header__buttons {
     display: flex;
@@ -78,15 +79,23 @@ const TopWrapper = styled.div`
   }
 
   img {
+    width: 14rem;
+    height: auto;
     margin-top: 2rem;
+  }
+  ${media.custom(1000)} {
+    img {
+      width: 11rem;
+      height: auto;
+    }
   }
   ${media[768]} {
     max-width: 100vw;
     border-radius: 0;
     img {
       margin-top: 0rem;
-      height: 8rem;
-      width: auto;
+      width: 12rem;
+      height: auto;
     }
     .header__buttons {
       display: none;
