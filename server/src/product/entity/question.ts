@@ -25,14 +25,8 @@ export class Question {
   @Column({ type: "char", length: 5 })
   type: string;
 
-  @Column({ length: 32 })
-  title: string;
-
   @Column({ length: 100 })
   question: string;
-
-  @Column({ type: "char", length: 32, nullable: true })
-  image: string;
 
   @Column({ length: 100, nullable: true })
   answer: string;

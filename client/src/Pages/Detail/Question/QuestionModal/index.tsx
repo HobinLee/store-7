@@ -4,21 +4,45 @@ import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
 import { useState } from "react";
 import { gap } from "@/styles/theme";
+import { postQuestion } from "@/api/questions";
+import Checkbox from "@/Components/Checkbox";
 
 export const OPTIONS = ["상품", "배송", "반품", "교환", "환불", "기타"];
 
 const QuestionModal = ({ handleModalOpen }) => {
   const reviewVal = useInput("");
 
+  const pathname = location.pathname.split("detail/")[1];
+
+  // 문의 유형
   const [option, setOption] = useState("상품");
   const handleSetOption = (val: string) => {
     setOption(val);
   };
 
+  // 비밀글
+  const [isSecret, setIsSecret] = useState(false);
+
+  const handleSumbit = async () => {
+    await postQuestion({
+      productId: parseInt(pathname),
+      type: option,
+      question: reviewVal.value,
+      isSecret: isSecret,
+    });
+  };
+
   return (
     <ModalWrapper title="문의하기" closeModal={() => handleModalOpen(false)}>
-      <Wrapper>
+      <Wrapper onSubmit={(e) => handleSumbit}>
         <div className="content">
+          <Checkbox
+            isChecked={isSecret}
+            handleCheck={() => setIsSecret(!isSecret)}
+            size="small"
+            label="비밀글"
+            className="secret-checkbox"
+          />
           <div className="content__label">문의 유형</div>
           <div className="question-option">
             {OPTIONS.map((item, idx) => (
@@ -42,7 +66,9 @@ const QuestionModal = ({ handleModalOpen }) => {
           />
         </div>
 
-        <SubmitBtn primary>완료</SubmitBtn>
+        <SubmitBtn type="submit" primary>
+          완료
+        </SubmitBtn>
       </Wrapper>
     </ModalWrapper>
   );
@@ -52,6 +78,7 @@ const Wrapper = styled.form`
   ${({ theme }) => theme.flexCenter};
   flex-direction: column;
   width: 100%;
+  position: relative;
   .content {
     margin-top: 4rem;
     width: 100%;
@@ -65,6 +92,11 @@ const Wrapper = styled.form`
       display: grid;
       grid-template-columns: repeat(3, 1fr);
     }
+  }
+  .secret-checkbox {
+    position: absolute;
+    top: -3rem;
+    left: 1rem;
   }
 `;
 

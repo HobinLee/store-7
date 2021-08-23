@@ -36,12 +36,7 @@ const ReviewModal = ({ handleModalOpen }) => {
 
   return (
     <ModalWrapper title="후기작성" closeModal={() => handleModalOpen(false)}>
-      <Wrapper
-        onSubmit={(e) => {
-          e.stopPropagation();
-          hanleSubmit();
-        }}
-      >
+      <Wrapper onSubmit={hanleSubmit}>
         <div className="content">
           <div className="content__label">별점 평가</div>
           <Rating />

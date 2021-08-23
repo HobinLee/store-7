@@ -1,6 +1,5 @@
 export interface QuestionPostRequest {
   productId: number;
-  userId?: number;
   type: string;
   title: string;
   question: string;
