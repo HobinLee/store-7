@@ -2,9 +2,9 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  ManyToOne,
   JoinColumn,
   CreateDateColumn,
+  OneToOne,
 } from "typeorm";
 import { Order } from "@/order/entity/order";
 
@@ -13,7 +13,7 @@ export class Review {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Order, (order) => order.reviews)
+  @OneToOne(() => Order, (order) => order.review)
   @JoinColumn({ name: "order_id" })
   order: Order;
 

@@ -7,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
+  OneToOne,
   JoinColumn,
   ManyToOne,
 } from "typeorm";
@@ -18,19 +18,16 @@ export class Order {
   id: number;
 
   @ManyToOne(() => Product, (product) => product.orders)
-  @Column({ type: "int", name: "product_id" })
+  @JoinColumn({ name: "product_id" })
   product: Product;
 
   @ManyToOne(() => User, (user) => user.orders)
   @JoinColumn({ name: "user_id" })
   user: User;
 
-  @OneToMany(() => Review, (review) => review.order)
+  @OneToOne(() => Review, (review) => review.order)
   @JoinColumn({ name: "review_id" })
-  reviews: Review[];
-
-  @Column({ type: "int", name: "review_id", nullable: true })
-  reviewId: number;
+  review: Review;
 
   @Column({ length: 20 })
   addressee: string;
@@ -49,6 +46,9 @@ export class Order {
 
   @Column({ length: 20, nullable: true })
   request: string;
+
+  @Column({ type: "int" })
+  price: number;
 
   @CreateDateColumn({
     type: "timestamp",

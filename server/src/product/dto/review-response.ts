@@ -25,7 +25,7 @@ export class ReviewResponse {
     );
 
     const rates = productReviews.reduce(
-      (result: ReviewRate[], review: Review): ReviewRate[] => {
+      (result: ReviewRate[], review): ReviewRate[] => {
         result[review.rate - 1].count++;
         return result;
       },

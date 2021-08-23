@@ -6,7 +6,6 @@ export interface ReviewPostReqeust {
 }
 
 export interface ReviewPatchRequest {
-  id;
   content: {
     content: string;
     rate: number;

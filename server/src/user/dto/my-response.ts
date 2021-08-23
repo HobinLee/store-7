@@ -85,7 +85,7 @@ export class MyOredersResponse {
       destination = order.destination,
       status = order.status,
       createdAt = order.createdAt,
-      reviewId = order.reviewId;
+      reviewId = order.review.id;
 
     return {
       id,

@@ -14,11 +14,15 @@ export class Reviews {
     private readonly reviewRepository: Repository<Review>
   ) {}
 
-  async findReviewsByProjectId(productId: number) {
+  async findReviewsByProductId(productId: number) {
     return this.reviewRepository.find({
-      relations: ["order"],
+      relations: ["order", "order.product"],
       where: {
-        productId,
+        order: {
+          product: {
+            id: productId,
+          },
+        },
       },
     });
   }
@@ -42,11 +46,8 @@ export class Reviews {
     await this.reviewRepository.insert(review);
   }
 
-  async editReview(request: ReviewPatchRequest) {
-    await this.reviewRepository.update(
-      { id: request.id },
-      { ...request.content }
-    );
+  async updateReview(id: number, review: ReviewPatchRequest) {
+    await this.reviewRepository.update({ id }, { ...review.content });
   }
 
   async deleteReview(id: number) {
