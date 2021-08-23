@@ -18,7 +18,7 @@ const CartPage = () => {
   const isLogined = useRecoilValue(loginState);
 
   const [cartItems, setCartItems] = useState<CartType>();
-  const { status, data: carts, error } = useMyCarts();
+  const { status, data: carts, error, refetch } = useMyCarts();
 
   const [checkItems, setCheckItems] = useState([]);
 
@@ -35,7 +35,7 @@ const CartPage = () => {
         }
       );
     }
-  }, [status]);
+  }, [carts]);
 
   useEffect(() => {
     if (isLogined && status !== "loading") setCheckItems(carts.items);
@@ -73,7 +73,7 @@ const CartPage = () => {
         totalCount: checkItems?.length,
       });
     }
-  }, [status, checkItems]);
+  }, [carts, checkItems]);
 
   // 체크박스 개별 선택
   const handleSingleCheck = (isChecked: boolean, cart: PartialCart) => {
@@ -132,6 +132,7 @@ const CartPage = () => {
                       cart
                     )
                   }
+                  refetch={refetch}
                   checkboxVisible
                 />
               ))}
