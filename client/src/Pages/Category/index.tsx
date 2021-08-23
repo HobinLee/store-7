@@ -12,10 +12,10 @@ const CategoryPage = ({ params }) => {
   const { data: products } = useProducts(params);
   return (
     <Wrapper>
-      <Header />
+      <Header category={params.category} />
       <div className="page_contents">
         <CategoryBanner />
-        <Filter />
+        <Filter category={params.category} />
         <ProductList products={products} />
       </div>
       <Footer />

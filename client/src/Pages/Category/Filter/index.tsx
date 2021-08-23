@@ -1,7 +1,8 @@
+import { media } from "@/styles/theme";
 import styled from "styled-components";
 
-const Filter = () => (
-  <FilterWrapper>
+const Filter = ({ category }: { category: string }) => (
+  <FilterWrapper category={category}>
     <div className="total">총 233개</div>
     <div className="buttons">
       <div className="buttons__btn">추천순</div>
@@ -13,11 +14,19 @@ const Filter = () => (
   </FilterWrapper>
 );
 
-const FilterWrapper = styled.div`
+const FilterWrapper = styled.div<{
+  category: string;
+}>`
   ${({ theme }) => theme.flexCenter}
   ${({ theme }) => theme.font.medium}
   justify-content: space-between;
-  padding: 3rem 0;
+  padding: 2rem 0;
+  position: -webkit-sticky;
+  position: sticky;
+  top: ${({ category }) => (category === "0" ? 14.6 : 17.8)}rem;
+  width: 100%;
+  background: white;
+  z-index: 20;
 
   .buttons {
     ${({ theme }) => theme.flexCenter}
@@ -28,6 +37,9 @@ const FilterWrapper = styled.div`
   }
   & > div:nth-child(1) {
     background: ${({ theme }) => theme.color.white};
+  }
+  ${media[768]} {
+    top: ${({ category }) => (category === "0" ? 10.6 : 13.8)}rem;
   }
 `;
 

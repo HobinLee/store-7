@@ -9,7 +9,12 @@ import { DELETE } from "@/utils/axios";
 import { useRecoilState } from "recoil";
 import { loginState } from "@/store/state";
 
-const Header = ({ children }: { children?: ReactChild | JSX.Element }) => {
+interface HeaderPropsType {
+  children?: ReactChild;
+  category?: string;
+}
+
+const Header = ({ children, category }: HeaderPropsType) => {
   const [isLogined, setLoginState] = useRecoilState(loginState);
 
   const handleSignout = async () => {
@@ -40,7 +45,7 @@ const Header = ({ children }: { children?: ReactChild | JSX.Element }) => {
           </Link>
         </div>
       </Wrapper>
-      <Menu />
+      <Menu category={category} />
       {children ?? ""}
     </TopWrapper>
   );

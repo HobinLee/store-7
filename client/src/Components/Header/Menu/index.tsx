@@ -10,8 +10,8 @@ export type CategoryType = {
   subCategories?: CategoryType[];
 };
 
-const Menu = () => {
-  const [currentCategoryIndex, setCurrentCategory] = useState(0);
+const Menu = ({ category }: { category?: string }) => {
+  const [currentCategoryIndex, setCurrentCategory] = useState(category ?? 0);
   const [padding, setPadding] = useState(0);
 
   const checkChangeCategory = ({
@@ -60,7 +60,7 @@ const Menu = () => {
           key={idx}
           className={currentCategoryIndex === idx ? "selected" : ""}
         >
-          <Link key={idx} to={`/category?main_id=${idx}`}>
+          <Link key={idx} to={`/category?category=${idx}`}>
             {category.name}
           </Link>
         </li>
@@ -191,7 +191,13 @@ const SubCategoryWrapper = styled.ul<{ padding: number; width: number }>`
   display: flex;
   justify-content: center;
   flex-direction: row;
+
   ${({ padding, width }) => setPadding(padding, width)}
+  ${media[768]} {
+    width: 100%;
+    padding: 0;
+    justify-content: flex-start;
+  }
   ${({ theme }) => theme.font.small}
   overflow-x: scroll;
   -ms-overflow-style: none; /* IE and Edge */
