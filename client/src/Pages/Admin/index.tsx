@@ -4,6 +4,7 @@ import DashboardIcon from "../../assets/dashboard.png";
 import BoxIcon from "../../assets/box.png";
 import ClipboardIcon from "../../assets/clipboard.png";
 import { useState } from "react";
+import properties from "../../config/properties";
 
 type Page = "Home" | "Product" | "Order";
 
@@ -109,7 +110,7 @@ const submitProduct = () => {
     formData.append("details", details[i]);
   }
 
-  fetch("http://localhost:8888/products", {
+  fetch(`${properties.baseURL}/products`, {
     method: "POST",
     body: formData,
   }).then((response) => {
