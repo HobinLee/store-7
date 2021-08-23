@@ -46,17 +46,17 @@ const ContentHeaderWrapper = styled.div`
 `;
 
 export const Greeting = () => {
-  const { status, data: userInfo } = useMyInfo();
+  const { status, data: myInfo } = useMyInfo();
   return (
     <GreetingWrapper data-testid="test__content-header">
       {status !== "loading" ? (
         <>
           <div className="greeting">반가워요,</div>
           <p>
-            <span>{userInfo.name}</span> 님의
+            <span>{myInfo.name}</span> 님의
           </p>
           <p>
-            회원등급은 <span>{userInfo.grade}</span>입니다.
+            회원등급은 <span>{myInfo.grade}</span>입니다.
           </p>{" "}
         </>
       ) : (
