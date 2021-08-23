@@ -9,12 +9,9 @@ export type CategoryType = {
   name: string;
   subCategories?: CategoryType[];
 };
-const getCurrentCategoryIndex = (category: string) =>
-  categories.findIndex((c) => c.name === category);
+
 const Menu = ({ category }: { category?: string }) => {
-  const [currentCategoryIndex, setCurrentCategory] = useState(
-    getCurrentCategoryIndex(category) ?? 0
-  );
+  const [currentCategoryIndex, setCurrentCategory] = useState(category ?? 0);
   const [padding, setPadding] = useState(0);
 
   const checkChangeCategory = ({
@@ -93,7 +90,7 @@ const Menu = ({ category }: { category?: string }) => {
           <li key={idx}>
             <Link
               key={idx}
-              to={`/category?category=${categories[currentCategoryIndex].name}&subCategory=${category.name}`}
+              to={`/category?category=${currentCategoryIndex}&subCategory=${idx}`}
             >
               {category.name}
             </Link>
@@ -194,6 +191,7 @@ const SubCategoryWrapper = styled.ul<{ padding: number; width: number }>`
   display: flex;
   justify-content: center;
   flex-direction: row;
+  z-index: 30;
 
   ${({ padding, width }) => setPadding(padding, width)}
   ${media[768]} {
