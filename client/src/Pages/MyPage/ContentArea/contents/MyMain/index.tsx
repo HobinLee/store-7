@@ -1,15 +1,15 @@
 import styled, { css } from "styled-components";
 import Section from "../../../Section";
 import { useMyOrdersOfFilter } from "@/api/my";
-import Orders from "../Orders";
 import { useState } from "react";
 import ProductList from "@/Components/ProductList";
-import { Arrow, DeleveryIcon, ProductIcon, ReviewIcon } from "@/assets";
-import OrderList from "../../OrderList/OrderList";
+import { Arrow } from "@/assets";
+import OrdersContainer from "./OrdersContainer";
 
 const MyMain = () => {
   const { status, data: orders } = useMyOrdersOfFilter("all");
   const [products, setProducts] = useState([]);
+  const { delivering, delivered, reviewed } = classifyOrders(orders);
 
   return (
     <Wrapper data-testid="test__root">
@@ -19,10 +19,17 @@ const MyMain = () => {
         lineType="long1"
       >
         {status !== "loading" && (
-          <>
-            <OrderStatus orders={orders} />
-            <OrderList orders={orders} />
-          </>
+          <div className="orders">
+            <OrdersContainer orders={delivering} type="delivering" />
+            <div className="arrow">
+              <Arrow />
+            </div>
+            <OrdersContainer orders={delivered} type="delivered" />
+            <div className="arrow">
+              <Arrow />
+            </div>
+            <OrdersContainer orders={reviewed} type="reviewed" />
+          </div>
         )}
       </Section>
       <Section
@@ -36,55 +43,23 @@ const MyMain = () => {
   );
 };
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  .orders {
+    display: flex;
+    .arrow {
+      width: 5rem;
+      display: flex;
+      justify-content: center;
+      padding-top: 3rem;
+    }
+  }
+`;
 
-const OrderStatus = ({ orders }) => {
-  const { delivering, delivered, reviewed } = classifyOrders(orders);
-
-  return (
-    <OrderStatusWrapper>
-      <div>
-        <DeleveryIcon width="30" height="30" />
-        {delivering.length}
-      </div>
-      <Arrow />
-      <div>
-        <ProductIcon width="30" height="30" />
-        {delivered.length}
-      </div>
-      <Arrow />
-      <div>
-        <ReviewIcon width="30" height="30" />
-        {reviewed.length}
-      </div>
-    </OrderStatusWrapper>
-  );
-};
-const classifyOrders = (orders) => {
+const classifyOrders = (orders = []) => {
   const delivering = orders.filter((order) => order.status === "배송중");
   const delivered = orders.filter((order) => order.status === "배송완료");
   const reviewed = orders.filter((order) => order.status === "리뷰완료");
   return { delivering, delivered, reviewed };
 };
-const OrderStatusWrapper = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  & > div {
-    ${({ theme }) =>
-      css`
-        ${theme.flexCenter}
-      `};
-    cursor: pointer;
-    width: 15rem;
-    height: 15rem;
-    border-radius: 15rem;
-    flex-direction: column;
-    font-size: 5rem;
 
-    & > svg {
-      margin-bottom: 2rem;
-    }
-  }
-`;
 export default MyMain;
