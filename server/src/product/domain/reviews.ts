@@ -6,19 +6,27 @@ import {
   ReviewPostReqeust,
   ReviewPatchRequest,
 } from "@/product/dto/review-request";
+import { S3Repository } from "@/product/infrastructure/s3-repository";
+
+const RANDOM_FILENAME_LENGTH = 32;
 
 @Injectable()
 export class Reviews {
   constructor(
     @InjectRepository(Review)
-    private readonly reviewRepository: Repository<Review>
+    private readonly reviewRepository: Repository<Review>,
+    private readonly s3Repository: S3Repository
   ) {}
 
-  async findReviewsByProjectId(productId: number) {
+  async findReviewsByProductId(productId: number) {
     return this.reviewRepository.find({
-      relations: ["order"],
+      relations: ["order", "order.product"],
       where: {
-        productId,
+        order: {
+          product: {
+            id: productId,
+          },
+        },
       },
     });
   }
@@ -42,14 +50,27 @@ export class Reviews {
     await this.reviewRepository.insert(review);
   }
 
-  async editReview(request: ReviewPatchRequest) {
-    await this.reviewRepository.update(
-      { id: request.id },
-      { ...request.content }
-    );
+  async updateReview(id: number, review: ReviewPatchRequest) {
+    await this.reviewRepository.update({ id }, { ...review.content });
   }
 
   async deleteReview(id: number) {
     this.reviewRepository.delete({ id });
   }
+
+  addImage(image) {
+    const fileName = generateRandomFileName();
+    this.s3Repository.putObject(fileName, image[0]);
+    return fileName;
+  }
 }
+
+const generateRandomFileName = () => {
+  let result = "";
+  const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+  const charactersLength = characters.length;
+  for (let i = 0; i < RANDOM_FILENAME_LENGTH; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+};

@@ -14,28 +14,30 @@ export class Questions {
     private readonly questionRepository: Repository<Question>
   ) {}
 
-  async findQuestion(id): Promise<Question> {
+  async findQuestion(id: number): Promise<Question> {
     return await this.questionRepository.findOne({ where: { id } });
   }
 
-  async findQuestionsByProductId(productId): Promise<Question[]> {
+  async findQuestionsByProductId(productId: number): Promise<Question[]> {
     return await this.questionRepository.find({ where: { productId } });
   }
 
-  async findQuestionsByUserId(userId): Promise<Question[]> {
+  async findQuestionsByUserId(userId: number): Promise<Question[]> {
     return await this.questionRepository.find({
       relations: ["user", "product"],
       where: { user: { id: userId } },
     });
   }
 
-  async insertQuestion(productId: number, question: QuestionPostRequest) {
-    const request = { productId, ...question };
-    await this.questionRepository.insert(request);
+  async createQuestion(productId: number, question: QuestionPostRequest) {
+    await this.questionRepository.insert({
+      product: { id: productId },
+      ...question,
+    });
   }
 
-  async updateQuestion(questionId: number, request: QuestionPatchRequest) {
-    await this.questionRepository.update({ id: questionId }, request);
+  async updateQuestion(id: number, question: QuestionPatchRequest) {
+    await this.questionRepository.update({ id }, question);
   }
 
   async deleteQuestion(id: number) {

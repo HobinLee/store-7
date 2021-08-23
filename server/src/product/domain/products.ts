@@ -117,10 +117,6 @@ const wrapWordToLike = (word: string) => {
   return Like(`%${word}%`);
 };
 
-const generateOrder = (order: string) => {
-  const orderName = order.split;
-};
-
 const generateRandomFileName = () => {
   let result = "";
   const characters = "abcdefghijklmnopqrstuvwxyz0123456789";

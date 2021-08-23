@@ -24,6 +24,7 @@ import { Order } from "@/order/entity/order";
 import { ProductModule } from "@/product/product-module";
 import { Wishes } from "./domain/wishes";
 import { Wish } from "./entity/wish";
+import { S3Repository } from "@/product/infrastructure/s3-repository";
 
 const jwtConfig = properties.auth;
 
@@ -50,6 +51,7 @@ const jwtConfig = properties.auth;
     Questions,
     Orders,
     Wishes,
+    S3Repository,
   ],
 })
 export class UserModule {}

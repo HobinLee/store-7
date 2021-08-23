@@ -4,6 +4,8 @@ import { convertToKRW } from "@/utils/util";
 import { gap } from "@/styles/theme";
 import { moveTo } from "@/Router";
 import { MouseEventHandler } from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 
 export type CartOrderBoxInput = {
   totalPrice: number;
@@ -29,20 +31,37 @@ export const output = (props: CartOrderBoxInput) => {
 const CartOrderBox = ({
   isButtonDisabled,
   handlePay,
+  info,
 }: {
   isButtonDisabled?: boolean;
   handlePay?: MouseEventHandler<HTMLButtonElement>;
+  info?: {
+    totalCount: number;
+    totalPrice: number;
+    totalDelivery: number;
+    totalPayment: number;
+  };
 }) => {
-  const { totalPrice, totalDelivery, totalPayment, totalCount } = JSON.parse(
-    localStorage.getItem("orders")
-  ) || { totalCount: 0, totalPrice: 0, totalDelivery: 0, totalPayment: 0 };
-
-  const OUTPUT = output({
-    totalPrice,
-    totalDelivery,
-    totalPayment,
-    totalCount,
+  const [value, setValue] = useState({
+    totalCount: 0,
+    totalPrice: 0,
+    totalDelivery: 0,
+    totalPayment: 0,
   });
+
+  const OUTPUT = output(value);
+
+  useEffect(() => {
+    setValue(
+      JSON.parse(localStorage.getItem("orders")) || {
+        totalCount: 0,
+        totalPrice: 0,
+        totalDelivery: 0,
+        totalPayment: 0,
+      }
+    );
+  }, [info]);
+
   const pathname = location.pathname.split("/")[1];
 
   return (
@@ -66,10 +85,12 @@ const CartOrderBox = ({
         className="order-btn"
         primary
         size="large"
-        disabled={totalCount === 0 || isButtonDisabled}
+        disabled={value.totalCount === 0 || isButtonDisabled}
         onClick={pathname === "cart" ? () => moveTo("/order") : handlePay}
       >
-        {OUTPUT.buttonText}
+        {pathname === "cart"
+          ? `${value.totalCount}개 상품 구매하기`
+          : `${OUTPUT.paymentOutput} 결제하기`}
       </Button>
     </Wrapper>
   );

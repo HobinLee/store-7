@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { loginState } from "@/store/state";
 import { CartType, ICart, OrderType, PartialCart } from "@/shared/type";
+import { useCallback } from "react";
 
 const CartPage = () => {
   const isLogined = useRecoilValue(loginState);
@@ -41,6 +42,13 @@ const CartPage = () => {
     else setCheckItems(cartItems?.items);
   }, [cartItems]);
 
+  const [info, setInfo] = useState({
+    totalPrice: 0,
+    totalPayment: 0,
+    totalDelivery: 0,
+    totalCount: 0,
+  });
+
   useEffect(() => {
     if (status !== "loading") {
       const price = checkItems.reduce((sum, cart) => sum + cart.price, 0);
@@ -55,9 +63,15 @@ const CartPage = () => {
           totalPrice: price,
           totalDelivery: delivery,
           totalPayment: price + delivery,
-          totalCount: checkItems.length,
+          totalCount: checkItems?.length,
         })
       );
+      setInfo({
+        totalPrice: price,
+        totalDelivery: delivery,
+        totalPayment: price + delivery,
+        totalCount: checkItems?.length,
+      });
     }
   }, [status, checkItems]);
 
@@ -84,7 +98,7 @@ const CartPage = () => {
     status !== "loading" && (
       <Wrapper>
         <Header>
-          <CartOrderBox />
+          <CartOrderBox {...{ info }} />
         </Header>
         <div className="contents">
           <Title>
@@ -99,13 +113,15 @@ const CartPage = () => {
               <div>
                 <Checkbox
                   label="모두선택"
-                  isChecked={checkItems.length === cartItems.items.length}
+                  isChecked={checkItems.length === cartItems?.items.length}
                   handleCheck={() =>
-                    handleAllCheck(checkItems.length !== cartItems.items.length)
+                    handleAllCheck(
+                      checkItems.length !== cartItems?.items.length
+                    )
                   }
                 />
               </div>
-              {cartItems.items.map((cart) => (
+              {cartItems?.items.map((cart) => (
                 <ItemInfoBox
                   key={cart.id}
                   {...(cart as ICart)}

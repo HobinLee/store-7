@@ -22,7 +22,6 @@ import {
   QuestionPostRequest,
 } from "../dto/question-request";
 import { SearchService } from "../application/search-service";
-import { SearchProduct } from "../dto/product-search-response";
 
 @Controller("/products")
 export class ProductController {

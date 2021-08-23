@@ -49,7 +49,7 @@ export class ProductService {
   }
 
   async getProductReviews(productId: number) {
-    const reviews = await this.reviews.findReviewsByProjectId(productId);
+    const reviews = await this.reviews.findReviewsByProductId(productId);
     return ReviewResponse.of(reviews);
   }
 
@@ -85,7 +85,7 @@ export class ProductService {
   }
 
   async registerQuestion(productId: number, question: QuestionPostRequest) {
-    await this.questions.insertQuestion(productId, question);
+    await this.questions.createQuestion(productId, question);
   }
 
   async editQuestion(questionId: number, request: QuestionPatchRequest) {
