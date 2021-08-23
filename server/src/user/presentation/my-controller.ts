@@ -11,7 +11,6 @@ import {
 import {
   MyInfoResponse,
   MyCartsResponse,
-  MyOredersResponse,
   MyWishResponse,
 } from "../dto/my-response";
 import { QuestionResponse } from "@/product/dto/question-response";
@@ -20,6 +19,7 @@ import { MyInfoEditRequest } from "../dto/my-reqeust";
 import { DestinationResponse } from "@/destination/dto/destination-response";
 import { MyService } from "../application/my-service";
 import { WishRequest } from "../dto/wish-request";
+import { OrderResponse } from "@/order/dto/order-response";
 
 @Controller("/my")
 export class MyController {
@@ -69,11 +69,23 @@ export class MyController {
   }
 
   // orders
-  @Get("/orders")
+  @Get("/orders/:filter")
   async getMyOrders(
-    @Body("userId") userId: number
-  ): Promise<MyOredersResponse[]> {
-    return await this.myService.getMyOrders(userId);
+    @Body("userId") userId: number,
+    @Param("filter") filter: string
+  ): Promise<OrderResponse[]> {
+    switch (filter) {
+      case "current":
+        return await this.myService.getCurrentOrdersByUserId(userId);
+      case "deliver":
+        return await this.myService.getDeliverdOrdersByUserId(userId);
+      case "review":
+        return await this.myService.getReviewedOrdersByUserId(userId);
+      case "all":
+        return await this.myService.getMyOrders(userId);
+      default:
+        throw new Error("파라미터 오류");
+    }
   }
 
   @Get("/orders")
@@ -81,7 +93,7 @@ export class MyController {
     @Body("userId") userId: number,
     @Query("from") from: Date,
     @Query("to") to: Date
-  ): Promise<MyOredersResponse[]> {
+  ): Promise<OrderResponse[]> {
     return await this.myService.getMyOrdersByDateRange(userId, { from, to });
   }
 
@@ -103,7 +115,6 @@ export class MyController {
     @Body("userId")
     userId: number
   ) {
-    userId = 1;
     return await this.myService.deleteWishProduct({ userId, productId });
   }
 }

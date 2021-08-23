@@ -4,7 +4,6 @@ import { Injectable } from "@nestjs/common";
 import {
   MyCartsResponse,
   MyInfoResponse,
-  MyOredersResponse,
   MyWishResponse,
 } from "../dto/my-response";
 import { Questions } from "@/product/domain/questions";
@@ -18,6 +17,7 @@ import { Destinations } from "@/destination/domain/destinations";
 import { DestinationResponse } from "@/destination/dto/destination-response";
 import { Wishes } from "../domain/wishes";
 import { WishRequest } from "../dto/wish-request";
+import { OrderResponse } from "@/order/dto/order-response";
 
 @Injectable()
 export class MyService {
@@ -33,7 +33,6 @@ export class MyService {
 
   // info
   async getMyInfo(userId) {
-    userId = 1;
     const user = await this.users.findUserById(userId);
     return MyInfoResponse.of(user);
   }
@@ -70,24 +69,21 @@ export class MyService {
   }
 
   // reviews
-  async getMyReviews(userId) {
-    userId = 1;
+  async getMyReviews(userId: number) {
     const reviews = await this.reviews.findReviewsByUserId(userId);
     return reviews.map(MyReviewResponse.of);
   }
 
   // qeustions
   async getMyQeustions(userId: number) {
-    userId = 1;
     const questions = await this.questions.findQuestionsByUserId(userId);
     return questions.map(QuestionResponse.of);
   }
 
   // orders
   async getMyOrders(userId: number) {
-    userId = 1;
     const orders = await this.orders.findOrdersByUserId(userId);
-    return orders.map(MyOredersResponse.of);
+    return orders.map(OrderResponse.of);
   }
 
   async getMyOrdersByDateRange(
@@ -98,12 +94,26 @@ export class MyService {
       userId,
       range
     );
-    return orders.map(MyOredersResponse.of);
+    return orders.map(OrderResponse.of);
+  }
+
+  async getCurrentOrdersByUserId(userId: number): Promise<OrderResponse[]> {
+    const orders = await this.orders.findCurrentOrdersByUserId(userId);
+    return orders.map(OrderResponse.of);
+  }
+
+  async getDeliverdOrdersByUserId(userId: number): Promise<OrderResponse[]> {
+    const orders = await this.orders.findDeliverdOrdersByUserId(userId);
+    return orders.map(OrderResponse.of);
+  }
+
+  async getReviewedOrdersByUserId(userId: number): Promise<OrderResponse[]> {
+    const orders = await this.orders.findReviewedOrdersByUserId(userId);
+    return orders.map(OrderResponse.of);
   }
 
   // wishes
   async getMyWishes(userId: number) {
-    userId = 1;
     const wishes = await this.wishes.findWishesByUserId(userId);
     return MyWishResponse.of(wishes);
   }
