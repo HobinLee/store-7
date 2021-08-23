@@ -6,6 +6,7 @@ export interface OrderRequest {
   destination: string;
   status: string;
   request?: string;
+  price: number;
 }
 
 export interface CreateOrderRequest extends OrderRequest {
