@@ -111,10 +111,10 @@ const NavItemWrapper = styled.div<{ isSelected: boolean }>`
   ${({ isSelected }) =>
     isSelected &&
     css`
-      transform: scale(1.3);
+      transform: scale(1.1);
     `}
   &:hover {
-    transform: scale(1.3);
+    transform: scale(1.1);
     transition: transform 0.2s;
   }
 

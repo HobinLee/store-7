@@ -75,7 +75,7 @@ export const YYYY_MM_DD_HH_mm = (date: Date) =>
   dayjs(date).format("YYYY년 MM월 DD일 HH시 mm분");
 
 export const YYYYMMDD = (date: Date) => dayjs(date).format("YYYYMMDD");
-
+export const YYYYMMDD_DOT = (date: Date) => dayjs(date).format("YYYY.MM.DD");
 // 문자열 중간에 char 삽입
 export const insertChar = (str, index, char) => {
   return str.substring(0, index) + char + str.substring(index, str.length);
