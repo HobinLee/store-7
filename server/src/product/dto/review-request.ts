@@ -1,8 +1,16 @@
 export interface ReviewPostReqeust {
-  orderId: number;
+  order: {
+    id: number;
+  };
   content: string;
   rate: number;
   image?: string;
+}
+
+export interface CreateReviewPostRequest {
+  orderId: number;
+  content: string;
+  rate: number;
 }
 
 export interface ReviewPatchRequest {

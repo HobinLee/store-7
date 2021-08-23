@@ -94,11 +94,6 @@ const CartPage = () => {
     }
   };
 
-  // const RenderCartOrderBox = useCallback(() => {
-  //   console.log("asdf");
-  //   return <CartOrderBox {...{ checkItems }} />;
-  // }, [checkItems]);
-
   return (
     status !== "loading" && (
       <Wrapper>

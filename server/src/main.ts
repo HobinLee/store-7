@@ -9,7 +9,7 @@ const nestApplication = async () => {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
     // "origin": "https://store-7.woowahan-techcamp.shop",
-    origin: properties.client,
+    origin: [properties.client, "http://localhost:3000"],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     preflightContinue: false,
     optionsSuccessStatus: 204,

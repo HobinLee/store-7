@@ -4,13 +4,44 @@ import useInput from "@/hooks/useInput";
 import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
 import { gap } from "@/styles/theme";
+import { FormEvent, useState } from "react";
+import { postReview } from "@/api/reviews";
 
 const ReviewModal = ({ handleModalOpen }) => {
   const reviewVal = useInput("");
 
+  const [file, setFile] = useState<File | undefined>(undefined);
+  const [previewURL, setPreviewURL] = useState("");
+
+  const selectImg = (e: any) => {
+    const reader = new FileReader();
+    const targetFile = e.target.files[0];
+    setFile(targetFile);
+
+    reader.onloadend = () => {
+      setPreviewURL(reader.result as string);
+    };
+
+    reader.readAsDataURL(targetFile);
+  };
+
+  const hanleSubmit = async () => {
+    const formData = new FormData();
+    formData.append("orderId", "7");
+    formData.append("rate", "3");
+    formData.append("content", "asdf");
+    formData.append("file", file);
+    await postReview(formData);
+  };
+
   return (
     <ModalWrapper title="후기작성" closeModal={() => handleModalOpen(false)}>
-      <Wrapper>
+      <Wrapper
+        onSubmit={(e) => {
+          e.stopPropagation();
+          hanleSubmit();
+        }}
+      >
         <div className="content">
           <div className="content__label">별점 평가</div>
           <Rating />
@@ -18,10 +49,16 @@ const ReviewModal = ({ handleModalOpen }) => {
         <div className="content">
           <div className="content__label">사진 첨부 (선택)</div>
 
+          <img src={previewURL} />
           <label className="upload-btn" htmlFor="img-upload">
             사진 업로드 (최대 1장)
           </label>
-          <input id="img-upload" type="file" accept="image/*" />
+          <input
+            id="img-upload"
+            type="file"
+            accept="image/*"
+            onChange={selectImg}
+          />
         </div>
 
         <div className="content">
@@ -33,7 +70,9 @@ const ReviewModal = ({ handleModalOpen }) => {
           />
         </div>
 
-        <SubmitBtn primary>완료</SubmitBtn>
+        <SubmitBtn type="submit" primary>
+          완료
+        </SubmitBtn>
       </Wrapper>
     </ModalWrapper>
   );
