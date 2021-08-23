@@ -3,10 +3,14 @@ import Checkbox from "@/Components/Checkbox";
 import { convertToKRW } from "@/utils/util";
 import { gap } from "@/styles/theme";
 import { Close } from "@/assets";
-import { deleteCart } from "@/api/carts";
+import { deleteCart, patchCart } from "@/api/carts";
 import { useRecoilValue } from "recoil";
 import { loginState } from "@/store/state";
 import { CartType } from "@/shared/type";
+import { useState } from "react";
+import { Triangle } from "@/assets";
+import useInput from "@/hooks/useInput";
+import Input from "../Input";
 
 export type ItemInfoBoxProps = {
   id: number;
@@ -18,11 +22,11 @@ export type ItemInfoBoxProps = {
   isChecked?: boolean;
   handleCheck?: Function;
   checkboxVisible?: boolean;
+  refetch?: Function;
 };
 
 export const output = ({ amount, price, deliveryCost }) => {
   return {
-    numOutput: `${amount}개`,
     priceOutput: `총 ${convertToKRW(price)}`,
     deliveryOutput: `배송비 ${convertToKRW(deliveryCost)}`,
   };
@@ -38,6 +42,7 @@ const ItemInfoBox = ({
   isChecked,
   handleCheck,
   checkboxVisible = false,
+  refetch,
 }: ItemInfoBoxProps) => {
   const OUTPUT = output({ ...{ amount, price, deliveryCost } });
 
@@ -60,6 +65,19 @@ const ItemInfoBox = ({
     location.reload();
   };
 
+  const numValue = useInput(amount.toString());
+  const handleClickNumVal = async (val: 1 | -1) => {
+    let num = parseInt(numValue.value);
+    if (val === 1) {
+      numValue.setValue((num + 1).toString());
+      await patchCart(id, { amount: amount + 1 });
+    } else {
+      if (num > 1) numValue.setValue((num - 1).toString());
+      await patchCart(id, { amount: amount - 1 });
+    }
+    refetch();
+  };
+
   return (
     <Wrapper>
       <div className="info">
@@ -67,7 +85,20 @@ const ItemInfoBox = ({
         <img role="img" src={process.env.IMG_URL + images[0]} />
         <div>
           <div className="info__name">{name}</div>
-          <div className="info__num">{OUTPUT.numOutput}</div>
+          <div className="info__num">
+            <div>수량</div>
+            <div className="num-input">
+              <NumInput value={numValue.value} onChange={numValue.onChange} />
+              <div>
+                <button type="button" onClick={() => handleClickNumVal(1)}>
+                  <Triangle className="num-input__up" />
+                </button>
+                <button type="button" onClick={() => handleClickNumVal(-1)}>
+                  <Triangle className="num-input__down" />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -100,7 +131,9 @@ const Wrapper = styled.div`
       ${({ theme }) => theme.font.large};
     }
     &__num {
-      margin-top: 2rem;
+      margin-top: 1rem;
+      ${({ theme }) => theme.flexCenter};
+      ${gap("1rem")}
     }
   }
   img {
@@ -123,6 +156,42 @@ const Wrapper = styled.div`
     right: 1rem;
     fill: ${({ theme }) => theme.color.primary1};
   }
+
+  .num-input {
+    ${({ theme }) => theme.flexCenter}
+    margin-right: 2rem;
+    background: #fff;
+    div {
+      ${({ theme }) => theme.flexCenter}
+      flex-direction: column;
+      height: 2.5rem;
+      button {
+        ${({ theme }) => theme.flexCenter};
+        cursor: pointer;
+        width: 1.6rem;
+        /* height: 1.6rem; */
+        border: none;
+        padding: 0.4rem;
+        background: ${({ theme }) => theme.color.primary2};
+      }
+    }
+    &__up {
+      transform: rotate(-90deg);
+      fill: white;
+      height: 1.1rem;
+    }
+    &__down {
+      transform: rotate(90deg);
+      fill: white;
+      height: 1.2rem;
+    }
+  }
+`;
+
+const NumInput = styled(Input)`
+  width: 3rem;
+  text-align: center;
+  padding: 1rem;
 `;
 
 export default ItemInfoBox;

@@ -8,7 +8,6 @@ export interface ReviewType {
 }
 
 export interface ReviewListType {
-  totalCount: number;
   averageRate: number;
   rates: { rate: number; count: number }[];
   reviews: ReviewType[];
@@ -16,33 +15,13 @@ export interface ReviewListType {
 
 export interface QuestionType {
   id: number;
-  question: {
-    authorName: string;
-    content: string;
-    date: Date;
-    category?: string;
-  };
-  answer?: {
-    content: string;
-    date: Date;
-  };
-}
-
-export interface QuestionListType {
-  totalCount: number;
-  questions: QuestionType[];
-}
-
-export interface QnAType {
-  id: number;
-  type: string;
   authorName: string;
-  title: string;
+  type: string;
   question: string;
-  answer?: string;
-  image?: string;
+  answer: string;
+  isSecret: boolean;
   createdAt: Date;
-  answerCreatedAt?: Date;
+  answeredAt: Date;
   product: {
     id: number;
     name: string;

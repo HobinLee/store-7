@@ -19,6 +19,8 @@ import { ElasticsearchModule } from "@nestjs/elasticsearch";
 import properties from "@/config/properties/properties";
 import { SearchService } from "./application/search-service";
 import { ReviewService } from "./application/review-service";
+import { QuestionController } from "./presentation/question-controller";
+import { QuestionService } from "./application/question-service";
 
 const elasticsearchConfig = properties.elastic;
 
@@ -40,7 +42,12 @@ const elasticsearchConfig = properties.elastic;
       },
     }),
   ],
-  controllers: [ProductController, ImageController, ReviewController],
+  controllers: [
+    ProductController,
+    ImageController,
+    ReviewController,
+    QuestionController,
+  ],
   providers: [
     Products,
     ProductService,
@@ -50,6 +57,7 @@ const elasticsearchConfig = properties.elastic;
     Reviews,
     ImageService,
     ReviewService,
+    QuestionService,
   ],
   exports: [Products, ElasticsearchModule, SearchService],
 })

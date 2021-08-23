@@ -45,11 +45,8 @@ export class Orders {
       where: { user: { id: userId }, createdAt: Between(range.from, range.to) },
     });
   }
-  // async findOrderByOrderNum(orderNum: number) {
-  //   return await this.orderRepository.find({ where: { orderNum } });
-  // }
 
-  async createOrder(order: CreateOrderRequest) {
+  createOrder(order: CreateOrderRequest) {
     this.orderRepository.insert(order);
   }
 

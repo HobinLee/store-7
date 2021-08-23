@@ -1,12 +1,12 @@
 import { useState } from "react";
 import QuestionBox from "@/Pages/Detail/Question/QuestionBox";
-import { QuestionType, QnAType } from "@/shared/type";
+import { QuestionType } from "@/shared/type";
 import dayjs from "dayjs";
 import styled from "styled-components";
 
-const Question = (question: QnAType) => {
+const Question = (question: QuestionType) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { createdAt, type, title } = question;
+  const { createdAt, type } = question;
   const isAnswered = !!question.answer;
 
   return (
@@ -20,9 +20,7 @@ const Question = (question: QnAType) => {
       >
         <td>{dayjs(createdAt).format("YYYYMMDD")}</td>
         <td>{type}</td>
-        <td className="content">
-          <div>{title}</div>
-        </td>
+        <td className="content">{/* <div>{title}</div> */}</td>
         <td className="status">{isAnswered ? "답변 완료" : "미답변"}</td>
       </Wrapper>
       {isOpen && (

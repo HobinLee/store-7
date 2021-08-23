@@ -19,7 +19,9 @@ const ReviewBox = (review: ReviewType) => {
 
       <div className="content">
         <div className="content-img">
-          {review.image && <img src={`${review.image}`} alt="review_img" />}
+          {review.image && (
+            <img src={process.env.IMG_URL + review.image} alt="review_img" />
+          )}
         </div>
         <span>{review.content}</span>
       </div>

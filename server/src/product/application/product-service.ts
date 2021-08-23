@@ -7,10 +7,6 @@ import { ReviewResponse } from "@/product/dto/review-response";
 import { ProductUploadRequest } from "@/product/dto/product-upload-request";
 import { Product } from "@/product/entity/product";
 import { Questions } from "../domain/questions";
-import {
-  QuestionPostRequest,
-  QuestionPatchRequest,
-} from "../dto/question-request";
 import { Reviews } from "../domain/reviews";
 import { SearchService } from "./search-service";
 import { SearchProduct } from "../dto/product-search-response";
@@ -82,17 +78,5 @@ export class ProductService {
   async getUserQuestions(userId: number) {
     const questions = await this.questions.findQuestionsByUserId(userId);
     return questions.map(QuestionResponse.of);
-  }
-
-  async registerQuestion(productId: number, question: QuestionPostRequest) {
-    await this.questions.createQuestion(productId, question);
-  }
-
-  async editQuestion(questionId: number, request: QuestionPatchRequest) {
-    await this.questions.updateQuestion(questionId, request);
-  }
-
-  async deleteQuestion(id: number) {
-    await this.questions.deleteQuestion(id);
   }
 }
