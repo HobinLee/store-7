@@ -22,3 +22,5 @@ export { default as DeleveryIcon } from "./delivery.svg";
 export { default as Info } from "./info.svg";
 export { default as QuestionIcon } from "./question.svg";
 export { default as ReviewIcon } from "./review.svg";
+export { default as King } from "./king.svg";
+export { default as ProductIcon } from "./product.svg";
