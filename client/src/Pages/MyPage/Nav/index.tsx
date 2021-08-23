@@ -6,6 +6,7 @@ import {
   QuestionIcon,
   ReviewIcon,
   UserIcon,
+  King,
 } from "@/assets";
 
 export interface NavProps {
@@ -53,11 +54,9 @@ const NavWrpper = styled.ul`
 const ICON_SIZE = 60;
 const navItems = [
   {
-    Icon: (props) => (
-      <WishIcon width={ICON_SIZE} height={ICON_SIZE} {...props} />
-    ),
-    title: "내 찜목록",
-    path: "orders",
+    Icon: (props) => <King width={ICON_SIZE} height={ICON_SIZE} {...props} />,
+    title: "메인",
+    path: "main",
   },
   {
     Icon: (props) => (
@@ -68,11 +67,12 @@ const navItems = [
   },
   {
     Icon: (props) => (
-      <UserIcon width={ICON_SIZE} height={ICON_SIZE} {...props} />
+      <WishIcon width={ICON_SIZE} height={ICON_SIZE} {...props} />
     ),
-    title: "회원정보 변경",
-    path: "userinfo",
+    title: "내 찜목록",
+    path: "wishes",
   },
+
   {
     Icon: (props) => (
       <QuestionIcon width={ICON_SIZE} height={ICON_SIZE} {...props} />
@@ -86,6 +86,13 @@ const navItems = [
     ),
     title: "나의 상품후기",
     path: "reviews",
+  },
+  {
+    Icon: (props) => (
+      <UserIcon width={ICON_SIZE} height={ICON_SIZE} {...props} />
+    ),
+    title: "회원정보 변경",
+    path: "userinfo",
   },
 ];
 
@@ -106,12 +113,14 @@ const NavItemWrapper = styled.div<{ isSelected: boolean }>`
     css`
       transform: scale(1.3);
     `}
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   &:hover {
     transform: scale(1.3);
     transition: transform 0.2s;
   }
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  white-space: nowrap;
 `;
 export default Nav;
