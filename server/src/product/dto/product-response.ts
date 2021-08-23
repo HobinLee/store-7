@@ -12,8 +12,9 @@ export class ProductResponse {
   option: string;
   images: string[];
   details: string[];
+  isWish: boolean;
 
-  static of(product: Product): ProductResponse {
+  static of(product: Product, isWish: boolean): ProductResponse {
     const id = product.id,
       name = product.name,
       price = product.getDiscountedPrice(),
@@ -25,7 +26,6 @@ export class ProductResponse {
       stock = product.stock,
       images = product.getImagesAsString(),
       details = product.getDetailImagesAsString();
-
     return {
       id,
       name,
@@ -38,6 +38,7 @@ export class ProductResponse {
       stock,
       images,
       details,
+      isWish,
     } as ProductResponse;
   }
 }

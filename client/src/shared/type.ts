@@ -91,6 +91,7 @@ export interface ProductType {
   option: string;
   images: string[];
   details: string[];
+  isWish: boolean;
 }
 
 export interface CartType {
