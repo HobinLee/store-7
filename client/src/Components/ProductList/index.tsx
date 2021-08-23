@@ -8,7 +8,7 @@ interface ProductListProps {
 
 const ProductList = ({ products }: ProductListProps) => (
   <ProductWrapList>
-    {products.map((product: ProductElementType) => (
+    {products?.map((product: ProductElementType) => (
       <Item {...product} key={product.id} />
     ))}
   </ProductWrapList>

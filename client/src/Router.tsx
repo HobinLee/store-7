@@ -6,16 +6,27 @@ import {
   ReactElement,
 } from "react";
 import styled from "styled-components";
+import { decodeParams, URIParameterType } from "./utils/location";
 
-type RouterContextPropsType = {
+interface RouterContextPropsType {
   location: string;
-};
+  params?: URIParameterType;
+}
 
-type RouteType = {
+type PageComponentProps = { location?: string; params?: URIParameterType };
+
+export type PageComponentType = ({
+  location,
+  params,
+}: PageComponentProps) => JSX.Element;
+
+export type RouteSetType = [string, PageComponentType, boolean?];
+
+interface RouterType {
   exact?: boolean;
   path: string;
-  children: ReactElement<unknown>;
-};
+  component: (props: PageComponentProps) => JSX.Element;
+}
 
 interface HistoryEvent extends Event {
   detail: {
@@ -30,15 +41,19 @@ const RouterContext = createContext<RouterContextPropsType>({
 });
 
 export const Router = ({ children }): ReactElement => {
-  const [location, setLocation] = useState(window.location.pathname);
+  const [location, setLocation] = useState<RouterContextPropsType>({
+    location: window.location.pathname,
+    params: decodeParams(),
+  });
 
-  const setCurrentLocation = () => {
-    setLocation(window.location.pathname);
-  };
+  const setCurrentLocation = () =>
+    setLocation({
+      location: window.location.pathname,
+      params: decodeParams(),
+    });
 
   const handlePushState = (e: HistoryEvent) => {
     const path = e.detail.pathname;
-
     window.history.pushState({}, "", path);
     setCurrentLocation();
   };
@@ -53,24 +68,24 @@ export const Router = ({ children }): ReactElement => {
   }, []);
 
   return (
-    <RouterContext.Provider value={{ location }}>
+    <RouterContext.Provider value={{ ...location }}>
       {children}
     </RouterContext.Provider>
   );
 };
 
-export const Route = ({ exact, path, children }: RouteType) => {
-  const { location } = useContext(RouterContext);
+export const Route = ({ exact, path, component: Component }: RouterType) => {
+  const { location, params } = useContext(RouterContext);
 
   const checkPath = (): boolean => {
     if (exact) {
       return path === location;
     } else {
-      return location.match(path)?.index === 0;
+      return location.match(new RegExp(path, "i"))?.index === 0;
     }
   };
 
-  return checkPath() ? children : null;
+  return checkPath() ? <Component location={location} params={params} /> : null;
 };
 
 export const moveTo = (path: string) => {

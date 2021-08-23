@@ -89,7 +89,7 @@ const Menu = () => {
           <li key={idx}>
             <Link
               key={idx}
-              to={`/category?main_id=${currentCategoryIndex}&sub_id=${idx}`}
+              to={`/category?category=${categories[currentCategoryIndex].name}&subCategory=${category.name}`}
             >
               {category.name}
             </Link>

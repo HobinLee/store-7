@@ -2,8 +2,11 @@ import Header from "@/Components/Header";
 import { PageWrapper, Contents } from "@/shared/styled";
 import styled from "styled-components";
 import Footer from "@/Components/Footer";
+import { useProducts } from "@/api/products";
+import ProductList from "@/Components/ProductList";
 
-const CategoryPage = () => {
+const CategoryPage = ({ params }) => {
+  const { data: products } = useProducts(params);
   return (
     <Wrapper>
       <Header />
@@ -18,6 +21,7 @@ const CategoryPage = () => {
             <div className="buttons__btn">높은가격순</div>
           </div>
         </Filter>
+        <ProductList products={products} />
       </Contents>
       <Footer />
     </Wrapper>
