@@ -1,12 +1,12 @@
 import { MyOrderType } from "@/shared/type";
 import styled, { css } from "styled-components";
 
-const TrakingOrders = () => {
+const OrderList = ({ orders }) => {
   return (
     <Wrapper data-testid="test__orderlist">
-      {/* {orders.map((order) => (
+      {orders.map((order) => (
         <OrderBox {...order} />
-      ))} */}
+      ))}
     </Wrapper>
   );
 };
@@ -67,4 +67,4 @@ const OrderWrapper = styled.div`
   }
 `;
 
-export default TrakingOrders;
+export default OrderList;
