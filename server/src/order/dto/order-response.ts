@@ -11,7 +11,10 @@ export class OrderResponse {
   status: string;
   request: string;
   price: number;
+  productName: string;
   createdAt: Date;
+  reviewId?: number;
+  image: string;
 
   static of(order: Order): OrderResponse {
     const id = order.id,
@@ -24,7 +27,10 @@ export class OrderResponse {
       status = order.status,
       request = order.request,
       price = order.price,
-      createdAt = order.createdAt;
+      createdAt = order.createdAt,
+      productName = order.product.name,
+      reviewId = order.review ? order.review.id : 0,
+      image = order.product.images[0] ? order.product.images[0].id : "bed";
 
     return {
       id,
@@ -38,6 +44,9 @@ export class OrderResponse {
       request,
       price,
       createdAt,
+      productName,
+      reviewId,
+      image,
     };
   }
 }

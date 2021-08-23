@@ -13,7 +13,4 @@ export interface CreateOrderRequest extends OrderRequest {
   user: {
     id: number;
   };
-  product: {
-    id: number;
-  };
 }
