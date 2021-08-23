@@ -5,8 +5,8 @@ import { DropdownWrapper, DropdownItem } from "@/shared/styled";
 import useInput from "@/hooks/useInput";
 import SearchList from "./DropDown/SearchedList";
 import AutoList from "./DropDown/AutoCompleteList";
-import { debounce } from "@material-ui/core";
 import { moveTo } from "@/Router";
+import { media } from "@/styles/theme";
 
 const LS_SEARCH = "search";
 
@@ -63,11 +63,8 @@ const Search = () => {
       : setNewSearchList([]);
   };
 
-  const debounceAutoComplete = debounce(() => {}, 200);
-
   const onChangeKeyword = (e) => {
     searchValue.onChange(e);
-    debounceAutoComplete();
   };
 
   return (
@@ -122,15 +119,21 @@ const SearchWrapper = styled.form`
   ${({ theme }) => theme.flexCenter}
   ${({ theme }) => theme.font.medium}
   border-radius: 2rem;
-  border: 0.2rem solid ${({ theme }) => theme.color.light_grey1};
+  border: 0.2rem solid ${({ theme }) => theme.color.light_grey2};
+  background: ${({ theme }) => theme.color.off_white};
   .input-box__select {
     color: ${({ theme }) => theme.color.grey1};
     position: relative;
     border-right: 0.2rem solid ${({ theme }) => theme.color.light_grey2};
     padding: 0 1.5rem;
-    width: 11rem;
+    width: 25%;
+    max-width: 11rem;
     box-sizing: border-box;
     height: 100%;
+  }
+
+  ${media.mobile} {
+    display: none;
   }
 `;
 
@@ -140,7 +143,6 @@ const SearchBox = styled.div`
   width: 27rem;
   padding: 1rem;
   border: 1px solid ${({ theme }) => theme.color.light_grey2};
-  background: ${({ theme }) => theme.color.off_white};
   .search-list__title {
     font-weight: bolder;
   }
@@ -154,9 +156,12 @@ const SearchInput = styled(Input)`
   color: ${({ theme }) => theme.color.light_grey1};
   border: none;
   padding: 1rem 1.5rem;
-  width: 30rem;
+  width: 34rem;
   text-align: left;
-  background: none;
+
+  ${media.tablet} {
+    width: 22vw;
+  }
 `;
 
 const ResetButton = styled.button`

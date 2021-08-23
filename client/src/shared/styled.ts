@@ -1,14 +1,18 @@
 import styled from "styled-components";
 import { LINE_LINK } from "@/assets";
-import { gap } from "@/styles/theme";
+import { gap, media } from "@/styles/theme";
 
 export const PageWrapper = styled.div`
   position: relative;
   width: 100%;
-  padding-top: 22rem;
+  padding-top: 20rem;
   padding-bottom: 30rem;
   min-height: 100vh;
   box-sizing: border-box;
+  ${media.mobile} {
+    padding-top: 12rem;
+    max-width: 100vw;
+  }
 `;
 
 export const Contents = styled.div`
@@ -19,6 +23,10 @@ export const Contents = styled.div`
   width: 100%;
   padding: 0 5rem;
   box-sizing: border-box;
+
+  ${media.mobile} {
+    padding: 0 1rem;
+  }
 `;
 
 export const DropdownWrapper = styled.div`
@@ -61,6 +69,18 @@ export const ItemList = styled.ul`
 
 export const ProductWrapList = styled.ul`
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  li {
+    padding: 1rem;
+    box-sizing: border-box;
+    flex: 0 0 25%;
+  }
+  ${media.mobile} {
+    li {
+      padding: 0.5rem;
+      flex: 0 0 50%;
+    }
+  }
 `;

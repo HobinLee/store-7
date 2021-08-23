@@ -1,5 +1,10 @@
 import { CategoryType } from "@/Components/Header/Menu";
-import { ItemType, ReviewListType, UserType } from "./type";
+import {
+  ItemType,
+  ProductElementType,
+  ReviewListType,
+  ReviewType,
+} from "./type";
 
 export const IMAGE_DUMMY =
   "https://store.baemin.com/data/board/upload/goodsreview/eea0b21ff31b55a0";
@@ -38,13 +43,16 @@ export const sampleMain = [
   },
 ];
 
-export const sampleCategory = [
+export const sampleProducts: ProductElementType[] = [
   {
     id: 1,
-    discountRate: 40,
     tags: ["new", "sale"],
+    discountRate: 40,
     name: "`타이틀이 굉장히 길어지면 무슨 일이 일어날지 대비하기 위해 작성하는 굉장히 긴 타이틀입니동. 세상에 이렇게 긴 타이틀을 가진 제품이 있을진 모르겠지만 그래도 일단 길에 줄줄 늘어놔야겠죠? 아 배고프다 이따 저녁은 어제 시킨 김치찜인데 솔직히 맛있진 않아서.. 떡볶이 먹고 싶다`",
     price: 10000,
+    originPrice: 10000,
+    amount: 100,
+    image: "",
     isWish: true,
   },
   {
@@ -54,6 +62,9 @@ export const sampleCategory = [
     name: "타이틀2",
     price: 260000,
     isWish: false,
+    originPrice: 260000,
+    image: "",
+    amount: 1,
   },
   {
     id: 3,
@@ -61,6 +72,10 @@ export const sampleCategory = [
     name: "타이틀3",
     price: 10000,
     isWish: true,
+    discountRate: 0,
+    originPrice: 260000,
+    image: "",
+    amount: 1,
   },
   {
     id: 4,
@@ -69,6 +84,9 @@ export const sampleCategory = [
     name: "타이틀4",
     price: 100000,
     isWish: true,
+    originPrice: 260000,
+    image: "",
+    amount: 1,
   },
   {
     id: 5,
@@ -77,6 +95,9 @@ export const sampleCategory = [
     name: "타이틀",
     price: 10000,
     isWish: false,
+    originPrice: 260000,
+    image: "",
+    amount: 1,
   },
   {
     id: 6,
@@ -85,6 +106,9 @@ export const sampleCategory = [
     name: "타이틀2",
     price: 260000,
     isWish: false,
+    originPrice: 260000,
+    image: "",
+    amount: 1,
   },
   {
     id: 7,
@@ -92,6 +116,10 @@ export const sampleCategory = [
     name: "타이틀3",
     price: 10000,
     isWish: true,
+    discountRate: 0,
+    originPrice: 260000,
+    image: "",
+    amount: 1,
   },
   {
     id: 8,
@@ -100,6 +128,64 @@ export const sampleCategory = [
     name: "타이틀4",
     price: 100000,
     isWish: true,
+    originPrice: 260000,
+    image: "",
+    amount: 1,
+  },
+  {
+    id: 9,
+    discountRate: 50,
+    tags: ["sale"],
+    name: "타이틀4",
+    price: 100000,
+    isWish: true,
+    originPrice: 260000,
+    image: "",
+    amount: 1,
+  },
+  {
+    id: 10,
+    discountRate: 40,
+    tags: ["new", "sale"],
+    name: "타이틀",
+    price: 10000,
+    isWish: false,
+    originPrice: 260000,
+    image: "",
+    amount: 1,
+  },
+  {
+    id: 11,
+    discountRate: 20,
+    tags: ["new", "green", "sale"],
+    name: "타이틀2",
+    price: 260000,
+    isWish: false,
+    originPrice: 260000,
+    image: "",
+    amount: 1,
+  },
+  {
+    id: 12,
+    tags: ["green"],
+    name: "타이틀3",
+    price: 10000,
+    isWish: true,
+    discountRate: 0,
+    originPrice: 260000,
+    image: "",
+    amount: 1,
+  },
+  {
+    id: 13,
+    discountRate: 50,
+    tags: ["sale"],
+    name: "타이틀4",
+    price: 100000,
+    isWish: true,
+    originPrice: 260000,
+    image: "",
+    amount: 1,
   },
 ];
 
@@ -359,5 +445,36 @@ export const review = [
     name: "제목 2",
     date: "20210815",
     authorName: "홍영준",
+  },
+];
+
+export const reviews: ReviewType[] = [
+  {
+    id: 1,
+    rate: 3,
+    content: "조아유",
+    image:
+      "https://store.baemin.com/data/board/upload/goodsreview/eea0b21ff31b55a0",
+    authorName: "쭈니쭈니",
+    date: new Date(),
+  },
+  {
+    id: 1,
+    rate: 3,
+    content:
+      "흠 처음에 별 생각 없이 구매했는데, 생각보다 너무 잘 산것 같습니다. 부모님께서 참 좋아하세요. 이렇게 긴 리뷰라면 내일 곱도리탕 맛있게 먹을 수 있겠죠? 데모 화이팅!",
+    image:
+      "https://store.baemin.com/data/board/upload/goodsreview/4d9f2950f11c0478",
+    authorName: "우아한개발자",
+    date: new Date(),
+  },
+  {
+    id: 1,
+    rate: 4,
+    image:
+      "https://store.baemin.com/data/board/upload/goodsreview/0b3a8185859afb31",
+    content: "와 너무 귀여워요 ㅠㅠ",
+    authorName: "호비",
+    date: new Date(),
   },
 ];

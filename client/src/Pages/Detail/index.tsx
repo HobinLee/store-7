@@ -10,7 +10,7 @@ import Footer from "@/Components/Footer";
 import Guide from "./Guide";
 import DetailInfo from "./DetailInfo";
 import ZoomModal from "./ZoomModal";
-import { gap } from "@/styles/theme";
+import { gap, media } from "@/styles/theme";
 import { convertToKRW } from "@/utils/util";
 import { useProduct } from "@/api/products";
 
@@ -66,21 +66,7 @@ const DetailPage = () => {
   return (
     status !== "loading" && (
       <Wrapper>
-        <Header>
-          {yOffset > topHeight && (
-            <FixedTab yOffset={yOffset}>
-              {tabs.map((tab, idx) => (
-                <TabA
-                  key={idx}
-                  onClick={() => handleSelectTab(tab.id)}
-                  isSelected={selectedTab === tab.id}
-                >
-                  {tab.title}
-                </TabA>
-              ))}
-            </FixedTab>
-          )}
-        </Header>
+        <Header />
 
         <Contents>
           <InfoBox>
@@ -126,35 +112,34 @@ const DetailPage = () => {
               />
             </Info>
           </InfoBox>
-
-          <Scroll {...{ selectedTab, yOffset }}>
-            <Tab yOffset={yOffset}>
-              {tabs.map((tab) => (
-                <TabA
-                  key={tab.title}
-                  onClick={() => handleSelectTab(tab.id)}
-                  isSelected={selectedTab === tab.id}
-                >
-                  {tab.title}
-                </TabA>
-              ))}
-            </Tab>
-
-            <div className="bottom-wrapper">
-              {tabs.map((tab) => (
-                <TabPage data-testid={tab.title} key={tab.title}>
-                  {tab.id === selectedTab && tab.component}
-                </TabPage>
-              ))}
-            </div>
-
-            {yOffset > topHeight && selectedTab === "first" && (
-              <div className="option-box">
-                <OptionBox {...{ numValue, handleClickNumVal, product }} />
-              </div>
-            )}
-          </Scroll>
         </Contents>
+        <Scroll selectedTab={selectedTab}>
+          <Tab>
+            {tabs.map((tab) => (
+              <TabA
+                key={tab.title}
+                onClick={() => handleSelectTab(tab.id)}
+                isSelected={selectedTab === tab.id}
+              >
+                {tab.title}
+              </TabA>
+            ))}
+          </Tab>
+
+          <div className="bottom-wrapper">
+            {tabs.map((tab) => (
+              <TabPage data-testid={tab.title} key={tab.title}>
+                {tab.id === selectedTab && tab.component}
+              </TabPage>
+            ))}
+          </div>
+
+          {yOffset > topHeight && selectedTab === "first" && (
+            <div className="option-box">
+              <OptionBox {...{ numValue, handleClickNumVal, product }} />
+            </div>
+          )}
+        </Scroll>
         <Footer />
       </Wrapper>
     )
@@ -229,13 +214,19 @@ const Info = styled.div`
   }
 `;
 
-const Scroll = styled.div<{ yOffset: number; selectedTab: string }>`
+const Scroll = styled.div<{ selectedTab: string }>`
   width: 100%;
   padding-right: ${({ selectedTab }) => selectedTab === "first" && "25rem"};
+  ${media.mobile} {
+    padding: 0;
+  }
   box-sizing: border-box;
   margin-top: 10rem;
+
   .bottom-wrapper {
+    box-sizing: border-box;
     width: 100%;
+    padding: 0 5rem;
   }
 
   .option-box {
@@ -260,17 +251,17 @@ const Scroll = styled.div<{ yOffset: number; selectedTab: string }>`
   }
 `;
 
-const Tab = styled.div<{ yOffset: number }>`
+const Tab = styled.div`
   ${({ theme }) => theme.flexCenter}
-  width: 100%;
-  left: 0;
-  position: absolute;
+  position: -webkit-sticky;
+  position: sticky;
+
+  top: 14.6rem;
   background: ${({ theme }) => theme.color.background};
   z-index: 1;
-`;
-
-const FixedTab = styled(Tab)`
-  position: fixed;
+  ${media.mobile} {
+    top: 10.6rem;
+  }
 `;
 
 const TabA = styled.div<{ isSelected: boolean }>`

@@ -1,6 +1,7 @@
 import { ProductWrapList } from "@/shared/styled";
 import { ProductElementType } from "@/shared/type";
 import Item from "@/Components/Item";
+import { sampleProducts } from "@/shared/dummy";
 
 interface ProductListProps {
   products: ProductElementType[];
@@ -8,7 +9,7 @@ interface ProductListProps {
 
 const ProductList = ({ products }: ProductListProps) => (
   <ProductWrapList>
-    {products?.map((product: ProductElementType) => (
+    {(products ?? sampleProducts).map((product: ProductElementType) => (
       <Item {...product} key={product.id} />
     ))}
   </ProductWrapList>

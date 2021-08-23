@@ -3,14 +3,15 @@ import styled from "styled-components";
 import { getSiblingIndex } from "@/utils/node";
 import { Link } from "@/Router";
 import { categories } from "@/shared/dummy";
+import { media } from "@/styles/theme";
 
 export type CategoryType = {
   name: string;
   subCategories?: CategoryType[];
 };
 
-const Menu = () => {
-  const [currentCategoryIndex, setCurrentCategory] = useState(0);
+const Menu = ({ category }: { category?: string }) => {
+  const [currentCategoryIndex, setCurrentCategory] = useState(category ?? 0);
   const [padding, setPadding] = useState(0);
 
   const checkChangeCategory = ({
@@ -59,7 +60,7 @@ const Menu = () => {
           key={idx}
           className={currentCategoryIndex === idx ? "selected" : ""}
         >
-          <Link key={idx} to={`/category?main_id=${idx}`}>
+          <Link key={idx} to={`/category?category=${idx}`}>
             {category.name}
           </Link>
         </li>
@@ -89,7 +90,7 @@ const Menu = () => {
           <li key={idx}>
             <Link
               key={idx}
-              to={`/category?category=${categories[currentCategoryIndex].name}&subCategory=${category.name}`}
+              to={`/category?category=${currentCategoryIndex}&subCategory=${idx}`}
             >
               {category.name}
             </Link>
@@ -128,8 +129,11 @@ const Wrapper = styled.div`
     cursor: pointer;
     text-align: center;
     &:hover {
-      opacity: 0.5;
+      color: ${({ theme }) => theme.color.primary3};
     }
+  }
+  ${media.mobile} {
+    padding: 0 1rem;
   }
 `;
 
@@ -140,7 +144,7 @@ const MainCategoryWrapper = styled.ul`
   display: flex;
   flex-direction: row;
   overflow-x: scroll;
-  color: #fff;
+  color: ${({ theme }) => theme.color.grey2};
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
   &::-webkit-scrollbar {
@@ -154,7 +158,7 @@ const MainCategoryWrapper = styled.ul`
   .selected {
     font-weight: bolder;
     a {
-      color: ${({ theme }) => theme.color.primary1};
+      color: ${({ theme }) => theme.color.primary3};
     }
   }
 `;
@@ -187,12 +191,19 @@ const SubCategoryWrapper = styled.ul<{ padding: number; width: number }>`
   display: flex;
   justify-content: center;
   flex-direction: row;
+  z-index: 30;
+
   ${({ padding, width }) => setPadding(padding, width)}
+  ${media.mobile} {
+    width: 100%;
+    padding: 0;
+    justify-content: flex-start;
+  }
   ${({ theme }) => theme.font.small}
   overflow-x: scroll;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
-  color: #fff;
+  color: ${({ theme }) => theme.color.grey1};
 
   &::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
