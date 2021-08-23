@@ -7,11 +7,11 @@ import Review from "./Review";
 
 const contents = {
   "/": Root,
-  "orderlist": Orders,
-  "wishlist": WishList,
+  "orders": Orders,
+  "wishes": WishList,
   "userinfo": UserInfo,
-  "question": Question,
-  "review": Review,
+  "questions": Question,
+  "reviews": Review,
 };
 
 export default contents;

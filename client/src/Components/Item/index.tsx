@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "@/Router";
 import styled, { css } from "styled-components";
 import ToggleImageWrapper from "../ToggleImageWrapper";
-import { Wish } from "@/assets";
+import { WishIcon } from "@/assets";
 import { getCurrentPrice, convertToKRW } from "@/utils/util";
 import { postWishProduct, deleteWishProduct } from "@/api/my";
 
@@ -46,7 +46,7 @@ const Item = ({
             </div>
             <WishBox isWishState={isWishState}>
               {isWishState ? (
-                <Wish
+                <WishIcon
                   width="36"
                   height="36"
                   opacity="1"
@@ -54,7 +54,7 @@ const Item = ({
                   onClick={handleClickWish(deleteWishProduct)}
                 />
               ) : (
-                <Wish
+                <WishIcon
                   width="36"
                   height="36"
                   fill="white"
