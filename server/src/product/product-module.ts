@@ -21,6 +21,8 @@ import { SearchService } from "./application/search-service";
 import { ReviewService } from "./application/review-service";
 import { QuestionController } from "./presentation/question-controller";
 import { QuestionService } from "./application/question-service";
+import { Wishes } from "@/user/domain/wishes";
+import { Wish } from "@/user/entity/wish";
 
 const elasticsearchConfig = properties.elastic;
 
@@ -33,6 +35,7 @@ const elasticsearchConfig = properties.elastic;
       ProductDetailImage,
       Question,
       Review,
+      Wish,
     ]),
     ElasticsearchModule.register({
       node: elasticsearchConfig.node,
@@ -58,6 +61,7 @@ const elasticsearchConfig = properties.elastic;
     ImageService,
     ReviewService,
     QuestionService,
+    Wishes,
   ],
   exports: [Products, ElasticsearchModule, SearchService],
 })
