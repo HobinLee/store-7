@@ -3,7 +3,7 @@ import Button from "@/Components/Button";
 import QuestionBox from "./QuestionBox";
 import { useState } from "react";
 import QuestionModal from "./QuestionModal";
-import { qnas } from "@/shared/dummy";
+import { useProductQuestions } from "@/api/products";
 
 const Question = () => {
   const [isModalOpened, setIsModalOpened] = useState(false);
@@ -16,23 +16,32 @@ const Question = () => {
     } else setIsModalOpened(val);
   };
 
+  const pathname = location.pathname.split("detail/")[1];
+  const {
+    status,
+    data: questions,
+    error,
+  } = useProductQuestions(parseInt(pathname));
+
   return (
-    <div>
-      <Header>
-        <div>
-          상품문의 <span className="total">{qnas.length}</span>
-        </div>
+    status !== "loading" && (
+      <div>
+        <Header>
+          <div>
+            상품문의 <span className="total">{questions.length}</span>
+          </div>
 
-        <Button onClick={() => handleModalOpen(true)} primary>
-          문의하기
-        </Button>
-      </Header>
-      {qnas.map((qna, idx) => (
-        <QuestionBox {...qna} key={idx} />
-      ))}
+          <Button onClick={() => handleModalOpen(true)} primary>
+            문의하기
+          </Button>
+        </Header>
+        {questions.map((qna, idx) => (
+          <QuestionBox {...qna} key={idx} />
+        ))}
 
-      {isModalOpened && <QuestionModal {...{ handleModalOpen }} />}
-    </div>
+        {isModalOpened && <QuestionModal {...{ handleModalOpen }} />}
+      </div>
+    )
   );
 };
 

@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { QnAType } from "@/shared/type";
+import { QuestionType } from "@/shared/type";
 import { gap } from "@/styles/theme";
 import { YYYY_MM_DD_HH_mm } from "@/utils/util";
 
-const QuestionBox = (Question: QnAType) => {
+const QuestionBox = (Question: QuestionType) => {
   const isAnswered = Question.answer ? true : false;
   return (
     <Wrapper isAnswered={isAnswered} data-testid="test__question-box">

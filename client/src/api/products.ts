@@ -1,4 +1,4 @@
-import { ProductType, ReviewListType } from "@/shared/type";
+import { ProductType, QuestionType, ReviewListType } from "@/shared/type";
 import { DELETE, GET, POST } from "@/utils/axios";
 import { useQuery } from "react-query";
 
@@ -19,7 +19,10 @@ export const useProductReviews = (id: number) =>
   useQuery(["reviews", id], () => getProductReviews(id));
 
 // GET /products/:id/questions 문의 리스트
-export const getProductQuestions = ({ id }) => GET(`/products/${id}/questions`);
+const getProductQuestions = (id: number): Promise<QuestionType[]> =>
+  GET(`/products/${id}/questions`);
+export const useProductQuestions = (id: number) =>
+  useQuery(["questions", id], () => getProductQuestions(id));
 
 // POST /products 상품 등록
 export const postProduct = ({ data }) => POST("/products", data);

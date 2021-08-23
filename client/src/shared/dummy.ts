@@ -1,11 +1,5 @@
 import { CategoryType } from "@/Components/Header/Menu";
-import {
-  ItemType,
-  QnAType,
-  QuestionListType,
-  ReviewListType,
-  UserType,
-} from "./type";
+import { ItemType, ReviewListType, UserType } from "./type";
 
 export const IMAGE_DUMMY =
   "https://store.baemin.com/data/board/upload/goodsreview/eea0b21ff31b55a0";
@@ -377,46 +371,5 @@ export const review = [
     name: "제목 2",
     date: "20210815",
     authorName: "홍영준",
-  },
-];
-export const qnas: QnAType[] = [
-  {
-    id: 1,
-    authorName: "우아한개발자1",
-    type: "배송",
-    title: "점심 뭐드셨어여",
-    question: "저는 농민백암순대 먹었는데 희희",
-    answer: "저희는 배민원으로 응급실 떡볶이 시켜 먹었습니다^^. 시켜드세요! ",
-    image: IMAGE_DUMMY,
-    createdAt: new Date(),
-    answerCreatedAt: new Date(),
-    product: {
-      id: 1,
-      name: "다 때가 있다.",
-    },
-  },
-  {
-    id: 2,
-    authorName: "우아한개발자2",
-    type: "배송",
-    title: `방금 배송 받아서 풀어봤는데, 검수하고 보내신 것 맞나요?
-      기다렸던 상품이라 서둘러 뜯었는데, 오염이 잔뜩 뭍어있는거 보고 완전 속상했어요
-      다른 상품에도 조금씩 뭍은건 닦으니 지워져서 그냥 사용하려고 하는데,
-      중 사이즈 1개는 닦아도 오염이 남아있어요
-      찝찝해서 교환신청합니다`,
-    question: `안녕하세요 고객님
-      불편을 드려 죄송합니다
-      아래 방법 참고하시어 접수 부탁드립니다.
-      [카톡접수]
-      카카오톡>친구추가>올리빙 검색후
-      사이트.성함.사진첨부접수요청`,
-    answer: "빵먹었어요 ",
-    image: IMAGE_DUMMY,
-    createdAt: new Date(),
-    answerCreatedAt: new Date(),
-    product: {
-      id: 1,
-      name: "다 때가 있다.",
-    },
   },
 ];

@@ -13,7 +13,6 @@ export class QuestionController {
   async postQuestion(
     @Body() body: { userId: number; data: QuestionPostRequest }
   ) {
-    console.log(body);
     return await this.questionService.createQuestion({
       ...body.data,
       product: {

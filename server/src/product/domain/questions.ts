@@ -19,7 +19,10 @@ export class Questions {
   }
 
   async findQuestionsByProductId(productId: number): Promise<Question[]> {
-    return await this.questionRepository.find({ where: { productId } });
+    return await this.questionRepository.find({
+      relations: ["user", "product"],
+      where: { product: { id: productId } },
+    });
   }
 
   async findQuestionsByUserId(userId: number): Promise<Question[]> {
