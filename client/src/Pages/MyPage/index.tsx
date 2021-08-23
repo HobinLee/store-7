@@ -9,7 +9,7 @@ import ContentArea from "./ContentArea";
 import { useMyInfo } from "@/api/my";
 
 const MyPage = () => {
-  const [current, setCurrent] = useState("/");
+  const [current, setCurrent] = useState("main");
 
   return (
     <MyPageWrapper>
@@ -42,7 +42,7 @@ const ContentHeader = ({ setCurrent, current }) => {
 const ContentHeaderWrapper = styled.div`
   width: 100%;
   display: flex;
-  margin-bottom: 5rem;
+  margin-bottom: 10rem;
 `;
 
 export const Greeting = () => {

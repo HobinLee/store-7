@@ -1,17 +1,17 @@
-import Root from "./Root";
+import MyMain from "./MyMain";
 import Orders from "./Orders";
 import UserInfo from "./UserInfo";
-import WishList from "./WishList";
+import Wishes from "./Wishes";
 import Question from "./Question";
 import Review from "./Review";
 
 const contents = {
-  "/": Root,
-  "orders": Orders,
-  "wishes": WishList,
-  "userinfo": UserInfo,
-  "questions": Question,
-  "reviews": Review,
+  main: MyMain,
+  orders: Orders,
+  wishes: Wishes,
+  userinfo: UserInfo,
+  questions: Question,
+  reviews: Review,
 };
 
 export default contents;
