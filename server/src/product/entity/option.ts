@@ -12,7 +12,10 @@ export class ProductOption {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Product, (product) => product.options, { nullable: false })
+  @ManyToOne(() => Product, (product) => product.options, {
+    nullable: false,
+    onDelete: "CASCADE",
+  })
   @JoinColumn({ name: "product_id" })
   product: Product;
 

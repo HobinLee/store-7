@@ -19,7 +19,10 @@ export class Cart {
   @JoinColumn({ name: "user_id" })
   user: User;
 
-  @ManyToOne(() => Product, (product) => product.carts, { nullable: false })
+  @ManyToOne(() => Product, (product) => product.carts, {
+    nullable: false,
+    onDelete: "CASCADE",
+  })
   @JoinColumn({ name: "product_id" })
   product: Product;
 
