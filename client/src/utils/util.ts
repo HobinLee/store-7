@@ -69,7 +69,7 @@ export const calSaledPrice = (price: number, discountRate: number) => {
 };
 
 export const convertToKRW = (price) => {
-  return price.toLocaleString() + "원";
+  return price?.toLocaleString() ?? 0 + "원";
 };
 
 export const YYYY_M_D_H_m = (date: Date) =>
