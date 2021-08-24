@@ -9,7 +9,7 @@ import ContentArea from "./ContentArea";
 import { useMyInfo } from "@/api/my";
 
 const MyPage = () => {
-  const [current, setCurrent] = useState("main");
+  const [current, setCurrent] = useState("order");
 
   return (
     <MyPageWrapper>

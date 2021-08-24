@@ -1,17 +1,15 @@
-import MyMain from "./MyMain";
-import Orders from "./Orders";
+import Order from "./Order";
 import UserInfo from "./UserInfo";
-import Wishes from "./Wishes";
+import Wish from "./Wish";
 import Question from "./Question";
 import Review from "./Review";
 
 const contents = {
-  main: MyMain,
-  orders: Orders,
-  wishes: Wishes,
+  order: Order,
+  wish: Wish,
   userinfo: UserInfo,
-  questions: Question,
-  reviews: Review,
+  question: Question,
+  review: Review,
 };
 
 export default contents;
