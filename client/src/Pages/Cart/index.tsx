@@ -11,8 +11,7 @@ import { useMyCarts } from "@/api/my";
 import { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { loginState } from "@/store/state";
-import { CartType, ICart, OrderType, PartialCart } from "@/shared/type";
-import { useCallback } from "react";
+import { CartType, ICart, PartialCart } from "@/shared/type";
 
 const CartPage = () => {
   const isLoggedin = useRecoilValue(loginState);
@@ -73,7 +72,7 @@ const CartPage = () => {
         totalCount: checkItems?.length,
       });
     }
-  }, [carts, checkItems]);
+  }, [status, checkItems]);
 
   // 체크박스 개별 선택
   const handleSingleCheck = (isChecked: boolean, cart: PartialCart) => {
@@ -97,9 +96,9 @@ const CartPage = () => {
   return (
     status !== "loading" && (
       <Wrapper>
-        <Header>
-          <CartOrderBox {...{ info }} />
-        </Header>
+        <Header />
+        <CartOrderBox {...{ info }} />
+
         <div className="contents">
           <Title>
             장바구니{" "}

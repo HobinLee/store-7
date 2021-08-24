@@ -97,7 +97,8 @@ const CartOrderBox = ({
 };
 
 const Wrapper = styled.div`
-  position: absolute;
+  position: fixed;
+  top: 18rem;
   right: 1rem;
   padding: 3rem;
   .order-btn {

@@ -50,7 +50,9 @@ const ItemInfoBox = ({
 
   const isLoggedin = useRecoilValue(loginState);
 
-  const handleDeleteCart = async (id: number) => {
+  const pathname = location.pathname.split("/")[1];
+
+  const handleDeleteCart = async () => {
     try {
       if (isLoggedin) deleteCart(id);
       else {
@@ -77,7 +79,6 @@ const ItemInfoBox = ({
     } else {
       if (num > 1) numValue.setValue((num - 1).toString());
     }
-    refetch();
   };
 
   const handlePatchCart = async () => {
@@ -85,7 +86,15 @@ const ItemInfoBox = ({
     refetch();
   };
   useEffect(() => {
-    handlePatchCart();
+    if (isLoggedin) handlePatchCart();
+    else {
+      const exist: CartType = JSON.parse(localStorage.getItem("carts"));
+      const itemIdxToUpdate = exist.items.findIndex((i) => i.id === id);
+
+      exist.items[itemIdxToUpdate].amount = parseInt(debouncedNumValue);
+
+      localStorage.setItem("carts", JSON.stringify(exist));
+    }
   }, [debouncedNumValue]);
 
   return (
@@ -96,18 +105,27 @@ const ItemInfoBox = ({
         <div>
           <div className="info__name">{name}</div>
           <div className="info__num">
-            <div>수량</div>
-            <div className="num-input">
-              <NumInput value={numValue.value} onChange={numValue.onChange} />
-              <div>
-                <button type="button" onClick={() => handleClickNumVal(1)}>
-                  <Triangle className="num-input__up" />
-                </button>
-                <button type="button" onClick={() => handleClickNumVal(-1)}>
-                  <Triangle className="num-input__down" />
-                </button>
-              </div>
-            </div>
+            {pathname === "cart" ? (
+              <>
+                <div>수량</div>
+                <div className="num-input">
+                  <NumInput
+                    value={numValue.value}
+                    onChange={numValue.onChange}
+                  />
+                  <div>
+                    <button type="button" onClick={() => handleClickNumVal(1)}>
+                      <Triangle className="num-input__up" />
+                    </button>
+                    <button type="button" onClick={() => handleClickNumVal(-1)}>
+                      <Triangle className="num-input__down" />
+                    </button>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>{numValue.value}개</>
+            )}
           </div>
         </div>
       </div>
@@ -118,7 +136,7 @@ const ItemInfoBox = ({
       </div>
 
       {checkboxVisible && (
-        <Close onClick={() => handleDeleteCart(id)} className="close-btn" />
+        <Close onClick={handleDeleteCart} className="close-btn" />
       )}
     </Wrapper>
   );

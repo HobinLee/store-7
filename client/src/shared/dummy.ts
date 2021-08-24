@@ -202,10 +202,13 @@ export const categories: CategoryType[] = [
     name: "문구",
     subCategories: [
       {
-        name: "펜",
+        name: "노트",
       },
       {
-        name: "공책",
+        name: "필기류",
+      },
+      {
+        name: "잡화",
       },
     ],
   },

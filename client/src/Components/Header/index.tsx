@@ -10,11 +10,10 @@ import { useRecoilState } from "recoil";
 import { loginState } from "@/store/state";
 
 interface HeaderPropsType {
-  children?: ReactChild;
   category?: string;
 }
 
-const Header = ({ children, category }: HeaderPropsType) => {
+const Header = ({ category }: HeaderPropsType) => {
   const [isLoggedin, setLoginState] = useRecoilState(loginState);
 
   const handleSignout = async () => {
@@ -47,7 +46,6 @@ const Header = ({ children, category }: HeaderPropsType) => {
         </div>
       </Wrapper>
       <Menu category={category} />
-      {children ?? ""}
     </TopWrapper>
   );
 };
