@@ -32,11 +32,10 @@ const OptionBox = ({
 
   const productId = product.id;
   const isLogined = useRecoilValue(loginState);
-  console.log(product.isWish);
   const handlePostWish = async () => {
     product.isWish
       ? await deleteWishProduct(productId)
-      : await postWishProduct( productId );
+      : await postWishProduct(productId);
     refetch();
   };
   const handlePostCart = async () => {
@@ -135,7 +134,7 @@ const OptionBox = ({
             height="24"
             fill="none"
             stroke="black"
-            stroke-width="3rem"
+            strokeWidth="3rem"
           />
         </Button>
         <Button onClick={handlePostCart}>장바구니</Button>

@@ -99,7 +99,7 @@ export class MyController {
 
   // wishes
   @Get("/wishes")
-  async getWishes(@Body("userId") userId: number): Promise<MyWishResponse[]> {
+  async getMyWishes(@Body("userId") userId: number): Promise<MyWishResponse[]> {
     return await this.myService.findMyWishes(userId);
   }
 

@@ -23,7 +23,7 @@ export class Wishes {
 
   async findMyWishesByUserId(userId: number): Promise<Wish[]> {
     return await this.wishRepository.find({
-      relations: ["product", "user"],
+      relations: ["product", "product.images", "user"],
       where: { user: { id: userId } },
     });
   }

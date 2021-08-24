@@ -69,7 +69,6 @@ export interface ItemType {
 
 export class ProductElementType {
   id: number;
-  tags?: string[];
   name: string;
   price: number;
   originPrice: number;

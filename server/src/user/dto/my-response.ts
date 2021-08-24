@@ -112,39 +112,28 @@ export class MyWishResponse {
   amount: number;
   image: string;
 
-  constructor(response: MyWishResponse) {
-    this.id = response.id;
-    this.name = response.name;
-    this.price = response.price;
-    this.originPrice = response.originPrice;
-    this.discountRate = response.discountRate;
-    this.isWish = response.isWish;
-    this.amount = response.amount;
-    this.image = response.image;
-  }
-
   static of(wishes: Wish[]): MyWishResponse[] {
     return wishes.map((wish) => {
-      const {
-        id,
-        name,
-        price,
-        stock,
-        discountRate,
-        getDiscountedPrice,
-        getThumbnailImage,
-      } = wish.product;
-      // get 함수들 사용 불가. of가 static이라서 this.discountRate에 접근 불가능해서 그런듯
-      return new MyWishResponse({
+      const { id, name, price, stock, discountRate, images } = wish.product;
+      return {
         id,
         name,
         originPrice: price,
         discountRate,
         amount: stock,
-        price: price,
-        image: "a",
+        price: getDiscountedPrice(discountRate, price),
+        image: getThumbnailImage(images),
         isWish: true,
-      });
+      };
     });
   }
 }
+
+const getDiscountedPrice = (discountRate, price) => {
+  return discountRate === 0 ? price : price * ((100 - discountRate) / 100);
+};
+
+const getThumbnailImage = (images) => {
+  if (!images || images.length == 0) return "";
+  return images[0].id;
+};
