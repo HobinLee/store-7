@@ -1,4 +1,4 @@
-import { gap } from "@/styles/theme";
+import { gap, media } from "@/styles/theme";
 import styled from "styled-components";
 import { Logo } from "@/assets";
 
@@ -35,7 +35,16 @@ const Wrapper = styled.div`
   height: 30rem;
   background-color: ${({ theme }) => theme.color.light_grey1};
   ${({ theme }) => theme.flexCenter};
+  padding: 5rem;
+  box-sizing: border-box;
   ${gap("10rem")}
+  ${media.tablet} {
+    ${gap("0")}
+  }
+  ${media.mobile} {
+    margin: 0;
+    flex-direction: column;
+  }
   b {
     ${({ theme }) => theme.font.medium};
     display: flex;
@@ -48,6 +57,17 @@ const Wrapper = styled.div`
     line-height: 2rem;
     white-space: pre-line;
     color: ${({ theme }) => theme.color.grey1};
+  }
+  img {
+    ${media.tablet} {
+      width: 20rem;
+      height: auto;
+    }
+    ${media.mobile} {
+      width: 10rem;
+      height: auto;
+      margin-bottom: 2rem;
+    }
   }
 `;
 

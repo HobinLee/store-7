@@ -36,7 +36,7 @@ const ValidationInput = ({
     <InputWrapper>
       <input
         className={checkValidStyle ? "valid-input" : "invalid-input"}
-        value={input.value}
+        defaultValue={input.value}
         onChange={(e) => {
           onChange && onChange(e);
           input.onChange(e);

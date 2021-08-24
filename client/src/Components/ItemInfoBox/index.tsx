@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Checkbox from "@/Components/Checkbox";
 import { convertToKRW } from "@/utils/util";
-import { gap } from "@/styles/theme";
+import { gap, media } from "@/styles/theme";
 import { Close } from "@/assets";
 import { deleteCart, patchCart } from "@/api/carts";
 import { useRecoilValue } from "recoil";
@@ -82,11 +82,21 @@ const LoggedInNumInput = ({
     }
   }, [debouncedNumValue]);
 
+  useEffect(() => {
+    console.log(numValue.value);
+  }, [numValue.value]);
+
+  const RenderNumInput = useCallback(() => {
+    return (
+      <NumInput defaultValue={numValue.value} onChange={numValue.onChange} />
+    );
+  }, [numValue.value]);
+
   return (
     <div className="info__num">
       <div>수량</div>
       <div className="num-input">
-        <NumInput value={numValue.value} onChange={numValue.onChange} />
+        <RenderNumInput />
         <div>
           <button type="button" onClick={() => handleClickNumVal(1)}>
             <Triangle className="num-input__up" />
@@ -180,11 +190,16 @@ const Wrapper = styled.div`
     ${gap("2rem")}
     &__name {
       ${({ theme }) => theme.font.large};
+      ${media.mobile} {
+        padding-right: 3rem;
+        line-height: 2.5rem;
+      }
     }
     &__num {
       margin-top: 1rem;
-      ${({ theme }) => theme.flexCenter};
-      ${gap("1rem")}
+      display: flex;
+      align-items: center;
+      ${gap("1rem")};
     }
     &__amount {
       margin-top: 3rem;
@@ -202,6 +217,9 @@ const Wrapper = styled.div`
     font-weight: 700;
     justify-content: flex-end;
     ${gap("2rem")}
+    ${media.mobile} {
+      margin-top: 2rem;
+    }
   }
   .close-btn {
     cursor: pointer;

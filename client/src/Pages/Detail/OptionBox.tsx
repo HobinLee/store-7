@@ -14,6 +14,7 @@ import { CartType, ProductType } from "@/shared/type";
 import { InputType } from "@/hooks/useInput";
 import { postWishProduct, deleteWishProduct } from "@/api/my";
 import { QueryObserverResult } from "react-query";
+import { useCallback } from "react";
 
 type OptionBoxProps = {
   numValue: InputType;
@@ -99,13 +100,19 @@ const OptionBox = ({
     moveTo("/order");
   };
 
+  const RenderNumInput = useCallback(() => {
+    return (
+      <NumInput defaultValue={numValue.value} onChange={numValue.onChange} />
+    );
+  }, [numValue.value]);
+
   return (
     <Wrapper>
       <div className="select-option">
         <div>수량</div>
         <div className="select-option__right">
           <div className="num-input">
-            <NumInput value={numValue.value} onChange={numValue.onChange} />
+            <RenderNumInput />
             <div>
               <button type="button" onClick={() => handleClickNumVal(1)}>
                 <Triangle className="num-input__up" />

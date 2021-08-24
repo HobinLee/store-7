@@ -22,12 +22,12 @@ const LoginPage = () => {
           <Title>비회원 주문조회 하기</Title>
           <Input
             placeholder="주문자명"
-            value={name.value}
+            defaultValue={name.value}
             onChange={name.onChange}
           />
           <Input
             placeholder="주문번호"
-            value={phoneNumber.value}
+            defaultValue={phoneNumber.value}
             onChange={phoneNumber.onChange}
           />
           <Button disabled={!checkLookupable()}>조회하기</Button>

@@ -35,12 +35,12 @@ const LoginSection = () => {
       <h3>회원 로그인</h3>
       <Input
         placeholder="아이디 입력"
-        value={email.value}
+        defaultValue={email.value}
         onChange={email.onChange}
       />
       <Input
         placeholder="비밀번호 입력"
-        value={password.value}
+        defaultValue={password.value}
         type="password"
         onChange={password.onChange}
       />

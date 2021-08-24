@@ -4,7 +4,7 @@ import styled from "styled-components";
 type InputType = {
   placeholder?: string;
   required?: boolean;
-  value: string;
+  defaultValue: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
   onBlur?: ChangeEventHandler<HTMLInputElement>;
   type?: string;
@@ -14,7 +14,7 @@ type InputType = {
 const Input = ({
   placeholder,
   required = true,
-  value,
+  defaultValue,
   onChange,
   onBlur,
   type = "text",
@@ -24,7 +24,7 @@ const Input = ({
     className={className}
     placeholder={placeholder}
     required={required}
-    value={value}
+    defaultValue={defaultValue}
     onChange={onChange}
     onBlur={onBlur}
     type={type}
