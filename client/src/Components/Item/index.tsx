@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "@/Router";
 import styled, { css } from "styled-components";
 import ToggleImageWrapper from "../ToggleImageWrapper";
@@ -6,6 +5,7 @@ import { WishIcon } from "@/assets";
 import { convertToKRW } from "@/utils/util";
 import { postWishProduct, deleteWishProduct, useMyWishes } from "@/api/my";
 import { media } from "@/styles/theme";
+import properties from "@/config/properties";
 
 type ItemType = {
   id: number;
@@ -40,7 +40,7 @@ const Item = ({
       <Link to={`/detail/${id}`}>
         <ItemWrapper>
           <div className="thumbnail">
-            <ToggleImageWrapper src={process.env.IMG_URL + image} />
+            <ToggleImageWrapper src={properties.imgURL + image} />
             <div className="thumbnail__tags">
               {tags.map((tag, idx) => (
                 <Tag tag={tag} key={idx}>
