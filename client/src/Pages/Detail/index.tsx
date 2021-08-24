@@ -13,6 +13,7 @@ import ZoomModal from "./ZoomModal";
 import { gap, media } from "@/styles/theme";
 import { convertToKRW } from "@/utils/util";
 import { useProduct } from "@/api/products";
+import properties from "@/config/properties";
 
 const topHeight = 740;
 
@@ -83,7 +84,7 @@ const DetailPage = () => {
             >
               <img
                 id="image"
-                src={process.env.IMG_URL + product.images[0]}
+                src={properties.imgURL + product.images[0]}
                 className="thumbnail"
               />
               {isZoomOpened && (
