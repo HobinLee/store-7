@@ -1,4 +1,5 @@
 import { useProduct } from "@/api/products";
+import properties from "@/config/properties";
 
 const DetailInfo = () => {
   const productId = location.pathname.split("detail/")[1];
@@ -8,7 +9,7 @@ const DetailInfo = () => {
     status !== "loading" && (
       <div>
         {product.details.map((detail) => (
-          <img key={detail} src={process.env.IMG_URL + detail} />
+          <img key={detail} src={properties.imgURL + detail} />
         ))}
       </div>
     )

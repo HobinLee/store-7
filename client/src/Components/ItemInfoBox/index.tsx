@@ -15,6 +15,7 @@ import { SetStateAction, useEffect } from "react";
 import { Dispatch } from "react";
 import { useCallback } from "react";
 import { QueryObserverResult } from "react-query";
+import properties from "@/config/properties";
 
 export type ItemInfoBoxProps = {
   id: number;
@@ -145,7 +146,7 @@ const ItemInfoBox = ({
     <Wrapper>
       <div className="info">
         {checkboxVisible && <Checkbox {...{ isChecked, handleCheck }} />}
-        <img role="img" src={process.env.IMG_URL + images[0]} />
+        <img role="img" src={properties.imgURL + images[0]} />
         <div>
           <div className="info__name">{name}</div>
           <RenderNumInput />
