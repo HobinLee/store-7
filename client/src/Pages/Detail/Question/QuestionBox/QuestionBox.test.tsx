@@ -1,6 +1,6 @@
 import { QuestionType } from "@/shared/type";
 import { render } from "@/utils/test-util";
-import { YYYY_MM_DD_HH_mm } from "@/utils/util";
+import { YYYY_M_D_H_m } from "@/utils/util";
 import { screen } from "@testing-library/react";
 import QuestionBox from "./index";
 
@@ -35,7 +35,7 @@ describe("<QuestionBox />", () => {
     expect(screen.queryByText("미답변")).toBeInTheDocument();
     expect(screen.queryByText(AUTHOR)).toBeInTheDocument();
     expect(screen.queryByText(Q_CONTENT)).toBeInTheDocument();
-    expect(screen.queryByText(YYYY_MM_DD_HH_mm(Q_DATE))).toBeInTheDocument();
+    expect(screen.queryByText(YYYY_M_D_H_m(Q_DATE))).toBeInTheDocument();
   });
 
   it("답변 완료", () => {
@@ -58,7 +58,7 @@ describe("<QuestionBox />", () => {
     expect(screen.queryByText(AUTHOR)).toBeInTheDocument();
     expect(screen.queryByText(Q_CONTENT)).toBeInTheDocument();
     expect(screen.queryByText(A_CONTENT)).toBeInTheDocument();
-    screen.queryAllByText(YYYY_MM_DD_HH_mm(Q_DATE)).forEach((date) => {
+    screen.queryAllByText(YYYY_M_D_H_m(Q_DATE)).forEach((date) => {
       expect(screen.queryByText(date.innerHTML)).toBeInTheDocument();
     });
   });

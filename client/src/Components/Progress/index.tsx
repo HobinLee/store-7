@@ -2,7 +2,7 @@ import styled from "styled-components";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { withStyles } from "@material-ui/core/styles";
 
-import { light } from "@/styles/theme";
+import { theme } from "@/styles/theme";
 
 type Content = {
   value: number;
@@ -32,10 +32,10 @@ const Progress = ({
       borderRadius: "1.5rem",
     },
     colorPrimary: {
-      backgroundColor: light.color.line,
+      backgroundColor: theme.color.line,
     },
     bar: {
-      backgroundColor: light.color.primary1,
+      backgroundColor: theme.color.primary1,
     },
   }))(LinearProgress);
 

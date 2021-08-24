@@ -8,7 +8,7 @@ import CartPage from "./Pages/Cart";
 import MyPage from "./Pages/MyPage";
 import OrderPage from "./Pages/Order";
 import OrderSuccess from "./Pages/OrderSuccess";
-import { light, dark } from "./styles/theme";
+import { theme } from "./styles/theme";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "./styles/global-style";
 import dayjs from "dayjs";
@@ -37,10 +37,6 @@ const routes: RouteSetType[] = [
 
 const App = () => {
   const setIsLoggedin = useSetRecoilState(loginState);
-  const [themeMode, setThemeMode] = useState("light");
-  const theme = themeMode === "light" ? light : dark;
-  const toggleTheme = () =>
-    setThemeMode(themeMode === "light" ? "dark" : "light");
 
   dayjs.locale("ko");
 
@@ -62,13 +58,6 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-
-      <button
-        style={{ position: "fixed", left: 0, top: 0, zIndex: 100 }}
-        onClick={toggleTheme}
-      >
-        toggle mode
-      </button>
 
       <Router>
         {routes.map(([path, component, exact]: RouteSetType) => (

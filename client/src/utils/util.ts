@@ -72,8 +72,8 @@ export const convertToKRW = (price) => {
   return price.toLocaleString() + "원";
 };
 
-export const YYYY_MM_DD_HH_mm = (date: Date) =>
-  dayjs(date).format("YYYY년 MM월 DD일 HH시 mm분");
+export const YYYY_M_D_H_m = (date: Date) =>
+  dayjs(date).format("YYYY년 M월 D일 H시 m분");
 
 export const YYYYMMDD = (date: Date) => dayjs(date).format("YYYYMMDD");
 export const YYYYMMDD_DOT = (date: Date) => dayjs(date).format("YYYY.MM.DD");
