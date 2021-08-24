@@ -51,7 +51,7 @@ const Header = ({ children, category }: HeaderPropsType) => {
 };
 
 const TopWrapper = styled.div`
-  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 1rem 0.2rem rgba(0, 0, 0, 0.2);
   position: fixed;
   top: 0;
   left: 0;
