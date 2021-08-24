@@ -2,18 +2,17 @@ import { ProductType, QuestionType, ReviewListType } from "@/shared/type";
 import { DELETE, GET, POST } from "@/utils/axios";
 import { useQuery } from "react-query";
 
-export interface productParams {
+export interface ProductParams {
   category?: number;
   subCategory?: number;
   order?: string;
-  keyword?: number;
   page?: number;
   size?: number;
 }
 // GET /products?order?category?subcategory?keyword? 상품 목록
-export const getProducts = async (params: productParams) =>
+export const getProducts = async (params: ProductParams) =>
   await GET("/products", params);
-export const useProducts = (params: productParams) =>
+export const useProducts = (params: ProductParams) =>
   useQuery(["product", params], () => getProducts(params));
 
 // GET /products/:id 상품 상세 정보
