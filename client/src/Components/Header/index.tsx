@@ -59,7 +59,7 @@ const TopWrapper = styled.div`
   max-width: 100vw;
   z-index: 30;
   border-radius: 0 0 2rem 2rem;
-  background: ${({ theme }) => theme.color.light_grey1};
+  background: ${({ theme }) => theme.color.white};
 
   .header__buttons {
     display: flex;
