@@ -6,7 +6,7 @@ import { useSearchProducts } from "@/api/search";
 import ProductList from "@/Components/ProductList";
 
 const SearchPage = ({ params }) => {
-  const { data: products } = useSearchProducts(params.keyword);
+  const { data: products } = useSearchProducts(params);
   return (
     <Wrapper>
       <Header />
