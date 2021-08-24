@@ -31,7 +31,12 @@ const DetailPage = () => {
   const productId = location.pathname.split("detail/")[1];
   const [yOffset, setYOffset] = useState(0);
 
-  const { status, data: product, error } = useProduct(parseInt(productId));
+  const {
+    status,
+    data: product,
+    error,
+    refetch,
+  } = useProduct(parseInt(productId));
 
   const numValue = useInput("1");
   const handleClickNumVal = (val: 1 | -1) => {
@@ -108,7 +113,7 @@ const DetailPage = () => {
 
               <OptionBox
                 key="option-box"
-                {...{ numValue, handleClickNumVal, product }}
+                {...{ numValue, handleClickNumVal, product, refetch }}
               />
             </Info>
           </InfoBox>

@@ -59,8 +59,11 @@ export class ProductController {
   // }
 
   @Get("/:id")
-  async getProduct(@Param("id") id: number): Promise<ProductResponse> {
-    return await this.productService.getProduct(id);
+  async getProduct(
+    @Param("id") id: number,
+    @Body("userId") userId: number
+  ): Promise<ProductResponse> {
+    return await this.productService.getProduct(id, userId);
   }
 
   @Get("/:id/reviews")

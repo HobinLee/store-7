@@ -69,7 +69,6 @@ export interface ItemType {
 
 export class ProductElementType {
   id: number;
-  tags?: string[];
   name: string;
   price: number;
   originPrice: number;
@@ -91,6 +90,7 @@ export interface ProductType {
   option: string;
   images: string[];
   details: string[];
+  isWish: boolean;
 }
 
 export interface CartType {

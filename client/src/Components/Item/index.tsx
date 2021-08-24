@@ -1,43 +1,46 @@
-import { useState } from "react";
 import { Link } from "@/Router";
 import styled, { css } from "styled-components";
 import ToggleImageWrapper from "../ToggleImageWrapper";
 import { WishIcon } from "@/assets";
-import { getCurrentPrice, convertToKRW } from "@/utils/util";
-import { postWishProduct, deleteWishProduct } from "@/api/my";
+import { convertToKRW } from "@/utils/util";
+import { postWishProduct, deleteWishProduct, useMyWishes } from "@/api/my";
 import { media } from "@/styles/theme";
+import properties from "@/config/properties";
 
 type ItemType = {
   id: number;
-  discountRate?: number;
-  tags?: string[];
   name: string;
   price: number;
+  originPrice: number;
+  discountRate: number;
   isWish: boolean;
+  amount: number;
+  image: string;
 };
 
 const Item = ({
   id,
-  discountRate = 0,
-  tags = [],
   name,
   price,
+  originPrice,
+  discountRate,
   isWish,
+  amount,
+  image,
 }: ItemType) => {
-  const [isWishState, setIsWish] = useState(isWish);
-
+  const { refetch } = useMyWishes();
+  const tags = ["new", "best"];
   const handleClickWish = (apiCallback) => async (e: Event) => {
     e.stopPropagation();
-    await apiCallback({ productId: id });
-    setIsWish(!isWishState);
+    await apiCallback(id);
+    refetch();
   };
-
   return (
     <li data-testid="test__itme">
       <Link to={`/detail/${id}`}>
         <ItemWrapper>
           <div className="thumbnail">
-            <ToggleImageWrapper src="https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg" />
+            <ToggleImageWrapper src={properties.imgURL + image} />
             <div className="thumbnail__tags">
               {tags.map((tag, idx) => (
                 <Tag tag={tag} key={idx}>
@@ -45,8 +48,8 @@ const Item = ({
                 </Tag>
               ))}
             </div>
-            <WishBox isWishState={isWishState}>
-              {isWishState ? (
+            <WishBox isWishState={isWish}>
+              {isWish ? (
                 <WishIcon
                   width="36"
                   height="36"
@@ -69,12 +72,10 @@ const Item = ({
             {discountRate !== 0 && (
               <div className="info__sale">
                 <div className="discount-rate">{discountRate}%</div>
-                <div className="before-price">{convertToKRW(price)}</div>
+                <div className="before-price">{convertToKRW(originPrice)}</div>
               </div>
             )}
-            <div className="info__price">
-              {getCurrentPrice(price, discountRate)}
-            </div>
+            <div className="info__price">{convertToKRW(price)}</div>
           </div>
         </ItemWrapper>
       </Link>

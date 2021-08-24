@@ -54,8 +54,8 @@ export const useMyOrderOfDate = (date: DateRange) =>
 const getMyWishes = () => GET("/my/wishes");
 export const useMyWishes = () => useQuery(["wishes"], () => getMyWishes());
 
-export const postWishProduct = ({ productId }) =>
+export const postWishProduct = (productId: number) =>
   POST("/my/wishes", { productId });
 
-export const deleteWishProduct = ({ productId }: { productId: number }) =>
+export const deleteWishProduct = (productId: number) =>
   DELETE(`/my/wishes/${productId}`);

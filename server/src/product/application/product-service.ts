@@ -10,6 +10,7 @@ import { Questions } from "../domain/questions";
 import { Reviews } from "../domain/reviews";
 import { SearchService } from "./search-service";
 import { SearchProduct } from "../dto/product-search-response";
+import { Wishes } from "@/user/domain/wishes";
 
 @Injectable()
 export class ProductService {
@@ -17,7 +18,8 @@ export class ProductService {
     private readonly products: Products,
     private readonly questions: Questions,
     private readonly reviews: Reviews,
-    private readonly serachService: SearchService
+    private readonly serachService: SearchService,
+    private readonly wishes: Wishes
   ) {}
 
   async getProducts(
@@ -36,10 +38,13 @@ export class ProductService {
     return products.map(ProductElementResponse.of);
   }
 
-  async getProduct(id: number) {
+  async getProduct(id: number, userId: number) {
+    const isWish = userId
+      ? !!(await this.wishes.findMyWishByProductId(userId, id))
+      : false;
     const product = await this.products.findProductById(id);
     if (product) {
-      return ProductResponse.of(product);
+      return ProductResponse.of(product, isWish);
     }
     throw new Error("404 Product NotFound");
   }

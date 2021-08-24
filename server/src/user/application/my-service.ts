@@ -69,24 +69,24 @@ export class MyService {
   }
 
   // reviews
-  async getMyReviews(userId: number) {
+  async findMyReviews(userId: number) {
     const reviews = await this.reviews.findReviewsByUserId(userId);
     return reviews.map(MyReviewResponse.of);
   }
 
   // qeustions
-  async getMyQeustions(userId: number) {
+  async findMyQeustions(userId: number) {
     const questions = await this.questions.findQuestionsByUserId(userId);
     return questions.map(QuestionResponse.of);
   }
 
   // orders
-  async getMyOrders(userId: number) {
+  async findMyOrders(userId: number) {
     const orders = await this.orders.findOrdersByUserId(userId);
     return orders.map(OrderResponse.of);
   }
 
-  async getMyOrdersByDateRange(
+  async findMyOrdersByDateRange(
     userId: number,
     range: { from: Date; to: Date }
   ) {
@@ -97,32 +97,37 @@ export class MyService {
     return orders.map(OrderResponse.of);
   }
 
-  async getCurrentOrdersByUserId(userId: number): Promise<OrderResponse[]> {
+  async findCurrentOrdersByUserId(userId: number): Promise<OrderResponse[]> {
     const orders = await this.orders.findCurrentOrdersByUserId(userId);
     return orders.map(OrderResponse.of);
   }
 
-  async getDeliverdOrdersByUserId(userId: number): Promise<OrderResponse[]> {
+  async findDeliverdOrdersByUserId(userId: number): Promise<OrderResponse[]> {
     const orders = await this.orders.findDeliverdOrdersByUserId(userId);
     return orders.map(OrderResponse.of);
   }
 
-  async getReviewedOrdersByUserId(userId: number): Promise<OrderResponse[]> {
+  async findReviewedOrdersByUserId(userId: number): Promise<OrderResponse[]> {
     const orders = await this.orders.findReviewedOrdersByUserId(userId);
     return orders.map(OrderResponse.of);
   }
 
   // wishes
-  async getMyWishes(userId: number) {
-    const wishes = await this.wishes.findWishesByUserId(userId);
+  async findMyWishes(userId: number) {
+    const wishes = await this.wishes.findMyWishesByUserId(userId);
     return MyWishResponse.of(wishes);
   }
 
-  async postWishProduct(wish: WishRequest) {
+  async findMyWishByProductId(userId: number, productId: number) {
+    const wish = await this.wishes.findMyWishByProductId(userId, productId);
+    return wish;
+  }
+
+  async createWishProduct(wish: WishRequest) {
     await this.wishes.createWish(wish);
   }
 
   async deleteWishProduct(wish: WishRequest) {
-    await this.wishes.deleteWish(wish);
+    return await this.wishes.deleteWish(wish);
   }
 }

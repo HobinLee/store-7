@@ -1,24 +1,24 @@
 import styled, { css } from "styled-components";
 import Section from "../../../Section";
-import { useMyOrdersOfFilter } from "@/api/my";
-import { useState } from "react";
-import ProductList from "@/Components/ProductList";
+import { useMyInfo, useMyOrdersOfFilter } from "@/api/my";
 import { Arrow } from "@/assets";
 import OrdersContainer from "./OrdersContainer";
 
 const MyMain = () => {
-  const { status, data: orders } = useMyOrdersOfFilter("all");
-  const [products, setProducts] = useState([]);
+  const { status: ordersStatus, data: orders } = useMyOrdersOfFilter("all");
+  const { status: myInfoStatus, data: myInfo } = useMyInfo();
   const { delivering, delivered, reviewed } = classifyOrders(orders);
 
   return (
     <Wrapper data-testid="test__root">
       <Section
         title="나의 주문 현황"
-        description="회원님의 주문 내역입니다."
+        description={`${
+          myInfoStatus !== "loading" ? myInfo.name : " "
+        }님의 주문 내역입니다.`}
         lineType="long1"
       >
-        {status !== "loading" && (
+        {ordersStatus !== "loading" && (
           <div className="orders">
             <OrdersContainer orders={delivering} type="delivering" />
             <div className="arrow">
@@ -33,11 +33,13 @@ const MyMain = () => {
         )}
       </Section>
       <Section
-        title="최근 본 상품"
-        description="ET님께서 본 최근 상품입니다."
+        title="최근 주문한 상품"
+        description={`${
+          myInfoStatus !== "loading" ? myInfo.name : " "
+        }님의 최근 30일내 주문 내역입니다.`}
         lineType="long2"
       >
-        <ProductList products={products} />
+        <div></div>
       </Section>
     </Wrapper>
   );
