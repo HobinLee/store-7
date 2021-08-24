@@ -20,7 +20,7 @@ export class Orders {
 
   async findOrdersByUserId(userId: number) {
     return await this.orderRepository.find({
-      relations: ["user", "product", "product.images"],
+      relations: ["user", "product", "product.images", "review"],
       where: { user: { id: userId } },
     });
   }
