@@ -37,34 +37,15 @@ export class Products {
     order: string | "",
     category: string | "",
     subCategory: string | "",
-    keyword: string | "",
     page: number = START_PAGE,
-    size: number = DEFAULT_PAGE_SIZE
+    size: number = DEFAULT_PAGE_SIZE,
+    ids?: number[]
   ): Promise<Product[]> {
-    // const offset = (page - 1) * size;
-    // const limit = page * size;
-
-    // const queryBuilder = createQueryBuilder()
-    //   .select(["product.id"])
-    //   .from(Product, "product")
-    //   .where({
-    //     category: wrapWordToLike(category),
-    //     subCategory: wrapWordToLike(subCategory),
-    //     name: wrapWordToLike(keyword),
-    //   })
-    //   .limit(limit)
-    //   .offset(offset)
-    //   .orderBy(ORDER_TYPE[order]);
-
-    // const query = queryBuilder.getSql();
-    // console.log("query: " + query);
-
     return this.productRepository.find({
       relations: ["options", "images", "detailImages"],
       where: {
         category: wrapWordToLike(category),
         subCategory: wrapWordToLike(subCategory),
-        name: wrapWordToLike(keyword),
       },
       order: ORDER_TYPE[order],
     });

@@ -17,6 +17,7 @@ import { QuestionResponse } from "@/product/dto/question-response";
 import { FileFieldsInterceptor } from "@nestjs/platform-express";
 import { ProductUploadRequest } from "@/product/dto/product-upload-request";
 import { SearchService } from "../application/search-service";
+import { ProductFindQuery } from "../dto/product-find-query";
 
 @Controller("/products")
 export class ProductController {
@@ -27,21 +28,9 @@ export class ProductController {
 
   @Get()
   async getProducts(
-    @Query("order") order,
-    @Query("category") category,
-    @Query("subCategory") subCategory,
-    @Query("keyword") keyword,
-    @Query("page") page,
-    @Query("size") size
+    @Query() query: ProductFindQuery
   ): Promise<ProductElementResponse[]> {
-    return await this.productService.getProducts(
-      order,
-      category,
-      subCategory,
-      keyword,
-      page,
-      size
-    );
+    return await this.productService.getProducts(query);
   }
 
   //auto complete

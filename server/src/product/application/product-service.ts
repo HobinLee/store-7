@@ -11,6 +11,7 @@ import { Reviews } from "../domain/reviews";
 import { SearchService } from "./search-service";
 import { SearchProduct } from "../dto/product-search-response";
 import { Wishes } from "@/user/domain/wishes";
+import { ProductFindQuery } from "../dto/product-find-query";
 
 @Injectable()
 export class ProductService {
@@ -22,28 +23,27 @@ export class ProductService {
     private readonly wishes: Wishes
   ) {}
 
-  async getProducts(
-    order: string,
-    category: string,
-    subCategory: string,
-    keyword: string,
-    page: number,
-    size: number
-  ): Promise<ProductElementResponse[]> {
+  async getProducts({
+    order,
+    category,
+    subCategory,
+    ids,
+    page,
+    size,
+  }: ProductFindQuery): Promise<ProductElementResponse[]> {
     const products =
       await this.products.findProductsByOrderAndCategoryAndSubCategoryAndKeyword(
         order,
         category,
         subCategory,
-        keyword,
         page,
-        size
+        size,
+        ids
       );
-    if (size) {
-      return products.map(ProductElementResponse.of).slice(0, size);
-    } else {
-      return products.map(ProductElementResponse.of);
-    }
+
+    return size
+      ? products.map(ProductElementResponse.of).slice(0, size)
+      : products.map(ProductElementResponse.of);
   }
 
   async getProduct(id: number, userId: number) {
