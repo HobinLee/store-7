@@ -46,7 +46,6 @@ export const sampleMain = [
 export const sampleProducts: ProductElementType[] = [
   {
     id: 1,
-    tags: ["new", "sale"],
     discountRate: 40,
     name: "`타이틀이 굉장히 길어지면 무슨 일이 일어날지 대비하기 위해 작성하는 굉장히 긴 타이틀입니동. 세상에 이렇게 긴 타이틀을 가진 제품이 있을진 모르겠지만 그래도 일단 길에 줄줄 늘어놔야겠죠? 아 배고프다 이따 저녁은 어제 시킨 김치찜인데 솔직히 맛있진 않아서.. 떡볶이 먹고 싶다`",
     price: 10000,
@@ -58,7 +57,6 @@ export const sampleProducts: ProductElementType[] = [
   {
     id: 2,
     discountRate: 20,
-    tags: ["new", "green", "sale"],
     name: "타이틀2",
     price: 260000,
     isWish: false,
@@ -68,7 +66,6 @@ export const sampleProducts: ProductElementType[] = [
   },
   {
     id: 3,
-    tags: ["green"],
     name: "타이틀3",
     price: 10000,
     isWish: true,
@@ -80,7 +77,6 @@ export const sampleProducts: ProductElementType[] = [
   {
     id: 4,
     discountRate: 50,
-    tags: ["sale"],
     name: "타이틀4",
     price: 100000,
     isWish: true,
@@ -91,7 +87,6 @@ export const sampleProducts: ProductElementType[] = [
   {
     id: 5,
     discountRate: 40,
-    tags: ["new", "sale"],
     name: "타이틀",
     price: 10000,
     isWish: false,
@@ -102,7 +97,6 @@ export const sampleProducts: ProductElementType[] = [
   {
     id: 6,
     discountRate: 20,
-    tags: ["new", "green", "sale"],
     name: "타이틀2",
     price: 260000,
     isWish: false,
@@ -112,7 +106,6 @@ export const sampleProducts: ProductElementType[] = [
   },
   {
     id: 7,
-    tags: ["green"],
     name: "타이틀3",
     price: 10000,
     isWish: true,
@@ -124,7 +117,6 @@ export const sampleProducts: ProductElementType[] = [
   {
     id: 8,
     discountRate: 50,
-    tags: ["sale"],
     name: "타이틀4",
     price: 100000,
     isWish: true,
@@ -135,7 +127,6 @@ export const sampleProducts: ProductElementType[] = [
   {
     id: 9,
     discountRate: 50,
-    tags: ["sale"],
     name: "타이틀4",
     price: 100000,
     isWish: true,
@@ -146,7 +137,6 @@ export const sampleProducts: ProductElementType[] = [
   {
     id: 10,
     discountRate: 40,
-    tags: ["new", "sale"],
     name: "타이틀",
     price: 10000,
     isWish: false,
@@ -157,7 +147,6 @@ export const sampleProducts: ProductElementType[] = [
   {
     id: 11,
     discountRate: 20,
-    tags: ["new", "green", "sale"],
     name: "타이틀2",
     price: 260000,
     isWish: false,
@@ -167,7 +156,6 @@ export const sampleProducts: ProductElementType[] = [
   },
   {
     id: 12,
-    tags: ["green"],
     name: "타이틀3",
     price: 10000,
     isWish: true,
@@ -179,7 +167,6 @@ export const sampleProducts: ProductElementType[] = [
   {
     id: 13,
     discountRate: 50,
-    tags: ["sale"],
     name: "타이틀4",
     price: 100000,
     isWish: true,
