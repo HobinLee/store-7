@@ -27,10 +27,6 @@ const Review = () => {
     error,
   } = useProductReviews(parseInt(pathname));
 
-  useEffect(() => {
-    console.log(reviews && reviews);
-  }, [status]);
-
   return (
     status !== "loading" && (
       <div>
