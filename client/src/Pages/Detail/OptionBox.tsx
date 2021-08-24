@@ -105,7 +105,10 @@ const OptionBox = ({
         <div>수량</div>
         <div className="select-option__right">
           <div className="num-input">
-            <NumInput value={numValue.value} onChange={numValue.onChange} />
+            <NumInput
+              defaultValue={numValue.value}
+              onChange={numValue.onChange}
+            />
             <div>
               <button type="button" onClick={() => handleClickNumVal(1)}>
                 <Triangle className="num-input__up" />

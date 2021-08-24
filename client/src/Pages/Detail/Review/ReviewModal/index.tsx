@@ -61,7 +61,7 @@ const ReviewModal = ({ handleModalOpen }) => {
           <div className="content__label">후기 작성</div>
           <ReivewInput
             placeholder="자세하고 솔직한 리뷰는 다른 고객에게 큰 도움이 됩니다."
-            value={reviewVal.value}
+            defaultValue={reviewVal.value}
             onChange={reviewVal.onChange}
           />
         </div>

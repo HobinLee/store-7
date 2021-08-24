@@ -6,7 +6,7 @@ import ItemInfoBox from "@/Components/ItemInfoBox";
 import CartOrderBox from "../../Components/CartOrderBox";
 import { Arrow } from "@/assets";
 import Checkbox from "@/Components/Checkbox";
-import { gap } from "@/styles/theme";
+import { gap, media } from "@/styles/theme";
 import { useMyCarts } from "@/api/my";
 import { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
@@ -97,7 +97,6 @@ const CartPage = () => {
     status !== "loading" && (
       <Wrapper>
         <Header />
-        <CartOrderBox {...{ info }} />
 
         <div className="contents">
           <Title>
@@ -108,35 +107,41 @@ const CartPage = () => {
           </Title>
 
           <Content>
-            <div className="items">
-              <div>
-                <Checkbox
-                  label="모두선택"
-                  isChecked={checkItems?.length === cartItems?.items.length}
-                  handleCheck={() =>
-                    handleAllCheck(
-                      checkItems?.length !== cartItems?.items.length
-                    )
-                  }
-                />
-              </div>
-              {cartItems?.items.map((cart) => (
-                <ItemInfoBox
-                  key={cart.id}
-                  {...(cart as ICart)}
-                  isChecked={checkItems?.find((i) => i.id === cart.id)}
-                  handleCheck={() =>
-                    handleSingleCheck(
-                      !checkItems?.find((i) => i.id === cart.id),
-                      cart
-                    )
-                  }
-                  refetch={refetch}
-                  setCartItems={setCartItems}
-                  checkboxVisible
-                />
+            {!cartItems ||
+              (cartItems?.items.length === 0 ? (
+                <div className="empty">장바구니에 담긴 상품이 없습니다.</div>
+              ) : (
+                <div className="items">
+                  <div>
+                    <Checkbox
+                      label="모두선택"
+                      isChecked={checkItems?.length === cartItems?.items.length}
+                      handleCheck={() =>
+                        handleAllCheck(
+                          checkItems?.length !== cartItems?.items.length
+                        )
+                      }
+                    />
+                  </div>
+                  {cartItems?.items.map((cart) => (
+                    <ItemInfoBox
+                      key={cart.id}
+                      {...(cart as ICart)}
+                      isChecked={checkItems?.find((i) => i.id === cart.id)}
+                      handleCheck={() =>
+                        handleSingleCheck(
+                          !checkItems?.find((i) => i.id === cart.id),
+                          cart
+                        )
+                      }
+                      refetch={refetch}
+                      setCartItems={setCartItems}
+                      checkboxVisible
+                    />
+                  ))}
+                </div>
               ))}
-            </div>
+            <CartOrderBox {...{ info }} />
           </Content>
         </div>
         <Footer />
@@ -152,6 +157,9 @@ const Wrapper = styled(PageWrapper)`
     ${({ theme }) => theme.flexCenter}
     flex-direction: column;
     padding: 0 10rem;
+  }
+  ${media.tablet} {
+    padding-right: 0;
   }
 `;
 
@@ -170,12 +178,24 @@ const Content = styled.div`
   align-items: flex-start;
   width: 100%;
   ${gap("3rem")}
+  ${media.tablet} {
+    flex-direction: column;
+  }
   .items {
     padding-bottom: 5rem;
     display: flex;
     flex-direction: column;
     width: 100%;
     ${gap("2rem", "column")}
+  }
+  .empty {
+    background-color: ${({ theme }) => theme.color.background};
+    width: 100%;
+    text-align: center;
+    padding: 5rem;
+    box-sizing: border-box;
+    border-radius: 1rem;
+    ${({ theme }) => theme.font.xlarge};
   }
 `;
 

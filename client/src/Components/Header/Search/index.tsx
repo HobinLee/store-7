@@ -88,7 +88,7 @@ const Search = () => {
       <div style={{ position: "relative" }} onClick={handleSearchBox}>
         <SearchInput
           placeholder="검색어를 입력해주세요."
-          value={searchValue.value}
+          defaultValue={searchValue.value}
           onChange={onChangeKeyword}
         />
         {searchValue.value.length > 0 && (

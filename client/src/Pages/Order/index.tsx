@@ -41,7 +41,7 @@ const LoggedinContent = () => {
     localStorage.getItem("orders")
   );
 
-  const { status, data: myInfo, error } = useMyInfo();
+  const { status: myInfoStatus, data: myInfo, error } = useMyInfo();
 
   // form
   const email = useInput(myInfo?.email);
@@ -50,6 +50,17 @@ const LoggedinContent = () => {
   const emailValidation = useValidation(validateEmail);
   const nameValidation = useValidation((name: string) => !!name?.length);
   const phoneValidation = useValidation(validatePhoneNumber);
+
+  useEffect(() => {
+    if (myInfo) {
+      email.setValue(myInfo?.email);
+      addressee.setValue(myInfo?.name);
+      phone.setValue(convertToPhoneNumber(myInfo?.phoneNumber ?? ""));
+      emailValidation.onCheck(myInfo?.email ?? "");
+      nameValidation.onCheck(myInfo?.name ?? "");
+      phoneValidation.onCheck(convertToPhoneNumber(myInfo?.phoneNumber ?? ""));
+    }
+  }, [myInfoStatus]);
 
   // 결제수단
   type paymentType = "kakaopay" | "etpay" | null;
@@ -128,132 +139,138 @@ const LoggedinContent = () => {
     !!address;
 
   return (
-    <div className="contents">
-      <CartOrderBox {...{ handlePay }} isButtonDisabled={!isOrderable} />
+    myInfoStatus !== "loading" &&
+    destinationsStatus !== "loading" && (
+      <div className="contents">
+        <CartOrderBox {...{ handlePay }} isButtonDisabled={!isOrderable} />
 
-      <Title>
-        <span className="other">장바구니</span> <Arrow /> 주문/결제
-      </Title>
+        <Title>
+          <span className="other">장바구니</span> <Arrow /> 주문/결제
+        </Title>
 
-      <Content>
-        <Info>
-          <div className="label">주문상품</div>
-          <div className="items">
-            {orderItems.items.map((cart) => (
-              <ItemInfoBox key={cart.id} {...(cart as ICart)} />
-            ))}
-          </div>
-        </Info>
-
-        <Info>
-          <div className="label">주문자</div>
-          <div className="user-info">
-            <InputSection title="이름">
-              <ValidationInput
-                input={addressee}
-                validation={nameValidation}
-                placeholder="이름"
-                message={VALIDATION_ERR_MSG.INVALID_NAME}
-              />
-            </InputSection>
-            <InputSection title="이메일">
-              <ValidationInput
-                input={email}
-                validation={emailValidation}
-                placeholder="이메일을 입력해주세요"
-                message={VALIDATION_ERR_MSG.INVALID_EMAIL}
-              />
-            </InputSection>
-            <InputSection title="휴대폰 번호" brief="휴대폰 번호를 적어주세요">
-              <ValidationInput
-                input={phone}
-                validation={phoneValidation}
-                placeholder="010-0000-0000"
-                message={VALIDATION_ERR_MSG.INVALID_PHONE}
-              />
-            </InputSection>
-          </div>
-        </Info>
-
-        <Info>
-          <div className="label">
-            배송지
-            <div
-              className="address-btn"
-              onClick={() => setIsAddressModalOpened(true)}
-            >
-              변경
+        <Content>
+          <Info>
+            <div className="label">주문상품</div>
+            <div className="items">
+              {orderItems.items.map((cart) => (
+                <ItemInfoBox key={cart.id} {...(cart as ICart)} />
+              ))}
             </div>
-          </div>
+          </Info>
 
-          <div className="address-info">
-            {address ? (
-              <>
-                <div className="name">{address?.name}</div>
-                <div>
-                  {address?.addressee} {address?.phoneNumber}
-                </div>
-                <div>
-                  {address?.address} {address?.detailAddress}
-                </div>
-              </>
-            ) : (
-              <div>배송지를 추가해주세요</div>
-            )}
-
-            <div style={{ marginTop: "3rem" }}>
-              <select className="order-input" value={request}>
-                <option value="배송시 요청사항을 선택해주세요.">
-                  배송시 요청사항을 선택해주세요.
-                </option>
-                <option value="부재시 문 앞에 놓아주세요.">
-                  부재시 문 앞에 놓아주세요.
-                </option>
-                <option value="배송전에 미리 연락주세요.">
-                  배송전에 미리 연락주세요.
-                </option>
-                <option value="부재시 경비실에 맡겨주세요.">
-                  부재시 경비실에 맡겨주세요.
-                </option>
-                <option value="부재시 전화주시거나 문자 남겨 주세요.">
-                  부재시 전화주시거나 문자 남겨 주세요.
-                </option>
-                {/* <option>직접입력</option> */}
-              </select>
+          <Info>
+            <div className="label">주문자</div>
+            <div className="user-info">
+              <InputSection title="이름">
+                <ValidationInput
+                  input={addressee}
+                  validation={nameValidation}
+                  placeholder="이름"
+                  message={VALIDATION_ERR_MSG.INVALID_NAME}
+                />
+              </InputSection>
+              <InputSection title="이메일">
+                <ValidationInput
+                  input={email}
+                  validation={emailValidation}
+                  placeholder="이메일을 입력해주세요"
+                  message={VALIDATION_ERR_MSG.INVALID_EMAIL}
+                />
+              </InputSection>
+              <InputSection
+                title="휴대폰 번호"
+                brief="휴대폰 번호를 적어주세요"
+              >
+                <ValidationInput
+                  input={phone}
+                  validation={phoneValidation}
+                  placeholder="010-0000-0000"
+                  message={VALIDATION_ERR_MSG.INVALID_PHONE}
+                />
+              </InputSection>
             </div>
-          </div>
-        </Info>
+          </Info>
 
-        <Info>
-          <div className="label">결제수단</div>
+          <Info>
+            <div className="label">
+              배송지
+              <div
+                className="address-btn"
+                onClick={() => setIsAddressModalOpened(true)}
+              >
+                변경
+              </div>
+            </div>
 
-          <div className="payments">
-            <Payment
-              className="payments__item"
-              onClick={() => setPayment("kakaopay")}
-              isClicked={payment === "kakaopay"}
-            >
-              <img width={70} src={KakaoPay} />
-              <div>카카오페이</div>
-            </Payment>
-            <Payment
-              className="payments__item"
-              onClick={() => setPayment("etpay")}
-              isClicked={payment === "etpay"}
-            >
-              <img width={70} src={ETPay} />
-              <div>ET페이</div>
-            </Payment>
-          </div>
-        </Info>
-      </Content>
-      {isAddressModalOpened && (
-        <AddressModal
-          {...{ setAddress, address }}
-          closeModal={() => setIsAddressModalOpened(false)}
-        />
-      )}
-    </div>
+            <div className="address-info">
+              {address ? (
+                <>
+                  <div className="name">{address?.name}</div>
+                  <div>
+                    {address?.addressee} {address?.phoneNumber}
+                  </div>
+                  <div>
+                    {address?.address} {address?.detailAddress}
+                  </div>
+                </>
+              ) : (
+                <div>배송지를 추가해주세요</div>
+              )}
+
+              <div style={{ marginTop: "3rem" }}>
+                <select className="order-input" defaultValue={request}>
+                  <option value="배송시 요청사항을 선택해주세요.">
+                    배송시 요청사항을 선택해주세요.
+                  </option>
+                  <option value="부재시 문 앞에 놓아주세요.">
+                    부재시 문 앞에 놓아주세요.
+                  </option>
+                  <option value="배송전에 미리 연락주세요.">
+                    배송전에 미리 연락주세요.
+                  </option>
+                  <option value="부재시 경비실에 맡겨주세요.">
+                    부재시 경비실에 맡겨주세요.
+                  </option>
+                  <option value="부재시 전화주시거나 문자 남겨 주세요.">
+                    부재시 전화주시거나 문자 남겨 주세요.
+                  </option>
+                  {/* <option>직접입력</option> */}
+                </select>
+              </div>
+            </div>
+          </Info>
+
+          <Info>
+            <div className="label">결제수단</div>
+
+            <div className="payments">
+              <Payment
+                className="payments__item"
+                onClick={() => setPayment("kakaopay")}
+                isClicked={payment === "kakaopay"}
+              >
+                <img width={70} src={KakaoPay} />
+                <div>카카오페이</div>
+              </Payment>
+              <Payment
+                className="payments__item"
+                onClick={() => setPayment("etpay")}
+                isClicked={payment === "etpay"}
+              >
+                <img width={70} src={ETPay} />
+                <div>ET페이</div>
+              </Payment>
+            </div>
+          </Info>
+        </Content>
+        {isAddressModalOpened && (
+          <AddressModal
+            {...{ setAddress, address }}
+            closeModal={() => setIsAddressModalOpened(false)}
+          />
+        )}
+      </div>
+    )
   );
 };
 
@@ -400,7 +417,7 @@ const LoggedoutContent = () => {
             <Address onChangeAddress={handleChangeAddress} />
 
             <div style={{ marginTop: "3rem" }}>
-              <select className="order-input" value={request}>
+              <select className="order-input" defaultValue={request}>
                 <option value="배송시 요청사항을 선택해주세요.">
                   배송시 요청사항을 선택해주세요.
                 </option>

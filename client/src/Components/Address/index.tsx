@@ -53,13 +53,13 @@ const Address = ({ onChangeAddress, defaultAddress }: AddressProps) => {
           <button className="address-search__button" type="button">
             주소 찾기
           </button>
-          <input disabled value={address.postCode ?? ""} />
+          <input disabled defaultValue={address.postCode ?? ""} />
         </div>
-        <input disabled value={address.address ?? ""} />
+        <input disabled defaultValue={address.address ?? ""} />
       </div>
       <input
         placeholder="상세주소 입력"
-        value={addressDetail.value}
+        defaultValue={addressDetail.value}
         disabled={!address.address}
         onChange={addressDetail.onChange}
       />

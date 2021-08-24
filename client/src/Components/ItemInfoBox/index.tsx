@@ -86,7 +86,7 @@ const LoggedInNumInput = ({
     <div className="info__num">
       <div>수량</div>
       <div className="num-input">
-        <NumInput value={numValue.value} onChange={numValue.onChange} />
+        <NumInput defaultValue={numValue.value} onChange={numValue.onChange} />
         <div>
           <button type="button" onClick={() => handleClickNumVal(1)}>
             <Triangle className="num-input__up" />

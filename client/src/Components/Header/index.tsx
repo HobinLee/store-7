@@ -1,6 +1,5 @@
 import { Link, moveTo } from "@/Router";
 import { HeaderLogo } from "@/assets";
-import { ReactChild } from "react";
 import styled from "styled-components";
 import SearchBar from "./Search";
 import Menu from "./Menu";

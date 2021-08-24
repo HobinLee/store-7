@@ -61,7 +61,7 @@ const QuestionModal = ({ handleModalOpen }) => {
           <div className="content__label">문의 내용</div>
           <QuestionInput
             placeholder="문의 내용을 입력하세요."
-            value={reviewVal.value}
+            defaultValue={reviewVal.value}
             onChange={reviewVal.onChange}
           />
         </div>

@@ -1,4 +1,4 @@
-import { gap } from "@/styles/theme";
+import { gap, media } from "@/styles/theme";
 import styled from "styled-components";
 import { Logo } from "@/assets";
 
@@ -48,6 +48,18 @@ const Wrapper = styled.div`
     line-height: 2rem;
     white-space: pre-line;
     color: ${({ theme }) => theme.color.grey1};
+  }
+  ${media.tablet} {
+    img {
+      width: 20rem;
+      height: auto;
+    }
+  }
+  ${media.mobile} {
+    img {
+      width: 10rem;
+      height: auto;
+    }
   }
 `;
 
