@@ -2,14 +2,26 @@ import styled from "styled-components";
 import { QuestionType } from "@/shared/type";
 import { gap } from "@/styles/theme";
 import { YYYY_M_D_H_m } from "@/utils/util";
+import { useState } from "react";
+import QuestionModal from "../QuestionModal";
 
 const QuestionBox = (Question: QuestionType) => {
+  const [isModalOpened, setIsModalOpened] = useState(false);
+  const handleModalOpen = (val: boolean) => {
+    if (!val) {
+      const submit = window.confirm(
+        "작성하고 있던 내용이 유실됩니다. 정말 다른 페이지로 이동하시겠어요?"
+      );
+      if (submit) setIsModalOpened(val);
+    } else setIsModalOpened(val);
+  };
   const isAnswered = Question.answer ? true : false;
   return (
     <Wrapper isAnswered={isAnswered} data-testid="test__question-box">
       <Header>
         <div className="author">{Question.authorName}</div>
         <div className="date">{YYYY_M_D_H_m(Question.createdAt)}</div>
+        <button onClick={() => handleModalOpen(true)}>수정하기</button>
       </Header>
 
       <div className="container">
@@ -24,6 +36,20 @@ const QuestionBox = (Question: QuestionType) => {
           </div>
         )}
       </div>
+      {isModalOpened && (
+        <QuestionModal
+          submitType="patch"
+          {...{
+            handleModalOpen,
+          }}
+          qeustion={{
+            id: Question.id,
+            option: Question.type,
+            value: Question.question,
+            isSecret: Question.isSecret,
+          }}
+        />
+      )}
     </Wrapper>
   );
 };
@@ -86,12 +112,11 @@ const Header = styled.div`
   ${gap("1rem")}
 
   .author {
-    ${({ theme }) => theme.font.medium}
+    ${({ theme }) => theme.font.medium};
     font-weight: 600;
   }
 
   .date {
-    /* color: ${({ theme }) => theme.color.grey1}; */
     ${({ theme }) => theme.font.small};
   }
 `;

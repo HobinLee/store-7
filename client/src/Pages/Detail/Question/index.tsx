@@ -39,7 +39,9 @@ const Question = () => {
           <QuestionBox {...qna} key={idx} />
         ))}
 
-        {isModalOpened && <QuestionModal {...{ handleModalOpen }} />}
+        {isModalOpened && (
+          <QuestionModal submitType="patch" {...{ handleModalOpen }} />
+        )}
       </div>
     )
   );

@@ -35,8 +35,7 @@ export class QuestionController {
       question: request.question,
       isSecret: request.isSecret,
     };
-    console.log(newQuestion);
-    return await this.questionService.updateQuestion(id, request);
+    return await this.questionService.updateQuestion(id, newQuestion);
   }
 
   @Delete("/:id")

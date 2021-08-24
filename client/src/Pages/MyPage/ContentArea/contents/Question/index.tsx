@@ -1,7 +1,5 @@
 import styled from "styled-components";
 import Section from "../../../Section";
-import Table from "../../../Table";
-import rows from "@/Pages/MyPage/Table/rows";
 
 import { useMyQuestions } from "@/api/my";
 import QuestionBox from "@/Pages/Detail/Question/QuestionBox";

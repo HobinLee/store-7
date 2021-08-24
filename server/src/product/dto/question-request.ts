@@ -17,7 +17,6 @@ export interface CreateQuestionPostRequest extends QuestionPostRequest {
 
 export interface QuestionPatchRequest {
   type: string;
-  title: string;
   question: string;
   isSecret: boolean;
 }

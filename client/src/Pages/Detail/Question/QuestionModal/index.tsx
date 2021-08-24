@@ -4,32 +4,55 @@ import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
 import { useState } from "react";
 import { gap } from "@/styles/theme";
-import { postQuestion } from "@/api/questions";
+import { postQuestion, patchQuestion } from "@/api/questions";
 import Checkbox from "@/Components/Checkbox";
 
 export const OPTIONS = ["상품", "배송", "반품", "교환", "환불", "기타"];
-
-const QuestionModal = ({ handleModalOpen }) => {
-  const reviewVal = useInput("");
-
+interface QuestionModal {
+  handleModalOpen: (boolean) => void;
+  qeustion?: {
+    id?: number;
+    option: string;
+    value: string;
+    isSecret: boolean;
+  };
+  submitType: string;
+}
+const QuestionModal = ({
+  handleModalOpen,
+  qeustion = { option: "상품", value: "", isSecret: false },
+  submitType,
+}: QuestionModal) => {
+  const reviewVal = useInput(qeustion.value);
   const pathname = location.pathname.split("detail/")[1];
 
   // 문의 유형
-  const [option, setOption] = useState("상품");
+  const [option, setOption] = useState(qeustion.option);
   const handleSetOption = (val: string) => {
     setOption(val);
   };
 
   // 비밀글
-  const [isSecret, setIsSecret] = useState(false);
+  const [isSecret, setIsSecret] = useState(qeustion.isSecret);
 
   const handleSumbit = async () => {
-    await postQuestion({
-      productId: parseInt(pathname),
-      type: option,
-      question: reviewVal.value,
-      isSecret: isSecret,
-    });
+    submitType === "post"
+      ? await postQuestion({
+          productId: parseInt(pathname),
+          type: option,
+          question: reviewVal.value,
+          isSecret: isSecret,
+        })
+      : submitType === "patch"
+      ? await patchQuestion({
+          id: qeustion.id,
+          question: {
+            type: option,
+            question: reviewVal.value,
+            isSecret,
+          },
+        })
+      : "";
   };
 
   return (
