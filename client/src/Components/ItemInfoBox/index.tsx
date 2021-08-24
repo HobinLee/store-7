@@ -6,7 +6,7 @@ import { Close } from "@/assets";
 import { deleteCart, patchCart } from "@/api/carts";
 import { useRecoilValue } from "recoil";
 import { loginState } from "@/store/state";
-import { CartType, PartialCart } from "@/shared/type";
+import { CartType } from "@/shared/type";
 import { Triangle } from "@/assets";
 import useInput from "@/hooks/useInput";
 import Input from "../Input";
