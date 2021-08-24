@@ -5,8 +5,10 @@ import { useQuery } from "react-query";
 export interface productParams {
   category?: number;
   subCategory?: number;
-  order?: number;
+  order?: string;
   keyword?: number;
+  page?: number;
+  size?: number;
 }
 // GET /products?order?category?subcategory?keyword? 상품 목록
 export const getProducts = async (params: productParams) =>
