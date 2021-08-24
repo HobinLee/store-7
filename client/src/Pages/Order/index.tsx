@@ -35,20 +35,20 @@ import { postOrder } from "@/api/orders";
 import { moveTo } from "@/Router";
 import { useCallback } from "react";
 
-const LoggedinOrderPage = () => {
+const LoggedinContent = () => {
   // 상품목록
   const orderItems: { items: PartialCart[] } = JSON.parse(
     localStorage.getItem("orders")
   );
 
-  const { status: myInfoStatus, data: myInfo, error } = useMyInfo();
+  const { status, data: myInfo, error } = useMyInfo();
 
   // form
   const email = useInput(myInfo?.email);
   const addressee = useInput(myInfo?.name);
   const phone = useInput(convertToPhoneNumber(myInfo?.phoneNumber ?? ""));
   const emailValidation = useValidation(validateEmail);
-  const nameValidation = useValidation((name: string) => !!name.length);
+  const nameValidation = useValidation((name: string) => !!name?.length);
   const phoneValidation = useValidation(validatePhoneNumber);
 
   // 결제수단
@@ -257,7 +257,7 @@ const LoggedinOrderPage = () => {
   );
 };
 
-const LoggedoutOrderPage = () => {
+const LoggedoutContent = () => {
   // 상품목록
   const orderItems: { items: PartialCart[] } = JSON.parse(
     localStorage.getItem("orders")
@@ -453,8 +453,8 @@ const OrderPage = () => {
   const isLoggedin = useRecoilValue(loginState);
 
   const RenderContent = useCallback(() => {
-    if (isLoggedin) return <LoggedinOrderPage />;
-    return <LoggedoutOrderPage />;
+    if (isLoggedin) return <LoggedinContent />;
+    return <LoggedoutContent />;
   }, []);
 
   return (

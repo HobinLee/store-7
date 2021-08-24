@@ -1,3 +1,4 @@
+import { CartType, ICart, PartialCart } from "@/shared/type";
 import dayjs from "dayjs";
 
 export const imageZoom = (imgID: string, resultID: string, lensID: string) => {
