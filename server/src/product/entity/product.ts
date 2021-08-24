@@ -63,7 +63,7 @@ export class Product {
   @OneToMany(() => Question, (question) => question.product)
   questions: Question[];
 
-  @OneToMany(() => Wish, (wish) => wish.user)
+  @OneToMany(() => Wish, (wish) => wish.product)
   wishes: Wish[];
 
   @OneToMany(() => Review, (review) => review.product)

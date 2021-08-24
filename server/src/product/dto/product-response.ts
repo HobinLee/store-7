@@ -14,7 +14,7 @@ export class ProductResponse {
   details: string[];
   isWish: boolean;
 
-  static of(product: Product, isWish: boolean): ProductResponse {
+  static of(product: Product, userId: number): ProductResponse {
     const id = product.id,
       name = product.name,
       price = product.getDiscountedPrice(),
@@ -25,7 +25,10 @@ export class ProductResponse {
       option = product.option,
       stock = product.stock,
       images = product.getImagesAsString(),
-      details = product.getDetailImagesAsString();
+      details = product.getDetailImagesAsString(),
+      isWish =
+        product.wishes.filter((wish) => wish.user.id === userId).length === 1;
+
     return {
       id,
       name,
