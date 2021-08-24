@@ -143,6 +143,7 @@ const SearchBox = styled.div`
   width: 27rem;
   padding: 1rem;
   border: 1px solid ${({ theme }) => theme.color.light_grey2};
+  background: ${({ theme }) => theme.color.white};
   .search-list__title {
     font-weight: bolder;
   }
@@ -153,7 +154,7 @@ const SearchInput = styled(Input)`
   ::placeholder {
     color: ${({ theme }) => theme.color.light_grey2};
   }
-  color: ${({ theme }) => theme.color.light_grey1};
+  color: ${({ theme }) => theme.color.grey1};
   border: none;
   padding: 1rem 1.5rem;
   width: 34rem;

@@ -40,9 +40,7 @@ const Header = ({ category }: HeaderPropsType) => {
           ) : (
             <Link to="/login">로그인</Link>
           )}
-          <Link to="/cart">
-            <div>장바구니</div>
-          </Link>
+          <Link to="/cart">장바구니</Link>
         </div>
       </Wrapper>
       <Menu category={category} />
@@ -51,28 +49,29 @@ const Header = ({ category }: HeaderPropsType) => {
 };
 
 const TopWrapper = styled.div`
-  ${({ theme }) => theme.shadow}
+  box-shadow: 0 0 1rem 0.2rem rgba(0, 0, 0, 0.2);
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   max-width: 100vw;
-  z-index: 10;
+  z-index: 30;
   border-radius: 0 0 2rem 2rem;
-  background: ${({ theme }) => theme.color.light_grey1};
+  background: ${({ theme }) => theme.color.white};
 
   .header__buttons {
     display: flex;
     flex-direction: row;
+    align-items: center;
     ${gap("5rem")}
 
-    a {
-      color: ${({ theme }) => theme.color.primary1};
-    }
+    color: ${({ theme }) => theme.color.primary1};
 
+    a {
+      display: block;
+    }
     a:hover {
       font-weight: bolder;
-      color: ${({ theme }) => theme.color.primary1};
     }
   }
 
@@ -113,6 +112,9 @@ const Wrapper = styled.div`
   .signout-button {
     color: ${({ theme }) => theme.color.primary1};
     cursor: pointer;
+    &:hover {
+      font-weight: bolder;
+    }
   }
 
   ${media.mobile} {

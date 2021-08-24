@@ -1,35 +1,92 @@
+import { categories } from "@/shared/dummy";
 import { media } from "@/styles/theme";
-import styled from "styled-components";
-const info = {
-  category: "책",
-  subCategory: "매거진",
-  brief: "집에 쌓아두면 교양이 쌓이는",
-  backgroundImg: "https://images2.alphacoders.com/261/thumb-1920-26102.jpg",
-};
-const CategoryBanner = () => (
-  <Wrapper url={info.backgroundImg}>
-    <div className="category-info">
-      <h2>{info.category}</h2>
-      <div className="category-info-side">
-        <h3>{info.subCategory}</h3>
-        <span>{info.brief}</span>
-      </div>
-    </div>
-  </Wrapper>
-);
+import { useState } from "react";
+import { useEffect } from "react";
+import styled, { css } from "styled-components";
+import { CategoryParamType, CategoryType, MainCategoryType } from "..";
 
-const Wrapper = styled.div<{
-  url: string;
-}>`
-  background-image: url(${({ url }) => url});
-  background-attachment: fixed;
-  background-position: center;
-  background-size: cover;
+interface CategoryInfo extends MainCategoryType {
+  subCategoryName?: string;
+}
+
+export const currentCategory = ({
+  category: categoryId,
+  subCategory: subCategoryId,
+}: CategoryParamType): CategoryInfo => {
+  const category: MainCategoryType = categories.find(
+    (category: MainCategoryType) => {
+      const result = category.id.toString() === categoryId;
+      return result;
+    }
+  );
+
+  const subCategoryName = category?.subCategories.find(
+    (subCategory: CategoryType) => subCategory.id.toString() === subCategoryId
+  )?.name;
+
+  return {
+    ...category,
+    subCategoryName,
+  };
+};
+
+const CategoryBanner = ({ params }: { params: CategoryParamType }) => {
+  const [info, setInfo] = useState(currentCategory(params));
+  useEffect(() => {
+    setInfo(currentCategory(params));
+  }, [params]);
+  return (
+    <>
+      <BGWrapper>
+        <img src={info.backgroundImg} alt="배경 이미지" />
+      </BGWrapper>
+      <Wrapper fontColor={info.fontColor} font={info.font}>
+        <div className="category-info">
+          <h2 className="category-name">{info.name}</h2>
+          <div className="category-info-side">
+            <h3>{info.subCategoryName ?? ""}</h3>
+            <span>{info.brief}</span>
+          </div>
+        </div>
+      </Wrapper>
+    </>
+  );
+};
+
+const BGWrapper = styled.div`
+  width: 100vw;
+  height: 30rem;
+  top: 0;
+  left: 0;
+  margin-top: 10rem;
+  position: fixed;
+  overflow: hidden;
+  ${({ theme }) => theme.flexCenter}
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  ${media.custom(920)} {
+    height: 24rem;
+  }
+  ${media.mobile} {
+    margin-top: 10.6rem;
+    height: 16.8rem;
+  }
+`;
+
+const Wrapper = styled.div<{ fontColor?: string; font?: string }>`
   width: 100vw;
   height: 30rem;
   overflow: hidden;
   font-size: x-large;
-  color: white;
+  color: ${({ fontColor }) => fontColor ?? "white"};
+  ${({ font }) =>
+    css`
+      font-family: ${font ? font : "BMDOHYEON"};
+    `}
+  position: relative;
   .category-info {
     box-sizing: border-box;
     max-width: 120rem;
@@ -39,8 +96,7 @@ const Wrapper = styled.div<{
     display: flex;
     flex-direction: row;
     align-items: flex-end;
-    h2 {
-      font-weight: bolder;
+    .category-name {
       font-size: 10rem;
     }
     .category-info-side {
@@ -64,15 +120,15 @@ const Wrapper = styled.div<{
     height: 24rem;
 
     .category-info {
-      h2 {
+      padding: 2rem 4rem;
+      .category-name {
         font-size: 9rem;
       }
       .category-info-side {
-        height: 9rem;
+        height: 8rem;
       }
       h3 {
         ${({ theme }) => theme.font.large};
-        font-weight: bolder;
       }
 
       span {
@@ -84,19 +140,22 @@ const Wrapper = styled.div<{
     height: 17rem;
 
     .category-info {
-      h2 {
-        font-size: 8rem;
+      padding: 2rem 3rem;
+      .category-name {
+        font-size: 12vw;
       }
+
       .category-info-side {
-        height: 8rem;
+        height: 12vw;
       }
+
       h3 {
-        ${({ theme }) => theme.font.large};
+        font-size: 3vw;
         font-weight: bolder;
       }
 
       span {
-        ${({ theme }) => theme.font.medium};
+        font-size: 2vw;
       }
     }
   }
