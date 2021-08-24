@@ -3,6 +3,7 @@ import { Injectable } from "@nestjs/common";
 import { ElasticsearchService } from "@nestjs/elasticsearch";
 import { Products } from "../domain/products";
 import { ProductElementResponse } from "../dto/product-element-response";
+import { ProductSearchQuery } from "../dto/product-find-query";
 import { SearchProduct } from "../dto/product-search-response";
 import { Product } from "../entity/product";
 
@@ -57,13 +58,21 @@ export class SearchService {
     return (await this.search(keyword)).map((product) => product._source.name);
   }
 
-  async searchProducts(keyword: string): Promise<ProductElementResponse[]> {
-    const productIds: number[] = await this.searchProductIds(keyword);
+  async searchProducts(
+    searchQuery: ProductSearchQuery
+  ): Promise<ProductElementResponse[]> {
+    const productIds: number[] = await this.searchProductIds(
+      searchQuery.keyword
+    );
     if (!productIds.length) return [];
 
-    const products: Product[] = await this.products.findProductsByIds(
-      productIds
-    );
+    const products: Product[] =
+      await this.products.findProductsByOrderAndCategoryAndSubCategoryAndKeyword(
+        {
+          ...searchQuery,
+          ids: productIds,
+        }
+      );
 
     return products.map(ProductElementResponse.of);
   }

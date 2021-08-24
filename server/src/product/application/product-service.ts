@@ -23,26 +23,16 @@ export class ProductService {
     private readonly wishes: Wishes
   ) {}
 
-  async getProducts({
-    order,
-    category,
-    subCategory,
-    ids,
-    page,
-    size,
-  }: ProductFindQuery): Promise<ProductElementResponse[]> {
+  async getProducts(
+    findQuery: ProductFindQuery
+  ): Promise<ProductElementResponse[]> {
     const products =
       await this.products.findProductsByOrderAndCategoryAndSubCategoryAndKeyword(
-        order,
-        category,
-        subCategory,
-        page,
-        size,
-        ids
+        findQuery
       );
 
-    return size
-      ? products.map(ProductElementResponse.of).slice(0, size)
+    return findQuery.size
+      ? products.map(ProductElementResponse.of).slice(0, findQuery.size)
       : products.map(ProductElementResponse.of);
   }
 
