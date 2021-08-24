@@ -4,7 +4,7 @@ import Section from "../../../Section";
 import { useMyWishes } from "@/api/my";
 import ProductList from "@/Components/ProductList";
 
-const Wishes = () => {
+const Wish = () => {
   const { status, data: wishes } = useMyWishes();
 
   return (
@@ -22,4 +22,4 @@ const Wishes = () => {
 };
 const Wrapper = styled.div``;
 
-export default Wishes;
+export default Wish;

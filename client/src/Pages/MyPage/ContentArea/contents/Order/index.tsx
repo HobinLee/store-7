@@ -1,12 +1,12 @@
 import styled, { css } from "styled-components";
 import Section from "../../../Section";
-import { useMyInfo, useMyOrdersOfFilter } from "@/api/my";
+import { useMyInfo, useMyOrders } from "@/api/my";
 import { Arrow } from "@/assets";
-import OrdersContainer from "./OrdersContainer";
+import OrdersContainer from "./OrderContainer";
 import { OrderStatus } from "@/shared/type";
 
-const MyMain = () => {
-  const { status: ordersStatus, data: orders } = useMyOrdersOfFilter("all");
+const Order = () => {
+  const { status: ordersStatus, data: orders } = useMyOrders();
   const { status: myInfoStatus, data: myInfo } = useMyInfo();
   const { prepare, delivered, arrival } = classifyOrders(orders);
 
@@ -32,15 +32,6 @@ const MyMain = () => {
             <OrdersContainer orders={arrival} type={OrderStatus.Arrival} />
           </div>
         )}
-      </Section>
-      <Section
-        title="최근 주문한 상품"
-        description={`${
-          myInfoStatus !== "loading" ? myInfo.name : " "
-        }님의 최근 30일내 주문 내역입니다.`}
-        lineType="long2"
-      >
-        <div></div>
       </Section>
     </Wrapper>
   );
@@ -71,4 +62,4 @@ const classifyOrders = (orders = []) => {
   return { prepare, delivered, arrival };
 };
 
-export default MyMain;
+export default Order;

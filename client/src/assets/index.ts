@@ -26,6 +26,8 @@ export { default as QuestionIcon } from "./question.svg";
 export { default as ReviewIcon } from "./review.svg";
 export { default as King } from "./king.svg";
 export { default as ProductIcon } from "./product.svg";
+export { default as ReadyIcon } from "./ready.svg";
+export { default as GoodIcon } from "./good.svg";
 export { default as CategoryBanner0 } from "./banners/0.gif";
 export { default as CategoryBanner1 } from "./banners/100.gif";
 export { default as CategoryBanner2 } from "./banners/200.gif";
