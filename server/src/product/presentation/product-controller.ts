@@ -39,7 +39,7 @@ export class ProductController {
   //auto complete
   @Get("/search")
   async searchProducts(@Query() query: ProductSearchQuery) {
-    return this.searchService.searchProducts(query);
+    return await this.searchService.searchProducts(query);
   }
 
   //search result
