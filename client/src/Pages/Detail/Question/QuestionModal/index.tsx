@@ -35,7 +35,7 @@ const QuestionModal = ({ handleModalOpen }) => {
   return (
     <ModalWrapper title="문의하기" closeModal={() => handleModalOpen(false)}>
       <Wrapper onSubmit={handleSumbit}>
-        <div className="content">
+        <div className="modal__content">
           <Checkbox
             isChecked={isSecret}
             handleCheck={() => setIsSecret(!isSecret)}
@@ -43,8 +43,8 @@ const QuestionModal = ({ handleModalOpen }) => {
             label="비밀글"
             className="secret-checkbox"
           />
-          <div className="content__label">문의 유형</div>
-          <div className="question-option">
+          <div className="modal__content-label">문의 유형</div>
+          <div className="modal__question-option">
             {OPTIONS.map((item, idx) => (
               <OptionBtn
                 key={idx}
@@ -57,8 +57,8 @@ const QuestionModal = ({ handleModalOpen }) => {
           </div>
         </div>
 
-        <div className="content">
-          <div className="content__label">문의 내용</div>
+        <div className="modal__content">
+          <div className="modal__content-label">문의 내용</div>
           <QuestionInput
             placeholder="문의 내용을 입력하세요."
             defaultValue={reviewVal.value}
@@ -79,16 +79,18 @@ const Wrapper = styled.form`
   flex-direction: column;
   width: 100%;
   position: relative;
-  .content {
-    margin-top: 4rem;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    ${gap("1rem", "column")}
-    &__label {
-      ${({ theme }) => theme.font.medium};
+  .modal {
+    &__content {
+      margin-top: 4rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      ${gap("1rem", "column")}
+      &-label {
+        ${({ theme }) => theme.font.medium};
+      }
     }
-    .question-option {
+    &__question-option {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
     }
