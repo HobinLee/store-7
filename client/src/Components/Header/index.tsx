@@ -53,13 +53,13 @@ const Header = ({ children, category }: HeaderPropsType) => {
 };
 
 const TopWrapper = styled.div`
-  ${({ theme }) => theme.shadow}
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2);
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   max-width: 100vw;
-  z-index: 10;
+  z-index: 30;
   border-radius: 0 0 2rem 2rem;
   background: ${({ theme }) => theme.color.light_grey1};
 

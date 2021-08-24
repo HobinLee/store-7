@@ -6,24 +6,20 @@ import { WishIcon } from "@/assets";
 import { getCurrentPrice, convertToKRW } from "@/utils/util";
 import { postWishProduct, deleteWishProduct } from "@/api/my";
 import { media } from "@/styles/theme";
-
-type ItemType = {
-  id: number;
-  discountRate?: number;
-  tags?: string[];
-  name: string;
-  price: number;
-  isWish: boolean;
-};
+import { ProductElementType } from "@/shared/type";
+import properties from "@/config/properties";
 
 const Item = ({
   id,
-  discountRate = 0,
+  originPrice,
+  price,
+  discountRate,
   tags = [],
   name,
-  price,
+  amount,
+  image,
   isWish,
-}: ItemType) => {
+}: ProductElementType) => {
   const [isWishState, setIsWish] = useState(isWish);
 
   const handleClickWish = (apiCallback) => async (e: Event) => {
@@ -37,7 +33,7 @@ const Item = ({
       <Link to={`/detail/${id}`}>
         <ItemWrapper>
           <div className="thumbnail">
-            <ToggleImageWrapper src="https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg" />
+            <ToggleImageWrapper src={properties.imgURL + image} />
             <div className="thumbnail__tags">
               {tags.map((tag, idx) => (
                 <Tag tag={tag} key={idx}>
