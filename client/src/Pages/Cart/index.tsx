@@ -102,7 +102,7 @@ const CartPage = () => {
           <Title>
             장바구니{" "}
             <span className="other">
-              <Arrow /> 주문/결제
+              <Arrow className="arrow" /> 주문/결제
             </span>
           </Title>
 
@@ -158,6 +158,8 @@ const Wrapper = styled(PageWrapper)`
     box-sizing: border-box;
     ${media.tablet} {
       padding: 0 5rem;
+    }
+    ${media.mobile} {
       padding-top: 3rem;
     }
   }
@@ -172,6 +174,11 @@ const Title = styled.div`
   .other {
     color: ${({ theme }) => theme.color.grey2};
     fill: ${({ theme }) => theme.color.grey2};
+  }
+  .arrow {
+    ${media.mobile} {
+      height: 2.3rem;
+    }
   }
 `;
 

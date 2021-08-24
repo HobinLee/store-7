@@ -15,7 +15,7 @@ import {
   validatePhoneNumber,
   VALIDATION_ERR_MSG,
 } from "@/utils/validations";
-import { gap } from "@/styles/theme";
+import { gap, media } from "@/styles/theme";
 import { useEffect } from "react";
 import { useMyDestinations, useMyInfo } from "@/api/my";
 import {
@@ -142,10 +142,9 @@ const LoggedinContent = () => {
     myInfoStatus !== "loading" &&
     destinationsStatus !== "loading" && (
       <div className="contents">
-        <CartOrderBox {...{ handlePay }} isButtonDisabled={!isOrderable} />
-
         <Title>
-          <span className="other">장바구니</span> <Arrow /> 주문/결제
+          <span className="other">장바구니</span> <Arrow className="arrow" />{" "}
+          주문/결제
         </Title>
 
         <Content>
@@ -272,6 +271,7 @@ const LoggedinContent = () => {
             closeModal={() => setIsAddressModalOpened(false)}
           />
         )}
+        <CartOrderBox {...{ handlePay }} isButtonDisabled={!isOrderable} />
       </div>
     )
   );
@@ -367,8 +367,6 @@ const LoggedoutContent = () => {
 
   return (
     <div className="contents">
-      <CartOrderBox {...{ handlePay }} isButtonDisabled={!isOrderable} />
-
       <Title>
         <span className="other">장바구니</span> <Arrow /> 주문/결제
       </Title>
@@ -468,6 +466,7 @@ const LoggedoutContent = () => {
           </div>
         </Info>
       </Content>
+      <CartOrderBox {...{ handlePay }} isButtonDisabled={!isOrderable} />
     </div>
   );
 };
@@ -494,6 +493,12 @@ const Wrapper = styled(PageWrapper)`
     ${({ theme }) => theme.flexCenter}
     flex-direction: column;
     padding: 0 10rem;
+    ${media.tablet} {
+      padding: 0 5rem;
+    }
+    ${media.mobile} {
+      padding-top: 3rem;
+    }
   }
   select {
     cursor: pointer;
@@ -522,6 +527,11 @@ const Title = styled.div`
   .other {
     color: ${({ theme }) => theme.color.grey2};
   }
+  .arrow {
+    ${media.mobile} {
+      height: 2.3rem;
+    }
+  }
 `;
 
 const Content = styled.div`
@@ -533,6 +543,9 @@ const Content = styled.div`
   width: 100%;
   ${gap("8rem", "column")}
   margin: 4rem 0;
+  ${media.tablet} {
+    padding-right: 0;
+  }
 `;
 
 const Info = styled.div`

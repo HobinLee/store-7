@@ -101,6 +101,7 @@ const Wrapper = styled.div`
   top: 18rem;
   right: 1rem;
   padding: 3rem;
+  padding-right: 7rem;
   .order-btn {
     margin-top: 2rem;
   }
