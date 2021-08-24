@@ -34,7 +34,7 @@ const CartPage = () => {
         }
       );
     }
-  }, [carts]);
+  }, [cartItems]);
 
   useEffect(() => {
     if (isLoggedin && status !== "loading") setCheckItems(carts.items);
@@ -107,40 +107,39 @@ const CartPage = () => {
           </Title>
 
           <Content>
-            {!cartItems ||
-              (cartItems?.items.length === 0 ? (
-                <div className="empty">장바구니에 담긴 상품이 없습니다.</div>
-              ) : (
-                <div className="items">
-                  <div>
-                    <Checkbox
-                      label="모두선택"
-                      isChecked={checkItems?.length === cartItems?.items.length}
-                      handleCheck={() =>
-                        handleAllCheck(
-                          checkItems?.length !== cartItems?.items.length
-                        )
-                      }
-                    />
-                  </div>
-                  {cartItems?.items.map((cart) => (
-                    <ItemInfoBox
-                      key={cart.id}
-                      {...(cart as ICart)}
-                      isChecked={checkItems?.find((i) => i.id === cart.id)}
-                      handleCheck={() =>
-                        handleSingleCheck(
-                          !checkItems?.find((i) => i.id === cart.id),
-                          cart
-                        )
-                      }
-                      refetch={refetch}
-                      setCartItems={setCartItems}
-                      checkboxVisible
-                    />
-                  ))}
+            {!cartItems || cartItems?.items.length === 0 ? (
+              <div className="empty">장바구니에 담긴 상품이 없습니다.</div>
+            ) : (
+              <div className="items">
+                <div>
+                  <Checkbox
+                    label="모두선택"
+                    isChecked={checkItems?.length === cartItems?.items.length}
+                    handleCheck={() =>
+                      handleAllCheck(
+                        checkItems?.length !== cartItems?.items.length
+                      )
+                    }
+                  />
                 </div>
-              ))}
+                {cartItems?.items.map((cart) => (
+                  <ItemInfoBox
+                    key={cart.id}
+                    {...(cart as ICart)}
+                    isChecked={checkItems?.find((i) => i.id === cart.id)}
+                    handleCheck={() =>
+                      handleSingleCheck(
+                        !checkItems?.find((i) => i.id === cart.id),
+                        cart
+                      )
+                    }
+                    refetch={refetch}
+                    setCartItems={setCartItems}
+                    checkboxVisible
+                  />
+                ))}
+              </div>
+            )}
             <CartOrderBox {...{ info }} />
           </Content>
         </div>
@@ -152,11 +151,15 @@ const CartPage = () => {
 
 const Wrapper = styled(PageWrapper)`
   padding-right: 43rem;
-  box-sizing: border-box;
   .contents {
     ${({ theme }) => theme.flexCenter}
     flex-direction: column;
     padding: 0 10rem;
+    box-sizing: border-box;
+    ${media.tablet} {
+      padding: 0 5rem;
+      padding-top: 3rem;
+    }
   }
   ${media.tablet} {
     padding-right: 0;
@@ -173,13 +176,12 @@ const Title = styled.div`
 `;
 
 const Content = styled.div`
-  margin-top: 5rem;
+  padding-top: 5rem;
   display: flex;
-  align-items: flex-start;
   width: 100%;
-  ${gap("3rem")}
   ${media.tablet} {
     flex-direction: column;
+    align-content: flex-start;
   }
   .items {
     padding-bottom: 5rem;
@@ -187,6 +189,9 @@ const Content = styled.div`
     flex-direction: column;
     width: 100%;
     ${gap("2rem", "column")}
+    ${media.tablet} {
+      padding-bottom: 0;
+    }
   }
   .empty {
     background-color: ${({ theme }) => theme.color.background};

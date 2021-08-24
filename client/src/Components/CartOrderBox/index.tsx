@@ -101,13 +101,15 @@ const Wrapper = styled.div`
   top: 18rem;
   right: 1rem;
   padding: 3rem;
-  box-sizing: border-box;
   .order-btn {
     margin-top: 2rem;
   }
   ${media.tablet} {
+    top: 0;
+    right: 0;
     position: relative;
     width: 100%;
+    padding: 5rem 0;
   }
 `;
 
