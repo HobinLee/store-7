@@ -11,12 +11,14 @@ export const useKeywords = (keyword: string) =>
   useQuery(["autoComplete", keyword], () => getKeywords(keyword));
 
 // GET products/search/:keyword
-const getSearchedProducts = (keyword: string) => {
+const getSearchedProducts = async (keyword: string) => {
   if (keyword.length === 0) {
     moveTo("/");
     return [];
   }
-  GET(`/products/search/${keyword}`);
+  const result = await GET(`/products/search/${keyword}`);
+  console.log(keyword, result);
+  return result;
 };
 export const useSearchProducts = (keyword: string) =>
   useQuery(["autoComplete", keyword], () => getSearchedProducts(keyword));

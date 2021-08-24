@@ -104,7 +104,12 @@ export class Products {
   }
 
   async findProductsByIds(productIds: number[]): Promise<Product[]> {
-    return await this.productRepository.find({ id: In(productIds) });
+    return await this.productRepository.find({
+      relations: ["options", "images", "detailImages"],
+      where: {
+        id: In(productIds),
+      },
+    });
   }
 
   async findAllProducts(): Promise<Product[]> {
