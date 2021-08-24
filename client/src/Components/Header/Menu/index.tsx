@@ -120,11 +120,14 @@ const Wrapper = styled.div`
   }
 
   li {
-    padding: 1rem;
     cursor: pointer;
     text-align: center;
     &:hover {
       color: ${({ theme }) => theme.color.primary3};
+    }
+    a {
+      display: block;
+      padding: 1rem;
     }
   }
   ${media.mobile} {
