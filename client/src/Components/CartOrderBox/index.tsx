@@ -18,13 +18,13 @@ export const output = (props: CartOrderBoxInput) => {
   const pathname = location.pathname.split("/")[1];
 
   return {
-    priceOutput: convertToKRW(props.totalPrice),
-    deliveryOutput: convertToKRW(props.totalDelivery),
-    paymentOutput: convertToKRW(props.totalPayment),
+    priceOutput: convertToKRW(props.totalPrice ?? 0),
+    deliveryOutput: convertToKRW(props.totalDelivery ?? 0),
+    paymentOutput: convertToKRW(props.totalPayment ?? 0),
     buttonText:
       pathname === "cart"
-        ? `${props.totalCount}개 상품 구매하기`
-        : `${convertToKRW(props.totalPayment)} 결제하기`,
+        ? `${props.totalCount ?? 0}개 상품 구매하기`
+        : `${convertToKRW(props.totalPayment ?? 0)} 결제하기`,
   };
 };
 

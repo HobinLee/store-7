@@ -104,29 +104,24 @@ const ItemInfoBox = ({
         <img role="img" src={process.env.IMG_URL + images[0]} />
         <div>
           <div className="info__name">{name}</div>
-          <div className="info__num">
-            {pathname === "cart" ? (
-              <>
-                <div>수량</div>
-                <div className="num-input">
-                  <NumInput
-                    value={numValue.value}
-                    onChange={numValue.onChange}
-                  />
-                  <div>
-                    <button type="button" onClick={() => handleClickNumVal(1)}>
-                      <Triangle className="num-input__up" />
-                    </button>
-                    <button type="button" onClick={() => handleClickNumVal(-1)}>
-                      <Triangle className="num-input__down" />
-                    </button>
-                  </div>
+          {pathname === "cart" ? (
+            <div className="info__num">
+              <div>수량</div>
+              <div className="num-input">
+                <NumInput value={numValue.value} onChange={numValue.onChange} />
+                <div>
+                  <button type="button" onClick={() => handleClickNumVal(1)}>
+                    <Triangle className="num-input__up" />
+                  </button>
+                  <button type="button" onClick={() => handleClickNumVal(-1)}>
+                    <Triangle className="num-input__down" />
+                  </button>
                 </div>
-              </>
-            ) : (
-              <>{numValue.value}개</>
-            )}
-          </div>
+              </div>
+            </div>
+          ) : (
+            <div className="info__amount">{numValue.value}개</div>
+          )}
         </div>
       </div>
 
@@ -162,6 +157,9 @@ const Wrapper = styled.div`
       margin-top: 1rem;
       ${({ theme }) => theme.flexCenter};
       ${gap("1rem")}
+    }
+    &__amount {
+      margin-top: 3rem;
     }
   }
   img {
