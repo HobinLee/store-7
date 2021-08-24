@@ -30,13 +30,17 @@ export class ProductController {
     @Query("order") order,
     @Query("category") category,
     @Query("subCategory") subCategory,
-    @Query("keyword") keyword
+    @Query("keyword") keyword,
+    @Query("page") page,
+    @Query("size") size
   ): Promise<ProductElementResponse[]> {
     return await this.productService.getProducts(
       order,
       category,
       subCategory,
-      keyword
+      keyword,
+      page,
+      size
     );
   }
 

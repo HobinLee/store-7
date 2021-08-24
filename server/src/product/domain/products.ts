@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { In, Like, Repository } from "typeorm";
+import { createQueryBuilder, In, Like, Repository } from "typeorm";
 import { Product } from "@/product/entity/product";
 import { S3Repository } from "@/product/infrastructure/s3-repository";
 import { ProductImage } from "@/product/entity/product-image";
@@ -8,10 +8,13 @@ import { ProductDetailImage } from "@/product/entity/product-detail-image";
 import { ProductOption } from "@/product/entity/option";
 
 const RANDOM_FILENAME_LENGTH = 32;
+const START_PAGE = 1;
+const DEFAULT_PAGE_SIZE = 10;
 
 const ORDER_TYPE = {
-  hot: { orderAmount: "DESC" },
+  hot: { price: "DESC" },
   new: { createdAt: "DESC" },
+  discount: { discountRate: "DESC" },
   priceAsc: { price: "ASC" },
   priceDesc: { price: "DESC" },
 };
@@ -34,8 +37,28 @@ export class Products {
     order: string | "",
     category: string | "",
     subCategory: string | "",
-    keyword: string | ""
+    keyword: string | "",
+    page: number = START_PAGE,
+    size: number = DEFAULT_PAGE_SIZE
   ): Promise<Product[]> {
+    // const offset = (page - 1) * size;
+    // const limit = page * size;
+
+    // const queryBuilder = createQueryBuilder()
+    //   .select(["product.id"])
+    //   .from(Product, "product")
+    //   .where({
+    //     category: wrapWordToLike(category),
+    //     subCategory: wrapWordToLike(subCategory),
+    //     name: wrapWordToLike(keyword),
+    //   })
+    //   .limit(limit)
+    //   .offset(offset)
+    //   .orderBy(ORDER_TYPE[order]);
+
+    // const query = queryBuilder.getSql();
+    // console.log("query: " + query);
+
     return this.productRepository.find({
       relations: ["options", "images", "detailImages"],
       where: {

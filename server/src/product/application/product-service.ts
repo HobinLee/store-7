@@ -26,16 +26,24 @@ export class ProductService {
     order: string,
     category: string,
     subCategory: string,
-    keyword: string
+    keyword: string,
+    page: number,
+    size: number
   ): Promise<ProductElementResponse[]> {
     const products =
       await this.products.findProductsByOrderAndCategoryAndSubCategoryAndKeyword(
         order,
         category,
         subCategory,
-        keyword
+        keyword,
+        page,
+        size
       );
-    return products.map(ProductElementResponse.of);
+    if (size) {
+      return products.map(ProductElementResponse.of).slice(0, size);
+    } else {
+      return products.map(ProductElementResponse.of);
+    }
   }
 
   async getProduct(id: number, userId: number) {
