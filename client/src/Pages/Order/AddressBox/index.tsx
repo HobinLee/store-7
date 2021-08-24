@@ -6,13 +6,14 @@ import { Dispatch } from "react";
 import { gap } from "@/styles/theme";
 import { deleteDestination } from "@/api/destinations";
 import Checkbox from "@/Components/Checkbox";
+import { QueryObserverResult } from "react-query";
 
 export type AddressBoxProps = {
   setPage: Dispatch<SetStateAction<"select" | "add" | "edit">>;
   address: DestinationType;
   setAddress: Dispatch<SetStateAction<DestinationType>>;
   setAddressToEdit?: Dispatch<SetStateAction<DestinationType>>;
-  refetch: Function;
+  refetch?: () => Promise<QueryObserverResult<unknown>>;
   closeModal: Function;
   isChecked: boolean;
   handleCheck: Function;
