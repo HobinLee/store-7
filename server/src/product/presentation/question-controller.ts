@@ -29,6 +29,13 @@ export class QuestionController {
     @Param("id") id: number,
     @Body() request: QuestionPatchRequest
   ) {
+    // 모든 body에 userId가 필요한게 아닌
+    const newQuestion = {
+      type: request.type,
+      question: request.question,
+      isSecret: request.isSecret,
+    };
+    console.log(newQuestion);
     return await this.questionService.updateQuestion(id, request);
   }
 
