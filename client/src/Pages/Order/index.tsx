@@ -44,8 +44,8 @@ const LoggedinContent = () => {
   const { status: myInfoStatus, data: myInfo, error } = useMyInfo();
 
   // form
-  const email = useInput(myInfo?.email);
-  const addressee = useInput(myInfo?.name);
+  const email = useInput(myInfo?.email ?? "");
+  const addressee = useInput(myInfo?.name ?? "");
   const phone = useInput(convertToPhoneNumber(myInfo?.phoneNumber ?? ""));
   const emailValidation = useValidation(validateEmail);
   const nameValidation = useValidation((name: string) => !!name?.length);
@@ -55,12 +55,12 @@ const LoggedinContent = () => {
     if (myInfo) {
       email.setValue(myInfo?.email);
       addressee.setValue(myInfo?.name);
-      phone.setValue(convertToPhoneNumber(myInfo?.phoneNumber ?? ""));
+      phone.setValue(convertToPhoneNumber(myInfo?.phoneNumber));
       emailValidation.onCheck(myInfo?.email ?? "");
       nameValidation.onCheck(myInfo?.name ?? "");
       phoneValidation.onCheck(convertToPhoneNumber(myInfo?.phoneNumber ?? ""));
     }
-  }, [myInfoStatus]);
+  }, [myInfo]);
 
   // 결제수단
   type paymentType = "kakaopay" | "etpay" | null;
@@ -92,7 +92,7 @@ const LoggedinContent = () => {
           price: item.price,
           amount: item.amount,
           destination: `${address.address} ${address.detailAddress}`,
-          // request,
+          request: request,
         },
       });
     });
@@ -218,7 +218,11 @@ const LoggedinContent = () => {
               )}
 
               <div style={{ marginTop: "3rem" }}>
-                <select className="order-input" defaultValue={request}>
+                <select
+                  className="order-input"
+                  onChange={(e) => setRequest(e.target.value)}
+                  defaultValue={request}
+                >
                   <option value="배송시 요청사항을 선택해주세요.">
                     배송시 요청사항을 선택해주세요.
                   </option>
@@ -234,7 +238,6 @@ const LoggedinContent = () => {
                   <option value="부재시 전화주시거나 문자 남겨 주세요.">
                     부재시 전화주시거나 문자 남겨 주세요.
                   </option>
-                  {/* <option>직접입력</option> */}
                 </select>
               </div>
             </div>
@@ -316,7 +319,7 @@ const LoggedoutContent = () => {
           price: item.price,
           amount: item.amount,
           destination: `${destination.address} ${destination.detailAddress}`,
-          // request,
+          request: request,
         },
       });
     });
@@ -417,7 +420,11 @@ const LoggedoutContent = () => {
             <Address onChangeAddress={handleChangeAddress} />
 
             <div style={{ marginTop: "3rem" }}>
-              <select className="order-input" defaultValue={request}>
+              <select
+                className="order-input"
+                onChange={(e) => setRequest(e.target.value)}
+                defaultValue={request}
+              >
                 <option value="배송시 요청사항을 선택해주세요.">
                   배송시 요청사항을 선택해주세요.
                 </option>
@@ -433,7 +440,6 @@ const LoggedoutContent = () => {
                 <option value="부재시 전화주시거나 문자 남겨 주세요.">
                   부재시 전화주시거나 문자 남겨 주세요.
                 </option>
-                {/* <option>직접입력</option> */}
               </select>
             </div>
           </div>
@@ -472,7 +478,7 @@ const OrderPage = () => {
   const RenderContent = useCallback(() => {
     if (isLoggedin) return <LoggedinContent />;
     return <LoggedoutContent />;
-  }, []);
+  }, [isLoggedin]);
 
   return (
     <Wrapper>
