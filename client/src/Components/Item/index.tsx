@@ -4,7 +4,7 @@ import ToggleImageWrapper from "../ToggleImageWrapper";
 import { WishIcon } from "@/assets";
 import { convertToKRW } from "@/utils/util";
 import { postWishProduct, deleteWishProduct, useMyWishes } from "@/api/my";
-import { media } from "@/styles/theme";
+import { media, theme } from "@/styles/theme";
 import properties from "@/config/properties";
 
 type ItemType = {
@@ -140,9 +140,25 @@ const ItemWrapper = styled.div`
     }
   }
   ${media.mobile} {
+    position: relative;
+    box-shadow: 0 0 0.4rem 0.2rem rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
+    padding-bottom: 1rem;
+
+    .info {
+      display: flex;
+      flex-direction: column;
+      height: 7rem;
+      justify-content: space-between;
+      &__name {
+        -webkit-line-clamp: 1;
+      }
+    }
+
     .thumbnail {
-      max-width: 46vw;
-      max-height: 46vw;
+      position: static;
+      max-width: 50w;
+      max-height: 40vw;
       overflow: hidden;
     }
   }
@@ -166,6 +182,16 @@ const WishBox = styled.div<{ isWishState: boolean }>`
   }
   & > svg:active {
     transform: scale(1.1);
+  }
+
+  ${media.mobile} {
+    & > svg {
+      width: 2.4rem;
+      height: 2.4rem;
+      fill: none;
+      stroke: #2ac1bc;
+      stroke-width: 3rem;
+    }
   }
 `;
 
