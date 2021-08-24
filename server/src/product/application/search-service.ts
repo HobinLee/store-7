@@ -64,6 +64,7 @@ export class SearchService {
     const productIds: number[] = await this.searchProductIds(
       searchQuery.keyword
     );
+
     if (!productIds.length) return [];
 
     const products: Product[] =
@@ -74,7 +75,7 @@ export class SearchService {
         }
       );
 
-    return products.map(ProductElementResponse.of);
+    return products.map(ProductElementResponse.of) ?? [];
   }
 
   async setAllProductsIntoElasticSearch() {
