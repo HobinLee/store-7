@@ -1,14 +1,19 @@
 import styled from "styled-components";
-import { DeleveryIcon, ProductIcon, ReviewIcon } from "@/assets";
+import { DeleveryIcon, Loading, ProductIcon } from "@/assets";
 import OrderBox from "./OrderBox";
+import { MyOrderType, OrderStatus } from "@/shared/type";
 
 const ICONS = {
-  delivering: DeleveryIcon,
-  delivered: ProductIcon,
-  reviewed: ReviewIcon,
+  [OrderStatus.Prepare]: Loading,
+  [OrderStatus.Delivery]: DeleveryIcon,
+  [OrderStatus.Arrival]: ProductIcon,
 };
 
-const OrdersContainer = ({ orders, type }) => {
+interface OrdersContainer {
+  orders: MyOrderType[];
+  type: OrderStatus;
+}
+const OrdersContainer = ({ orders, type }: OrdersContainer) => {
   const Icon = ICONS[type];
   return (
     <Container>

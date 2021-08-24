@@ -3,11 +3,12 @@ import Section from "../../../Section";
 import { useMyInfo, useMyOrdersOfFilter } from "@/api/my";
 import { Arrow } from "@/assets";
 import OrdersContainer from "./OrdersContainer";
+import { OrderStatus } from "@/shared/type";
 
 const MyMain = () => {
   const { status: ordersStatus, data: orders } = useMyOrdersOfFilter("all");
   const { status: myInfoStatus, data: myInfo } = useMyInfo();
-  const { delivering, delivered, reviewed } = classifyOrders(orders);
+  const { prepare, delivered, arrival } = classifyOrders(orders);
 
   return (
     <Wrapper data-testid="test__root">
@@ -20,15 +21,15 @@ const MyMain = () => {
       >
         {ordersStatus !== "loading" && (
           <div className="orders">
-            <OrdersContainer orders={delivering} type="delivering" />
+            <OrdersContainer orders={prepare} type={OrderStatus.Prepare} />
             <div className="arrow">
               <Arrow />
             </div>
-            <OrdersContainer orders={delivered} type="delivered" />
+            <OrdersContainer orders={delivered} type={OrderStatus.Delivery} />
             <div className="arrow">
               <Arrow />
             </div>
-            <OrdersContainer orders={reviewed} type="reviewed" />
+            <OrdersContainer orders={arrival} type={OrderStatus.Arrival} />
           </div>
         )}
       </Section>
@@ -58,10 +59,16 @@ const Wrapper = styled.div`
 `;
 
 const classifyOrders = (orders = []) => {
-  const delivering = orders.filter((order) => order.status === "배송중");
-  const delivered = orders.filter((order) => order.status === "배송완료");
-  const reviewed = orders.filter((order) => order.status === "리뷰완료");
-  return { delivering, delivered, reviewed };
+  const prepare = orders.filter(
+    (order) => order.status === OrderStatus.Prepare
+  );
+  const delivered = orders.filter(
+    (order) => order.status === OrderStatus.Delivery
+  );
+  const arrival = orders.filter(
+    (order) => order.status === OrderStatus.Arrival
+  );
+  return { prepare, delivered, arrival };
 };
 
 export default MyMain;

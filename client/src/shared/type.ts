@@ -148,3 +148,9 @@ export interface MyOrderType {
   reviewId: number;
   image: string;
 }
+
+export enum OrderStatus {
+  Prepare = "배송준비중",
+  Delivery = "배송중",
+  Arrival = "배송완료",
+}
