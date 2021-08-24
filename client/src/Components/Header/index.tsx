@@ -15,7 +15,7 @@ interface HeaderPropsType {
 }
 
 const Header = ({ children, category }: HeaderPropsType) => {
-  const [isLogined, setLoginState] = useRecoilState(loginState);
+  const [isLoggedin, setLoginState] = useRecoilState(loginState);
 
   const handleSignout = async () => {
     await DELETE("/auth");
@@ -31,7 +31,7 @@ const Header = ({ children, category }: HeaderPropsType) => {
         </Link>
         <SearchBar />
         <div className="header__buttons">
-          {isLogined ? (
+          {isLoggedin ? (
             <>
               <Link to="/mypage">마이페이지</Link>
               <button className="signout-button" onClick={handleSignout}>

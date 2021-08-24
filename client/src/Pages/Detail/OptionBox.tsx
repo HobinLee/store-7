@@ -31,7 +31,7 @@ const OptionBox = ({
   const [isCartAlertShown, setIsCartAlertShown] = useState(false);
 
   const productId = product.id;
-  const isLogined = useRecoilValue(loginState);
+  const isLoggedIn = useRecoilValue(loginState);
   const handlePostWish = async () => {
     product.isWish
       ? await deleteWishProduct(productId)
@@ -40,7 +40,7 @@ const OptionBox = ({
   };
   const handlePostCart = async () => {
     try {
-      if (isLogined && status !== "loading") {
+      if (isLoggedin && status !== "loading") {
         await postCart({
           data: {
             product: { id: productId },

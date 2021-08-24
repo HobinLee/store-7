@@ -36,7 +36,7 @@ const routes: RouteSetType[] = [
 ];
 
 const App = () => {
-  const setLogined = useSetRecoilState(loginState);
+  const setIsLoggedin = useSetRecoilState(loginState);
   const [themeMode, setThemeMode] = useState("light");
   const theme = themeMode === "light" ? light : dark;
   const toggleTheme = () =>
@@ -47,9 +47,9 @@ const App = () => {
   const auth = async () => {
     try {
       await verifyToken();
-      setLogined(true);
+      setIsLoggedin(true);
     } catch (e) {
-      setLogined(false);
+      setIsLoggedin(false);
     }
   };
 

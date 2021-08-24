@@ -48,11 +48,11 @@ const ItemInfoBox = ({
 }: ItemInfoBoxProps) => {
   const OUTPUT = output({ ...{ amount, price, deliveryCost } });
 
-  const isLogined = useRecoilValue(loginState);
+  const isLoggedin = useRecoilValue(loginState);
 
   const handleDeleteCart = async (id: number) => {
     try {
-      if (isLogined) deleteCart(id);
+      if (isLoggedin) deleteCart(id);
       else {
         const exist: CartType = JSON.parse(localStorage.getItem("carts"));
         const itemIdxToDelete = exist.items.findIndex((i) => i.id === id);

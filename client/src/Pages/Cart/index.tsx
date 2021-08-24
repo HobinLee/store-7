@@ -15,7 +15,7 @@ import { CartType, ICart, OrderType, PartialCart } from "@/shared/type";
 import { useCallback } from "react";
 
 const CartPage = () => {
-  const isLogined = useRecoilValue(loginState);
+  const isLoggedin = useRecoilValue(loginState);
 
   const [cartItems, setCartItems] = useState<CartType>();
   const { status, data: carts, error, refetch } = useMyCarts();
@@ -23,7 +23,7 @@ const CartPage = () => {
   const [checkItems, setCheckItems] = useState([]);
 
   useEffect(() => {
-    if (isLogined && status !== "loading") {
+    if (isLoggedin && status !== "loading") {
       setCartItems(carts);
     } else {
       setCartItems(
@@ -38,7 +38,7 @@ const CartPage = () => {
   }, [carts]);
 
   useEffect(() => {
-    if (isLogined && status !== "loading") setCheckItems(carts.items);
+    if (isLoggedin && status !== "loading") setCheckItems(carts.items);
     else setCheckItems(cartItems?.items);
   }, [cartItems]);
 
