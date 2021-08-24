@@ -73,7 +73,7 @@ const Review = () => {
           <ReviewBox key={review.id} {...review} />
         ))}
 
-        {isModalOpened && <ReviewModal {...{ handleModalOpen }} />}
+        {/* {isModalOpened && <ReviewModal {...{ handleModalOpen }} />} */}
       </div>
     )
   );

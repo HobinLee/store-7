@@ -15,7 +15,7 @@ export class ReviewService {
     return ReviewResponse.of(reviews);
   }
   async createReview(review: CreateReviewPostRequest, image) {
-    const fileName = this.reviews.addImage(image);
+    const fileName = image ? this.reviews.addImage(image) : "";
     await this.reviews.createReview({
       ...review,
       image: fileName,
