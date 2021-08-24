@@ -1,13 +1,208 @@
-import { CategoryType } from "@/Components/Header/Menu";
+import { MainCategoryType } from "@/Pages/Category";
+import { ItemType, ProductElementType, ReviewType } from "./type";
 import {
-  ItemType,
-  ProductElementType,
-  ReviewListType,
-  ReviewType,
-} from "./type";
+  CategoryBanner0,
+  CategoryBanner1,
+  CategoryBanner2,
+  CategoryBanner3,
+  CategoryBanner4,
+  CategoryBanner5,
+  CategoryBanner6,
+  CategoryBanner7,
+  CategoryBanner8,
+  CategoryBanner9,
+} from "@/assets";
 
 export const IMAGE_DUMMY =
   "https://store.baemin.com/data/board/upload/goodsreview/eea0b21ff31b55a0";
+
+export const categories: MainCategoryType[] = [
+  {
+    id: 0,
+    name: "전체",
+    brief: "",
+    fontColor: "#333",
+    backgroundImg: CategoryBanner0,
+    subCategories: [],
+  },
+  {
+    id: 100,
+    name: "문구",
+    brief: "",
+    backgroundImg: CategoryBanner1,
+    subCategories: [
+      {
+        id: 101,
+        name: "노트",
+      },
+      {
+        id: 102,
+        name: "필기류",
+      },
+      {
+        id: 103,
+        name: "잡화",
+      },
+    ],
+  },
+  {
+    id: 200,
+    name: "리빙",
+    brief: "",
+    backgroundImg: CategoryBanner2,
+    subCategories: [
+      {
+        id: 201,
+        name: "가방",
+      },
+      {
+        id: 202,
+        name: "의류",
+      },
+      {
+        id: 203,
+        name: "레터링시트지",
+      },
+      {
+        id: 204,
+        name: "있어 시리즈",
+      },
+    ],
+  },
+  {
+    id: 300,
+    name: "책",
+    brief: "쌓인만큼 교양이 쌓인다",
+    backgroundImg: CategoryBanner3,
+    subCategories: [
+      {
+        id: 301,
+        name: "매거진",
+      },
+      {
+        id: 302,
+        name: "기타",
+      },
+    ],
+  },
+  {
+    id: 400,
+    name: "배민그린",
+    brief: "내가 그린 지구 그림",
+    fontColor: "#32BF9A",
+    backgroundImg: CategoryBanner4,
+    subCategories: [
+      {
+        id: 401,
+        name: "가방",
+      },
+      {
+        id: 402,
+        name: "문구",
+      },
+      {
+        id: 403,
+        name: "리빙",
+      },
+      {
+        id: 404,
+        name: "기타",
+      },
+    ],
+  },
+  {
+    id: 500,
+    name: "ㅋㅋ에디션",
+    brief: "",
+    fontColor: "#555",
+    font: "BMKIRANGHAERANG",
+    backgroundImg: CategoryBanner5,
+    subCategories: [
+      {
+        id: 501,
+        name: "양말",
+      },
+      {
+        id: 502,
+        name: "슬리퍼",
+      },
+      {
+        id: 503,
+        name: "핸드폰 엑세서리",
+      },
+      {
+        id: 504,
+        name: "옷",
+      },
+      {
+        id: 505,
+        name: "기타",
+      },
+    ],
+  },
+  {
+    id: 600,
+    name: "을지로 에디션",
+    brief: "여기는 영원히 아날로그야",
+    font: "BMEULJIRO",
+    fontColor: "#333",
+    backgroundImg: CategoryBanner6,
+    subCategories: [
+      {
+        id: 601,
+        name: "뱃지",
+      },
+      {
+        id: 602,
+        name: "엽서",
+      },
+      {
+        id: 603,
+        name: "리빙",
+      },
+      {
+        id: 604,
+        name: "기타",
+      },
+    ],
+  },
+  {
+    id: 700,
+    name: "배달이 친구들",
+    brief: "",
+    fontColor: "#32BF9A",
+    backgroundImg: CategoryBanner7,
+    subCategories: [
+      {
+        id: 701,
+        name: "뱃지",
+      },
+      {
+        id: 702,
+        name: "피규어",
+      },
+      {
+        id: 703,
+        name: "기타",
+      },
+    ],
+  },
+  {
+    id: 800,
+    name: "선물하기",
+    brief: "",
+    backgroundImg: CategoryBanner8,
+    subCategories: [],
+  },
+  {
+    id: 900,
+    name: "콜라보레이션",
+    brief: "",
+    fontColor: "#32BF9A",
+    backgroundImg: CategoryBanner9,
+    subCategories: [],
+  },
+];
 
 export const sampleMain = [
   {
@@ -46,7 +241,6 @@ export const sampleMain = [
 export const sampleProducts: ProductElementType[] = [
   {
     id: 1,
-    tags: ["new", "sale"],
     discountRate: 40,
     name: "`타이틀이 굉장히 길어지면 무슨 일이 일어날지 대비하기 위해 작성하는 굉장히 긴 타이틀입니동. 세상에 이렇게 긴 타이틀을 가진 제품이 있을진 모르겠지만 그래도 일단 길에 줄줄 늘어놔야겠죠? 아 배고프다 이따 저녁은 어제 시킨 김치찜인데 솔직히 맛있진 않아서.. 떡볶이 먹고 싶다`",
     price: 10000,
@@ -58,7 +252,6 @@ export const sampleProducts: ProductElementType[] = [
   {
     id: 2,
     discountRate: 20,
-    tags: ["new", "green", "sale"],
     name: "타이틀2",
     price: 260000,
     isWish: false,
@@ -68,7 +261,6 @@ export const sampleProducts: ProductElementType[] = [
   },
   {
     id: 3,
-    tags: ["green"],
     name: "타이틀3",
     price: 10000,
     isWish: true,
@@ -80,7 +272,6 @@ export const sampleProducts: ProductElementType[] = [
   {
     id: 4,
     discountRate: 50,
-    tags: ["sale"],
     name: "타이틀4",
     price: 100000,
     isWish: true,
@@ -91,7 +282,6 @@ export const sampleProducts: ProductElementType[] = [
   {
     id: 5,
     discountRate: 40,
-    tags: ["new", "sale"],
     name: "타이틀",
     price: 10000,
     isWish: false,
@@ -102,7 +292,6 @@ export const sampleProducts: ProductElementType[] = [
   {
     id: 6,
     discountRate: 20,
-    tags: ["new", "green", "sale"],
     name: "타이틀2",
     price: 260000,
     isWish: false,
@@ -112,7 +301,6 @@ export const sampleProducts: ProductElementType[] = [
   },
   {
     id: 7,
-    tags: ["green"],
     name: "타이틀3",
     price: 10000,
     isWish: true,
@@ -124,7 +312,6 @@ export const sampleProducts: ProductElementType[] = [
   {
     id: 8,
     discountRate: 50,
-    tags: ["sale"],
     name: "타이틀4",
     price: 100000,
     isWish: true,
@@ -135,7 +322,6 @@ export const sampleProducts: ProductElementType[] = [
   {
     id: 9,
     discountRate: 50,
-    tags: ["sale"],
     name: "타이틀4",
     price: 100000,
     isWish: true,
@@ -146,7 +332,6 @@ export const sampleProducts: ProductElementType[] = [
   {
     id: 10,
     discountRate: 40,
-    tags: ["new", "sale"],
     name: "타이틀",
     price: 10000,
     isWish: false,
@@ -157,7 +342,6 @@ export const sampleProducts: ProductElementType[] = [
   {
     id: 11,
     discountRate: 20,
-    tags: ["new", "green", "sale"],
     name: "타이틀2",
     price: 260000,
     isWish: false,
@@ -167,7 +351,6 @@ export const sampleProducts: ProductElementType[] = [
   },
   {
     id: 12,
-    tags: ["green"],
     name: "타이틀3",
     price: 10000,
     isWish: true,
@@ -179,7 +362,6 @@ export const sampleProducts: ProductElementType[] = [
   {
     id: 13,
     discountRate: 50,
-    tags: ["sale"],
     name: "타이틀4",
     price: 100000,
     isWish: true,
@@ -193,159 +375,6 @@ export const wishlistSample = {
   ths: ["상품명/옵션", "상품금액/수량", " 합계"],
   ratio: [6, 1, 1],
 };
-
-export const categories: CategoryType[] = [
-  {
-    name: "전체",
-  },
-  {
-    name: "문구",
-    subCategories: [
-      {
-        name: "펜",
-      },
-      {
-        name: "공책",
-      },
-    ],
-  },
-  {
-    name: "리빙",
-    subCategories: [
-      {
-        name: "가방",
-      },
-      {
-        name: "그립톡",
-      },
-      {
-        name: "레터링시트지",
-      },
-      {
-        name: "돗자리",
-      },
-      {
-        name: "기타",
-      },
-    ],
-  },
-  {
-    name: "책",
-    subCategories: [
-      {
-        name: "매거진",
-      },
-      {
-        name: "소설",
-      },
-      {
-        name: "교양용",
-      },
-      {
-        name: "전문가용",
-      },
-      {
-        name: "기타",
-      },
-    ],
-  },
-  {
-    name: "배민그린",
-    subCategories: [
-      {
-        name: "가방",
-      },
-      {
-        name: "문구",
-      },
-      {
-        name: "리빙",
-      },
-      {
-        name: "기타",
-      },
-    ],
-  },
-  {
-    name: "ㅋㅋ에디션",
-    subCategories: [
-      {
-        name: "양말",
-      },
-      {
-        name: "슬리퍼",
-      },
-      {
-        name: "핸드폰 액세서리",
-      },
-      {
-        name: "옷",
-      },
-      {
-        name: "기타",
-      },
-    ],
-  },
-  {
-    name: "을지로에디션",
-    subCategories: [
-      {
-        name: "뱃지",
-      },
-      {
-        name: "엽서",
-      },
-      {
-        name: "리빙",
-      },
-      {
-        name: "기타",
-      },
-    ],
-  },
-  {
-    name: "배달이친구들",
-    subCategories: [
-      {
-        name: "포스터",
-      },
-      {
-        name: "피규어",
-      },
-      {
-        name: "기타",
-      },
-    ],
-  },
-  {
-    name: "선물세트",
-    subCategories: [
-      {
-        name: "문구",
-      },
-      {
-        name: "리빙",
-      },
-      {
-        name: "기타",
-      },
-    ],
-  },
-  {
-    name: "콜라보레이션",
-    subCategories: [
-      {
-        name: "업사이클링",
-      },
-      {
-        name: "세븐일레븐",
-      },
-      {
-        name: "넛때문이야",
-      },
-    ],
-  },
-];
 
 export const buyItems = {
   totalPrice: 50000,

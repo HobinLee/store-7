@@ -4,14 +4,11 @@ import { getSiblingIndex } from "@/utils/node";
 import { Link } from "@/Router";
 import { categories } from "@/shared/dummy";
 import { media } from "@/styles/theme";
-
-export type CategoryType = {
-  name: string;
-  subCategories?: CategoryType[];
-};
-
+import { CategoryType } from "@/Pages/Category";
 const Menu = ({ category }: { category?: string }) => {
-  const [currentCategoryIndex, setCurrentCategory] = useState(category ?? 0);
+  const [categoryId, setCurrentCategory] = useState<number>(
+    category ? parseInt(category) : 0
+  );
   const [padding, setPadding] = useState(0);
 
   const checkChangeCategory = ({
@@ -46,23 +43,22 @@ const Menu = ({ category }: { category?: string }) => {
 
     const $li: HTMLElement = e.target.closest("LI");
     const currentIndex = getSiblingIndex($li);
+    const id = categories[currentIndex]?.id ?? 0;
 
-    if (currentIndex !== currentCategoryIndex) {
-      setCurrentCategory(currentIndex);
+    if (id !== categoryId) {
+      setCurrentCategory(id);
       getPadding($li);
     }
   };
 
   const generateMainCategory = (
     <MainCategoryWrapper onMouseMove={handleMouseMove}>
-      {categories.map((category: CategoryType, idx: number) => (
+      {categories.map((category: CategoryType) => (
         <li
-          key={idx}
-          className={currentCategoryIndex === idx ? "selected" : ""}
+          key={category.id}
+          className={categoryId === category.id ? "selected" : ""}
         >
-          <Link key={idx} to={`/category?category=${idx}`}>
-            {category.name}
-          </Link>
+          <Link to={`/category?category=${category.id}`}>{category.name}</Link>
         </li>
       ))}
     </MainCategoryWrapper>
@@ -83,16 +79,15 @@ const Menu = ({ category }: { category?: string }) => {
   const generateSubCategory = (
     <SubCategoryWrapper
       padding={padding}
-      width={getWidth(categories[currentCategoryIndex].subCategories)}
+      width={getWidth(categories[categoryId / 100]?.subCategories)}
     >
-      {categories[currentCategoryIndex].subCategories?.map(
-        (category: CategoryType, idx: number) => (
-          <li key={idx}>
+      {categories[categoryId / 100]?.subCategories?.map(
+        (subCategory: CategoryType) => (
+          <li key={subCategory.id}>
             <Link
-              key={idx}
-              to={`/category?category=${currentCategoryIndex}&subCategory=${idx}`}
+              to={`/category?category=${categoryId}&subCategory=${subCategory.id}`}
             >
-              {category.name}
+              {subCategory.name}
             </Link>
           </li>
         )
@@ -125,11 +120,14 @@ const Wrapper = styled.div`
   }
 
   li {
-    padding: 1rem;
     cursor: pointer;
     text-align: center;
     &:hover {
       color: ${({ theme }) => theme.color.primary3};
+    }
+    a {
+      display: block;
+      padding: 1rem;
     }
   }
   ${media.mobile} {
