@@ -10,12 +10,11 @@ import { useRecoilState } from "recoil";
 import { loginState } from "@/store/state";
 
 interface HeaderPropsType {
-  children?: ReactChild;
   category?: string;
 }
 
-const Header = ({ children, category }: HeaderPropsType) => {
-  const [isLogined, setLoginState] = useRecoilState(loginState);
+const Header = ({ category }: HeaderPropsType) => {
+  const [isLoggedin, setLoginState] = useRecoilState(loginState);
 
   const handleSignout = async () => {
     await DELETE("/auth");
@@ -31,7 +30,7 @@ const Header = ({ children, category }: HeaderPropsType) => {
         </Link>
         <SearchBar />
         <div className="header__buttons">
-          {isLogined ? (
+          {isLoggedin ? (
             <>
               <Link to="/mypage">마이페이지</Link>
               <button className="signout-button" onClick={handleSignout}>
@@ -45,7 +44,6 @@ const Header = ({ children, category }: HeaderPropsType) => {
         </div>
       </Wrapper>
       <Menu category={category} />
-      {children ?? ""}
     </TopWrapper>
   );
 };

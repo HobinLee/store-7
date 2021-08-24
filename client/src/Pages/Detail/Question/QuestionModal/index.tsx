@@ -34,7 +34,7 @@ const QuestionModal = ({ handleModalOpen }) => {
 
   return (
     <ModalWrapper title="문의하기" closeModal={() => handleModalOpen(false)}>
-      <Wrapper onSubmit={(e) => handleSumbit}>
+      <Wrapper onSubmit={handleSumbit}>
         <div className="content">
           <Checkbox
             isChecked={isSecret}

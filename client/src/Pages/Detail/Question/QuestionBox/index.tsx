@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { QuestionType } from "@/shared/type";
 import { gap } from "@/styles/theme";
-import { YYYY_MM_DD_HH_mm } from "@/utils/util";
+import { YYYY_M_D_H_m } from "@/utils/util";
 
 const QuestionBox = (Question: QuestionType) => {
   const isAnswered = Question.answer ? true : false;
@@ -10,7 +10,7 @@ const QuestionBox = (Question: QuestionType) => {
       <div className="status">{isAnswered ? "답변완료" : "미답변"}</div>
       <Header>
         <div>{Question.authorName}</div>
-        <div className="date">{YYYY_MM_DD_HH_mm(Question.createdAt)}</div>
+        <div className="date">{YYYY_M_D_H_m(Question.createdAt)}</div>
       </Header>
 
       <div className="content">

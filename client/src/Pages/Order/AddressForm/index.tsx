@@ -12,11 +12,12 @@ import { validatePhoneNumber, VALIDATION_ERR_MSG } from "@/utils/validations";
 import { gap } from "@/styles/theme";
 import { patchDestination, postDestination } from "@/api/destinations";
 import { convertToNumber, convertToPhoneNumber } from "@/utils/util";
+import { QueryObserverResult } from "react-query";
 
 export interface AddressFormProps {
   addressToEdit?: DestinationType;
   gotoBack: Function;
-  refetch: Function;
+  refetch: () => Promise<QueryObserverResult<unknown>>;
   isFirst: boolean;
 }
 

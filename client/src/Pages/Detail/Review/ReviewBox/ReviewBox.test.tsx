@@ -1,6 +1,6 @@
 import { ReviewType } from "@/shared/type";
 import { render } from "@/utils/test-util";
-import { YYYY_MM_DD_HH_mm } from "@/utils/util";
+import { YYYY_M_D_H_m } from "@/utils/util";
 import { screen } from "@testing-library/react";
 import ReviewBox from "./index";
 
@@ -23,6 +23,6 @@ describe("<ReviewBox />", () => {
 
     expect(screen.queryByText(AUTHOR)).toBeInTheDocument();
     expect(screen.queryByText(CONTENT)).toBeInTheDocument();
-    expect(screen.queryByText(YYYY_MM_DD_HH_mm(DATE))).toBeInTheDocument();
+    expect(screen.queryByText(YYYY_M_D_H_m(DATE))).toBeInTheDocument();
   });
 });

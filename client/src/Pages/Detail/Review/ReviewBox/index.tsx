@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { ReviewType } from "@/shared/type";
 import Rating from "@/Components/Rating";
 import { gap } from "@/styles/theme";
-import { YYYY_MM_DD_HH_mm } from "@/utils/util";
+import { YYYY_M_D_H_m } from "@/utils/util";
 
 const ReviewBox = (review: ReviewType) => {
   return (
@@ -13,7 +13,7 @@ const ReviewBox = (review: ReviewType) => {
           <div className="info__rate">
             <Rating value={review.rate} readOnly />
           </div>
-          <div className="info__date">{YYYY_MM_DD_HH_mm(review.date)}</div>
+          <div className="info__date">{YYYY_M_D_H_m(review.date)}</div>
         </div>
       </Header>
 

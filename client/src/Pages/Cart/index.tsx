@@ -11,11 +11,10 @@ import { useMyCarts } from "@/api/my";
 import { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { loginState } from "@/store/state";
-import { CartType, ICart, OrderType, PartialCart } from "@/shared/type";
-import { useCallback } from "react";
+import { CartType, ICart, PartialCart } from "@/shared/type";
 
 const CartPage = () => {
-  const isLogined = useRecoilValue(loginState);
+  const isLoggedin = useRecoilValue(loginState);
 
   const [cartItems, setCartItems] = useState<CartType>();
   const { status, data: carts, error, refetch } = useMyCarts();
@@ -23,7 +22,7 @@ const CartPage = () => {
   const [checkItems, setCheckItems] = useState([]);
 
   useEffect(() => {
-    if (isLogined && status !== "loading") {
+    if (isLoggedin && status !== "loading") {
       setCartItems(carts);
     } else {
       setCartItems(
@@ -38,7 +37,7 @@ const CartPage = () => {
   }, [carts]);
 
   useEffect(() => {
-    if (isLogined && status !== "loading") setCheckItems(carts.items);
+    if (isLoggedin && status !== "loading") setCheckItems(carts.items);
     else setCheckItems(cartItems?.items);
   }, [cartItems]);
 
@@ -51,8 +50,8 @@ const CartPage = () => {
 
   useEffect(() => {
     if (status !== "loading") {
-      const price = checkItems.reduce((sum, cart) => sum + cart.price, 0);
-      const delivery = checkItems.reduce(
+      const price = checkItems?.reduce((sum, cart) => sum + cart.price, 0);
+      const delivery = checkItems?.reduce(
         (sum, cart) => sum + cart.deliveryCost,
         0
       );
@@ -73,7 +72,7 @@ const CartPage = () => {
         totalCount: checkItems?.length,
       });
     }
-  }, [carts, checkItems]);
+  }, [status, checkItems]);
 
   // 체크박스 개별 선택
   const handleSingleCheck = (isChecked: boolean, cart: PartialCart) => {
@@ -97,9 +96,9 @@ const CartPage = () => {
   return (
     status !== "loading" && (
       <Wrapper>
-        <Header>
-          <CartOrderBox {...{ info }} />
-        </Header>
+        <Header />
+        <CartOrderBox {...{ info }} />
+
         <div className="contents">
           <Title>
             장바구니{" "}
@@ -113,10 +112,10 @@ const CartPage = () => {
               <div>
                 <Checkbox
                   label="모두선택"
-                  isChecked={checkItems.length === cartItems?.items.length}
+                  isChecked={checkItems?.length === cartItems?.items.length}
                   handleCheck={() =>
                     handleAllCheck(
-                      checkItems.length !== cartItems?.items.length
+                      checkItems?.length !== cartItems?.items.length
                     )
                   }
                 />
@@ -125,14 +124,15 @@ const CartPage = () => {
                 <ItemInfoBox
                   key={cart.id}
                   {...(cart as ICart)}
-                  isChecked={checkItems.find((i) => i.id === cart.id)}
+                  isChecked={checkItems?.find((i) => i.id === cart.id)}
                   handleCheck={() =>
                     handleSingleCheck(
-                      !checkItems.find((i) => i.id === cart.id),
+                      !checkItems?.find((i) => i.id === cart.id),
                       cart
                     )
                   }
                   refetch={refetch}
+                  setCartItems={setCartItems}
                   checkboxVisible
                 />
               ))}

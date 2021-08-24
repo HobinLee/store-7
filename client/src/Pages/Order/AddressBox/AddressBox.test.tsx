@@ -18,7 +18,6 @@ const addressBoxProps: AddressBoxProps = {
   setPage: () => {},
   address: ADDRESS,
   setAddress: () => {},
-  refetch: () => {},
   closeModal: () => {},
   isChecked: false,
   handleCheck: () => {},

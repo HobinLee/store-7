@@ -6,6 +6,7 @@ import ModalWrapper from "@/Components/ModalWrapper";
 import { gap } from "@/styles/theme";
 import { FormEvent, useState } from "react";
 import { postReview } from "@/api/reviews";
+import { ChangeEventHandler } from "react";
 
 const ReviewModal = ({ handleModalOpen }) => {
   const reviewVal = useInput("");
@@ -13,9 +14,9 @@ const ReviewModal = ({ handleModalOpen }) => {
   const [file, setFile] = useState<File | undefined>(undefined);
   const [previewURL, setPreviewURL] = useState("");
 
-  const selectImg = (e: any) => {
+  const selectImg = ({ target }: { target: HTMLInputElement }) => {
     const reader = new FileReader();
-    const targetFile = e.target.files[0];
+    const targetFile = target.files[0];
     setFile(targetFile);
 
     reader.onloadend = () => {

@@ -1,6 +1,6 @@
 import MRating from "@material-ui/lab/Rating";
 import { withStyles } from "@material-ui/core/styles";
-import { light } from "@/styles/theme";
+import { theme } from "@/styles/theme";
 
 export type RatingProps = {
   value?: number;
@@ -17,7 +17,7 @@ const Rating = ({
 }: RatingProps) => {
   const CustomRating = withStyles({
     iconFilled: {
-      color: light.color.primary1,
+      color: theme.color.primary1,
     },
   })(MRating);
 

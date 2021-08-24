@@ -81,7 +81,7 @@ export const gap = (
   `;
 };
 
-export const light: DefaultTheme = {
+export const theme: DefaultTheme = {
   color: {
     title_active: "#1e2222",
     body: "#626666",
@@ -100,32 +100,6 @@ export const light: DefaultTheme = {
     primary2: "#89F4D8",
     primary3: "#32BF9A",
     red: "#f45452",
-  },
-  font,
-  flexCenter,
-  shadow,
-  borderRadius,
-  tags,
-};
-export const dark: DefaultTheme = {
-  color: {
-    title_active: "#fff",
-    body: "#888888",
-    label: "#8d9393",
-    placeholder: "#c1c5c5",
-    light_grey1: "#333333",
-    light_grey2: "#444444",
-    error_color: "#f45452",
-    grey1: "#888888",
-    grey2: "#bbbbbb",
-    line: "#888888",
-    background: "#1e2222",
-    off_white: "#3d4545",
-    white: "#222222",
-    primary1: "#16de8e",
-    primary2: "#85e1b2",
-    primary3: "#16de8e",
-    red: "#f13734",
   },
   font,
   flexCenter,
