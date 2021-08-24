@@ -34,7 +34,7 @@ const CartPage = () => {
         }
       );
     }
-  }, [cartItems]);
+  }, [carts]);
 
   useEffect(() => {
     if (isLoggedin && status !== "loading") setCheckItems(carts.items);

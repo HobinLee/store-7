@@ -82,10 +82,6 @@ const LoggedInNumInput = ({
     }
   }, [debouncedNumValue]);
 
-  useEffect(() => {
-    console.log(numValue.value);
-  }, [numValue.value]);
-
   const RenderNumInput = useCallback(() => {
     return (
       <NumInput defaultValue={numValue.value} onChange={numValue.onChange} />
