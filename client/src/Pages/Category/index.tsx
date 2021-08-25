@@ -1,5 +1,5 @@
 import CategoryBanner from "./Banner";
-import Filter from "./Filter";
+import Filter, { filters } from "../../Components/Filter";
 
 import Header from "@/Components/Header";
 import { PageWrapper, Contents } from "@/shared/styled";
@@ -8,6 +8,7 @@ import Footer from "@/Components/Footer";
 import { useProducts } from "@/api/products";
 import ProductList from "@/Components/ProductList";
 import { media } from "@/styles/theme";
+import { useState } from "react";
 
 export interface CategoryType {
   id: number;
@@ -29,7 +30,11 @@ export type CategoryParamType = {
 };
 
 const CategoryPage = ({ params }) => {
-  const { data: products } = useProducts(params);
+  const [filter, setFilter] = useState(filters[0]);
+  const { data: products } = useProducts({
+    ...params,
+    order: filter.value,
+  });
   return (
     <Wrapper>
       <BGWrapper></BGWrapper>
@@ -37,7 +42,7 @@ const CategoryPage = ({ params }) => {
       <CategoryBanner params={params} />
       <div className="page-contents">
         <div className="products-wrapper">
-          <Filter category={params.category} />
+          <Filter setFilter={setFilter} currentFilter={filter} />
           <ProductList products={products} />
         </div>
       </div>
