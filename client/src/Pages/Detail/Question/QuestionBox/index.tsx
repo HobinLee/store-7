@@ -9,10 +9,10 @@ import { deleteQuestion } from "@/api/questions";
 import { QueryObserverResult } from "react-query";
 
 const QuestionBox = (
-  Question: QuestionType &&,
-  refetch?: () => Promise<QueryObserverResult<unknown>>
+  Question: QuestionType & {
+    refetch?: () => Promise<QueryObserverResult<unknown>>;
+  }
 ) => {
-  console.log(refetch);
   const [isModalOpened, setIsModalOpened] = useState(false);
   const handleModalOpen = (val: boolean) => {
     if (!val) {
@@ -25,9 +25,7 @@ const QuestionBox = (
   const isAnswered = Question.answer ? true : false;
   const handleClickDeleteButton = async () => {
     const result = await deleteQuestion({ id: Question.id });
-    console.log(result);
-    console.log(refetch);
-    refetch();
+    Question.refetch();
   };
   return (
     <Wrapper isAnswered={isAnswered} data-testid="test__question-box">
