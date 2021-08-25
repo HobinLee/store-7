@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Link } from "@/Router";
 import { ItemBannerType } from "@/shared/type";
 import { gap, media } from "@/styles/theme";
+import Image from "@/Components/Image";
 
 export interface BannerProps {
   banners: ItemBannerType[];
@@ -21,7 +22,7 @@ const Banner = ({ banners }: BannerProps) => {
               <span>자세히 보기</span>
             </div>
           </div>
-          <img src={banners[0].src} />
+          <Image src={banners[0].src} />
         </Link>
       </div>
     </BannerWrapper>
