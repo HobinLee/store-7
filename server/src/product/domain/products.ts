@@ -1,12 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import {
-  createQueryBuilder,
-  FindOperator,
-  In,
-  Like,
-  Repository,
-} from "typeorm";
+import { FindOperator, In, Like, Repository } from "typeorm";
 import { Product } from "@/product/entity/product";
 import { S3Repository } from "@/product/infrastructure/s3-repository";
 import { ProductImage } from "@/product/entity/product-image";
@@ -16,7 +10,7 @@ import { ProductFindQuery } from "../dto/product-find-query";
 
 const RANDOM_FILENAME_LENGTH = 32;
 const START_PAGE = 1;
-const DEFAULT_PAGE_SIZE = 10;
+const PRODUCT_PER_PAGE = 12;
 
 const ORDER_TYPE = {
   hot: { price: "DESC" },
@@ -40,13 +34,13 @@ export class Products {
     private readonly s3Repository: S3Repository
   ) {}
 
-  async findProductsByOrderAndCategoryAndSubCategoryAndKeyword(
-    query: ProductFindQuery
-  ): Promise<Product[]> {
+  async findProductsByQueries(query: ProductFindQuery): Promise<Product[]> {
     return this.productRepository.find({
       relations: ["options", "images", "detailImages"],
       where: generateWhere(query.category, query.subCategory, query.ids),
       order: ORDER_TYPE[query.order],
+      skip: ((query.page ?? START_PAGE) - 1) * (query.size ?? PRODUCT_PER_PAGE),
+      take: query.size ?? PRODUCT_PER_PAGE,
     });
   }
 
