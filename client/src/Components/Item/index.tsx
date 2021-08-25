@@ -93,6 +93,7 @@ const ItemWrapper = styled.div`
 
   .thumbnail {
     position: relative;
+    height: 24rem;
 
     &__tags {
       position: absolute;
