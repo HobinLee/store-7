@@ -53,7 +53,7 @@ export class Products {
 
   async findProductById(id: number): Promise<Product> {
     return this.productRepository.findOne(id, {
-      relations: ["options", "images", "detailImages"],
+      relations: ["options", "images", "detailImages", "wishes", "wishes.user"],
     });
   }
 

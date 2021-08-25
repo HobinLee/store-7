@@ -6,7 +6,6 @@ import {
   QuestionIcon,
   ReviewIcon,
   UserIcon,
-  King,
 } from "@/assets";
 
 export interface NavProps {
@@ -54,23 +53,18 @@ const NavWrpper = styled.ul`
 const ICON_SIZE = 60;
 const navItems = [
   {
-    Icon: (props) => <King width={ICON_SIZE} height={ICON_SIZE} {...props} />,
-    title: "메인",
-    path: "main",
-  },
-  {
     Icon: (props) => (
       <DeleveryIcon width={ICON_SIZE} height={ICON_SIZE} {...props} />
     ),
     title: "주문목록 / 배송조회",
-    path: "orders",
+    path: "order",
   },
   {
     Icon: (props) => (
       <WishIcon width={ICON_SIZE} height={ICON_SIZE} {...props} />
     ),
     title: "내 찜목록",
-    path: "wishes",
+    path: "wish",
   },
 
   {
@@ -78,14 +72,14 @@ const navItems = [
       <QuestionIcon width={ICON_SIZE} height={ICON_SIZE} {...props} />
     ),
     title: "나의 상품문의",
-    path: "questions",
+    path: "question",
   },
   {
     Icon: (props) => (
       <ReviewIcon width={ICON_SIZE} height={ICON_SIZE} {...props} />
     ),
     title: "나의 상품후기",
-    path: "reviews",
+    path: "review",
   },
   {
     Icon: (props) => (
@@ -100,7 +94,7 @@ const NavItem = ({ Icon, title, isSelected }) => {
   return (
     <NavItemWrapper isSelected={isSelected}>
       <div>
-        <Icon fill={isSelected ? "#3be1b4" : "black"} />
+        <Icon fill={isSelected ? "#2ac1bc" : "black"} />
       </div>
       <h3>{title}</h3>
     </NavItemWrapper>

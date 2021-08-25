@@ -47,12 +47,9 @@ export class ProductService {
   }
 
   async getProduct(id: number, userId: number) {
-    const isWish = userId
-      ? !!(await this.wishes.findMyWishByProductId(userId, id))
-      : false;
     const product = await this.products.findProductById(id);
     if (product) {
-      return ProductResponse.of(product, isWish);
+      return ProductResponse.of(product, userId);
     }
     throw new Error("404 Product NotFound");
   }

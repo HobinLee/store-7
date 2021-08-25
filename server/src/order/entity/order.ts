@@ -12,6 +12,12 @@ import {
   ManyToOne,
 } from "typeorm";
 
+export enum OrderStatus {
+  Prepare = "배송준비중",
+  Delivery = "배송중",
+  Arrival = "배송완료",
+}
+
 @Entity()
 export class Order {
   @PrimaryGeneratedColumn()
@@ -43,7 +49,7 @@ export class Order {
   destination: string;
 
   @Column({ type: "char", length: 5 })
-  status: string;
+  status: OrderStatus;
 
   @Column({ length: 20, nullable: true })
   request: string;

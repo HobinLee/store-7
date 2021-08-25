@@ -69,23 +69,9 @@ export class MyController {
   }
 
   // orders
-  @Get("/orders/:filter")
-  async getMyOrders(
-    @Body("userId") userId: number,
-    @Param("filter") filter: string
-  ): Promise<OrderResponse[]> {
-    switch (filter) {
-      case "current":
-        return await this.myService.findCurrentOrdersByUserId(userId);
-      case "deliver":
-        return await this.myService.findDeliverdOrdersByUserId(userId);
-      case "review":
-        return await this.myService.findReviewedOrdersByUserId(userId);
-      case "all":
-        return await this.myService.findMyOrders(userId);
-      default:
-        throw new Error("파라미터 오류");
-    }
+  @Get("/orders")
+  async getMyOrders(@Body("userId") userId: number): Promise<OrderResponse[]> {
+    return await this.myService.findMyOrders(userId);
   }
 
   @Get("/orders")
@@ -105,8 +91,6 @@ export class MyController {
 
   @Post("/wishes")
   async postWishProduct(@Body() body: WishRequest) {
-    console.log("delete : ", body.productId, body.userId);
-
     return await this.myService.createWishProduct(body);
   }
 

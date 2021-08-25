@@ -4,38 +4,61 @@ import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
 import { useState } from "react";
 import { gap } from "@/styles/theme";
-import { postQuestion } from "@/api/questions";
+import { postQuestion, patchQuestion } from "@/api/questions";
 import Checkbox from "@/Components/Checkbox";
 
 export const OPTIONS = ["상품", "배송", "반품", "교환", "환불", "기타"];
-
-const QuestionModal = ({ handleModalOpen }) => {
-  const reviewVal = useInput("");
-
+interface QuestionModal {
+  handleModalOpen: (boolean) => void;
+  qeustion?: {
+    id?: number;
+    option: string;
+    value: string;
+    isSecret: boolean;
+  };
+  submitType: string;
+}
+const QuestionModal = ({
+  handleModalOpen,
+  qeustion = { option: "상품", value: "", isSecret: false },
+  submitType,
+}: QuestionModal) => {
+  const reviewVal = useInput(qeustion.value);
   const pathname = location.pathname.split("detail/")[1];
 
   // 문의 유형
-  const [option, setOption] = useState("상품");
+  const [option, setOption] = useState(qeustion.option);
   const handleSetOption = (val: string) => {
     setOption(val);
   };
 
   // 비밀글
-  const [isSecret, setIsSecret] = useState(false);
+  const [isSecret, setIsSecret] = useState(qeustion.isSecret);
 
   const handleSumbit = async () => {
-    await postQuestion({
-      productId: parseInt(pathname),
-      type: option,
-      question: reviewVal.value,
-      isSecret: isSecret,
-    });
+    submitType === "post"
+      ? await postQuestion({
+          productId: parseInt(pathname),
+          type: option,
+          question: reviewVal.value,
+          isSecret: isSecret,
+        })
+      : submitType === "patch"
+      ? await patchQuestion({
+          id: qeustion.id,
+          question: {
+            type: option,
+            question: reviewVal.value,
+            isSecret,
+          },
+        })
+      : "";
   };
 
   return (
     <ModalWrapper title="문의하기" closeModal={() => handleModalOpen(false)}>
       <Wrapper onSubmit={handleSumbit}>
-        <div className="content">
+        <div className="modal__content">
           <Checkbox
             isChecked={isSecret}
             handleCheck={() => setIsSecret(!isSecret)}
@@ -43,8 +66,8 @@ const QuestionModal = ({ handleModalOpen }) => {
             label="비밀글"
             className="secret-checkbox"
           />
-          <div className="content__label">문의 유형</div>
-          <div className="question-option">
+          <div className="modal__content-label">문의 유형</div>
+          <div className="modal__question-option">
             {OPTIONS.map((item, idx) => (
               <OptionBtn
                 key={idx}
@@ -57,8 +80,8 @@ const QuestionModal = ({ handleModalOpen }) => {
           </div>
         </div>
 
-        <div className="content">
-          <div className="content__label">문의 내용</div>
+        <div className="modal__content">
+          <div className="modal__content-label">문의 내용</div>
           <QuestionInput
             placeholder="문의 내용을 입력하세요."
             defaultValue={reviewVal.value}
@@ -79,16 +102,18 @@ const Wrapper = styled.form`
   flex-direction: column;
   width: 100%;
   position: relative;
-  .content {
-    margin-top: 4rem;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    ${gap("1rem", "column")}
-    &__label {
-      ${({ theme }) => theme.font.medium};
+  .modal {
+    &__content {
+      margin-top: 4rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      ${gap("1rem", "column")}
+      &-label {
+        ${({ theme }) => theme.font.medium};
+      }
     }
-    .question-option {
+    &__question-option {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
     }

@@ -34,11 +34,9 @@ export const useMyQuestions = () =>
   useQuery(["questions"], () => getMyQuestions());
 
 // GET /my/orders 내 주문목록
-type OrderFilter = "current" | "deliver" | "review" | "all";
-const getMyOrders = (filter: OrderFilter): Promise<MyOrderType[]> =>
-  GET(`/my/orders/${filter}`);
-export const useMyOrdersOfFilter = (filter: OrderFilter) =>
-  useQuery(["filteredOrders"], () => getMyOrders(filter));
+const getMyOrders = (): Promise<MyOrderType[]> => GET(`/my/orders`);
+export const useMyOrders = () =>
+  useQuery(["filteredOrders"], () => getMyOrders());
 
 interface DateRange {
   from: Date;

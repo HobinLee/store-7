@@ -1,7 +1,7 @@
 import { CartResponse } from "@/cart/dto/cart-response";
 import { Review } from "@/product/entity/review";
 import { User } from "../entity/user";
-import { Order } from "@/order/entity/order";
+import { Order, OrderStatus } from "@/order/entity/order";
 import { Destination } from "@/destination/entity/destination";
 import { Wish } from "../entity/wish";
 
@@ -71,7 +71,7 @@ export class MyOredersResponse {
   productOptionId: number;
   amount: number;
   destination: string;
-  status: string;
+  status: OrderStatus;
   createdAt: Date;
   reviewId: number;
 

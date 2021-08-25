@@ -1,3 +1,4 @@
+import { OrderStatus } from "../entity/order";
 import { Order } from "../entity/order";
 
 export class OrderResponse {
@@ -8,7 +9,7 @@ export class OrderResponse {
   productOptionId: number;
   amount: number;
   destination: string;
-  status: string;
+  status: OrderStatus;
   request: string;
   price: number;
   productName: string;

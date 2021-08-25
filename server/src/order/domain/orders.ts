@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository, Between } from "typeorm";
 import { CreateOrderRequest } from "../dto/order-request";
 import { Order } from "../entity/order";
+import { OrderStatus } from "@/order/entity/order";
 
 @Injectable()
 export class Orders {
@@ -19,7 +20,7 @@ export class Orders {
 
   async findOrdersByUserId(userId: number) {
     return await this.orderRepository.find({
-      relations: ["user", "product", "product.images"],
+      relations: ["user", "product", "product.images", "review"],
       where: { user: { id: userId } },
     });
   }
@@ -66,7 +67,7 @@ export class Orders {
     this.orderRepository.insert(order);
   }
 
-  async updateOrderStatus(id: number, status: string) {
+  async updateOrderStatus(id: number, status: OrderStatus) {
     return await this.orderRepository.update({ id }, { status });
   }
 }
