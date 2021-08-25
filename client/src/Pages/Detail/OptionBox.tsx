@@ -8,37 +8,35 @@ import { convertToKRW } from "@/utils/util";
 import { gap, media } from "@/styles/theme";
 import { postCart } from "@/api/carts";
 import { moveTo } from "@/Router";
-import { useRecoilValue } from "recoil";
-import { loginState } from "@/store/state";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { isMyWishInDetail, loginState } from "@/store/state";
 import { CartType, ProductType } from "@/shared/type";
 import { InputType } from "@/hooks/useInput";
-import { postWishProduct, deleteWishProduct } from "@/api/my";
-import { QueryObserverResult } from "react-query";
 import { useCallback } from "react";
 
 type OptionBoxProps = {
   numValue: InputType;
   handleClickNumVal: Function;
   product: ProductType;
-  refetch?: () => Promise<QueryObserverResult<unknown>>;
+  isMyWish: boolean;
 };
 
 const OptionBox = ({
   numValue,
   handleClickNumVal,
   product,
-  refetch,
+  isMyWish,
 }: OptionBoxProps) => {
   const [isCartAlertShown, setIsCartAlertShown] = useState(false);
+  const setIsMyWish = useSetRecoilState(isMyWishInDetail);
 
   const productId = product.id;
   const isLoggedin = useRecoilValue(loginState);
-  const handlePostWish = async () => {
-    product.isWish
-      ? await deleteWishProduct(productId)
-      : await postWishProduct(productId);
-    refetch();
+
+  const handleClickWish = async () => {
+    setIsMyWish((isMyWish) => !isMyWish);
   };
+
   const handlePostCart = async () => {
     try {
       if (isLoggedin && status !== "loading") {
@@ -134,8 +132,8 @@ const OptionBox = ({
       <div className="buttons">
         <div>
           <WishIcon
-            onClick={handlePostWish}
-            className={product.isWish ? "is-wish" : "not-wish"}
+            onClick={handleClickWish}
+            className={isMyWish ? "is-wish" : "not-wish"}
           />
         </div>
         <Button onClick={handlePostCart}>장바구니</Button>
@@ -253,12 +251,14 @@ const Wrapper = styled.div`
     justify-content: flex-end;
     ${gap("1rem")}
     .is-wish {
+      cursor: pointer;
       fill: ${({ theme }) => theme.color.primary1};
       &:hover {
       }
     }
 
     .not-wish {
+      cursor: pointer;
       stroke: ${({ theme }) => theme.color.primary1};
       fill: transparent;
       stroke-width: 2rem;

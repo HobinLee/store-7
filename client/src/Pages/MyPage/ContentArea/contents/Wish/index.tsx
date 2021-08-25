@@ -5,8 +5,6 @@ import { useMyWishes } from "@/api/my";
 import ProductList from "@/Components/ProductList";
 
 const Wish = () => {
-  const { status, data: wishes } = useMyWishes();
-
   return (
     <Wrapper data-testid="test__wishlist">
       <Section
@@ -15,7 +13,7 @@ const Wish = () => {
         lineType="long1"
         data-testid="test__section"
       >
-        {status !== "loading" && <ProductList products={wishes} />}
+        <ProductList useQuery={useMyWishes} />
       </Section>
     </Wrapper>
   );

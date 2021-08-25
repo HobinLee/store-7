@@ -15,6 +15,7 @@ export interface FilterType {
 export const filters: FilterType[] = [
   {
     name: "기본순",
+    value: "default",
   },
   {
     name: "인기순",

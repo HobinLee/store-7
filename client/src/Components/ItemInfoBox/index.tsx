@@ -50,7 +50,7 @@ const LoggedInNumInput = ({
   setCartItems: Dispatch<SetStateAction<CartType>>;
 }) => {
   const numValue = useInput(amount.toString());
-  const debouncedNumValue = useDebounce(numValue.value, 200);
+  const debouncedNumValue = useDebounce<string>(numValue.value, 200);
 
   const isLoggedin = useRecoilValue(loginState);
 
