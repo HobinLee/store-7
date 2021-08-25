@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { QuestionType } from "@/shared/type";
-import { gap } from "@/styles/theme";
+import { gap, media } from "@/styles/theme";
 import { YYYY_M_D_H_m } from "@/utils/util";
 import { Link } from "@/Router";
 import { deleteQuestion } from "@/api/questions";
@@ -119,6 +119,9 @@ const Wrapper = styled.div<{ isAnswered: boolean }>`
     & > div {
       flex: 1;
     }
+    ${media.mobile} {
+      flex-direction: column;
+    }
   }
   .content {
     display: flex;
@@ -152,6 +155,10 @@ const Wrapper = styled.div<{ isAnswered: boolean }>`
   .content + .content {
     border-left: 0.1rem solid ${({ theme }) => theme.color.light_grey2};
     padding-left: 2rem;
+    ${media.mobile} {
+      margin-top: 1rem;
+      border-left: 0;
+    }
   }
 `;
 
