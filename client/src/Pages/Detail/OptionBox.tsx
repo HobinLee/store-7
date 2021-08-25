@@ -180,11 +180,17 @@ const OptionBox = ({
 export default OptionBox;
 
 const Wrapper = styled.div`
+  position: sticky;
+  position: -webkit-sticky;
+  top: 23.5rem;
+  width: 35rem;
+  padding: 2rem 0;
+  box-sizing: border-box;
+
   .select-option {
     ${({ theme }) => theme.flexCenter}
     ${({ theme }) => theme.font.medium}
     justify-content: space-around;
-    margin-top: 5rem;
     background: ${({ theme }) => theme.color.background};
     width: 100%;
     padding: 1.5rem 0;

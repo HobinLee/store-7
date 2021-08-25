@@ -30,7 +30,6 @@ export const tabs = [
 
 const DetailPage = () => {
   const productId = location.pathname.split("detail/")[1];
-  const [yOffset, setYOffset] = useState(0);
 
   const {
     status,
@@ -56,18 +55,6 @@ const DetailPage = () => {
   };
 
   const [isZoomOpened, setIsZoomOpened] = useState(false);
-
-  useEffect(() => {
-    addEventListener("scroll", () => {
-      setYOffset(window.pageYOffset);
-    });
-
-    return () => {
-      removeEventListener("scroll", () => {
-        setYOffset(window.pageYOffset);
-      });
-    };
-  }, []);
 
   return (
     status !== "loading" && (
@@ -133,18 +120,20 @@ const DetailPage = () => {
           </Tab>
 
           <div className="bottom-wrapper">
-            {tabs.map((tab) => (
-              <TabPage data-testid={tab.title} key={tab.title}>
-                {tab.id === selectedTab && tab.component}
-              </TabPage>
-            ))}
-          </div>
-
-          {yOffset > topHeight && selectedTab === "first" && (
-            <div className="option-box">
-              <OptionBox {...{ numValue, handleClickNumVal, product }} />
+            <div>
+              {tabs.map(
+                (tab) =>
+                  tab.id === selectedTab && (
+                    <TabPage data-testid={tab.title} key={tab.title}>
+                      {tab.component}
+                    </TabPage>
+                  )
+              )}
+              <div className="option-box">
+                <OptionBox {...{ numValue, handleClickNumVal, product }} />
+              </div>
             </div>
-          )}
+          </div>
         </Scroll>
         <Footer />
       </Wrapper>
@@ -222,7 +211,6 @@ const Info = styled.div`
 
 const Scroll = styled.div<{ selectedTab: string }>`
   width: 100%;
-  padding-right: ${({ selectedTab }) => selectedTab === "first" && "25rem"};
   ${media.mobile} {
     padding: 0;
   }
@@ -230,29 +218,25 @@ const Scroll = styled.div<{ selectedTab: string }>`
   margin-top: 10rem;
 
   .bottom-wrapper {
-    box-sizing: border-box;
+    ${({ theme }) => theme.flexCenter};
     width: 100%;
+    box-sizing: border-box;
     padding: 0 5rem;
+    position: relative;
+    & > div {
+      width: 120rem;
+      padding: 3rem 0;
+      display: flex;
+      ${gap("3rem")}
+      img {
+        width: 80rem;
+      }
+    }
   }
 
   .option-box {
-    position: fixed;
-    right: 3rem;
-    bottom: 3rem;
     .total-price {
       margin-top: 3rem;
-    }
-    &::after {
-      content: "";
-      z-index: -1;
-      width: 50rem;
-      height: 33.5rem;
-      border-radius: 1rem;
-      position: absolute;
-      top: 3rem;
-      left: -2rem;
-      opacity: 0.5;
-      background: #fff;
     }
   }
 `;
@@ -261,7 +245,7 @@ const Tab = styled.div`
   ${({ theme }) => theme.flexCenter}
   position: -webkit-sticky;
   position: sticky;
-
+  ${gap("2rem")}
   top: 14.6rem;
   background: ${({ theme }) => theme.color.background};
   z-index: 1;
