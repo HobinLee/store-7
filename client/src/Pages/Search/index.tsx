@@ -13,7 +13,11 @@ const SearchPage = ({ params }) => {
         <div className="search-page__keyword">
           <span>{params.keyword}</span>
         </div>
-        <ProductList useQuery={useSearchProducts} params={params} />
+        <ProductList
+          useQuery={useSearchProducts}
+          params={params}
+          pagination={true}
+        />
       </Contents>
       <Footer />
     </Wrapper>
