@@ -43,6 +43,7 @@ const CategoryPage = ({ params }) => {
           <ProductList
             useQuery={useProducts}
             params={{ ...params, order: filter.value }}
+            pagination={true}
           />
         </div>
       </div>

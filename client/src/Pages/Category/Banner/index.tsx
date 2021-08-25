@@ -39,7 +39,7 @@ const CategoryBanner = ({ params }: { params: CategoryParamType }) => {
   return (
     <>
       <BGWrapper>
-        <Image src={info.backgroundImg} alt="배경 이미지" />
+        <img src={info.backgroundImg} alt="배경 이미지" />
       </BGWrapper>
       <Wrapper fontColor={info.fontColor} font={info.font}>
         <div className="category-info">
