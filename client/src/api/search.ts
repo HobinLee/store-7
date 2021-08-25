@@ -19,8 +19,8 @@ const getSearchedProducts = async (searchParams: SearchParams) => {
     moveTo("/");
     return [];
   }
-  const result = await GET(`/products/search`, searchParams);
-  return result;
+
+  return GET(`/products/search`, searchParams);
 };
 
 export const useSearchProducts = (searchParams: SearchParams) =>
