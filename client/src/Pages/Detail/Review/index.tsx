@@ -1,12 +1,9 @@
 import styled from "styled-components";
-import Button from "@/Components/Button";
 import Progress from "@/Components/Progress";
 import ReviewBox from "./ReviewBox";
 import { useState } from "react";
-import ReviewModal from "./ReviewModal";
 import { gap } from "@/styles/theme";
 import { useProductReviews } from "@/api/products";
-import { useEffect } from "react";
 
 const Review = () => {
   const [isModalOpened, setIsModalOpened] = useState(false);
@@ -72,8 +69,6 @@ const Review = () => {
         {reviews.reviews.map((review) => (
           <ReviewBox key={review.id} {...review} />
         ))}
-
-        {/* {isModalOpened && <ReviewModal {...{ handleModalOpen }} />} */}
       </div>
     )
   );

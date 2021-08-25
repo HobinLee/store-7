@@ -1,4 +1,3 @@
-import { GoodIcon, ReviewIcon } from "@/assets";
 import ReviewModal from "@/Pages/Detail/Review/ReviewModal";
 import { Link } from "@/Router";
 import { MyOrderType, OrderStatus } from "@/shared/type";
@@ -53,7 +52,9 @@ const OrderBox = ({
               {convertToKRW(price)} x {amount}
             </div>
           </div>
-          {isModalOpened && <ReviewModal {...{ handleModalOpen, id }} />}
+          {isModalOpened && (
+            <ReviewModal {...{ handleModalOpen, id, productId }} />
+          )}
         </div>
       </Wrapper>
       {type === OrderStatus.Arrival &&

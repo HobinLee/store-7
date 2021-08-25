@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import styled, { css } from "styled-components";
 import Image from "@/Components/Image";
-import { CategoryParamType, CategoryType, MainCategoryType } from "..";
+import { CategoryParamType, CategoryType, MainCategoryType } from "../";
 
 interface CategoryInfo extends MainCategoryType {
   subCategoryName?: string;
@@ -36,6 +36,7 @@ const CategoryBanner = ({ params }: { params: CategoryParamType }) => {
   useEffect(() => {
     setInfo(currentCategory(params));
   }, [params]);
+
   return (
     <>
       <BGWrapper>

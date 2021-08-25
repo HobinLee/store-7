@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { LINE_LINK } from "@/assets";
 import { gap, media } from "@/styles/theme";
 
 export const PageWrapper = styled.div`

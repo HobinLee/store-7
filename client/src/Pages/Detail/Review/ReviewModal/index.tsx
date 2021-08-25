@@ -4,12 +4,21 @@ import useInput from "@/hooks/useInput";
 import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
 import { gap } from "@/styles/theme";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { postReview } from "@/api/reviews";
-import { ChangeEventHandler } from "react";
 import { useRef } from "react";
 
-const ReviewModal = ({ handleModalOpen, id: orderId }) => {
+interface ReviewModalProps {
+  handleModalOpen: Function;
+  id: number;
+  productId: number;
+}
+
+const ReviewModal = ({
+  handleModalOpen,
+  id: orderId,
+  productId,
+}: ReviewModalProps) => {
   const reviewVal = useInput("");
   const rate = useRef("");
   const [file, setFile] = useState<File | undefined>(undefined);
@@ -29,14 +38,11 @@ const ReviewModal = ({ handleModalOpen, id: orderId }) => {
 
   const hanleSubmit = async () => {
     const formData = new FormData();
-    formData.append("orderId", orderId);
+    formData.append("orderId", orderId.toString());
+    formData.append("productId", productId.toString());
     formData.append("rate", rate.current);
     formData.append("content", reviewVal.value);
     file && formData.append("file", file);
-    console.log("form");
-    console.log("orderId", orderId);
-    console.log("rate", rate.current);
-    console.log("content", reviewVal.value);
     await postReview(formData);
   };
 

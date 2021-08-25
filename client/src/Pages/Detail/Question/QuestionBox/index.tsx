@@ -23,7 +23,6 @@ const QuestionBox = ({
   handleClickEditButton?: (question: QuestionForm) => void;
 }) => {
   const isAnswered = question.answer ? true : false;
-  console.log(1, question);
   const pathname = location.pathname.split("/")[1];
 
   return (
