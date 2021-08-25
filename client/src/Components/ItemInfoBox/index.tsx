@@ -174,7 +174,7 @@ const ItemInfoBox = ({
 const Wrapper = styled.div`
   ${({ theme }) => theme.font.medium};
   width: 100%;
-  background-color: ${({ theme }) => theme.color.background};
+  background: white;
   width: 100%;
   border-radius: 1rem;
   padding: 2rem;

@@ -14,6 +14,7 @@ export const GlobalStyle = createGlobalStyle`
     font-display: fallback;
     overflow-x: hidden;
     color: ${({ theme }) => theme.color.title_active};
+    background: #f9f9f9;
     a {
       text-decoration: none;
     }

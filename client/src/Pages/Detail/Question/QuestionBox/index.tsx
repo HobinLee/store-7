@@ -1,11 +1,18 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { QuestionType } from "@/shared/type";
 import { gap } from "@/styles/theme";
 import { YYYY_M_D_H_m } from "@/utils/util";
 import { useState } from "react";
 import QuestionModal from "../QuestionModal";
+import { Link } from "@/Router";
+import { deleteQuestion } from "@/api/questions";
+import { QueryObserverResult } from "react-query";
 
-const QuestionBox = (Question: QuestionType) => {
+const QuestionBox = (
+  Question: QuestionType &&,
+  refetch?: () => Promise<QueryObserverResult<unknown>>
+) => {
+  console.log(refetch);
   const [isModalOpened, setIsModalOpened] = useState(false);
   const handleModalOpen = (val: boolean) => {
     if (!val) {
@@ -16,12 +23,23 @@ const QuestionBox = (Question: QuestionType) => {
     } else setIsModalOpened(val);
   };
   const isAnswered = Question.answer ? true : false;
+  const handleClickDeleteButton = async () => {
+    const result = await deleteQuestion({ id: Question.id });
+    console.log(result);
+    console.log(refetch);
+    refetch();
+  };
   return (
     <Wrapper isAnswered={isAnswered} data-testid="test__question-box">
+      <div className="bar" />
       <Header>
-        <div className="author">{Question.authorName}</div>
+        <Link to={`/detail/${Question.product.id}`}>
+          <div className="product">{Question.product.name} /</div>
+        </Link>
+        <div className="author">{Question.authorName} /</div>
         <div className="date">{YYYY_M_D_H_m(Question.createdAt)}</div>
         <button onClick={() => handleModalOpen(true)}>수정하기</button>
+        <button onClick={handleClickDeleteButton}>삭제하기</button>
       </Header>
 
       <div className="container">
@@ -59,11 +77,15 @@ const Wrapper = styled.div<{ isAnswered: boolean }>`
   background: white;
   ${({ theme }) => theme.font.medium}
   ${({ theme }) => theme.shadow}
-  & + & {
-    margin-top: 3rem;
-  }
+  
   width: 100%;
   border-radius: 1rem;
+
+  .bar {
+    background: #2ac1bc;
+    height: 1rem;
+    border-radius: 1rem 1rem 0 0;
+  }
 
   .status {
     color: ${({ theme, isAnswered }) =>
@@ -85,7 +107,6 @@ const Wrapper = styled.div<{ isAnswered: boolean }>`
     div {
       font-size: 3.5rem;
       font-weight: 900;
-      color: ${({ theme }) => theme.color.primary1};
       color: #c24d46;
       margin-right: 2rem;
     }
@@ -102,15 +123,15 @@ const Wrapper = styled.div<{ isAnswered: boolean }>`
 `;
 
 const Header = styled.div`
-  ${({ theme }) => theme.flexCenter}
-  justify-content: flex-start;
+  display: flex;
+  align-items: center;
   border-bottom: 0.1rem solid ${({ theme }) => theme.color.light_grey2};
-  padding: 1rem 2rem;
-  background: #2ac1bc;
-  border-radius: 1rem 1rem 0 0;
+  padding: 1.5rem 2rem 1.2rem 2rem;
 
   ${gap("1rem")}
-
+  .product {
+    ${({ theme }) => theme.font.medium}
+  }
   .author {
     ${({ theme }) => theme.font.medium};
     font-weight: 600;
@@ -118,6 +139,15 @@ const Header = styled.div`
 
   .date {
     ${({ theme }) => theme.font.small};
+  }
+  button {
+    ${({ theme }) => css`
+      ${theme.borderRadius.small};
+      ${theme.flexCenter};
+      background: ${theme.color.light_grey2};
+    `}
+    cursor: pointer;
+    padding: 0.5rem 1rem;
   }
 `;
 
