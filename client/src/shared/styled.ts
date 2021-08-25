@@ -48,13 +48,6 @@ export const DropdownItem = styled.div`
   }
 `;
 
-export const SignatureLine = styled.div<{ type: string }>`
-  width: 100%;
-  height: 3rem;
-  background: url(${({ type }) => LINE_LINK[type]}) no-repeat;
-  background-size: contain;
-`;
-
 export const ItemList = styled.ul`
   display: flex;
   margin-top: 2rem;

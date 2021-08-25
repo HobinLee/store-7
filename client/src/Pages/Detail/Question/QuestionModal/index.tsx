@@ -134,6 +134,8 @@ const QuestionInput = styled.textarea`
   border: 0.1rem solid ${({ theme }) => theme.color.line};
   height: 10rem;
   padding: 1.5rem;
+  ${({ theme }) => theme.font.medium};
+  ${({ theme }) => theme.borderRadius.medium};
 `;
 
 const SubmitBtn = styled(Button)`

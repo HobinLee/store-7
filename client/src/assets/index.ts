@@ -4,7 +4,6 @@ export { default as Banner3 } from "./banner3.gif";
 export { default as Logo } from "./logo.png";
 export { default as MenuIcon } from "./menu.svg";
 export { default as Close } from "./close.svg";
-export { LINE_LINK } from "./link-image";
 export { default as Back } from "./back.svg";
 export { default as Arrow } from "./arrow.svg";
 export { default as Check } from "./check.svg";

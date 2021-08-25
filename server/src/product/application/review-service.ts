@@ -20,6 +20,7 @@ export class ReviewService {
       ...review,
       image: fileName,
       order: { id: review.orderId },
+      product: { id: review.productId },
     });
   }
   async updateReview(id: number, review: ReviewPatchRequest) {

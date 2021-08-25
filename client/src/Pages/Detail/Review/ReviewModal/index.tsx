@@ -4,12 +4,21 @@ import useInput from "@/hooks/useInput";
 import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
 import { gap } from "@/styles/theme";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { postReview } from "@/api/reviews";
-import { ChangeEventHandler } from "react";
 import { useRef } from "react";
 
-const ReviewModal = ({ handleModalOpen, id: orderId }) => {
+interface ReviewModalProps {
+  handleModalOpen: Function;
+  id: number;
+  productId: number;
+}
+
+const ReviewModal = ({
+  handleModalOpen,
+  id: orderId,
+  productId,
+}: ReviewModalProps) => {
   const reviewVal = useInput("");
   const rate = useRef("");
   const [file, setFile] = useState<File | undefined>(undefined);
@@ -29,14 +38,11 @@ const ReviewModal = ({ handleModalOpen, id: orderId }) => {
 
   const hanleSubmit = async () => {
     const formData = new FormData();
-    formData.append("orderId", orderId);
+    formData.append("orderId", orderId.toString());
+    formData.append("productId", productId.toString());
     formData.append("rate", rate.current);
     formData.append("content", reviewVal.value);
     file && formData.append("file", file);
-    console.log("form");
-    console.log("orderId", orderId);
-    console.log("rate", rate.current);
-    console.log("content", reviewVal.value);
     await postReview(formData);
   };
 
@@ -45,14 +51,18 @@ const ReviewModal = ({ handleModalOpen, id: orderId }) => {
       <Wrapper onSubmit={hanleSubmit}>
         <div className="content">
           <div className="content__label">별점 평가</div>
-          <Rating rate={rate} />
+          <span className="rating">
+            <Rating rate={rate} />
+          </span>
         </div>
         <div className="content">
           <div className="content__label">사진 첨부 (선택)</div>
 
-          <div className="content__preview">
-            <img src={previewURL} />
-          </div>
+          {previewURL && (
+            <div className="content__preview">
+              <img src={previewURL} />
+            </div>
+          )}
           <label className="upload-btn" htmlFor="img-upload">
             사진 업로드 (최대 1장)
           </label>
@@ -101,6 +111,11 @@ const Wrapper = styled.form`
         height: 100%;
       }
     }
+    .rating {
+      transform: scale(1.8);
+      width: 15rem;
+      margin-left: 6rem;
+    }
   }
   .upload-btn {
     ${({ theme }) => theme.font.large}
@@ -118,6 +133,7 @@ const ReivewInput = styled.textarea`
   border: 0.1rem solid ${({ theme }) => theme.color.line};
   height: 10rem;
   padding: 1.5rem;
+  ${({ theme }) => theme.borderRadius.medium};
 `;
 
 const SubmitBtn = styled(Button)`

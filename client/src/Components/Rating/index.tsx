@@ -10,6 +10,7 @@ export type RatingProps = {
   className?: string;
   readOnly?: boolean;
   rate?: React.MutableRefObject<string>;
+  color?: string;
 };
 
 const Rating = ({
@@ -18,25 +19,31 @@ const Rating = ({
   className,
   readOnly = false,
   rate,
+  color,
 }: RatingProps) => {
   const CustomRating = withStyles({
     iconFilled: {
-      color: theme.color.primary1,
+      color: color || theme.color.primary1,
+    },
+    iconEmpty: {
+      color: color || theme.color.primary1,
+      opacity: 0.3,
     },
   })(MRating);
 
   return (
-    <div {...{ className }}>
+    <span {...{ className }}>
       <CustomRating
+        name="size-large"
         role={!readOnly ? "button" : "article"}
         defaultValue={value}
         precision={PRECISION}
         readOnly={readOnly}
         size={size}
-        name="rating"
+        className="MuiRating-sizeLarge"
         onChange={(e, newValue) => (rate.current = String(newValue))}
       />
-    </div>
+    </span>
   );
 };
 
