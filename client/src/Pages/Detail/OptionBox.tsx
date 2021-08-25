@@ -133,7 +133,10 @@ const OptionBox = ({
 
       <div className="buttons">
         <div>
-          <WishIcon className={product.isWish ? "is-wish" : "not-wish"} />
+          <WishIcon
+            onClick={handlePostWish}
+            className={product.isWish ? "is-wish" : "not-wish"}
+          />
         </div>
         <Button onClick={handlePostCart}>장바구니</Button>
         <Button onClick={handleBuyImmediately} primary>

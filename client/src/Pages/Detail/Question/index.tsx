@@ -50,6 +50,7 @@ const Question = () => {
 };
 
 const QuestionsWrapper = styled.div`
+  margin-top: 3rem;
   ${gap("3rem", "column")}
 `;
 
