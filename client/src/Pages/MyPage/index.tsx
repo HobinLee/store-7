@@ -39,12 +39,6 @@ const ContentHeader = ({ setCurrent, current }) => {
   );
 };
 
-const ContentHeaderWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  margin-bottom: 10rem;
-`;
-
 export const Greeting = () => {
   const { status, data: myInfo } = useMyInfo();
   return (
@@ -65,6 +59,12 @@ export const Greeting = () => {
     </GreetingWrapper>
   );
 };
+
+const ContentHeaderWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  margin-bottom: 10rem;
+`;
 
 const GreetingWrapper = styled.div`
   margin-right: 10em;

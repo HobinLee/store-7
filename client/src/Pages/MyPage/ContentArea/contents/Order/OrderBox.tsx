@@ -6,6 +6,8 @@ import { theme } from "@/styles/theme";
 import { convertToKRW, YYYYMMDD_DOT } from "@/utils/util";
 import { useState } from "react";
 import styled, { css } from "styled-components";
+import { Back } from "@/assets";
+import { gap } from "@/styles/theme";
 
 const OrderBox = ({
   id,
@@ -33,7 +35,6 @@ const OrderBox = ({
   return (
     <Container>
       <Wrapper type={type}>
-        <div className="bar"></div>
         <div className="body">
           <Link to={`/detail/${productId}`}>
             <div className="image">
@@ -49,33 +50,39 @@ const OrderBox = ({
             </Link>
             <div className="create-at">{YYYYMMDD_DOT(createdAt)}</div>
             <div className="price">
-              {convertToKRW(price)} X {amount}
+              {convertToKRW(price)} x {amount}
             </div>
           </div>
           {isModalOpened && <ReviewModal {...{ handleModalOpen, id }} />}
         </div>
       </Wrapper>
-      {type === OrderStatus.Arrival && (
-        <ReviewTag isReviewed={reviewId !== 0}>
-          <button disabled={!!reviewId} onClick={() => handleModalOpen(true)}>
-            {reviewId ? (
-              <>
-                <GoodIcon />
-                리뷰ㄱㅅ
-              </>
-            ) : (
-              <>
-                <ReviewIcon />
-                리뷰써줘
-              </>
-            )}
-          </button>
-        </ReviewTag>
-      )}
+      {type === OrderStatus.Arrival &&
+        (reviewId ? (
+          <div className="review-badge">리뷰완료</div>
+        ) : (
+          <ReviewTag
+            isReviewed={reviewId !== 0}
+            onClick={() => handleModalOpen(true)}
+          >
+            <div>리뷰쓰기</div>
+            <Back className="next-btn" />
+          </ReviewTag>
+        ))}
     </Container>
   );
 };
 const Container = styled.div`
+  position: relative;
+  .review-badge {
+    background: ${({ theme }) => theme.color.primary3};
+    color: #fff;
+    padding: 0.7rem 1rem 0.4rem 1rem;
+    border-radius: 2rem;
+    position: absolute;
+    top: -1rem;
+    left: 1rem;
+    ${({ theme }) => theme.font.small}
+  }
   & + & {
     margin-top: 2rem;
   }
@@ -83,21 +90,15 @@ const Container = styled.div`
 
 const Wrapper = styled.div<{ type: string }>`
   width: 100%;
-  border-radius: 1rem 1rem 0 0;
+  border-radius: 1rem;
   display: flex;
   background: white;
+
   ${({ theme }) =>
     css`
       ${theme.shadow}
       ${theme.font.medium}
     `}
-
-  .bar {
-    background: ${({ theme, type }) =>
-      type === "delivered" ? theme.color.primary1 : "#eb4d26"};
-    width: 0.7rem;
-    border-radius: 1rem 0 0 1rem;
-  }
 
   .body {
     display: flex;
@@ -107,12 +108,13 @@ const Wrapper = styled.div<{ type: string }>`
       & > img {
         display: block;
         width: 100%;
+        border-radius: 1rem 0 0 1rem;
       }
     }
     .contents {
       flex: 1;
       padding: 1rem;
-      color: #5d5d5d;
+      position: relative;
       h3 {
         width: 100%;
         font-weight: 700;
@@ -123,8 +125,12 @@ const Wrapper = styled.div<{ type: string }>`
       }
 
       .create-at {
-        ${({ theme }) => theme.font.small}
+        ${({ theme }) => theme.font.small};
+        color: ${({ theme }) => theme.color.body};
         letter-spacing: 0.1rem;
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
       }
 
       .price {
@@ -136,36 +142,27 @@ const Wrapper = styled.div<{ type: string }>`
 `;
 
 const ReviewTag = styled.div<{ isReviewed: boolean }>`
-  display: flex;
+  ${theme.flexCenter}
   justify-content: flex-end;
+  cursor: pointer;
+  color: ${({ theme }) => theme.color.primary1};
+  ${({ theme }) => theme.font.medium};
+  ${gap("1rem")}
+  padding-top: 0.7rem;
+  font-weight: 800;
+
+  div {
+    padding-top: 0.7rem;
+  }
+
+  .next-btn {
+    transform: rotate(180deg);
+  }
+  fill: ${({ theme }) => theme.color.primary1};
 
   &:hover {
     color: ${({ theme }) => theme.color.primary3};
-  }
-
-  & > button {
-    ${({ theme, isReviewed }) => css`
-      ${theme.flexCenter}
-      ${theme.font.medium}
-      background: ${({ theme }) => theme.color.primary1};
-      color: white;
-
-      ${isReviewed
-        ? css`
-            background: ${({ theme }) => theme.color.primary1};
-            background: #2ac1bc;
-          `
-        : css`
-            background: red;
-          `}
-    `}
-    & > svg {
-      margin-right: 1rem;
-    }
-
-    box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
-    border-radius: 0 0 0.5rem 0.5rem;
-    padding: 0.5rem 1.5rem;
+    fill: ${({ theme }) => theme.color.primary3};
   }
 `;
 

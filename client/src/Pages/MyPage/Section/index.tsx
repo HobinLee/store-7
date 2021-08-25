@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import SignatureLine from "@/Components/SignatureLine";
 
 export interface SectionProps {
   title: string;
@@ -16,7 +15,6 @@ const Section = ({
 }: SectionProps) => {
   return (
     <SectionWrapper data-testid="test__section">
-      <SignatureLine type={lineType} height="1" />
       <div className="section__title">
         <h3>{title}</h3>
         <p>{description}</p>
