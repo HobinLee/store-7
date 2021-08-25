@@ -1,15 +1,12 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { useEffect } from "react";
-import { useRef } from "react";
+import { useLazyLoad } from "@/hooks/useLazyLoad";
 
 export interface ImageProps {
   src: string;
   alt?: string;
   lazyload?: boolean;
 }
-
-const THRESHOLD = 0.05;
 
 const Image = ({
   src,
@@ -18,27 +15,10 @@ const Image = ({
 }: ImageProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [imageSrc, setImageSrc] = useState(lazyload ? null : src);
-  /* 타겟 엘리먼트 */
-  const target = useRef(null);
 
-  useEffect(() => {
-    if (lazyload && target.current) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              observer.unobserve(target.current);
-              setImageSrc(src);
-            }
-          });
-        },
-        { threshold: THRESHOLD }
-      );
-      observer.observe(target.current);
+  const setImage = () => setImageSrc(src);
 
-      return () => observer.disconnect();
-    }
-  }, [target.current]);
+  const { ref } = useLazyLoad(setImage);
 
   const handleImageLoaded = () => {
     setIsLoading(false);
@@ -46,7 +26,7 @@ const Image = ({
 
   return (
     <>
-      {isLoading && <SkeletonImage ref={target} />}
+      {isLoading && <SkeletonImage ref={ref} />}
       {imageSrc && <img src={imageSrc} onLoad={handleImageLoaded} alt={alt} />}
     </>
   );

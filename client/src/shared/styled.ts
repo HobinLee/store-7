@@ -1,5 +1,6 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { LINE_LINK } from "@/assets";
+import LoadingSpinner from "@/assets/spinner.png";
 import { gap, media } from "@/styles/theme";
 
 export const PageWrapper = styled.div`
@@ -67,20 +68,21 @@ export const ItemList = styled.ul`
   ${gap("1rem")}
 `;
 
-export const ProductWrapList = styled.ul`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  li {
-    padding: 1rem;
-    box-sizing: border-box;
-    flex: 0 0 25%;
-  }
-  ${media.mobile} {
-    li {
-      padding: 0.5rem;
-      flex: 0 0 50%;
-    }
-  }
+export const Loading = styled.img<{ primary?: boolean }>`
+  width: 20px;
+  ${({ primary }) =>
+    primary
+      ? css`
+          filter: invert(98%) sepia(12%) saturate(78%) hue-rotate(137deg)
+            brightness(124%) contrast(100%);
+        `
+      : css`
+          filter: invert(88%);
+        `}
+
+  animation: rotate 0.8s ease infinite;
 `;
+
+Loading.defaultProps = {
+  src: LoadingSpinner,
+};

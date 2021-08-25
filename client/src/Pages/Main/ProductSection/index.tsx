@@ -9,15 +9,13 @@ export interface ProductSectionProps extends SectionType {}
 const MAIN_PAGE_PRODUCTS_SIZE = 4;
 
 const ProductSection = ({ title, type }: ProductSectionProps) => {
-  const { data: products } = useProducts({
-    order: type,
-    size: MAIN_PAGE_PRODUCTS_SIZE,
-  });
-
   return (
     <SectionWrapper {...{ title }}>
       <div className="title">{title}</div>
-      <ProductList products={products} />
+      <ProductList
+        useQuery={useProducts}
+        params={{ order: type, size: MAIN_PAGE_PRODUCTS_SIZE }}
+      />
     </SectionWrapper>
   );
 };
