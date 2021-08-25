@@ -2,7 +2,7 @@ import Header from "@/Components/Header";
 import OptionBox from "./OptionBox";
 import useInput from "@/hooks/useInput";
 import { PageWrapper, Contents } from "@/shared/styled";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import Review from "./Review";
 import Question from "./Question";
@@ -14,18 +14,18 @@ import { gap, media } from "@/styles/theme";
 import { convertToKRW } from "@/utils/util";
 import { useProduct } from "@/api/products";
 import properties from "@/config/properties";
+import { useCallback } from "react";
 
-const topHeight = 740;
+const topHeight = innerWidth > 500 ? 700 : 400;
 
 export const tabs = [
   {
     id: "first",
     title: "상품상세정보",
-    component: <DetailInfo />,
   },
-  { id: "seconed", title: "배송/교환/반품 안내", component: <Guide /> },
-  { id: "third", title: "상품후기", component: <Review /> },
-  { id: "fourth", title: "상품문의", component: <Question /> },
+  { id: "second", title: "배송/교환/반품 안내" },
+  { id: "third", title: "상품후기" },
+  { id: "fourth", title: "상품문의" },
 ];
 
 const DetailPage = () => {
@@ -50,11 +50,26 @@ const DetailPage = () => {
 
   const [selectedTab, setSelectedTab] = useState("first");
   const handleSelectTab = (val: string) => {
-    window.scrollTo({ top: topHeight + 1, behavior: "smooth" });
+    window.scrollTo({ top: topHeight, behavior: "smooth" });
     setSelectedTab(val);
   };
 
   const [isZoomOpened, setIsZoomOpened] = useState(false);
+
+  const RenderTabComponent = useCallback(() => {
+    switch (selectedTab) {
+      case "first":
+        return <DetailInfo {...{ product }} />;
+      case "second":
+        return <Guide />;
+      case "third":
+        return <Review />;
+      case "fourth":
+        return <Question />;
+      default:
+        return;
+    }
+  }, [product, selectedTab]);
 
   return (
     status !== "loading" && (
@@ -121,14 +136,9 @@ const DetailPage = () => {
 
           <div className="bottom-wrapper">
             <div>
-              {tabs.map(
-                (tab) =>
-                  tab.id === selectedTab && (
-                    <TabPage data-testid={tab.title} key={tab.title}>
-                      {tab.component}
-                    </TabPage>
-                  )
-              )}
+              <TabPage>
+                <RenderTabComponent />
+              </TabPage>
               <div className="option-box">
                 <OptionBox {...{ numValue, handleClickNumVal, product }} />
               </div>
@@ -161,20 +171,25 @@ const ZoomLens = styled.div`
 
 const InfoBox = styled.div`
   ${({ theme }) => theme.flexCenter}
+  align-items: flex-start;
   margin-top: 5rem;
   width: 100%;
   height: 50rem;
   box-sizing: border-box;
   ${gap("5rem")}
   .thumbnail {
-    width: 50rem;
-    height: 100%;
+    width: 100%;
+    max-height: 50rem;
     object-fit: cover;
     background-color: lightgray;
   }
   .img-box {
     cursor: zoom-in;
     position: relative;
+  }
+  ${media.tablet} {
+    height: 40rem;
+    padding: 0 2rem;
   }
 `;
 
@@ -215,7 +230,7 @@ const Scroll = styled.div<{ selectedTab: string }>`
     padding: 0;
   }
   box-sizing: border-box;
-  margin-top: 10rem;
+  margin-top: 5rem;
 
   .bottom-wrapper {
     ${({ theme }) => theme.flexCenter};
@@ -229,14 +244,24 @@ const Scroll = styled.div<{ selectedTab: string }>`
       display: flex;
       ${gap("3rem")}
       img {
-        width: 80rem;
+        width: 100%;
       }
     }
   }
 
   .option-box {
+    ${media.mobile} {
+      display: none;
+    }
+    ${media.tablet} {
+      button {
+        ${({ theme }) => theme.font.small};
+        ${({ theme }) => theme.borderRadius.small};
+        padding: 1rem 1.5rem;
+      }
+    }
     .total-price {
-      margin-top: 3rem;
+      margin-top: 2rem;
     }
   }
 `;
@@ -262,6 +287,9 @@ const TabA = styled.div<{ isSelected: boolean }>`
     isSelected ? theme.color.primary1 : "transparent"};
   color: ${({ isSelected, theme }) =>
     isSelected ? theme.color.primary1 : theme.color.title_active};
+  ${media.tablet} {
+    padding: 2rem 1rem;
+  }
 `;
 
 const TabPage = styled.div`

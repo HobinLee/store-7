@@ -43,6 +43,8 @@ const Container = styled.button<{ primary: boolean; size: string }>`
 
   width: ${({ size }) => size === "large" && "100%"};
 
+  white-space: nowrap;
+
   &:hover {
     background: ${({ primary, theme }) =>
       primary ? theme.color.primary3 : theme.color.background};

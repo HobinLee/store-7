@@ -5,7 +5,7 @@ import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
 import { Triangle, WishIcon } from "@/assets";
 import { convertToKRW } from "@/utils/util";
-import { gap } from "@/styles/theme";
+import { gap, media } from "@/styles/theme";
 import { postCart } from "@/api/carts";
 import { moveTo } from "@/Router";
 import { useRecoilValue } from "recoil";
@@ -132,18 +132,9 @@ const OptionBox = ({
       </div>
 
       <div className="buttons">
-        <Button
-          onClick={handlePostWish}
-          className={product.isWish ? "is-wish" : "not-wish"}
-        >
-          <WishIcon
-            width="24"
-            height="24"
-            fill="none"
-            stroke="black"
-            strokeWidth="3rem"
-          />
-        </Button>
+        <div>
+          <WishIcon className={product.isWish ? "is-wish" : "not-wish"} />
+        </div>
         <Button onClick={handlePostCart}>장바구니</Button>
         <Button onClick={handleBuyImmediately} primary>
           바로 구매
@@ -187,6 +178,10 @@ const Wrapper = styled.div`
   padding: 2rem 0;
   box-sizing: border-box;
 
+  ${media.tablet} {
+    width: 25rem;
+  }
+
   .select-option {
     ${({ theme }) => theme.flexCenter}
     ${({ theme }) => theme.font.medium}
@@ -209,7 +204,6 @@ const Wrapper = styled.div`
             ${({ theme }) => theme.flexCenter};
             cursor: pointer;
             width: 1.6rem;
-            /* height: 1.6rem; */
             border: none;
             padding: 0.4rem;
             background: ${({ theme }) => theme.color.primary2};
@@ -241,6 +235,12 @@ const Wrapper = styled.div`
       ${({ theme }) => theme.font.medium}
       color: ${({ theme }) => theme.color.title_active};
     }
+    ${media.mobile} {
+      margin-top: 7rem;
+    }
+    ${media.tablet} {
+      margin-top: 3rem;
+    }
   }
   .buttons {
     ${({ theme }) => theme.flexCenter}
@@ -248,20 +248,15 @@ const Wrapper = styled.div`
     justify-content: flex-end;
     ${gap("1rem")}
     .is-wish {
-      padding: 0.8rem 2rem;
-      background: #2ac1bc;
+      fill: ${({ theme }) => theme.color.primary1};
       &:hover {
       }
     }
 
     .not-wish {
-      padding: 0.8rem 2rem;
-      background: white;
-      &:hover > svg {
-        stroke: #2ac1bc;
-        fill: none;
-        stroke-width: 3rem;
-      }
+      stroke: ${({ theme }) => theme.color.primary1};
+      fill: transparent;
+      stroke-width: 2rem;
     }
   }
   .alert {

@@ -1,14 +1,12 @@
-import { useProduct } from "@/api/products";
 import properties from "@/config/properties";
+import { ProductType } from "@/shared/type";
+import { memo } from "react";
 
-const DetailInfo = () => {
-  const productId = location.pathname.split("detail/")[1];
-  const { status, data: product, error } = useProduct(parseInt(productId));
-
+const DetailInfo = ({ product }: { product: ProductType }) => {
   return (
     status !== "loading" && (
       <div>
-        {product.details.map((detail) => (
+        {product?.details.map((detail) => (
           <img key={detail} src={properties.imgURL + detail} />
         ))}
       </div>
@@ -16,4 +14,4 @@ const DetailInfo = () => {
   );
 };
 
-export default DetailInfo;
+export default memo(DetailInfo);
