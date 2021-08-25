@@ -2,6 +2,8 @@ import MRating from "@material-ui/lab/Rating";
 import { withStyles } from "@material-ui/core/styles";
 import { theme } from "@/styles/theme";
 
+const PRECISION = 0.5;
+
 export type RatingProps = {
   value?: number;
   size?: "small" | "medium" | "large";
@@ -28,7 +30,7 @@ const Rating = ({
       <CustomRating
         role={!readOnly ? "button" : "article"}
         defaultValue={value}
-        precision={0.5}
+        precision={PRECISION}
         readOnly={readOnly}
         size={size}
         name="rating"

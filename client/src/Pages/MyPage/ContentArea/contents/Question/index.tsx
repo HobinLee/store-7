@@ -4,20 +4,62 @@ import Section from "../../../Section";
 import { useMyQuestions } from "@/api/my";
 import QuestionBox from "@/Pages/Detail/Question/QuestionBox";
 import { gap } from "@/styles/theme";
+import { useState } from "react";
+import QuestionModal from "@/Pages/Detail/Question/QuestionModal";
+import { QuestionType } from "@/shared/type";
+
+interface QuestionForm {
+  id: number;
+  question: string;
+  type: string;
+  isSecret: false;
+}
 
 const Question = () => {
   const { status, data: questions, error, refetch } = useMyQuestions();
+  const [isModalOpened, setIsModalOpened] = useState(false);
+  const [question, setQuestion] = useState<QuestionForm | undefined>(undefined);
+  const handleClickEditButton = (question: QuestionForm) => {
+    setQuestion(question);
+    handleModalOpen(true);
+  };
+
+  const handleModalOpen = (val: boolean) => {
+    if (!val) {
+      const submit = window.confirm(
+        "작성하고 있던 내용이 유실됩니다. 정말 다른 페이지로 이동하시겠어요?"
+      );
+      if (submit) setIsModalOpened(val);
+    } else setIsModalOpened(val);
+  };
 
   return (
     <Wrapper data-testid="test__question-content">
       <Section title="상품문의" lineType="long1">
         <QuestionsWrapper>
           {status !== "loading" &&
-            questions.map((qna, idx) => (
-              <QuestionBox {...{ ...qna, refetch }} key={idx} />
+            questions.map((question: QuestionType, idx) => (
+              <QuestionBox
+                {...{ question, refetch, handleClickEditButton }}
+                key={idx}
+              />
             ))}
         </QuestionsWrapper>
       </Section>
+      {isModalOpened && (
+        <QuestionModal
+          submitType="patch"
+          {...{
+            handleModalOpen,
+          }}
+          qeustion={{
+            id: question.id,
+            option: question.type,
+            value: question.question,
+            isSecret: question.isSecret,
+          }}
+        />
+      )}
     </Wrapper>
   );
 };
