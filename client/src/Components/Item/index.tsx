@@ -25,7 +25,6 @@ const Item = ({
   originPrice,
   discountRate,
   isWish,
-  amount,
   image,
 }: ItemType) => {
   const { refetch } = useMyWishes();

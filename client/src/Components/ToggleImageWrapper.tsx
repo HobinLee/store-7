@@ -5,7 +5,7 @@ import Image from "@/Components/Image";
 const ToggleImageWrapper = ({ src }: { src: string }) => {
   return (
     <Wrapper>
-      <Image src={src} />
+      <Image src={src} lazyload={true} />
     </Wrapper>
   );
 };

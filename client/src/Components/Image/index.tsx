@@ -1,15 +1,44 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { useState } from "react";
+import { useEffect } from "react";
+import { useRef } from "react";
 
-interface ImgProps {
+export interface ImageProps {
   src: string;
   alt?: string;
-  lazyLoad?: boolean;
-  width?: number;
-  height?: number;
+  lazyload?: boolean;
 }
-const Image = ({ src, alt = "이미지를 찾을 수 없습니다" }: ImgProps) => {
+
+const THRESHOLD = 0.05;
+
+const Image = ({
+  src,
+  alt = "이미지를 찾을 수 없습니다",
+  lazyload,
+}: ImageProps) => {
   const [isLoading, setIsLoading] = useState(true);
+  const [imageSrc, setImageSrc] = useState(lazyload ? null : src);
+  /* 타겟 엘리먼트 */
+  const target = useRef(null);
+
+  useEffect(() => {
+    if (lazyload && target.current) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              observer.unobserve(target.current);
+              setImageSrc(src);
+            }
+          });
+        },
+        { threshold: THRESHOLD }
+      );
+      observer.observe(target.current);
+
+      return () => observer.disconnect();
+    }
+  }, [target.current]);
 
   const handleImageLoaded = () => {
     setIsLoading(false);
@@ -17,8 +46,8 @@ const Image = ({ src, alt = "이미지를 찾을 수 없습니다" }: ImgProps) 
 
   return (
     <>
-      {isLoading && <SkeletonImage />}
-      <img src={src} onLoad={handleImageLoaded} alt={alt} />
+      {isLoading && <SkeletonImage ref={target} />}
+      {imageSrc && <img src={imageSrc} onLoad={handleImageLoaded} alt={alt} />}
     </>
   );
 };
