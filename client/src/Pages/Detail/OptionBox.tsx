@@ -175,9 +175,10 @@ const Wrapper = styled.div`
   position: -webkit-sticky;
   top: 23.5rem;
   width: 35rem;
-  padding: 2rem 0;
+  padding: 2rem;
   box-sizing: border-box;
-
+  background: #fff;
+  border-radius: 2rem;
   ${media.tablet} {
     width: 25rem;
   }
@@ -195,7 +196,8 @@ const Wrapper = styled.div`
       .num-input {
         ${({ theme }) => theme.flexCenter}
         margin-right: 2rem;
-        background: #fff;
+        background: ${({ theme }) => theme.color.background};
+
         div {
           ${({ theme }) => theme.flexCenter}
           flex-direction: column;

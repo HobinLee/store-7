@@ -182,6 +182,7 @@ const InfoBox = styled.div`
     max-height: 50rem;
     object-fit: cover;
     background-color: lightgray;
+    border-radius: 2rem;
   }
   .img-box {
     cursor: zoom-in;
@@ -231,6 +232,7 @@ const Scroll = styled.div<{ selectedTab: string }>`
   }
   box-sizing: border-box;
   margin-top: 5rem;
+  background: #fff;
 
   .bottom-wrapper {
     ${({ theme }) => theme.flexCenter};
@@ -272,7 +274,7 @@ const Tab = styled.div`
   position: sticky;
   ${gap("2rem")}
   top: 14.6rem;
-  background: ${({ theme }) => theme.color.background};
+  background: rgba(255, 255, 255, 0.9);
   z-index: 1;
   ${media.mobile} {
     top: 10.6rem;

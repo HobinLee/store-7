@@ -94,7 +94,7 @@ export const theme: DefaultTheme = {
     grey2: "#bbbbbb",
     line: "#ccd3d3",
     white: "#ffffff",
-    background: "#f5f5f5",
+    background: "#f9f9f9",
     off_white: "#fcfcfc",
     primary1: "#3be1b4",
     primary2: "#89F4D8",
