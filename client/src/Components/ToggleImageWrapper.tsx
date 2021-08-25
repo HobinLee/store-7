@@ -1,10 +1,11 @@
 import { Loading, Search } from "@/assets";
 import styled from "styled-components";
+import Image from "@/Components/Image";
 
 const ToggleImageWrapper = ({ src }: { src: string }) => {
   return (
     <Wrapper>
-      <img src={src} />
+      <Image src={src} />
     </Wrapper>
   );
 };
@@ -12,6 +13,7 @@ const ToggleImageWrapper = ({ src }: { src: string }) => {
 const Wrapper = styled.div`
   overflow: hidden;
   ${({ theme }) => theme.borderRadius.medium}
+  height: 100%;
 
   & > img {
     display: block;
