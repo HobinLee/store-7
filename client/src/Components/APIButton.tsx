@@ -1,7 +1,7 @@
 import { ReactChild } from "react";
 import { useState } from "react";
 import styled, { css } from "styled-components";
-import spinner from "@/assets/spinner.png";
+import Loading from "@/Components/Loading";
 
 interface APIButtonProps {
   api: (e?: MouseEvent) => Promise<void>;
@@ -39,7 +39,7 @@ const APIButton = ({
       onClick={handleClick}
       disabled={disabled || isAPICalling}
     >
-      {isAPICalling ? <img className="spinner" src={spinner} /> : children}
+      {isAPICalling ? <Loading primary={primary} /> : children}
     </APIButtonWrapper>
   );
 };
@@ -82,30 +82,6 @@ const APIButtonWrapper = styled.button<{
             border: none;
             cursor: default;
           `}
-  }
-
-  @keyframes rotate {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  .spinner {
-    width: 20px;
-    ${({ primary }) =>
-      primary
-        ? css`
-            filter: invert(98%) sepia(12%) saturate(78%) hue-rotate(137deg)
-              brightness(124%) contrast(100%);
-          `
-        : css`
-            filter: invert(88%);
-          `}
-
-    animation: rotate 0.8s ease infinite;
   }
 `;
 export default APIButton;
