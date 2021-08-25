@@ -2,6 +2,7 @@ import { moveTo } from "@/Router";
 import { ProductType } from "@/shared/type";
 import { GET } from "@/utils/axios";
 import { useQuery } from "react-query";
+import { ProductParams } from "./products";
 
 // GET products/keywords/:keyword
 const getKeywords = (keyword: string) =>
@@ -10,13 +11,19 @@ const getKeywords = (keyword: string) =>
 export const useKeywords = (keyword: string) =>
   useQuery(["autoComplete", keyword], () => getKeywords(keyword));
 
-// GET products/search/:keyword
-const getSearchedProducts = (keyword: string) => {
-  if (keyword.length === 0) {
+export interface SearchParams extends ProductParams {
+  keyword: string;
+}
+
+const getSearchedProducts = async (searchParams: SearchParams) => {
+  if (searchParams.keyword.length === 0) {
     moveTo("/");
     return [];
   }
-  GET(`/products/search/${keyword}`);
+  const result = await GET(`/products/search`, searchParams);
+  return result;
 };
-export const useSearchProducts = (keyword: string) =>
-  useQuery(["autoComplete", keyword], () => getSearchedProducts(keyword));
+export const useSearchProducts = (searchParams: SearchParams) =>
+  useQuery(["autoComplete", searchParams], () =>
+    getSearchedProducts(searchParams)
+  );

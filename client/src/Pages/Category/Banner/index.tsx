@@ -3,6 +3,7 @@ import { media } from "@/styles/theme";
 import { useState } from "react";
 import { useEffect } from "react";
 import styled, { css } from "styled-components";
+import Image from "@/Components/Image";
 import { CategoryParamType, CategoryType, MainCategoryType } from "..";
 
 interface CategoryInfo extends MainCategoryType {
@@ -38,7 +39,7 @@ const CategoryBanner = ({ params }: { params: CategoryParamType }) => {
   return (
     <>
       <BGWrapper>
-        <img src={info.backgroundImg} alt="배경 이미지" />
+        <Image src={info.backgroundImg} alt="배경 이미지" />
       </BGWrapper>
       <Wrapper fontColor={info.fontColor} font={info.font}>
         <div className="category-info">

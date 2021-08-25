@@ -2,6 +2,7 @@ import { ItemBannerType } from "@/shared/type";
 import { Link } from "@/Router";
 import styled from "styled-components";
 import { gap } from "@/styles/theme";
+import Image from "@/Components/Image";
 
 export interface GiftItemProps {
   item: ItemBannerType;
@@ -10,7 +11,7 @@ export interface GiftItemProps {
 const GiftItem = ({ item }: GiftItemProps) => (
   <ItemWrapper isWhite={item.isWhite}>
     <Link to={`/detail/${item.id}`}>
-      <img src={item.src} />
+      <Image src={item.src} />
       <div className="item__info">
         <h5 className="item__title">{item.title}</h5>
         <span className="item__brief">{item.brief}</span>

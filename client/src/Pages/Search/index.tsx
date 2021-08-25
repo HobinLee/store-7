@@ -6,7 +6,7 @@ import { useSearchProducts } from "@/api/search";
 import ProductList from "@/Components/ProductList";
 
 const SearchPage = ({ params }) => {
-  const { data: products } = useSearchProducts(params.keyword);
+  const { data: products } = useSearchProducts(params);
   return (
     <Wrapper>
       <Header />
@@ -15,10 +15,11 @@ const SearchPage = ({ params }) => {
           <span>{params.keyword}</span>
           검색결과 {products?.length ?? 0}건
         </div>
-        {(!products || products.length === 0) && (
+        {!products || products.length === 0 ? (
           <div className="search-page__no-result">검색결과가 없습니다</div>
+        ) : (
+          <ProductList products={products} />
         )}
-        <ProductList products={products} />
       </Contents>
       <Footer />
     </Wrapper>

@@ -14,7 +14,7 @@ const Question = () => {
         <QuestionsWrapper>
           {status !== "loading" &&
             questions.map((qna, idx) => (
-              <QuestionBox {...qna} key={idx} refetch={refetch} />
+              <QuestionBox {...{ ...qna, refetch }} key={idx} />
             ))}
         </QuestionsWrapper>
       </Section>

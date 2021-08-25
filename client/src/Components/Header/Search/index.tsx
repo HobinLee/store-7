@@ -1,4 +1,9 @@
-import { useEffect, useState } from "react";
+import {
+  KeyboardEventHandler,
+  SyntheticEvent,
+  useEffect,
+  useState,
+} from "react";
 import styled from "styled-components";
 import Input from "@/Components/Input";
 import { DropdownWrapper, DropdownItem } from "@/shared/styled";
@@ -7,6 +12,8 @@ import SearchList from "./DropDown/SearchedList";
 import AutoList from "./DropDown/AutoCompleteList";
 import { moveTo } from "@/Router";
 import { media } from "@/styles/theme";
+import { categories } from "@/shared/dummy";
+import { MainCategoryType } from "@/Pages/Category";
 
 const LS_SEARCH = "search";
 
@@ -18,9 +25,9 @@ const Search = () => {
     setIsMenuOpened(!isMenuOpened);
   };
 
-  const [category, setCategory] = useState("전체");
-  const handleCategory = (val: string) => {
-    setCategory(val);
+  const [category, setCategory] = useState<MainCategoryType>(categories[0]);
+  const handleCategory = (category) => {
+    setCategory(category);
   };
 
   const [isSearchBoxOpened, setIsSearchBoxOpened] = useState(false);
@@ -54,7 +61,7 @@ const Search = () => {
     searchValue.setValue(keyword);
 
     setNewSearchList(makeNewSearchedList(keyword));
-    moveTo(`/search?category=${category}&keyword=${keyword}`);
+    moveTo(`/search?category=${category.id}&keyword=${keyword}`);
   };
 
   const handleDeleteSearchList = (keyword?: string) => {
@@ -63,33 +70,33 @@ const Search = () => {
       : setNewSearchList([]);
   };
 
-  const onChangeKeyword = (e) => {
-    searchValue.onChange(e);
-  };
-
   return (
     <SearchWrapper
-      onKeyUp={(e) => {
-        if (e.key === "Enter") handleSearch();
+      onKeyUp={({ key, target }) => {
+        key === "Enter" && handleSearch((target as HTMLInputElement).value);
       }}
     >
       <div onClick={handleMenuOpen} className="input-box__select">
-        {category}
+        {category.name}
         {isMenuOpened && (
-          <DropdownWrapper style={{ left: 0, top: "3rem" }}>
-            {[0, 0, 0, 0, 0, 0, 0].map((i, idx) => (
-              <DropdownItem onClick={() => handleCategory("asdf")} key={idx}>
-                asdf
+          <DropdownWrapper>
+            {categories.map((mainCategory: MainCategoryType) => (
+              <DropdownItem
+                onClick={() => handleCategory(mainCategory)}
+                key={mainCategory.id}
+              >
+                {mainCategory.name}
               </DropdownItem>
             ))}
           </DropdownWrapper>
         )}
       </div>
       <div style={{ position: "relative" }} onClick={handleSearchBox}>
-        <SearchInput
+        <input
+          className="search-input"
           placeholder="검색어를 입력해주세요."
           defaultValue={searchValue.value}
-          onChange={onChangeKeyword}
+          onChange={searchValue.onChange}
         />
         {searchValue.value.length > 0 && (
           <ResetButton onClick={() => searchValue.setValue("")} />
@@ -121,15 +128,48 @@ const SearchWrapper = styled.form`
   border-radius: 2rem;
   border: 0.2rem solid ${({ theme }) => theme.color.light_grey2};
   background: ${({ theme }) => theme.color.off_white};
+  z-index: 40;
   .input-box__select {
     color: ${({ theme }) => theme.color.grey1};
     position: relative;
     border-right: 0.2rem solid ${({ theme }) => theme.color.light_grey2};
-    padding: 0 1.5rem;
-    width: 25%;
-    max-width: 11rem;
+    padding: 0.6rem 2rem;
+    min-width: 11rem;
+    max-width: auto;
     box-sizing: border-box;
     height: 100%;
+    font-size: 1.4rem;
+    text-align: left;
+    cursor: pointer;
+
+    & > div {
+      box-shadow: none;
+      border: 1px solid ${({ theme }) => theme.color.primary1};
+      background: white;
+      top: 3.4rem;
+      right: -0.3rem;
+      & > div {
+        &:hover {
+          background: ${({ theme }) => theme.color.off_white};
+        }
+      }
+    }
+  }
+
+  .search-input {
+    ${({ theme }) => theme.font.medium}
+    ::placeholder {
+      color: ${({ theme }) => theme.color.light_grey2};
+    }
+    color: ${({ theme }) => theme.color.grey1};
+    border: none;
+    padding: 1rem 1.5rem;
+    width: 34rem;
+    text-align: left;
+
+    ${media.tablet} {
+      width: 22vw;
+    }
   }
 
   ${media.mobile} {
@@ -146,22 +186,6 @@ const SearchBox = styled.div`
   background: ${({ theme }) => theme.color.white};
   .search-list__title {
     font-weight: bolder;
-  }
-`;
-
-const SearchInput = styled(Input)`
-  ${({ theme }) => theme.font.medium}
-  ::placeholder {
-    color: ${({ theme }) => theme.color.light_grey2};
-  }
-  color: ${({ theme }) => theme.color.grey1};
-  border: none;
-  padding: 1rem 1.5rem;
-  width: 34rem;
-  text-align: left;
-
-  ${media.tablet} {
-    width: 22vw;
   }
 `;
 
