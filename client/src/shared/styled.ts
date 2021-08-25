@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
-import { LINE_LINK, Loading } from "@/assets";
+import { LINE_LINK } from "@/assets";
+import LoadingSpinner from "@/assets/spinner.png";
 import { gap, media } from "@/styles/theme";
 
 export const PageWrapper = styled.div`
@@ -67,7 +68,7 @@ export const ItemList = styled.ul`
   ${gap("1rem")}
 `;
 
-export const LoadingSpinner = styled.img<{ primary?: boolean }>`
+export const Loading = styled.img<{ primary?: boolean }>`
   width: 20px;
   ${({ primary }) =>
     primary
@@ -81,6 +82,7 @@ export const LoadingSpinner = styled.img<{ primary?: boolean }>`
 
   animation: rotate 0.8s ease infinite;
 `;
-LoadingSpinner.defaultProps = {
-  src: Loading,
+
+Loading.defaultProps = {
+  src: LoadingSpinner,
 };

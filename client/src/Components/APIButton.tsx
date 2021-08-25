@@ -1,7 +1,7 @@
 import { ReactChild } from "react";
 import { useState } from "react";
 import styled, { css } from "styled-components";
-import Loading from "@/Components/Loading";
+import { Loading } from "@/shared/styled";
 
 interface APIButtonProps {
   api: (e?: MouseEvent) => Promise<void>;

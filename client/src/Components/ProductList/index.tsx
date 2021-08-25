@@ -3,7 +3,7 @@ import Item from "@/Components/Item";
 import styled from "styled-components";
 import { media } from "@/styles/theme";
 import { UseQueryResult } from "react-query";
-import Loading from "@/Components/Loading";
+import { Loading } from "@/shared/styled";
 import { useState } from "react";
 import { ProductParams } from "@/api/products";
 import { useLazyLoad } from "@/hooks/useLazyLoad";
