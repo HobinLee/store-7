@@ -31,10 +31,7 @@ export type CategoryParamType = {
 
 const CategoryPage = ({ params }) => {
   const [filter, setFilter] = useState(filters[0]);
-  const { data: products } = useProducts({
-    ...params,
-    order: filter.value,
-  });
+
   return (
     <Wrapper>
       <BGWrapper></BGWrapper>
@@ -43,7 +40,10 @@ const CategoryPage = ({ params }) => {
       <div className="page-contents">
         <div className="products-wrapper">
           <Filter setFilter={setFilter} currentFilter={filter} />
-          <ProductList products={products} />
+          <ProductList
+            useQuery={useProducts}
+            params={{ ...params, order: filter.value }}
+          />
         </div>
       </div>
       <Footer />
