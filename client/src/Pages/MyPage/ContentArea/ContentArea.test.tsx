@@ -4,7 +4,7 @@ import { screen } from "@testing-library/react";
 import ContentArea, { ContentAreaProps } from "./index";
 
 const ContentAreaProps: ContentAreaProps = {
-  current: "/",
+  current: "order",
 };
 
 describe("<ContentArea />", () => {

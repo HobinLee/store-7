@@ -4,6 +4,7 @@ import QuestionBox from "./QuestionBox";
 import { useState } from "react";
 import QuestionModal from "./QuestionModal";
 import { useProductQuestions } from "@/api/products";
+import { gap } from "@/styles/theme";
 
 const Question = () => {
   const [isModalOpened, setIsModalOpened] = useState(false);
@@ -35,10 +36,11 @@ const Question = () => {
             문의하기
           </Button>
         </Header>
-        {questions.map((qna, idx) => (
-          <QuestionBox {...qna} key={idx} />
-        ))}
-
+        <QuestionsWrapper>
+          {questions.map((qna, idx) => (
+            <QuestionBox {...qna} key={idx} />
+          ))}
+        </QuestionsWrapper>
         {isModalOpened && (
           <QuestionModal submitType="patch" {...{ handleModalOpen }} />
         )}
@@ -46,6 +48,10 @@ const Question = () => {
     )
   );
 };
+
+const QuestionsWrapper = styled.div`
+  ${gap("3rem", "column")}
+`;
 
 const Header = styled.div`
   ${({ theme }) => theme.flexCenter};
