@@ -51,14 +51,18 @@ const ReviewModal = ({
       <Wrapper onSubmit={hanleSubmit}>
         <div className="content">
           <div className="content__label">별점 평가</div>
-          <Rating rate={rate} />
+          <span className="rating">
+            <Rating rate={rate} />
+          </span>
         </div>
         <div className="content">
           <div className="content__label">사진 첨부 (선택)</div>
 
-          <div className="content__preview">
-            <img src={previewURL} />
-          </div>
+          {previewURL && (
+            <div className="content__preview">
+              <img src={previewURL} />
+            </div>
+          )}
           <label className="upload-btn" htmlFor="img-upload">
             사진 업로드 (최대 1장)
           </label>
@@ -107,6 +111,11 @@ const Wrapper = styled.form`
         height: 100%;
       }
     }
+    .rating {
+      transform: scale(1.8);
+      width: 15rem;
+      margin-left: 6rem;
+    }
   }
   .upload-btn {
     ${({ theme }) => theme.font.large}
@@ -124,6 +133,7 @@ const ReivewInput = styled.textarea`
   border: 0.1rem solid ${({ theme }) => theme.color.line};
   height: 10rem;
   padding: 1.5rem;
+  ${({ theme }) => theme.borderRadius.medium};
 `;
 
 const SubmitBtn = styled(Button)`

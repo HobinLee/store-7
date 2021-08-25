@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { ReviewType } from "@/shared/type";
 import Rating from "@/Components/Rating";
-import { gap, theme } from "@/styles/theme";
+import { gap, media, theme } from "@/styles/theme";
 import { YYYY_M_D_H_m } from "@/utils/util";
 import properties from "@/config/properties";
 
@@ -44,6 +44,11 @@ const Wrapper = styled.div`
   padding: 2rem;
   box-sizing: border-box;
   position: relative;
+
+  ${media.tablet} {
+    flex-direction: column;
+  }
+
   .rating {
     background: ${({ theme }) => theme.color.primary3};
     color: #fff;
@@ -52,7 +57,6 @@ const Wrapper = styled.div`
     position: absolute;
     top: -1rem;
     left: 1rem;
-    transform: scale(1);
   }
 
   .content {
@@ -67,6 +71,7 @@ const Wrapper = styled.div`
 
   .content-img {
     max-width: 30rem;
+    max-height: 30rem;
     align-self: center;
     img {
       width: 100%;
