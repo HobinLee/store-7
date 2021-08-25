@@ -23,27 +23,12 @@ export class ProductService {
     private readonly wishes: Wishes
   ) {}
 
-  async getProducts({
-    order,
-    category,
-    subCategory,
-    ids,
-    page,
-    size,
-  }: ProductFindQuery): Promise<ProductElementResponse[]> {
-    const products =
-      await this.products.findProductsByOrderAndCategoryAndSubCategoryAndKeyword(
-        order,
-        category,
-        subCategory,
-        page,
-        size,
-        ids
-      );
+  async getProducts(
+    findQuery: ProductFindQuery
+  ): Promise<ProductElementResponse[]> {
+    const products = await this.products.findProductsByQueries(findQuery);
 
-    return size
-      ? products.map(ProductElementResponse.of).slice(0, size)
-      : products.map(ProductElementResponse.of);
+    return products.map(ProductElementResponse.of);
   }
 
   async getProduct(id: number, userId: number) {

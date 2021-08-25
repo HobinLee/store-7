@@ -153,6 +153,7 @@ const ReviewTag = styled.div<{ isReviewed: boolean }>`
       ${isReviewed
         ? css`
             background: ${({ theme }) => theme.color.primary1};
+            background: #2ac1bc;
           `
         : css`
             background: red;

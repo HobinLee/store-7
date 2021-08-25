@@ -3,7 +3,10 @@ export interface ProductFindQuery {
   order: string;
   category: string;
   subCategory: string;
-  keyword: string;
   page: number;
   size: number;
+}
+
+export interface ProductSearchQuery extends ProductFindQuery {
+  keyword: string;
 }

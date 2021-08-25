@@ -1,15 +1,16 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { createQueryBuilder, In, Like, Repository } from "typeorm";
+import { FindOperator, In, Like, Repository } from "typeorm";
 import { Product } from "@/product/entity/product";
 import { S3Repository } from "@/product/infrastructure/s3-repository";
 import { ProductImage } from "@/product/entity/product-image";
 import { ProductDetailImage } from "@/product/entity/product-detail-image";
 import { ProductOption } from "@/product/entity/option";
+import { ProductFindQuery } from "../dto/product-find-query";
 
 const RANDOM_FILENAME_LENGTH = 32;
 const START_PAGE = 1;
-const DEFAULT_PAGE_SIZE = 10;
+const PRODUCT_PER_PAGE = 12;
 
 const ORDER_TYPE = {
   hot: { price: "DESC" },
@@ -33,21 +34,13 @@ export class Products {
     private readonly s3Repository: S3Repository
   ) {}
 
-  async findProductsByOrderAndCategoryAndSubCategoryAndKeyword(
-    order: string | "",
-    category: string | "",
-    subCategory: string | "",
-    page: number = START_PAGE,
-    size: number = DEFAULT_PAGE_SIZE,
-    ids?: number[]
-  ): Promise<Product[]> {
+  async findProductsByQueries(query: ProductFindQuery): Promise<Product[]> {
     return this.productRepository.find({
       relations: ["options", "images", "detailImages"],
-      where: {
-        category: wrapWordToLike(category),
-        subCategory: wrapWordToLike(subCategory),
-      },
-      order: ORDER_TYPE[order],
+      where: generateWhere(query.category, query.subCategory, query.ids),
+      order: ORDER_TYPE[query.order],
+      skip: ((query.page ?? START_PAGE) - 1) * (query.size ?? PRODUCT_PER_PAGE),
+      take: query.size ?? PRODUCT_PER_PAGE,
     });
   }
 
@@ -103,10 +96,6 @@ export class Products {
     await this.productRepository.delete(id);
   }
 
-  async findProductsByIds(productIds: number[]): Promise<Product[]> {
-    return await this.productRepository.find({ id: In(productIds) });
-  }
-
   async findAllProducts(): Promise<Product[]> {
     return await this.productRepository.find({
       order: {
@@ -129,4 +118,20 @@ const generateRandomFileName = () => {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
   return result;
+};
+
+interface WhereType {
+  id?: FindOperator<unknown>;
+  category?: FindOperator<unknown>;
+  subCategory?: FindOperator<unknown>;
+}
+
+const generateWhere = (category, subCategory, ids) => {
+  const where: WhereType = {};
+
+  if (ids) where.id = In(ids);
+  if (category) where.category = wrapWordToLike(category);
+  if (subCategory) where.subCategory = wrapWordToLike(subCategory);
+
+  return where;
 };

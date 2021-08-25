@@ -25,7 +25,6 @@ const Item = ({
   originPrice,
   discountRate,
   isWish,
-  amount,
   image,
 }: ItemType) => {
   const { refetch } = useMyWishes();
@@ -93,6 +92,7 @@ const ItemWrapper = styled.div`
 
   .thumbnail {
     position: relative;
+    height: 24rem;
 
     &__tags {
       position: absolute;
