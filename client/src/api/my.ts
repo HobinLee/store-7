@@ -33,16 +33,27 @@ const getMyQuestions = () => GET("/my/questions");
 export const useMyQuestions = () =>
   useQuery(["questions"], () => getMyQuestions());
 
-// GET /my/orders?target 내 현재 주문목록
+// GET /my/orders 내 주문목록
 const getMyOrders = (): Promise<MyOrderType[]> => GET(`/my/orders`);
-export const useMyOrders = () => useQuery([], () => getMyOrders());
+export const useMyOrders = () =>
+  useQuery(["filteredOrders"], () => getMyOrders());
+
+interface DateRange {
+  from: Date;
+  to: Date;
+}
+const getMyOrdersByDateRange = ({ from, to }: DateRange) =>
+  GET(`/my/orders?from=${from}to=${to}`);
+
+export const useMyOrderOfDate = (date: DateRange) =>
+  useQuery(["dateOrders"], () => getMyOrdersByDateRange(date));
 
 // GET /my/wishes 내 찜목록
 const getMyWishes = () => GET("/my/wishes");
 export const useMyWishes = () => useQuery(["wishes"], () => getMyWishes());
 
-export const postWishProduct = ({ productId }) =>
+export const postWishProduct = (productId: number) =>
   POST("/my/wishes", { productId });
 
-export const deleteWishProduct = ({ productId }: { productId: number }) =>
+export const deleteWishProduct = (productId: number) =>
   DELETE(`/my/wishes/${productId}`);

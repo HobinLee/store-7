@@ -22,7 +22,7 @@ describe("<ItemInfoBox />", () => {
     expect(screen.queryByRole("img")).toBeInTheDocument();
     expect(screen.queryByText(NAME)).toBeInTheDocument();
 
-    expect(screen.queryByText(OUTPUT.numOutput)).toBeInTheDocument();
+    expect(screen.queryByText(itemInfoBoxProps.amount)).toBeInTheDocument();
     expect(screen.queryByText(OUTPUT.priceOutput)).toBeInTheDocument();
     expect(screen.queryByText(OUTPUT.deliveryOutput)).toBeInTheDocument();
   });

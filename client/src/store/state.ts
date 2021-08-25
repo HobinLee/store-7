@@ -9,6 +9,6 @@ export const alertState = atom({
 });
 
 export const loginState = atom({
-  key: "isLogined",
+  key: "isLoggedin",
   default: false,
 });

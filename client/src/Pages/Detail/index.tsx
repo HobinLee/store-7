@@ -10,9 +10,10 @@ import Footer from "@/Components/Footer";
 import Guide from "./Guide";
 import DetailInfo from "./DetailInfo";
 import ZoomModal from "./ZoomModal";
-import { gap } from "@/styles/theme";
+import { gap, media } from "@/styles/theme";
 import { convertToKRW } from "@/utils/util";
 import { useProduct } from "@/api/products";
+import properties from "@/config/properties";
 
 const topHeight = 740;
 
@@ -31,7 +32,12 @@ const DetailPage = () => {
   const productId = location.pathname.split("detail/")[1];
   const [yOffset, setYOffset] = useState(0);
 
-  const { status, data: product, error } = useProduct(parseInt(productId));
+  const {
+    status,
+    data: product,
+    error,
+    refetch,
+  } = useProduct(parseInt(productId));
 
   const numValue = useInput("1");
   const handleClickNumVal = (val: 1 | -1) => {
@@ -66,21 +72,7 @@ const DetailPage = () => {
   return (
     status !== "loading" && (
       <Wrapper>
-        <Header>
-          {yOffset > topHeight && (
-            <FixedTab yOffset={yOffset}>
-              {tabs.map((tab, idx) => (
-                <TabA
-                  key={idx}
-                  onClick={() => handleSelectTab(tab.id)}
-                  isSelected={selectedTab === tab.id}
-                >
-                  {tab.title}
-                </TabA>
-              ))}
-            </FixedTab>
-          )}
-        </Header>
+        <Header />
 
         <Contents>
           <InfoBox>
@@ -92,7 +84,7 @@ const DetailPage = () => {
             >
               <img
                 id="image"
-                src={process.env.IMG_URL + product.images[0]}
+                src={properties.imgURL + product.images[0]}
                 className="thumbnail"
               />
               {isZoomOpened && (
@@ -122,39 +114,38 @@ const DetailPage = () => {
 
               <OptionBox
                 key="option-box"
-                {...{ numValue, handleClickNumVal, product }}
+                {...{ numValue, handleClickNumVal, product, refetch }}
               />
             </Info>
           </InfoBox>
-
-          <Scroll {...{ selectedTab, yOffset }}>
-            <Tab yOffset={yOffset}>
-              {tabs.map((tab) => (
-                <TabA
-                  key={tab.title}
-                  onClick={() => handleSelectTab(tab.id)}
-                  isSelected={selectedTab === tab.id}
-                >
-                  {tab.title}
-                </TabA>
-              ))}
-            </Tab>
-
-            <div className="bottom-wrapper">
-              {tabs.map((tab) => (
-                <TabPage data-testid={tab.title} key={tab.title}>
-                  {tab.id === selectedTab && tab.component}
-                </TabPage>
-              ))}
-            </div>
-
-            {yOffset > topHeight && selectedTab === "first" && (
-              <div className="option-box">
-                <OptionBox {...{ numValue, handleClickNumVal, product }} />
-              </div>
-            )}
-          </Scroll>
         </Contents>
+        <Scroll selectedTab={selectedTab}>
+          <Tab>
+            {tabs.map((tab) => (
+              <TabA
+                key={tab.title}
+                onClick={() => handleSelectTab(tab.id)}
+                isSelected={selectedTab === tab.id}
+              >
+                {tab.title}
+              </TabA>
+            ))}
+          </Tab>
+
+          <div className="bottom-wrapper">
+            {tabs.map((tab) => (
+              <TabPage data-testid={tab.title} key={tab.title}>
+                {tab.id === selectedTab && tab.component}
+              </TabPage>
+            ))}
+          </div>
+
+          {yOffset > topHeight && selectedTab === "first" && (
+            <div className="option-box">
+              <OptionBox {...{ numValue, handleClickNumVal, product }} />
+            </div>
+          )}
+        </Scroll>
         <Footer />
       </Wrapper>
     )
@@ -229,13 +220,19 @@ const Info = styled.div`
   }
 `;
 
-const Scroll = styled.div<{ yOffset: number; selectedTab: string }>`
+const Scroll = styled.div<{ selectedTab: string }>`
   width: 100%;
   padding-right: ${({ selectedTab }) => selectedTab === "first" && "25rem"};
+  ${media.mobile} {
+    padding: 0;
+  }
   box-sizing: border-box;
   margin-top: 10rem;
+
   .bottom-wrapper {
+    box-sizing: border-box;
     width: 100%;
+    padding: 0 5rem;
   }
 
   .option-box {
@@ -260,17 +257,17 @@ const Scroll = styled.div<{ yOffset: number; selectedTab: string }>`
   }
 `;
 
-const Tab = styled.div<{ yOffset: number }>`
+const Tab = styled.div`
   ${({ theme }) => theme.flexCenter}
-  width: 100%;
-  left: 0;
-  position: absolute;
+  position: -webkit-sticky;
+  position: sticky;
+
+  top: 14.6rem;
   background: ${({ theme }) => theme.color.background};
   z-index: 1;
-`;
-
-const FixedTab = styled(Tab)`
-  position: fixed;
+  ${media.mobile} {
+    top: 10.6rem;
+  }
 `;
 
 const TabA = styled.div<{ isSelected: boolean }>`

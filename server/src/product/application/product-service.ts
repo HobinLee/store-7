@@ -7,13 +7,11 @@ import { ReviewResponse } from "@/product/dto/review-response";
 import { ProductUploadRequest } from "@/product/dto/product-upload-request";
 import { Product } from "@/product/entity/product";
 import { Questions } from "../domain/questions";
-import {
-  QuestionPostRequest,
-  QuestionPatchRequest,
-} from "../dto/question-request";
 import { Reviews } from "../domain/reviews";
 import { SearchService } from "./search-service";
 import { SearchProduct } from "../dto/product-search-response";
+import { Wishes } from "@/user/domain/wishes";
+import { ProductFindQuery } from "../dto/product-find-query";
 
 @Injectable()
 export class ProductService {
@@ -21,29 +19,37 @@ export class ProductService {
     private readonly products: Products,
     private readonly questions: Questions,
     private readonly reviews: Reviews,
-    private readonly serachService: SearchService
+    private readonly serachService: SearchService,
+    private readonly wishes: Wishes
   ) {}
 
-  async getProducts(
-    order: string,
-    category: string,
-    subCategory: string,
-    keyword: string
-  ): Promise<ProductElementResponse[]> {
+  async getProducts({
+    order,
+    category,
+    subCategory,
+    ids,
+    page,
+    size,
+  }: ProductFindQuery): Promise<ProductElementResponse[]> {
     const products =
       await this.products.findProductsByOrderAndCategoryAndSubCategoryAndKeyword(
         order,
         category,
         subCategory,
-        keyword
+        page,
+        size,
+        ids
       );
-    return products.map(ProductElementResponse.of);
+
+    return size
+      ? products.map(ProductElementResponse.of).slice(0, size)
+      : products.map(ProductElementResponse.of);
   }
 
-  async getProduct(id: number) {
+  async getProduct(id: number, userId: number) {
     const product = await this.products.findProductById(id);
     if (product) {
-      return ProductResponse.of(product);
+      return ProductResponse.of(product, userId);
     }
     throw new Error("404 Product NotFound");
   }
@@ -82,17 +88,5 @@ export class ProductService {
   async getUserQuestions(userId: number) {
     const questions = await this.questions.findQuestionsByUserId(userId);
     return questions.map(QuestionResponse.of);
-  }
-
-  async registerQuestion(productId: number, question: QuestionPostRequest) {
-    await this.questions.createQuestion(productId, question);
-  }
-
-  async editQuestion(questionId: number, request: QuestionPatchRequest) {
-    await this.questions.updateQuestion(questionId, request);
-  }
-
-  async deleteQuestion(id: number) {
-    await this.questions.deleteQuestion(id);
   }
 }

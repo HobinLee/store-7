@@ -1,12 +1,21 @@
 import styled from "styled-components";
 import Checkbox from "@/Components/Checkbox";
 import { convertToKRW } from "@/utils/util";
-import { gap } from "@/styles/theme";
+import { gap, media } from "@/styles/theme";
 import { Close } from "@/assets";
-import { deleteCart } from "@/api/carts";
+import { deleteCart, patchCart } from "@/api/carts";
 import { useRecoilValue } from "recoil";
 import { loginState } from "@/store/state";
 import { CartType } from "@/shared/type";
+import { Triangle } from "@/assets";
+import useInput from "@/hooks/useInput";
+import Input from "../Input";
+import useDebounce from "@/hooks/useDebounce";
+import { SetStateAction, useEffect } from "react";
+import { Dispatch } from "react";
+import { useCallback } from "react";
+import { QueryObserverResult } from "react-query";
+import properties from "@/config/properties";
 
 export type ItemInfoBoxProps = {
   id: number;
@@ -18,14 +27,83 @@ export type ItemInfoBoxProps = {
   isChecked?: boolean;
   handleCheck?: Function;
   checkboxVisible?: boolean;
+  refetch?: () => Promise<QueryObserverResult<unknown>>;
+  setCartItems?: Dispatch<SetStateAction<CartType>>;
 };
 
-export const output = ({ amount, price, deliveryCost }) => {
+export const output = ({ price, deliveryCost }) => {
   return {
-    numOutput: `${amount}개`,
     priceOutput: `총 ${convertToKRW(price)}`,
     deliveryOutput: `배송비 ${convertToKRW(deliveryCost)}`,
   };
+};
+
+const LoggedInNumInput = ({
+  id,
+  amount,
+  refetch,
+  setCartItems,
+}: {
+  id: number;
+  amount: number;
+  refetch: () => Promise<QueryObserverResult<unknown>>;
+  setCartItems: Dispatch<SetStateAction<CartType>>;
+}) => {
+  const numValue = useInput(amount.toString());
+  const debouncedNumValue = useDebounce(numValue.value, 200);
+
+  const isLoggedin = useRecoilValue(loginState);
+
+  const handleClickNumVal = async (val: 1 | -1) => {
+    let num = parseInt(numValue.value);
+    if (val === 1) {
+      numValue.setValue((num + 1).toString());
+    } else {
+      if (num > 1) numValue.setValue((num - 1).toString());
+    }
+  };
+
+  const handlePatchCart = async () => {
+    await patchCart(id, { amount: parseInt(debouncedNumValue) });
+    refetch();
+  };
+  useEffect(() => {
+    if (isLoggedin) handlePatchCart();
+    else {
+      const exist: CartType = JSON.parse(localStorage.getItem("carts"));
+      const itemToUpdate = exist.items.find((i) => i.id === id);
+
+      const itemPrice = itemToUpdate.price / itemToUpdate.amount;
+      itemToUpdate.amount = parseInt(debouncedNumValue);
+      itemToUpdate.price = itemPrice * parseInt(debouncedNumValue);
+
+      localStorage.setItem("carts", JSON.stringify(exist));
+      setCartItems(exist);
+    }
+  }, [debouncedNumValue]);
+
+  const RenderNumInput = useCallback(() => {
+    return (
+      <NumInput defaultValue={numValue.value} onChange={numValue.onChange} />
+    );
+  }, [numValue.value]);
+
+  return (
+    <div className="info__num">
+      <div>수량</div>
+      <div className="num-input">
+        <RenderNumInput />
+        <div>
+          <button type="button" onClick={() => handleClickNumVal(1)}>
+            <Triangle className="num-input__up" />
+          </button>
+          <button type="button" onClick={() => handleClickNumVal(-1)}>
+            <Triangle className="num-input__down" />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 const ItemInfoBox = ({
@@ -38,14 +116,18 @@ const ItemInfoBox = ({
   isChecked,
   handleCheck,
   checkboxVisible = false,
+  refetch,
+  setCartItems,
 }: ItemInfoBoxProps) => {
   const OUTPUT = output({ ...{ amount, price, deliveryCost } });
 
-  const isLogined = useRecoilValue(loginState);
+  const isLoggedin = useRecoilValue(loginState);
 
-  const handleDeleteCart = async (id: number) => {
+  const pathname = location.pathname.split("/")[1];
+
+  const handleDeleteCart = async () => {
     try {
-      if (isLogined) deleteCart(id);
+      if (isLoggedin) deleteCart(id);
       else {
         const exist: CartType = JSON.parse(localStorage.getItem("carts"));
         const itemIdxToDelete = exist.items.findIndex((i) => i.id === id);
@@ -60,14 +142,20 @@ const ItemInfoBox = ({
     location.reload();
   };
 
+  const RenderNumInput = useCallback(() => {
+    if (pathname === "cart")
+      return <LoggedInNumInput {...{ id, amount, refetch, setCartItems }} />;
+    return <div className="info__amount">{amount}개</div>;
+  }, []);
+
   return (
     <Wrapper>
       <div className="info">
         {checkboxVisible && <Checkbox {...{ isChecked, handleCheck }} />}
-        <img role="img" src={process.env.IMG_URL + images[0]} />
+        <img role="img" src={properties.imgURL + images[0]} />
         <div>
           <div className="info__name">{name}</div>
-          <div className="info__num">{OUTPUT.numOutput}</div>
+          <RenderNumInput />
         </div>
       </div>
 
@@ -77,7 +165,7 @@ const ItemInfoBox = ({
       </div>
 
       {checkboxVisible && (
-        <Close onClick={() => handleDeleteCart(id)} className="close-btn" />
+        <Close onClick={handleDeleteCart} className="close-btn" />
       )}
     </Wrapper>
   );
@@ -98,9 +186,19 @@ const Wrapper = styled.div`
     ${gap("2rem")}
     &__name {
       ${({ theme }) => theme.font.large};
+      ${media.mobile} {
+        padding-right: 3rem;
+        line-height: 2.5rem;
+      }
     }
     &__num {
-      margin-top: 2rem;
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      ${gap("1rem")};
+    }
+    &__amount {
+      margin-top: 3rem;
     }
   }
   img {
@@ -115,6 +213,9 @@ const Wrapper = styled.div`
     font-weight: 700;
     justify-content: flex-end;
     ${gap("2rem")}
+    ${media.mobile} {
+      margin-top: 2rem;
+    }
   }
   .close-btn {
     cursor: pointer;
@@ -123,6 +224,42 @@ const Wrapper = styled.div`
     right: 1rem;
     fill: ${({ theme }) => theme.color.primary1};
   }
+
+  .num-input {
+    ${({ theme }) => theme.flexCenter}
+    margin-right: 2rem;
+    background: #fff;
+    div {
+      ${({ theme }) => theme.flexCenter}
+      flex-direction: column;
+      height: 2.5rem;
+      button {
+        ${({ theme }) => theme.flexCenter};
+        cursor: pointer;
+        width: 1.6rem;
+        /* height: 1.6rem; */
+        border: none;
+        padding: 0.4rem;
+        background: ${({ theme }) => theme.color.primary2};
+      }
+    }
+    &__up {
+      transform: rotate(-90deg);
+      fill: white;
+      height: 1.1rem;
+    }
+    &__down {
+      transform: rotate(90deg);
+      fill: white;
+      height: 1.2rem;
+    }
+  }
+`;
+
+const NumInput = styled(Input)`
+  width: 3rem;
+  text-align: center;
+  padding: 1rem;
 `;
 
 export default ItemInfoBox;

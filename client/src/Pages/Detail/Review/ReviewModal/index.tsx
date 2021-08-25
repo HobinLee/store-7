@@ -6,16 +6,18 @@ import ModalWrapper from "@/Components/ModalWrapper";
 import { gap } from "@/styles/theme";
 import { FormEvent, useState } from "react";
 import { postReview } from "@/api/reviews";
+import { ChangeEventHandler } from "react";
+import { useRef } from "react";
 
-const ReviewModal = ({ handleModalOpen }) => {
+const ReviewModal = ({ handleModalOpen, id: orderId }) => {
   const reviewVal = useInput("");
-
+  const rate = useRef("");
   const [file, setFile] = useState<File | undefined>(undefined);
   const [previewURL, setPreviewURL] = useState("");
 
-  const selectImg = (e: any) => {
+  const selectImg = ({ target }: { target: HTMLInputElement }) => {
     const reader = new FileReader();
-    const targetFile = e.target.files[0];
+    const targetFile = target.files[0];
     setFile(targetFile);
 
     reader.onloadend = () => {
@@ -27,29 +29,30 @@ const ReviewModal = ({ handleModalOpen }) => {
 
   const hanleSubmit = async () => {
     const formData = new FormData();
-    formData.append("orderId", "7");
-    formData.append("rate", "3");
-    formData.append("content", "asdf");
-    formData.append("file", file);
+    formData.append("orderId", orderId);
+    formData.append("rate", rate.current);
+    formData.append("content", reviewVal.value);
+    file && formData.append("file", file);
+    console.log("form");
+    console.log("orderId", orderId);
+    console.log("rate", rate.current);
+    console.log("content", reviewVal.value);
     await postReview(formData);
   };
 
   return (
     <ModalWrapper title="후기작성" closeModal={() => handleModalOpen(false)}>
-      <Wrapper
-        onSubmit={(e) => {
-          e.stopPropagation();
-          hanleSubmit();
-        }}
-      >
+      <Wrapper onSubmit={hanleSubmit}>
         <div className="content">
           <div className="content__label">별점 평가</div>
-          <Rating />
+          <Rating rate={rate} />
         </div>
         <div className="content">
           <div className="content__label">사진 첨부 (선택)</div>
 
-          <img src={previewURL} />
+          <div className="content__preview">
+            <img src={previewURL} />
+          </div>
           <label className="upload-btn" htmlFor="img-upload">
             사진 업로드 (최대 1장)
           </label>
@@ -65,7 +68,7 @@ const ReviewModal = ({ handleModalOpen }) => {
           <div className="content__label">후기 작성</div>
           <ReivewInput
             placeholder="자세하고 솔직한 리뷰는 다른 고객에게 큰 도움이 됩니다."
-            value={reviewVal.value}
+            defaultValue={reviewVal.value}
             onChange={reviewVal.onChange}
           />
         </div>
@@ -90,6 +93,13 @@ const Wrapper = styled.form`
     ${gap("1rem", "column")}
     &__label {
       ${({ theme }) => theme.font.medium};
+    }
+    &__preview {
+      text-align: center;
+      & > img {
+        max-height: 20rem;
+        height: 100%;
+      }
     }
   }
   .upload-btn {

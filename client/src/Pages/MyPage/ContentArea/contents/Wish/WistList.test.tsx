@@ -3,7 +3,7 @@ import { render } from "@/utils/test-util";
 import { screen } from "@testing-library/react";
 import WistList from "./index";
 import { expectText } from "@/utils/test-util";
-import { sampleCategory } from "@/shared/dummy";
+import { sampleProducts } from "@/shared/dummy";
 
 describe("<WistList />", () => {
   let page;
@@ -15,7 +15,7 @@ describe("<WistList />", () => {
   it("should render component in document", () => {
     expect(page).toBeInTheDocument();
     expect(screen.queryAllByTestId("test__itme").length).toBe(
-      sampleCategory.length
+      sampleProducts.length
     );
   });
 });

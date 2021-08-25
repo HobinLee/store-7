@@ -11,8 +11,8 @@ describe("<Review />", () => {
     expect(container).toBeInTheDocument();
 
     // 후기쓰기 클릭 시 ReviewMdoal 열림
-    fireEvent.click(screen.queryByText("후기쓰기"));
-    expect(screen.queryByTestId("close-btn")).toBeInTheDocument();
+    // fireEvent.click(screen.queryByText("후기쓰기"));
+    // expect(screen.queryByTestId("close-btn")).toBeInTheDocument();
 
     // close btn 클릭시 alert 때문에 바로 안 닫힘
     fireEvent.click(screen.queryByTestId("close-btn"));

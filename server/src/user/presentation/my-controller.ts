@@ -11,7 +11,6 @@ import {
 import {
   MyInfoResponse,
   MyCartsResponse,
-  MyOredersResponse,
   MyWishResponse,
 } from "../dto/my-response";
 import { QuestionResponse } from "@/product/dto/question-response";
@@ -20,6 +19,7 @@ import { MyInfoEditRequest } from "../dto/my-reqeust";
 import { DestinationResponse } from "@/destination/dto/destination-response";
 import { MyService } from "../application/my-service";
 import { WishRequest } from "../dto/wish-request";
+import { OrderResponse } from "@/order/dto/order-response";
 
 @Controller("/my")
 export class MyController {
@@ -57,7 +57,7 @@ export class MyController {
   async getMyReviews(
     @Body("userId") userId: number
   ): Promise<MyReviewResponse[]> {
-    return await this.myService.getMyReviews(userId);
+    return await this.myService.findMyReviews(userId);
   }
 
   // questions
@@ -65,15 +65,13 @@ export class MyController {
   async getMyQuestions(
     @Body("userId") userId: number
   ): Promise<QuestionResponse[]> {
-    return await this.myService.getMyQeustions(userId);
+    return await this.myService.findMyQeustions(userId);
   }
 
   // orders
   @Get("/orders")
-  async getMyOrders(
-    @Body("userId") userId: number
-  ): Promise<MyOredersResponse[]> {
-    return await this.myService.getMyOrders(userId);
+  async getMyOrders(@Body("userId") userId: number): Promise<OrderResponse[]> {
+    return await this.myService.findMyOrders(userId);
   }
 
   @Get("/orders")
@@ -81,20 +79,19 @@ export class MyController {
     @Body("userId") userId: number,
     @Query("from") from: Date,
     @Query("to") to: Date
-  ): Promise<MyOredersResponse[]> {
-    return await this.myService.getMyOrdersByDateRange(userId, { from, to });
+  ): Promise<OrderResponse[]> {
+    return await this.myService.findMyOrdersByDateRange(userId, { from, to });
   }
 
   // wishes
   @Get("/wishes")
-  async getWishes(@Body("userId") userId: number): Promise<MyWishResponse[]> {
-    return await this.myService.getMyWishes(userId);
+  async getMyWishes(@Body("userId") userId: number): Promise<MyWishResponse[]> {
+    return await this.myService.findMyWishes(userId);
   }
 
   @Post("/wishes")
   async postWishProduct(@Body() body: WishRequest) {
-    body.userId = 1;
-    return await this.myService.postWishProduct(body);
+    return await this.myService.createWishProduct(body);
   }
 
   @Delete("/wishes/:productId")
@@ -103,7 +100,15 @@ export class MyController {
     @Body("userId")
     userId: number
   ) {
-    userId = 1;
-    return await this.myService.deleteWishProduct({ userId, productId });
+    try {
+      const result = await this.myService.deleteWishProduct({
+        userId,
+        productId,
+      });
+    } catch (e) {
+      console.error(e);
+    } finally {
+      return;
+    }
   }
 }

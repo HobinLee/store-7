@@ -11,7 +11,7 @@ export const postOrder = ({
     amount: number;
     destination: string;
     price: number;
-    // request: string;
+    request: string;
   };
 }) => POST("/orders", { data });
 

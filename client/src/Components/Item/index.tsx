@@ -1,42 +1,46 @@
-import { useState } from "react";
 import { Link } from "@/Router";
 import styled, { css } from "styled-components";
 import ToggleImageWrapper from "../ToggleImageWrapper";
-import { Wish } from "@/assets";
-import { getCurrentPrice, convertToKRW } from "@/utils/util";
-import { postWishProduct, deleteWishProduct } from "@/api/my";
+import { WishIcon } from "@/assets";
+import { convertToKRW } from "@/utils/util";
+import { postWishProduct, deleteWishProduct, useMyWishes } from "@/api/my";
+import { media, theme } from "@/styles/theme";
+import properties from "@/config/properties";
 
 type ItemType = {
   id: number;
-  discountRate?: number;
-  tags?: string[];
   name: string;
   price: number;
+  originPrice: number;
+  discountRate: number;
   isWish: boolean;
+  amount: number;
+  image: string;
 };
 
 const Item = ({
   id,
-  discountRate = 0,
-  tags = [],
   name,
   price,
+  originPrice,
+  discountRate,
   isWish,
+  amount,
+  image,
 }: ItemType) => {
-  const [isWishState, setIsWish] = useState(isWish);
-
+  const { refetch } = useMyWishes();
+  const tags = ["new", "best"];
   const handleClickWish = (apiCallback) => async (e: Event) => {
     e.stopPropagation();
-    await apiCallback({ productId: id });
-    setIsWish(!isWishState);
+    await apiCallback(id);
+    refetch();
   };
-
   return (
     <li data-testid="test__itme">
       <Link to={`/detail/${id}`}>
         <ItemWrapper>
           <div className="thumbnail">
-            <ToggleImageWrapper src="https://user-images.githubusercontent.com/41738385/128832252-b19d32b1-0a89-4eb6-b5d9-c399de5f44cc.jpeg" />
+            <ToggleImageWrapper src={properties.imgURL + image} />
             <div className="thumbnail__tags">
               {tags.map((tag, idx) => (
                 <Tag tag={tag} key={idx}>
@@ -44,9 +48,9 @@ const Item = ({
                 </Tag>
               ))}
             </div>
-            <WishBox isWishState={isWishState}>
-              {isWishState ? (
-                <Wish
+            <WishBox isWishState={isWish}>
+              {isWish ? (
+                <WishIcon
                   width="36"
                   height="36"
                   opacity="1"
@@ -54,7 +58,7 @@ const Item = ({
                   onClick={handleClickWish(deleteWishProduct)}
                 />
               ) : (
-                <Wish
+                <WishIcon
                   width="36"
                   height="36"
                   fill="white"
@@ -68,12 +72,10 @@ const Item = ({
             {discountRate !== 0 && (
               <div className="info__sale">
                 <div className="discount-rate">{discountRate}%</div>
-                <div className="before-price">{convertToKRW(price)}</div>
+                <div className="before-price">{convertToKRW(originPrice)}</div>
               </div>
             )}
-            <div className="info__price">
-              {getCurrentPrice(price, discountRate)}
-            </div>
+            <div className="info__price">{convertToKRW(price)}</div>
           </div>
         </ItemWrapper>
       </Link>
@@ -137,6 +139,29 @@ const ItemWrapper = styled.div`
       }
     }
   }
+  ${media.mobile} {
+    position: relative;
+    box-shadow: 0 0 0.4rem 0.2rem rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
+    padding-bottom: 1rem;
+
+    .info {
+      display: flex;
+      flex-direction: column;
+      height: 7rem;
+      justify-content: space-between;
+      &__name {
+        -webkit-line-clamp: 1;
+      }
+    }
+
+    .thumbnail {
+      position: static;
+      max-width: 50w;
+      max-height: 40vw;
+      overflow: hidden;
+    }
+  }
 `;
 const WishBox = styled.div<{ isWishState: boolean }>`
   position: absolute;
@@ -157,6 +182,16 @@ const WishBox = styled.div<{ isWishState: boolean }>`
   }
   & > svg:active {
     transform: scale(1.1);
+  }
+
+  ${media.mobile} {
+    & > svg {
+      width: 2.4rem;
+      height: 2.4rem;
+      fill: none;
+      stroke: #2ac1bc;
+      stroke-width: 3rem;
+    }
   }
 `;
 

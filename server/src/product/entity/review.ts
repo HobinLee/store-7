@@ -5,8 +5,10 @@ import {
   JoinColumn,
   CreateDateColumn,
   OneToOne,
+  ManyToOne,
 } from "typeorm";
 import { Order } from "@/order/entity/order";
+import { Product } from "./product";
 
 @Entity("review")
 export class Review {
@@ -16,6 +18,10 @@ export class Review {
   @OneToOne(() => Order, (order) => order.review)
   @JoinColumn({ name: "order_id" })
   order: Order;
+
+  @ManyToOne(() => Product, (product) => product.reviews)
+  @JoinColumn({ name: "product_id" })
+  product: Product;
 
   @Column({ type: "char", length: 32, nullable: true })
   image: string;

@@ -7,6 +7,9 @@ export const GlobalStyle = createGlobalStyle`
 
   html {
     font-size: 10px;
+    ${media.mobile}{
+      font-size: 7px;
+    }
     font-family: Noto Sans KR, Apple SD Gothic Neo, sans-serif;
     font-display: fallback;
     overflow-x: hidden;
@@ -72,5 +75,24 @@ export const GlobalStyle = createGlobalStyle`
     ${media.mobile} {
       display: none;
     }
+  }
+
+  @font-face {
+    font-family: 'BMEULJIRO';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/BMEULJIRO.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'BMKIRANGHAERANG';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMKIRANGHAERANG.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'BMDOHYEON';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
   }
 `;

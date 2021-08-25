@@ -14,6 +14,7 @@ import { Cart } from "@/cart/entity/cart";
 import { Question } from "./question";
 import { Wish } from "@/user/entity/wish";
 import { Order } from "@/order/entity/order";
+import { Review } from "./review";
 
 @Entity()
 export class Product {
@@ -62,8 +63,11 @@ export class Product {
   @OneToMany(() => Question, (question) => question.product)
   questions: Question[];
 
-  @OneToMany(() => Wish, (wish) => wish.user)
+  @OneToMany(() => Wish, (wish) => wish.product)
   wishes: Wish[];
+
+  @OneToMany(() => Review, (review) => review.product)
+  reviews: Review[];
 
   @CreateDateColumn({
     type: "timestamp",

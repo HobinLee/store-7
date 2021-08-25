@@ -4,8 +4,9 @@ import Progress from "@/Components/Progress";
 import ReviewBox from "./ReviewBox";
 import { useState } from "react";
 import ReviewModal from "./ReviewModal";
-import { reviews } from "@/shared/dummy";
 import { gap } from "@/styles/theme";
+import { useProductReviews } from "@/api/products";
+import { useEffect } from "react";
 
 const Review = () => {
   const [isModalOpened, setIsModalOpened] = useState(false);
@@ -18,16 +19,24 @@ const Review = () => {
     } else setIsModalOpened(val);
   };
 
+  const pathname = location.pathname.split("detail/")[1];
+
+  const {
+    status,
+    data: reviews,
+    error,
+  } = useProductReviews(parseInt(pathname));
+
   return (
-    <div>
-      <Header>
-        <div className="left">
+    status !== "loading" && (
+      <div>
+        <Header>
           <div>
             <div>
               <div>
-                상품후기 <span className="total">{reviews.totalCount}</span>
+                상품후기 <span className="total">{reviews.reviews.length}</span>
               </div>
-              <div className="average-rate">{reviews.averageRate}/5</div>
+              <div className="average-rate">{reviews.averageRate}/5점</div>
             </div>
           </div>
 
@@ -41,36 +50,32 @@ const Review = () => {
                   content={{
                     value: item.rate,
                     count: item.count,
-                    totalCount: reviews.totalCount,
+                    totalCount: reviews.reviews.length,
                   }}
                 />
               ))}
           </div>
-        </div>
+        </Header>
 
-        <Button onClick={() => handleModalOpen(true)} primary>
-          후기쓰기
-        </Button>
-      </Header>
-
-      <Filter>
-        <div className="buttons">
-          <div>
-            <span>베스트순</span>
-            <span>최신순</span>
+        <Filter>
+          <div className="buttons">
+            <div>
+              <span>베스트순</span>
+              <span>최신순</span>
+            </div>
+            <div>사진리뷰</div>
           </div>
-          <div>사진리뷰</div>
-        </div>
 
-        <button className="rate-sort">별점</button>
-      </Filter>
+          <button className="rate-sort">별점</button>
+        </Filter>
 
-      {reviews.reviews.map((review) => (
-        <ReviewBox key={review.id} {...review} />
-      ))}
+        {reviews.reviews.map((review) => (
+          <ReviewBox key={review.id} {...review} />
+        ))}
 
-      {isModalOpened && <ReviewModal {...{ handleModalOpen }} />}
-    </div>
+        {/* {isModalOpened && <ReviewModal {...{ handleModalOpen }} />} */}
+      </div>
+    )
   );
 };
 

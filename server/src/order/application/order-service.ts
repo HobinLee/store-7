@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { Orders } from "../domain/orders";
 import { OrderRequest } from "../dto/order-request";
 import { OrderResponse } from "../dto/order-response";
+import { OrderStatus } from "@/order/entity/order";
 
 @Injectable()
 export class OrderService {
@@ -33,23 +34,22 @@ export class OrderService {
 
   createOrder(userId: number, order: OrderRequest): string {
     try {
-      // 비회원은 id 1
+      // 비회원은 id 7
       this.orders.createOrder({
         ...order,
         product: { id: order.productId },
         user: {
-          id: userId ?? 1,
+          id: userId ?? 7,
         },
-        status: "배송준비중",
+        status: OrderStatus.Prepare,
       });
     } catch (e) {
       throw Error(e.message);
-      return e;
     }
     return "Created!";
   }
 
-  updateOrderStatus(id: number, status: string): string {
+  updateOrderStatus(id: number, status: OrderStatus): string {
     try {
       this.orders.updateOrderStatus(id, status);
     } catch (e) {

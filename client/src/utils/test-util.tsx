@@ -1,14 +1,14 @@
 import { FC, ReactElement } from "react";
 import { render, RenderOptions, screen } from "@testing-library/react";
 import { ThemeProvider } from "styled-components";
-import { light } from "@/styles/theme";
+import { theme } from "@/styles/theme";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 const queryClient = new QueryClient();
 
 const AllTheProviders: FC = ({ children }) => {
   return (
-    <ThemeProvider theme={light}>
+    <ThemeProvider theme={theme}>
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </ThemeProvider>
   );

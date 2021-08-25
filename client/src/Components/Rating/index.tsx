@@ -1,12 +1,13 @@
 import MRating from "@material-ui/lab/Rating";
 import { withStyles } from "@material-ui/core/styles";
-import { light } from "@/styles/theme";
+import { theme } from "@/styles/theme";
 
 export type RatingProps = {
   value?: number;
   size?: "small" | "medium" | "large";
   className?: string;
   readOnly?: boolean;
+  rate?: React.MutableRefObject<string>;
 };
 
 const Rating = ({
@@ -14,10 +15,11 @@ const Rating = ({
   size = "large",
   className,
   readOnly = false,
+  rate,
 }: RatingProps) => {
   const CustomRating = withStyles({
     iconFilled: {
-      color: light.color.primary1,
+      color: theme.color.primary1,
     },
   })(MRating);
 
@@ -26,10 +28,11 @@ const Rating = ({
       <CustomRating
         role={!readOnly ? "button" : "article"}
         defaultValue={value}
-        precision={0.1}
+        precision={0.5}
         readOnly={readOnly}
         size={size}
         name="rating"
+        onChange={(e, newValue) => (rate.current = String(newValue))}
       />
     </div>
   );

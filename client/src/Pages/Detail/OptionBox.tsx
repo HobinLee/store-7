@@ -3,7 +3,7 @@ import Input from "@/Components/Input";
 import { useState } from "react";
 import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
-import { Triangle } from "@/assets";
+import { Triangle, WishIcon } from "@/assets";
 import { convertToKRW } from "@/utils/util";
 import { gap } from "@/styles/theme";
 import { postCart } from "@/api/carts";
@@ -12,30 +12,39 @@ import { useRecoilValue } from "recoil";
 import { loginState } from "@/store/state";
 import { CartType, ProductType } from "@/shared/type";
 import { InputType } from "@/hooks/useInput";
+import { postWishProduct, deleteWishProduct } from "@/api/my";
+import { QueryObserverResult } from "react-query";
+import { useCallback } from "react";
 
 type OptionBoxProps = {
   numValue: InputType;
   handleClickNumVal: Function;
   product: ProductType;
+  refetch?: () => Promise<QueryObserverResult<unknown>>;
 };
 
 const OptionBox = ({
   numValue,
   handleClickNumVal,
   product,
+  refetch,
 }: OptionBoxProps) => {
   const [isCartAlertShown, setIsCartAlertShown] = useState(false);
 
-  const productId = location.pathname.split("detail/")[1];
-
-  const isLogined = useRecoilValue(loginState);
-
+  const productId = product.id;
+  const isLoggedin = useRecoilValue(loginState);
+  const handlePostWish = async () => {
+    product.isWish
+      ? await deleteWishProduct(productId)
+      : await postWishProduct(productId);
+    refetch();
+  };
   const handlePostCart = async () => {
     try {
-      if (isLogined && status !== "loading") {
+      if (isLoggedin && status !== "loading") {
         await postCart({
           data: {
-            product: { id: parseInt(productId) },
+            product: { id: productId },
             amount: parseInt(numValue.value),
           },
         });
@@ -56,7 +65,7 @@ const OptionBox = ({
             id: (exist.items[exist.items.length - 1]?.id || 0) + 1,
             amount: parseInt(numValue.value),
             price: product.price * parseInt(numValue.value),
-            productId: parseInt(productId),
+            productId: productId,
           },
         ];
         localStorage.setItem("carts", JSON.stringify(exist));
@@ -91,13 +100,19 @@ const OptionBox = ({
     moveTo("/order");
   };
 
+  const RenderNumInput = useCallback(() => {
+    return (
+      <NumInput defaultValue={numValue.value} onChange={numValue.onChange} />
+    );
+  }, [numValue.value]);
+
   return (
     <Wrapper>
       <div className="select-option">
         <div>수량</div>
         <div className="select-option__right">
           <div className="num-input">
-            <NumInput value={numValue.value} onChange={numValue.onChange} />
+            <RenderNumInput />
             <div>
               <button type="button" onClick={() => handleClickNumVal(1)}>
                 <Triangle className="num-input__up" />
@@ -117,7 +132,18 @@ const OptionBox = ({
       </div>
 
       <div className="buttons">
-        <Button>찜</Button>
+        <Button
+          onClick={handlePostWish}
+          className={product.isWish ? "is-wish" : "not-wish"}
+        >
+          <WishIcon
+            width="24"
+            height="24"
+            fill="none"
+            stroke="black"
+            strokeWidth="3rem"
+          />
+        </Button>
         <Button onClick={handlePostCart}>장바구니</Button>
         <Button onClick={handleBuyImmediately} primary>
           바로 구매
@@ -215,6 +241,22 @@ const Wrapper = styled.div`
     width: 100%;
     justify-content: flex-end;
     ${gap("1rem")}
+    .is-wish {
+      padding: 0.8rem 2rem;
+      background: #2ac1bc;
+      &:hover {
+      }
+    }
+
+    .not-wish {
+      padding: 0.8rem 2rem;
+      background: white;
+      &:hover > svg {
+        stroke: #2ac1bc;
+        fill: none;
+        stroke-width: 3rem;
+      }
+    }
   }
   .alert {
     width: auto;

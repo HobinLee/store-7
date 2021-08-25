@@ -1,3 +1,4 @@
+import { OrderStatus } from "../entity/order";
 import { Order } from "../entity/order";
 
 export class OrderResponse {
@@ -8,9 +9,13 @@ export class OrderResponse {
   productOptionId: number;
   amount: number;
   destination: string;
-  status: string;
+  status: OrderStatus;
   request: string;
+  price: number;
+  productName: string;
   createdAt: Date;
+  reviewId?: number;
+  image: string;
 
   static of(order: Order): OrderResponse {
     const id = order.id,
@@ -21,7 +26,12 @@ export class OrderResponse {
       amount = order.amount,
       destination = order.destination,
       status = order.status,
-      request = order.request;
+      request = order.request,
+      price = order.price,
+      createdAt = order.createdAt,
+      productName = order.product.name,
+      reviewId = order.review ? order.review.id : 0,
+      image = order.product.images[0] ? order.product.images[0].id : "bed";
 
     return {
       id,
@@ -33,6 +43,11 @@ export class OrderResponse {
       destination,
       status,
       request,
-    } as OrderResponse;
+      price,
+      createdAt,
+      productName,
+      reviewId,
+      image,
+    };
   }
 }

@@ -3,14 +3,12 @@ import styled from "styled-components";
 import { getSiblingIndex } from "@/utils/node";
 import { Link } from "@/Router";
 import { categories } from "@/shared/dummy";
-
-export type CategoryType = {
-  name: string;
-  subCategories?: CategoryType[];
-};
-
-const Menu = () => {
-  const [currentCategoryIndex, setCurrentCategory] = useState(0);
+import { media } from "@/styles/theme";
+import { CategoryType } from "@/Pages/Category";
+const Menu = ({ category }: { category?: string }) => {
+  const [categoryId, setCurrentCategory] = useState<number>(
+    category ? parseInt(category) : 0
+  );
   const [padding, setPadding] = useState(0);
 
   const checkChangeCategory = ({
@@ -45,23 +43,22 @@ const Menu = () => {
 
     const $li: HTMLElement = e.target.closest("LI");
     const currentIndex = getSiblingIndex($li);
+    const id = categories[currentIndex]?.id ?? 0;
 
-    if (currentIndex !== currentCategoryIndex) {
-      setCurrentCategory(currentIndex);
+    if (id !== categoryId) {
+      setCurrentCategory(id);
       getPadding($li);
     }
   };
 
   const generateMainCategory = (
     <MainCategoryWrapper onMouseMove={handleMouseMove}>
-      {categories.map((category: CategoryType, idx: number) => (
+      {categories.map((category: CategoryType) => (
         <li
-          key={idx}
-          className={currentCategoryIndex === idx ? "selected" : ""}
+          key={category.id}
+          className={categoryId === category.id ? "selected" : ""}
         >
-          <Link key={idx} to={`/category?main_id=${idx}`}>
-            {category.name}
-          </Link>
+          <Link to={`/category?category=${category.id}`}>{category.name}</Link>
         </li>
       ))}
     </MainCategoryWrapper>
@@ -82,16 +79,15 @@ const Menu = () => {
   const generateSubCategory = (
     <SubCategoryWrapper
       padding={padding}
-      width={getWidth(categories[currentCategoryIndex].subCategories)}
+      width={getWidth(categories[categoryId / 100]?.subCategories)}
     >
-      {categories[currentCategoryIndex].subCategories?.map(
-        (category: CategoryType, idx: number) => (
-          <li key={idx}>
+      {categories[categoryId / 100]?.subCategories?.map(
+        (subCategory: CategoryType) => (
+          <li key={subCategory.id}>
             <Link
-              key={idx}
-              to={`/category?category=${categories[currentCategoryIndex].name}&subCategory=${category.name}`}
+              to={`/category?category=${categoryId}&subCategory=${subCategory.id}`}
             >
-              {category.name}
+              {subCategory.name}
             </Link>
           </li>
         )
@@ -124,12 +120,18 @@ const Wrapper = styled.div`
   }
 
   li {
-    padding: 1rem;
     cursor: pointer;
     text-align: center;
     &:hover {
-      opacity: 0.5;
+      color: ${({ theme }) => theme.color.primary3};
     }
+    a {
+      display: block;
+      padding: 1rem;
+    }
+  }
+  ${media.mobile} {
+    padding: 0 1rem;
   }
 `;
 
@@ -140,7 +142,7 @@ const MainCategoryWrapper = styled.ul`
   display: flex;
   flex-direction: row;
   overflow-x: scroll;
-  color: #fff;
+  color: ${({ theme }) => theme.color.grey2};
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
   &::-webkit-scrollbar {
@@ -154,7 +156,7 @@ const MainCategoryWrapper = styled.ul`
   .selected {
     font-weight: bolder;
     a {
-      color: ${({ theme }) => theme.color.primary1};
+      color: ${({ theme }) => theme.color.primary3};
     }
   }
 `;
@@ -187,12 +189,19 @@ const SubCategoryWrapper = styled.ul<{ padding: number; width: number }>`
   display: flex;
   justify-content: center;
   flex-direction: row;
+  z-index: 30;
+
   ${({ padding, width }) => setPadding(padding, width)}
+  ${media.mobile} {
+    width: 100%;
+    padding: 0;
+    justify-content: flex-start;
+  }
   ${({ theme }) => theme.font.small}
   overflow-x: scroll;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
-  color: #fff;
+  color: ${({ theme }) => theme.color.grey1};
 
   &::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/

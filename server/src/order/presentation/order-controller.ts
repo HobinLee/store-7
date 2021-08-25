@@ -2,6 +2,7 @@ import { Body, Controller, Get, Patch, Post, Param } from "@nestjs/common";
 import { OrderService } from "../application/order-service";
 import { OrderRequest } from "../dto/order-request";
 import { OrderResponse } from "../dto/order-response";
+import { OrderStatus } from "../entity/order";
 
 @Controller("/orders")
 export class OrderController {
@@ -30,7 +31,10 @@ export class OrderController {
   }
 
   @Patch("/:id")
-  updateOrderStatus(@Param("id") id: number, @Body() status: string): string {
+  updateOrderStatus(
+    @Param("id") id: number,
+    @Body() status: OrderStatus
+  ): string {
     return this.orderService.updateOrderStatus(id, status);
   }
 }

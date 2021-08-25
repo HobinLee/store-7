@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Button from "@/Components/Button";
 import { convertToKRW } from "@/utils/util";
-import { gap } from "@/styles/theme";
+import { gap, media } from "@/styles/theme";
 import { moveTo } from "@/Router";
 import { MouseEventHandler } from "react";
 import { useEffect } from "react";
@@ -18,13 +18,13 @@ export const output = (props: CartOrderBoxInput) => {
   const pathname = location.pathname.split("/")[1];
 
   return {
-    priceOutput: convertToKRW(props.totalPrice),
-    deliveryOutput: convertToKRW(props.totalDelivery),
-    paymentOutput: convertToKRW(props.totalPayment),
+    priceOutput: convertToKRW(props.totalPrice ?? 0),
+    deliveryOutput: convertToKRW(props.totalDelivery ?? 0),
+    paymentOutput: convertToKRW(props.totalPayment ?? 0),
     buttonText:
       pathname === "cart"
-        ? `${props.totalCount}개 상품 구매하기`
-        : `${convertToKRW(props.totalPayment)} 결제하기`,
+        ? `${props.totalCount ?? 0}개 상품 구매하기`
+        : `${convertToKRW(props.totalPayment ?? 0)} 결제하기`,
   };
 };
 
@@ -97,11 +97,20 @@ const CartOrderBox = ({
 };
 
 const Wrapper = styled.div`
-  position: absolute;
+  position: fixed;
+  top: 18rem;
   right: 1rem;
   padding: 3rem;
+  padding-right: 7rem;
   .order-btn {
     margin-top: 2rem;
+  }
+  ${media.tablet} {
+    top: 0;
+    right: 0;
+    position: relative;
+    width: 100%;
+    padding: 5rem 0;
   }
 `;
 
@@ -114,6 +123,8 @@ const Result = styled.div`
   padding: 3rem 2rem;
   ${gap("2rem", "column")}
   width: 40rem;
+  box-sizing: border-box;
+
   & > div {
     ${({ theme }) => theme.flexCenter};
     width: 100%;
@@ -129,6 +140,9 @@ const Result = styled.div`
       color: ${({ theme }) => theme.color.primary1};
       font-size: 3rem;
     }
+  }
+  ${media.tablet} {
+    width: 100%;
   }
 `;
 
