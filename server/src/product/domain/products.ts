@@ -36,7 +36,7 @@ export class Products {
 
   async findProductsByQueries(query: ProductFindQuery): Promise<Product[]> {
     return this.productRepository.find({
-      relations: ["options", "images", "detailImages"],
+      relations: ["options", "images", "detailImages", "wishes", "wishes.user"],
       where: generateWhere(query.category, query.subCategory, query.ids),
       order: ORDER_TYPE[query.order],
       skip: ((query.page ?? START_PAGE) - 1) * (query.size ?? PRODUCT_PER_PAGE),

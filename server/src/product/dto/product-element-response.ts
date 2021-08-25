@@ -21,14 +21,17 @@ export class ProductElementResponse {
     this.image = response.image;
   }
 
-  static of(product: Product): ProductElementResponse {
+  static of(product: Product, userId: number): ProductElementResponse {
     const id = product.id,
       name = product.name,
       originPrice = product.price,
       discountRate = product.discountRate,
       amount = product.stock,
       image = product.getThumbnailImage(),
-      price = product.getDiscountedPrice();
+      price = product.getDiscountedPrice(),
+      isWish =
+        product.wishes?.filter((wish) => wish?.user?.id === userId).length !==
+        0;
 
     return new ProductElementResponse({
       id,
@@ -36,7 +39,7 @@ export class ProductElementResponse {
       price,
       originPrice,
       discountRate,
-      isWish: false,
+      isWish,
       amount,
       image,
     });

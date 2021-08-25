@@ -15,6 +15,12 @@ import { convertToKRW } from "@/utils/util";
 import { useProduct } from "@/api/products";
 import properties from "@/config/properties";
 import { useCallback } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { isMyWishInDetail } from "@/store/state";
+import { useEffect } from "react";
+import useDidMountEffect from "@/hooks/useDidMountEffect";
+import { deleteWishProduct, postWishProduct } from "@/api/my";
+import useDebounce from "@/hooks/useDebounce";
 
 const topHeight = innerWidth > 500 ? 700 : 400;
 
@@ -30,13 +36,14 @@ export const tabs = [
 
 const DetailPage = () => {
   const productId = location.pathname.split("detail/")[1];
-
   const {
     status,
     data: product,
     error,
     refetch,
   } = useProduct(parseInt(productId));
+  const [isMyWish, setIsMyWish] = useRecoilState(isMyWishInDetail);
+  const debounceIsMyWish = useDebounce<boolean>(isMyWish, 300);
 
   const numValue = useInput("1");
   const handleClickNumVal = (val: 1 | -1) => {
@@ -70,6 +77,16 @@ const DetailPage = () => {
         return;
     }
   }, [product, selectedTab]);
+
+  useEffect(() => {
+    setIsMyWish(product?.isWish);
+  }, [product]);
+
+  useDidMountEffect(() => {
+    debounceIsMyWish
+      ? postWishProduct(product.id)
+      : deleteWishProduct(product.id);
+  }, [debounceIsMyWish]);
 
   return (
     status !== "loading" && (
@@ -116,7 +133,7 @@ const DetailPage = () => {
 
               <OptionBox
                 key="option-box"
-                {...{ numValue, handleClickNumVal, product, refetch }}
+                {...{ numValue, handleClickNumVal, product, refetch, isMyWish }}
               />
             </Info>
           </InfoBox>
@@ -140,7 +157,9 @@ const DetailPage = () => {
                 <RenderTabComponent />
               </TabPage>
               <div className="option-box">
-                <OptionBox {...{ numValue, handleClickNumVal, product }} />
+                <OptionBox
+                  {...{ numValue, handleClickNumVal, product, isMyWish }}
+                />
               </div>
             </div>
           </div>

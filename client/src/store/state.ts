@@ -12,3 +12,8 @@ export const loginState = atom({
   key: "isLoggedin",
   default: false,
 });
+
+export const isMyWishInDetail = atom({
+  key: "isMyWishInDetail",
+  default: false,
+});
