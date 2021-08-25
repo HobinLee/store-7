@@ -8,7 +8,7 @@ const AutoList = ({ keyword, handleSearch }) => {
   const handleClick = (v) => {
     handleSearch(v);
   };
-  const debouncedSearchInput = useDebounce(keyword, 200);
+  const debouncedSearchInput = useDebounce<string>(keyword, 200);
   const { data: autoList } = useKeywords(debouncedSearchInput);
 
   const generateAutoList = autoList?.map((value, idx) => (
