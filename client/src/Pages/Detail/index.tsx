@@ -2,7 +2,7 @@ import Header from "@/Components/Header";
 import OptionBox from "./OptionBox";
 import useInput from "@/hooks/useInput";
 import { PageWrapper, Contents } from "@/shared/styled";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import Review from "./Review";
 import Question from "./Question";
@@ -14,23 +14,22 @@ import { gap, media } from "@/styles/theme";
 import { convertToKRW } from "@/utils/util";
 import { useProduct } from "@/api/products";
 import properties from "@/config/properties";
+import { useCallback } from "react";
 
-const topHeight = 740;
+const topHeight = innerWidth > 500 ? 700 : 400;
 
 export const tabs = [
   {
     id: "first",
     title: "상품상세정보",
-    component: <DetailInfo />,
   },
-  { id: "seconed", title: "배송/교환/반품 안내", component: <Guide /> },
-  { id: "third", title: "상품후기", component: <Review /> },
-  { id: "fourth", title: "상품문의", component: <Question /> },
+  { id: "second", title: "배송/교환/반품 안내" },
+  { id: "third", title: "상품후기" },
+  { id: "fourth", title: "상품문의" },
 ];
 
 const DetailPage = () => {
   const productId = location.pathname.split("detail/")[1];
-  const [yOffset, setYOffset] = useState(0);
 
   const {
     status,
@@ -51,23 +50,26 @@ const DetailPage = () => {
 
   const [selectedTab, setSelectedTab] = useState("first");
   const handleSelectTab = (val: string) => {
-    window.scrollTo({ top: topHeight + 1, behavior: "smooth" });
+    window.scrollTo({ top: topHeight, behavior: "smooth" });
     setSelectedTab(val);
   };
 
   const [isZoomOpened, setIsZoomOpened] = useState(false);
 
-  useEffect(() => {
-    addEventListener("scroll", () => {
-      setYOffset(window.pageYOffset);
-    });
-
-    return () => {
-      removeEventListener("scroll", () => {
-        setYOffset(window.pageYOffset);
-      });
-    };
-  }, []);
+  const RenderTabComponent = useCallback(() => {
+    switch (selectedTab) {
+      case "first":
+        return <DetailInfo {...{ product }} />;
+      case "second":
+        return <Guide />;
+      case "third":
+        return <Review />;
+      case "fourth":
+        return <Question />;
+      default:
+        return;
+    }
+  }, [product, selectedTab]);
 
   return (
     status !== "loading" && (
@@ -133,18 +135,15 @@ const DetailPage = () => {
           </Tab>
 
           <div className="bottom-wrapper">
-            {tabs.map((tab) => (
-              <TabPage data-testid={tab.title} key={tab.title}>
-                {tab.id === selectedTab && tab.component}
+            <div>
+              <TabPage>
+                <RenderTabComponent />
               </TabPage>
-            ))}
-          </div>
-
-          {yOffset > topHeight && selectedTab === "first" && (
-            <div className="option-box">
-              <OptionBox {...{ numValue, handleClickNumVal, product }} />
+              <div className="option-box">
+                <OptionBox {...{ numValue, handleClickNumVal, product }} />
+              </div>
             </div>
-          )}
+          </div>
         </Scroll>
         <Footer />
       </Wrapper>
@@ -172,20 +171,26 @@ const ZoomLens = styled.div`
 
 const InfoBox = styled.div`
   ${({ theme }) => theme.flexCenter}
+  align-items: flex-start;
   margin-top: 5rem;
   width: 100%;
   height: 50rem;
   box-sizing: border-box;
   ${gap("5rem")}
   .thumbnail {
-    width: 50rem;
-    height: 100%;
+    width: 100%;
+    max-height: 50rem;
     object-fit: cover;
     background-color: lightgray;
+    border-radius: 2rem;
   }
   .img-box {
     cursor: zoom-in;
     position: relative;
+  }
+  ${media.tablet} {
+    height: 40rem;
+    padding: 0 2rem;
   }
 `;
 
@@ -222,37 +227,43 @@ const Info = styled.div`
 
 const Scroll = styled.div<{ selectedTab: string }>`
   width: 100%;
-  padding-right: ${({ selectedTab }) => selectedTab === "first" && "25rem"};
   ${media.mobile} {
     padding: 0;
   }
   box-sizing: border-box;
-  margin-top: 10rem;
+  margin-top: 5rem;
+  background: #fff;
 
   .bottom-wrapper {
-    box-sizing: border-box;
+    ${({ theme }) => theme.flexCenter};
     width: 100%;
+    box-sizing: border-box;
     padding: 0 5rem;
+    position: relative;
+    & > div {
+      width: 120rem;
+      padding: 3rem 0;
+      display: flex;
+      ${gap("3rem")}
+      img {
+        width: 100%;
+      }
+    }
   }
 
   .option-box {
-    position: fixed;
-    right: 3rem;
-    bottom: 3rem;
-    .total-price {
-      margin-top: 3rem;
+    ${media.mobile} {
+      display: none;
     }
-    &::after {
-      content: "";
-      z-index: -1;
-      width: 50rem;
-      height: 33.5rem;
-      border-radius: 1rem;
-      position: absolute;
-      top: 3rem;
-      left: -2rem;
-      opacity: 0.5;
-      background: #fff;
+    ${media.tablet} {
+      button {
+        ${({ theme }) => theme.font.small};
+        ${({ theme }) => theme.borderRadius.small};
+        padding: 1rem 1.5rem;
+      }
+    }
+    .total-price {
+      margin-top: 2rem;
     }
   }
 `;
@@ -261,9 +272,9 @@ const Tab = styled.div`
   ${({ theme }) => theme.flexCenter}
   position: -webkit-sticky;
   position: sticky;
-
+  ${gap("2rem")}
   top: 14.6rem;
-  background: ${({ theme }) => theme.color.background};
+  background: rgba(255, 255, 255, 0.9);
   z-index: 1;
   ${media.mobile} {
     top: 10.6rem;
@@ -278,6 +289,9 @@ const TabA = styled.div<{ isSelected: boolean }>`
     isSelected ? theme.color.primary1 : "transparent"};
   color: ${({ isSelected, theme }) =>
     isSelected ? theme.color.primary1 : theme.color.title_active};
+  ${media.tablet} {
+    padding: 2rem 1rem;
+  }
 `;
 
 const TabPage = styled.div`

@@ -201,7 +201,7 @@ const Content = styled.div`
     }
   }
   .empty {
-    background-color: ${({ theme }) => theme.color.background};
+    background-color: #fff;
     width: 100%;
     text-align: center;
     padding: 5rem;

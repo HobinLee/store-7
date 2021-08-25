@@ -118,7 +118,7 @@ const Result = styled.div`
   ${({ theme }) => theme.flexCenter};
   ${({ theme }) => theme.font.medium};
   flex-direction: column;
-  background: ${({ theme }) => theme.color.background};
+  background: #fff;
   border-radius: 1rem;
   padding: 3rem 2rem;
   ${gap("2rem", "column")}

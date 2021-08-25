@@ -36,7 +36,7 @@ const Review = () => {
               <div>
                 상품후기 <span className="total">{reviews.reviews.length}</span>
               </div>
-              <div className="average-rate">{reviews.averageRate}/5점</div>
+              <div className="average-rate">{reviews.averageRate || 0}/5점</div>
             </div>
           </div>
 

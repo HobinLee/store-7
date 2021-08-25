@@ -14,7 +14,7 @@ export const GlobalStyle = createGlobalStyle`
     font-display: fallback;
     overflow-x: hidden;
     color: ${({ theme }) => theme.color.title_active};
-    background: #f9f9f9;
+    background: ${({ theme }) => theme.color.background};
     a {
       text-decoration: none;
     }
@@ -26,7 +26,7 @@ export const GlobalStyle = createGlobalStyle`
       color: inherit;
       font: inherit;
       margin: 0;
-      background: none;
+      background: #fff;
       border: none;
     }
 
