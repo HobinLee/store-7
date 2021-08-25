@@ -67,13 +67,10 @@ export class SearchService {
 
     if (!productIds.length) return [];
 
-    const products: Product[] =
-      await this.products.findProductsByOrderAndCategoryAndSubCategoryAndKeyword(
-        {
-          ...searchQuery,
-          ids: productIds,
-        }
-      );
+    const products: Product[] = await this.products.findProductsByQueries({
+      ...searchQuery,
+      ids: productIds,
+    });
 
     return products.map(ProductElementResponse.of) ?? [];
   }

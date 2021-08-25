@@ -26,14 +26,9 @@ export class ProductService {
   async getProducts(
     findQuery: ProductFindQuery
   ): Promise<ProductElementResponse[]> {
-    const products =
-      await this.products.findProductsByOrderAndCategoryAndSubCategoryAndKeyword(
-        findQuery
-      );
+    const products = await this.products.findProductsByQueries(findQuery);
 
-    return findQuery.size
-      ? products.map(ProductElementResponse.of).slice(0, findQuery.size)
-      : products.map(ProductElementResponse.of);
+    return products.map(ProductElementResponse.of);
   }
 
   async getProduct(id: number, userId: number) {
