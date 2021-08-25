@@ -23,6 +23,7 @@ import { QuestionController } from "./presentation/question-controller";
 import { QuestionService } from "./application/question-service";
 import { Wishes } from "@/user/domain/wishes";
 import { Wish } from "@/user/entity/wish";
+import { AdminController } from "./presentation/admin-controller";
 
 const elasticsearchConfig = properties.elastic;
 
@@ -50,6 +51,7 @@ const elasticsearchConfig = properties.elastic;
     ImageController,
     ReviewController,
     QuestionController,
+    AdminController,
   ],
   providers: [
     Products,

@@ -15,13 +15,17 @@ export class S3Repository {
     this.bucket = properties.s3.bucket;
   }
 
-  getObject(fileName) {
-    return this.s3
-      .getObject({
-        Bucket: this.bucket,
-        Key: fileName,
-      })
-      .promise();
+  async getObject(fileName) {
+    try {
+      return await this.s3
+        .getObject({
+          Bucket: this.bucket,
+          Key: fileName,
+        })
+        .promise();
+    } catch (e) {
+      return null;
+    }
   }
 
   putObject(fileName, data) {

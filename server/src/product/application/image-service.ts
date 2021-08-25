@@ -7,6 +7,8 @@ export class ImageService {
 
   async getImage(imageName) {
     const s3Result = await this.s3Repository.getObject(imageName);
-    return s3Result.Body;
+    if (s3Result) {
+      return s3Result.Body;
+    }
   }
 }

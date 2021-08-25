@@ -50,6 +50,20 @@ export class Products {
     });
   }
 
+  async findAllProductsByKeyword(keyword: string): Promise<Product[]> {
+    return await this.productRepository.find({
+      relations: ["images", "orders"],
+      where: [
+        { name: wrapWordToLike(keyword) },
+        { category: wrapWordToLike(keyword) },
+        { subCategory: wrapWordToLike(keyword) },
+      ],
+      order: {
+        id: "DESC",
+      },
+    });
+  }
+
   async createProduct(product: Product): Promise<Product> {
     const result = await this.productRepository.insert(product);
     return await this.findProductById(result.raw.insertId);
@@ -93,11 +107,20 @@ export class Products {
   }
 
   async deleteProduct(id: number) {
+    this.findProductById(id).then((product) => {
+      product.images.forEach((image) => {
+        this.s3Repository.deleteObject(image.id);
+      });
+      product.detailImages.forEach((image) => {
+        this.s3Repository.deleteObject(image.id);
+      });
+    });
     await this.productRepository.delete(id);
   }
 
   async findAllProducts(): Promise<Product[]> {
     return await this.productRepository.find({
+      relations: ["images"],
       order: {
         id: "DESC",
       },

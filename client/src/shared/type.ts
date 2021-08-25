@@ -78,6 +78,19 @@ export class ProductElementType {
   image: string;
 }
 
+export class AdminProductType {
+  id: number;
+  name: string;
+  price: number;
+  originPrice: number;
+  discountRate: number;
+  isWish: boolean;
+  amount: number;
+  image: string;
+  orderWait: number;
+  salse: number;
+}
+
 export interface ProductType {
   id: number;
   name: string;

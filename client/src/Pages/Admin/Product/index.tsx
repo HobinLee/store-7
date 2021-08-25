@@ -1,54 +1,125 @@
 import * as S from "./styles";
 import properties from "../../../config/properties";
-import { ProductElementType } from "@/shared/type";
-import { useEffect, useState } from "react";
+import { AdminProductType } from "@/shared/type";
+import { FC, MouseEvent, useEffect, useState } from "react";
 import SearchInput from "./SearchInput";
-import { getProducts } from "@/api/products";
+import { getAllProductsByKeyword } from "@/api/products";
+import { Page } from "..";
 
-const AdminProduct = () => {
+interface Props {
+  setPage: (page: Page) => void;
+}
+
+const AdminProduct: FC<Props> = ({ setPage }) => {
   const [products, setProducts] = useState([]);
   const [keyword, setKeyword] = useState("");
+  const [productDetail, setProductDetail] = useState<AdminProductType>(null);
 
   useEffect(() => {
-    getProducts({ params: { keyword } }).then((data) => {
+    getAllProductsByKeyword(keyword).then((data) => {
       setProducts(data);
     });
   }, [keyword]);
 
+  const productDetailCloseHandler = () => {
+    setProductDetail(null);
+  };
+
+  const productDetailClickHandler = (e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+  };
+
+  const getProductDetail = () => {
+    if (productDetail) {
+      return (
+        <S.ProductDetail
+          isShowed={productDetail !== null}
+          onClick={productDetailClickHandler}
+        >
+          <div>
+            <img src={getImage(productDetail.image)} />
+            <div>
+              <div className="header">
+                <p>상품명</p>
+                <span>{productDetail.name}</span>
+              </div>
+              <div className="header">
+                <p>상품재고</p>
+                <span className={productDetail.amount < 10 ? "red" : ""}>
+                  {productDetail.amount}개
+                </span>
+              </div>
+              <div className="info">
+                <div>
+                  <p>주문대기</p>
+                  <span>{productDetail.orderWait}건</span>
+                </div>
+                <div>
+                  <p>판매량</p>
+                  <span>{productDetail.salse}개</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          대충 이 부분에는 해당 상품의 판매 정보를 시각화 하여 보여줄 예정
+        </S.ProductDetail>
+      );
+    }
+  };
+
+  const clickProductAddHandler = () => {
+    setPage("ProductCreate");
+  };
+
   return (
-    <S.AdminProduct>
-      <S.Header>
-        <div>Total ({products.length})</div>
-        <div>
-          <SearchInput keyword={keyword} setKeyword={setKeyword} />
-          <button>상품 추가</button>
-        </div>
-      </S.Header>
-      <S.ProductListHeader>
-        <div>상품번호</div>
-        <div>상품명</div>
-        <div>재고</div>
-        <div>주문대기</div>
-        <div>판매량</div>
-        <div>관리</div>
-      </S.ProductListHeader>
-      <S.ProductList>{convertProductsToElement(products)}</S.ProductList>
-    </S.AdminProduct>
+    <>
+      <S.AdminProduct>
+        <S.Header>
+          <div>Total ({products.length})</div>
+          <div>
+            <SearchInput keyword={keyword} setKeyword={setKeyword} />
+            <button onClick={clickProductAddHandler}>상품 추가</button>
+          </div>
+        </S.Header>
+        <S.ProductListHeader>
+          <div>상품번호</div>
+          <div>상품명</div>
+          <div>재고</div>
+          <div>주문대기</div>
+          <div>판매량</div>
+          <div>관리</div>
+        </S.ProductListHeader>
+        <S.ProductList>
+          {convertProductsToElement(products, setProductDetail)}
+        </S.ProductList>
+      </S.AdminProduct>
+      <S.ProductDetailBackground
+        isShowed={productDetail !== null}
+        onClick={productDetailCloseHandler}
+      >
+        {getProductDetail()}
+      </S.ProductDetailBackground>
+    </>
   );
 };
 
-const convertProductsToElement = (products: ProductElementType[]) => {
+const convertProductsToElement = (
+  products: AdminProductType[],
+  setProductDetail
+) => {
   return products.map((product) => {
     return (
-      <S.ProductItem>
+      <S.ProductItem
+        onClick={() => productClickHandler(product, setProductDetail)}
+      >
         <div>{product.id}</div>
         <div>
           <img src={getImage(product.image)} />
           {product.name}
         </div>
-        <div>{product.amount}</div>
-        <div>{0}</div>
-        <div>{0}</div>
+        <div>{product.amount}개</div>
+        <div>{product.orderWait}건</div>
+        <div>{product.salse}개</div>
         <div>
           <button className="delete">삭제</button>
         </div>
@@ -57,81 +128,12 @@ const convertProductsToElement = (products: ProductElementType[]) => {
   });
 };
 
+const productClickHandler = (product: AdminProductType, setProductDetail) => {
+  setProductDetail(product);
+};
+
 const getImage = (name: string) => {
   return properties.imgURL + name;
-};
-
-/*
-<div>
-        <label>상품명</label>
-        <input id="name" type="text" />
-        <br />
-        <label>상품 가격</label>
-        <input id="price" type="text" />
-        <br />
-        <label>배송비</label>
-        <input id="deliveryCost" type="text" />
-        <br />
-        <label>할인률</label>
-        <input id="discountRate" type="text" />
-        <br />
-        <label>재고</label>
-        <input id="stock" type="text" />
-        <br />
-        <label>카테고리</label>
-        <input id="category" type="text" />
-        <br />
-        <label>카테고리 - 서브</label>
-        <input id="subCategory" type="text" />
-        <br />
-        <label>상품 이미지</label>
-        <input type="file" id="images" accept="image/*" multiple />
-        <input type="file" id="details" accept="image/*" multiple />
-      </div>
-      <br />
-      <button onClick={submitProduct}>상품 추가</button>
-*/
-
-const getInput = (id: string) => {
-  return document.getElementById(id) as HTMLInputElement;
-};
-
-const submitProduct = () => {
-  const name = getInput("name").value;
-  const price = getInput("price").value;
-  const deliveryCost = getInput("deliveryCost").value;
-  const discountRate = getInput("discountRate").value;
-  const stock = getInput("stock").value;
-  const category = getInput("category").value;
-  const subCategory = getInput("subCategory").value;
-  const images = getInput("images").files;
-  const details = getInput("details").files;
-
-  const formData = new FormData();
-  formData.append("name", name);
-  formData.append("price", price);
-  formData.append("deliveryCost", deliveryCost);
-  formData.append("discountRate", discountRate);
-  formData.append("stock", stock);
-  formData.append("category", category);
-  formData.append("subCategory", subCategory);
-  for (let i = 0; i < images.length; i++) {
-    formData.append("images", images[i]);
-  }
-  for (let i = 0; i < details.length; i++) {
-    formData.append("details", details[i]);
-  }
-
-  fetch(`${properties.baseURL}/products`, {
-    method: "POST",
-    body: formData,
-  }).then((response) => {
-    if (response.status === 201) {
-      alert("상품이 추가되었습니다.");
-    } else {
-      alert("상품 추가 실패");
-    }
-  });
 };
 
 export default AdminProduct;

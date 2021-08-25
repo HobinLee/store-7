@@ -24,7 +24,7 @@ export class Order {
   id: number;
 
   @ManyToOne(() => Product, (product) => product.orders, {
-    onDelete: "CASCADE",
+    onDelete: "SET NULL",
   })
   @JoinColumn({ name: "product_id" })
   product: Product;

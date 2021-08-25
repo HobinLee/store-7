@@ -6,21 +6,23 @@ import ClipboardIcon from "../../assets/clipboard.png";
 import { useState } from "react";
 import AdminHome from "./Home";
 import AdminProduct from "./Product";
+import AdminProductCreate from "./Create";
 
-type Page = "Home" | "Product" | "Order";
-const Pages = {
-  Home: <AdminHome />,
-  Product: <AdminProduct />,
-};
+export type Page = "Home" | "Product" | "Order" | "ProductCreate";
 
 const AdminPage = () => {
   const [currentPage, setPage] = useState<Page>("Product");
+  const Pages = {
+    Home: <AdminHome />,
+    Product: <AdminProduct setPage={setPage} />,
+    ProductCreate: <AdminProductCreate />,
+  };
 
   const SidebarItem = (name: Page, icon: string) => {
     return (
       <S.SideBarItem
         onClick={() => setPage(name)}
-        isCurrentPage={currentPage === name}
+        isCurrentPage={currentPage.startsWith(name)}
       >
         <img src={icon} />
         {name}

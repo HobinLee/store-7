@@ -13,7 +13,7 @@ import { ProductUploadRequest } from "@/product/dto/product-upload-request";
 import { Cart } from "@/cart/entity/cart";
 import { Question } from "./question";
 import { Wish } from "@/user/entity/wish";
-import { Order } from "@/order/entity/order";
+import { Order, OrderStatus } from "@/order/entity/order";
 import { Review } from "./review";
 
 @Entity()
@@ -114,5 +114,15 @@ export class Product {
 
   getDetailImagesAsString() {
     return this.detailImages.map((image) => image.id);
+  }
+
+  getWaitOrdersCount() {
+    return this.orders.filter((order) => order.status === OrderStatus.Prepare)
+      .length;
+  }
+
+  getSalse() {
+    return this.orders.filter((order) => order.status !== OrderStatus.Prepare)
+      .length;
   }
 }
