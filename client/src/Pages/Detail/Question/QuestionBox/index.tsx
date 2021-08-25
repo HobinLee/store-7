@@ -2,71 +2,80 @@ import styled, { css } from "styled-components";
 import { QuestionType } from "@/shared/type";
 import { gap } from "@/styles/theme";
 import { YYYY_M_D_H_m } from "@/utils/util";
-import { useState } from "react";
-import QuestionModal from "../QuestionModal";
 import { Link } from "@/Router";
 import { deleteQuestion } from "@/api/questions";
 import { QueryObserverResult } from "react-query";
 
-const QuestionBox = (
-  Question: QuestionType & {
-    refetch?: () => Promise<QueryObserverResult<unknown>>;
-  }
-) => {
-  const [isModalOpened, setIsModalOpened] = useState(false);
-  const handleModalOpen = (val: boolean) => {
-    if (!val) {
-      const submit = window.confirm(
-        "작성하고 있던 내용이 유실됩니다. 정말 다른 페이지로 이동하시겠어요?"
-      );
-      if (submit) setIsModalOpened(val);
-    } else setIsModalOpened(val);
-  };
-  const isAnswered = Question.answer ? true : false;
-  const handleClickDeleteButton = async () => {
-    const result = await deleteQuestion({ id: Question.id });
-    Question.refetch();
-  };
+interface QuestionForm {
+  id: number;
+  question: string;
+  type: string;
+  isSecret: false;
+}
+
+const QuestionBox = ({
+  question,
+  refetch,
+  handleClickEditButton,
+}: {
+  question: QuestionType;
+  refetch?: () => Promise<QueryObserverResult<any, unknown>>;
+  handleClickEditButton?: (question: QuestionForm) => void;
+}) => {
+  const isAnswered = question.answer ? true : false;
+  console.log(1, question);
+  const pathname = location.pathname.split("/")[1];
+
   return (
     <Wrapper isAnswered={isAnswered} data-testid="test__question-box">
       <div className="bar" />
       <Header>
-        <Link to={`/detail/${Question.product.id}`}>
-          <div className="product">{Question.product.name} /</div>
+        <Link to={`/detail/${question.product.id}`}>
+          <div className="product">{question.product?.name} /</div>
         </Link>
-        <div className="author">{Question.authorName} /</div>
-        <div className="date">{YYYY_M_D_H_m(Question.createdAt)}</div>
-        <button onClick={() => handleModalOpen(true)}>수정하기</button>
-        <button onClick={handleClickDeleteButton}>삭제하기</button>
+        <div className="author">{question.authorName} /</div>
+        <div className="date">{YYYY_M_D_H_m(question?.createdAt)}</div>
+        {pathname === "mypage" && (
+          <EditAndDeleteButtons
+            {...{ handleClickEditButton, question, refetch }}
+          />
+        )}
       </Header>
 
       <div className="container">
         <div className="content">
           <div>Q</div>
-          {Question.question}
+          {question.question}
         </div>
         {isAnswered && (
           <div className="content answer">
             <div>A</div>
-            {Question.answer}
+            {question.answer}
           </div>
         )}
       </div>
-      {isModalOpened && (
-        <QuestionModal
-          submitType="patch"
-          {...{
-            handleModalOpen,
-          }}
-          qeustion={{
-            id: Question.id,
-            option: Question.type,
-            value: Question.question,
-            isSecret: Question.isSecret,
-          }}
-        />
-      )}
     </Wrapper>
+  );
+};
+
+const EditAndDeleteButtons = ({ handleClickEditButton, question, refetch }) => {
+  const handleClickDeleteButton = async () => {
+    const result = await deleteQuestion({ id: question?.id });
+    refetch();
+  };
+  const { id, question: q, type, isSecret } = question;
+
+  return (
+    <>
+      <button
+        onClick={() =>
+          handleClickEditButton({ id, question: q, type, isSecret })
+        }
+      >
+        수정하기
+      </button>
+      <button onClick={handleClickDeleteButton}>삭제하기</button>
+    </>
   );
 };
 
