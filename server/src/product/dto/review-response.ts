@@ -35,7 +35,7 @@ export class ReviewResponse {
     const reviews: ReviewDTO[] = productReviews.map((review): ReviewDTO => {
       return {
         id: review.id,
-        rate: review.id,
+        rate: review.rate,
         content: review.content,
         image: review.image,
         authorName: review.order.user.name,
