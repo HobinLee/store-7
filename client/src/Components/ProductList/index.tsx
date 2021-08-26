@@ -10,6 +10,7 @@ import { useLazyLoad } from "@/hooks/useLazyLoad";
 import { useEffect } from "react";
 
 const PRODUCT_PER_PAGE = 12;
+const START_PAGE = 1;
 
 interface ProductListProps {
   useQuery: (params: any) => UseQueryResult<ProductElementType[], unknown>;
@@ -24,25 +25,35 @@ const ProductList = ({
 }: ProductListProps) => {
   console.log("안녕?");
   const [isEnd, setIsEnd] = useState(!pagination);
-
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(START_PAGE);
+  const [products, setProducts] = useState([]);
 
   const nextPage = () => {
     if (status === "success" && !isEnd) {
       setPage(page + 1);
     }
   };
+
   const { ref } = useLazyLoad(nextPage);
+
   const {
     data: newProducts,
     status,
     refetch,
-  } = useQuery(originParams && { ...originParams, page });
+  } = useQuery({ ...originParams, page });
 
-  const [products, setProducts] = useState([]);
+  const initStates = () => {
+    setPage(START_PAGE);
+    setIsEnd(!pagination);
+  };
+
   useEffect(() => {
     if (status === "success") {
-      setProducts([...products, ...newProducts]);
+      if (page === 1) {
+        setProducts([...newProducts]);
+      } else {
+        setProducts([...products, ...newProducts]);
+      }
 
       if (newProducts?.length < PRODUCT_PER_PAGE) {
         setIsEnd(true);
@@ -54,9 +65,7 @@ const ProductList = ({
   }, [newProducts, status]);
 
   useEffect(() => {
-    setPage(1);
-    setIsEnd(!pagination);
-    setProducts([]);
+    initStates();
   }, [originParams]);
 
   return (
