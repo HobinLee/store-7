@@ -112,7 +112,12 @@ const QuestionModal = ({
             maxLength={99}
           />
         </div>
-        <APIButton api={handleSumbit} primary className="submit-btn">
+        <APIButton
+          api={handleSumbit}
+          primary
+          className="submit-btn"
+          disabled={!questionValidation.isValid}
+        >
           완료
         </APIButton>
       </Wrapper>
