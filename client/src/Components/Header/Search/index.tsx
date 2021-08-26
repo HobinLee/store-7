@@ -8,7 +8,6 @@ import { moveTo } from "@/Router";
 import { categories } from "@/shared/dummy";
 import { MainCategoryType } from "@/Pages/Category";
 import { Delete, Arrow } from "@/assets";
-import { media } from "@/styles/theme";
 
 const LS_SEARCH = "search";
 
