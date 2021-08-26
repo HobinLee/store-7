@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import SignatureLine from "@/Components/SignatureLine";
 
 export interface TableProps {
   ths: string[];
@@ -42,9 +41,7 @@ const Table = ({
           ))}
         </tr>
         <tr>
-          <td colSpan={ratio.length + 1}>
-            <SignatureLine type="long2" height="0.5" opacity="1" />
-          </td>
+          <td colSpan={ratio.length + 1}></td>
         </tr>
       </thead>
       <tbody>{children}</tbody>

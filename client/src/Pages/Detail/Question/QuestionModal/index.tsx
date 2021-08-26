@@ -10,13 +10,13 @@ import Checkbox from "@/Components/Checkbox";
 export const OPTIONS = ["상품", "배송", "반품", "교환", "환불", "기타"];
 interface QuestionModal {
   handleModalOpen: (boolean) => void;
+  submitType: string;
   qeustion?: {
     id?: number;
     option: string;
     value: string;
     isSecret: boolean;
   };
-  submitType: string;
 }
 const QuestionModal = ({
   handleModalOpen,
@@ -35,7 +35,7 @@ const QuestionModal = ({
   // 비밀글
   const [isSecret, setIsSecret] = useState(qeustion.isSecret);
 
-  const handleSumbit = async () => {
+  const handleSumbit = async (e) => {
     submitType === "post"
       ? await postQuestion({
           productId: parseInt(pathname),
@@ -134,6 +134,8 @@ const QuestionInput = styled.textarea`
   border: 0.1rem solid ${({ theme }) => theme.color.line};
   height: 10rem;
   padding: 1.5rem;
+  ${({ theme }) => theme.font.medium};
+  ${({ theme }) => theme.borderRadius.medium};
 `;
 
 const SubmitBtn = styled(Button)`

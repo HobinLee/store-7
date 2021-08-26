@@ -26,7 +26,7 @@ const flexCenter = css`
 `;
 
 const shadow = css`
-  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.07);
 `;
 
 const borderRadius = {
@@ -94,7 +94,7 @@ export const theme: DefaultTheme = {
     grey2: "#bbbbbb",
     line: "#ccd3d3",
     white: "#ffffff",
-    background: "#f5f5f5",
+    background: "#f9f9f9",
     off_white: "#fcfcfc",
     primary1: "#3be1b4",
     primary2: "#89F4D8",
@@ -116,5 +116,5 @@ export const media = {
   1440: customMediaQuery(1440),
   768: customMediaQuery(768),
   tablet: customMediaQuery(1100),
-  mobile: customMediaQuery(768),
+  mobile: customMediaQuery(500),
 };

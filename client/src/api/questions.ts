@@ -9,9 +9,8 @@ export const postQuestion = (data: {
 }) => POST("/questions", { data });
 
 // PATCH /questions/:id 문의 수정하기
-export const patchQuestion = ({ id, question }) => {
+export const patchQuestion = ({ id, question }) =>
   PATCH(`/questions/${id}`, question);
-};
 
 // DELETE /questions/:id
 export const deleteQuestion = ({ id }) => DELETE(`questions/${id}`);

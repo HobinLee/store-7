@@ -1,26 +1,12 @@
 import styled from "styled-components";
-import Button from "@/Components/Button";
 import Progress from "@/Components/Progress";
 import ReviewBox from "./ReviewBox";
 import { useState } from "react";
-import ReviewModal from "./ReviewModal";
 import { gap } from "@/styles/theme";
 import { useProductReviews } from "@/api/products";
-import { useEffect } from "react";
 
 const Review = () => {
-  const [isModalOpened, setIsModalOpened] = useState(false);
-  const handleModalOpen = (val: boolean) => {
-    if (!val) {
-      const submit = window.confirm(
-        "작성하고 있던 내용이 유실됩니다. 정말 다른 페이지로 이동하시겠어요?"
-      );
-      if (submit) setIsModalOpened(val);
-    } else setIsModalOpened(val);
-  };
-
   const pathname = location.pathname.split("detail/")[1];
-
   const {
     status,
     data: reviews,
@@ -36,7 +22,7 @@ const Review = () => {
               <div>
                 상품후기 <span className="total">{reviews.reviews.length}</span>
               </div>
-              <div className="average-rate">{reviews.averageRate}/5점</div>
+              <div className="average-rate">{reviews.averageRate || 0}/5</div>
             </div>
           </div>
 
@@ -69,15 +55,20 @@ const Review = () => {
           <button className="rate-sort">별점</button>
         </Filter>
 
-        {reviews.reviews.map((review) => (
-          <ReviewBox key={review.id} {...review} />
-        ))}
-
-        {/* {isModalOpened && <ReviewModal {...{ handleModalOpen }} />} */}
+        <ReviewsWrapper>
+          {reviews.reviews.map((review) => (
+            <ReviewBox key={review.id} {...review} />
+          ))}
+        </ReviewsWrapper>
       </div>
     )
   );
 };
+
+const ReviewsWrapper = styled.div`
+  margin-top: 3rem;
+  ${gap("3rem", "column")}
+`;
 
 const Header = styled.div`
   ${({ theme }) => theme.flexCenter};
@@ -111,7 +102,6 @@ const Filter = styled.div`
   justify-content: space-between;
   border: 0 solid ${({ theme }) => theme.color.line};
   border-top-width: 0.1rem;
-  border-bottom-width: 0.1rem;
 
   .buttons {
     ${({ theme }) => theme.flexCenter};

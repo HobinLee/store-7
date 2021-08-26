@@ -29,7 +29,7 @@ describe("<QuestionBox />", () => {
       answeredAt: A_DATE,
     };
 
-    const { container } = render(<QuestionBox {...questionBoxProps} />);
+    const { container } = render(<QuestionBox question={questionBoxProps} />);
     expect(container).toBeInTheDocument();
 
     expect(screen.queryByText("미답변")).toBeInTheDocument();
@@ -51,7 +51,7 @@ describe("<QuestionBox />", () => {
       isSecret: false,
     };
 
-    const { container } = render(<QuestionBox {...questionBoxProps} />);
+    const { container } = render(<QuestionBox question={questionBoxProps} />);
     expect(container).toBeInTheDocument();
 
     expect(screen.queryByText("답변완료")).toBeInTheDocument();

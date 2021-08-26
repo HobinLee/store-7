@@ -50,7 +50,7 @@ const LoggedInNumInput = ({
   setCartItems: Dispatch<SetStateAction<CartType>>;
 }) => {
   const numValue = useInput(amount.toString());
-  const debouncedNumValue = useDebounce(numValue.value, 200);
+  const debouncedNumValue = useDebounce<string>(numValue.value, 200);
 
   const isLoggedin = useRecoilValue(loginState);
 
@@ -228,11 +228,14 @@ const Wrapper = styled.div`
   .num-input {
     ${({ theme }) => theme.flexCenter}
     margin-right: 2rem;
-    background: #fff;
+    input {
+      background: ${({ theme }) => theme.color.background};
+    }
     div {
       ${({ theme }) => theme.flexCenter}
       flex-direction: column;
       height: 2.5rem;
+
       button {
         ${({ theme }) => theme.flexCenter};
         cursor: pointer;

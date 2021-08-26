@@ -1,5 +1,4 @@
 import { moveTo } from "@/Router";
-import { ProductType } from "@/shared/type";
 import { GET } from "@/utils/axios";
 import { useQuery } from "react-query";
 import { ProductParams } from "./products";
@@ -23,6 +22,7 @@ const getSearchedProducts = async (searchParams: SearchParams) => {
   const result = await GET(`/products/search`, searchParams);
   return result;
 };
+
 export const useSearchProducts = (searchParams: SearchParams) =>
   useQuery(["autoComplete", searchParams], () =>
     getSearchedProducts(searchParams)

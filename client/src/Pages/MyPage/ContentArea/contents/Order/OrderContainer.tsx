@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { DeleveryIcon, ReadyIcon, ProductIcon } from "@/assets";
 import OrderBox from "./OrderBox";
 import { MyOrderType, OrderStatus } from "@/shared/type";
+import { gap, media } from "@/styles/theme";
 
 const ICONS = {
   [OrderStatus.Prepare]: ReadyIcon,
@@ -40,9 +41,9 @@ const Container = styled.div`
 
   .head {
     display: flex;
-    flex-direction: column;
     align-items: center;
     margin-bottom: 2rem;
+    ${gap("2rem")}
 
     &__type {
       display: flex;
@@ -58,7 +59,7 @@ const Container = styled.div`
     }
     &__count {
       margin-top: 1.5rem;
-      font-size: 6rem;
+      font-size: 4rem;
       font-weight: 700;
     }
   }

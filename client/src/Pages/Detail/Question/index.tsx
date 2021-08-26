@@ -38,11 +38,11 @@ const Question = () => {
         </Header>
         <QuestionsWrapper>
           {questions.map((qna, idx) => (
-            <QuestionBox {...qna} key={idx} />
+            <QuestionBox question={qna} key={idx} />
           ))}
         </QuestionsWrapper>
         {isModalOpened && (
-          <QuestionModal submitType="patch" {...{ handleModalOpen }} />
+          <QuestionModal submitType="post" {...{ handleModalOpen }} />
         )}
       </div>
     )
@@ -50,6 +50,7 @@ const Question = () => {
 };
 
 const QuestionsWrapper = styled.div`
+  margin-top: 3rem;
   ${gap("3rem", "column")}
 `;
 

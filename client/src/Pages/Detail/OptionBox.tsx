@@ -5,40 +5,38 @@ import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
 import { Triangle, WishIcon } from "@/assets";
 import { convertToKRW } from "@/utils/util";
-import { gap } from "@/styles/theme";
+import { gap, media } from "@/styles/theme";
 import { postCart } from "@/api/carts";
 import { moveTo } from "@/Router";
-import { useRecoilValue } from "recoil";
-import { loginState } from "@/store/state";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { isMyWishInDetail, loginState } from "@/store/state";
 import { CartType, ProductType } from "@/shared/type";
 import { InputType } from "@/hooks/useInput";
-import { postWishProduct, deleteWishProduct } from "@/api/my";
-import { QueryObserverResult } from "react-query";
 import { useCallback } from "react";
 
 type OptionBoxProps = {
   numValue: InputType;
   handleClickNumVal: Function;
   product: ProductType;
-  refetch?: () => Promise<QueryObserverResult<unknown>>;
+  isMyWish: boolean;
 };
 
 const OptionBox = ({
   numValue,
   handleClickNumVal,
   product,
-  refetch,
+  isMyWish,
 }: OptionBoxProps) => {
   const [isCartAlertShown, setIsCartAlertShown] = useState(false);
+  const setIsMyWish = useSetRecoilState(isMyWishInDetail);
 
   const productId = product.id;
   const isLoggedin = useRecoilValue(loginState);
-  const handlePostWish = async () => {
-    product.isWish
-      ? await deleteWishProduct(productId)
-      : await postWishProduct(productId);
-    refetch();
+
+  const handleClickWish = async () => {
+    setIsMyWish((isMyWish) => !isMyWish);
   };
+
   const handlePostCart = async () => {
     try {
       if (isLoggedin && status !== "loading") {
@@ -132,18 +130,12 @@ const OptionBox = ({
       </div>
 
       <div className="buttons">
-        <Button
-          onClick={handlePostWish}
-          className={product.isWish ? "is-wish" : "not-wish"}
-        >
+        <div>
           <WishIcon
-            width="24"
-            height="24"
-            fill="none"
-            stroke="black"
-            strokeWidth="3rem"
+            onClick={handleClickWish}
+            className={isMyWish ? "is-wish" : "not-wish"}
           />
-        </Button>
+        </div>
         <Button onClick={handlePostCart}>장바구니</Button>
         <Button onClick={handleBuyImmediately} primary>
           바로 구매
@@ -180,11 +172,22 @@ const OptionBox = ({
 export default OptionBox;
 
 const Wrapper = styled.div`
+  position: sticky;
+  position: -webkit-sticky;
+  top: 23.5rem;
+  width: 35rem;
+  padding: 2rem;
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 2rem;
+  ${media.tablet} {
+    width: 25rem;
+  }
+
   .select-option {
     ${({ theme }) => theme.flexCenter}
     ${({ theme }) => theme.font.medium}
     justify-content: space-around;
-    margin-top: 5rem;
     background: ${({ theme }) => theme.color.background};
     width: 100%;
     padding: 1.5rem 0;
@@ -194,7 +197,8 @@ const Wrapper = styled.div`
       .num-input {
         ${({ theme }) => theme.flexCenter}
         margin-right: 2rem;
-        background: #fff;
+        background: ${({ theme }) => theme.color.background};
+
         div {
           ${({ theme }) => theme.flexCenter}
           flex-direction: column;
@@ -203,7 +207,6 @@ const Wrapper = styled.div`
             ${({ theme }) => theme.flexCenter};
             cursor: pointer;
             width: 1.6rem;
-            /* height: 1.6rem; */
             border: none;
             padding: 0.4rem;
             background: ${({ theme }) => theme.color.primary2};
@@ -235,6 +238,12 @@ const Wrapper = styled.div`
       ${({ theme }) => theme.font.medium}
       color: ${({ theme }) => theme.color.title_active};
     }
+    ${media.mobile} {
+      margin-top: 7rem;
+    }
+    ${media.tablet} {
+      margin-top: 3rem;
+    }
   }
   .buttons {
     ${({ theme }) => theme.flexCenter}
@@ -242,20 +251,17 @@ const Wrapper = styled.div`
     justify-content: flex-end;
     ${gap("1rem")}
     .is-wish {
-      padding: 0.8rem 2rem;
-      background: #2ac1bc;
+      cursor: pointer;
+      fill: ${({ theme }) => theme.color.primary1};
       &:hover {
       }
     }
 
     .not-wish {
-      padding: 0.8rem 2rem;
-      background: white;
-      &:hover > svg {
-        stroke: #2ac1bc;
-        fill: none;
-        stroke-width: 3rem;
-      }
+      cursor: pointer;
+      stroke: ${({ theme }) => theme.color.primary1};
+      fill: transparent;
+      stroke-width: 2rem;
     }
   }
   .alert {

@@ -25,10 +25,13 @@ export class ProductService {
   ) {}
 
   async getProducts(
-    findQuery: ProductFindQuery
+    findQuery: ProductFindQuery,
+    userId: number
   ): Promise<ProductElementResponse[]> {
     const products = await this.products.findProductsByQueries(findQuery);
-    return products.map(ProductElementResponse.of);
+    return products.map((product) =>
+      ProductElementResponse.of(product, userId)
+    );
   }
 
   async getAllProductsByKeyword(keyword: string) {

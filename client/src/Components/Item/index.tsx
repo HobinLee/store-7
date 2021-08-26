@@ -3,9 +3,12 @@ import styled, { css } from "styled-components";
 import ToggleImageWrapper from "../ToggleImageWrapper";
 import { WishIcon } from "@/assets";
 import { convertToKRW } from "@/utils/util";
-import { postWishProduct, deleteWishProduct, useMyWishes } from "@/api/my";
-import { media, theme } from "@/styles/theme";
+import { postWishProduct, deleteWishProduct } from "@/api/my";
+import { media } from "@/styles/theme";
 import properties from "@/config/properties";
+import { useState } from "react";
+import useDebounce from "@/hooks/useDebounce";
+import useDidMountEffect from "@/hooks/useDidMountEffect";
 
 type ItemType = {
   id: number;
@@ -27,13 +30,19 @@ const Item = ({
   isWish,
   image,
 }: ItemType) => {
-  const { refetch } = useMyWishes();
+  const [isMyWish, setIsMyWish] = useState(isWish);
+  const debounceIsMyWish = useDebounce<boolean>(isMyWish, 300);
+
   const tags = ["new", "best"];
-  const handleClickWish = (apiCallback) => async (e: Event) => {
+  const handleClickWish = async (e: Event) => {
     e.stopPropagation();
-    await apiCallback(id);
-    refetch();
+    setIsMyWish((isMyWish) => !isMyWish);
   };
+
+  useDidMountEffect(() => {
+    debounceIsMyWish ? postWishProduct(id) : deleteWishProduct(id);
+  }, [debounceIsMyWish]);
+
   return (
     <li data-testid="test__itme">
       <Link to={`/detail/${id}`}>
@@ -47,23 +56,11 @@ const Item = ({
                 </Tag>
               ))}
             </div>
-            <WishBox isWishState={isWish}>
-              {isWish ? (
-                <WishIcon
-                  width="36"
-                  height="36"
-                  opacity="1"
-                  fill="#13d8d1"
-                  onClick={handleClickWish(deleteWishProduct)}
-                />
-              ) : (
-                <WishIcon
-                  width="36"
-                  height="36"
-                  fill="white"
-                  onClick={handleClickWish(postWishProduct)}
-                />
-              )}
+            <WishBox>
+              <WishIcon
+                className={isMyWish ? "is-wish" : "not-wish"}
+                onClick={handleClickWish}
+              />
             </WishBox>
           </div>
           <div className="info">
@@ -163,25 +160,31 @@ const ItemWrapper = styled.div`
     }
   }
 `;
-const WishBox = styled.div<{ isWishState: boolean }>`
+
+const WishBox = styled.div`
   position: absolute;
   bottom: 1rem;
   right: 1rem;
-  & > svg:hover {
-    opacity: 1;
-    ${({ isWishState }) =>
-      isWishState
-        ? css`
-            fill: #2ac1bc;
-          `
-        : css`
-            fill: none;
-            stroke: #2ac1bc;
-            stroke-width: 3rem;
-          `}
-  }
-  & > svg:active {
-    transform: scale(1.1);
+
+  & > svg {
+    width: 3.6rem;
+    height: 3.6rem;
+    &:active {
+      transform: scale(1.1);
+    }
+    &.is-wish {
+      fill: ${({ theme }) => theme.color.primary1};
+      opacity: 1;
+    }
+    &.not-wish {
+      fill: #fff;
+      &:hover {
+        opacity: 1;
+        fill: none;
+        stroke: #2ac1bc;
+        stroke-width: 3rem;
+      }
+    }
   }
 
   ${media.mobile} {

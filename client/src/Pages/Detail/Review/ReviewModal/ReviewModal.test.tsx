@@ -4,7 +4,7 @@ import ReviewModal from "./index";
 describe("<ReviewModal />", () => {
   it("should render component in document", () => {
     const { container } = render(
-      <ReviewModal handleModalOpen={() => {}} id={1} />
+      <ReviewModal handleModalOpen={() => {}} id={1} productId={1} />
     );
     expect(container).toBeInTheDocument();
   });

@@ -597,6 +597,9 @@ const Info = styled.div`
   .payments {
     display: flex;
     ${gap("1rem")}
+    &__item {
+      background: #fff;
+    }
   }
 `;
 
