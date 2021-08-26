@@ -45,6 +45,13 @@ const Menu = () => {
     setPadding(barWidth - 2 * left - width);
   };
 
+  const setHoveredCategoryId = (id) => {
+    setHoveredCategoryState({
+      ...hovered,
+      categoryId: id,
+    });
+  };
+
   const handleMouseMove = (e) => {
     if (!checkChangeCategory(e)) return;
 
@@ -53,19 +60,13 @@ const Menu = () => {
     const id = categories[currentIndex]?.id ?? 0;
 
     if (id !== hovered.categoryId) {
-      setHoveredCategoryState({
-        ...hovered,
-        categoryId: id,
-      });
+      setHoveredCategoryId(id);
       getPadding($li);
     }
   };
 
   const handleMouseLeave = () => {
-    setHoveredCategoryState({
-      ...hovered,
-      categoryId: -1,
-    });
+    setHoveredCategoryId(-1);
   };
 
   const highlighted = hovered.categoryId < 0 ? selected : hovered;
@@ -99,39 +100,34 @@ const Menu = () => {
     !categories[highlighted.categoryId / 100]?.subCategories.length &&
     !categories[selected.categoryId / 100]?.subCategories.length;
 
-  const generateSubCategory = () => {
-    if (checkHideSubCategory) return;
-    return (
-      <SubCategoryWrapper
-        padding={padding}
-        width={getWidth(
-          categories[highlighted.categoryId / 100]?.subCategories
-        )}
-      >
-        {categories[highlighted.categoryId / 100]?.subCategories?.map(
-          (subCategory: CategoryType) => (
-            <li
-              key={subCategory.id}
-              className={
-                selected.subCategoryId === subCategory.id ? "selected" : ""
-              }
+  const generateSubCategory = () => (
+    <SubCategoryWrapper
+      padding={padding}
+      width={getWidth(categories[highlighted.categoryId / 100]?.subCategories)}
+    >
+      {categories[highlighted.categoryId / 100]?.subCategories?.map(
+        (subCategory: CategoryType) => (
+          <li
+            key={subCategory.id}
+            className={
+              selected.subCategoryId === subCategory.id ? "selected" : ""
+            }
+          >
+            <Link
+              to={`/category?category=${highlighted.categoryId}&subCategory=${subCategory.id}`}
             >
-              <Link
-                to={`/category?category=${highlighted.categoryId}&subCategory=${subCategory.id}`}
-              >
-                {subCategory.name}
-              </Link>
-            </li>
-          )
-        )}
-      </SubCategoryWrapper>
-    );
-  };
+              {subCategory.name}
+            </Link>
+          </li>
+        )
+      )}
+    </SubCategoryWrapper>
+  );
 
   return (
     <Wrapper id="category" onMouseLeave={handleMouseLeave}>
       {generateMainCategory}
-      {generateSubCategory()}
+      {checkHideSubCategory && generateSubCategory}
     </Wrapper>
   );
 };
