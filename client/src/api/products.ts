@@ -6,12 +6,15 @@ export interface ProductParams {
   category?: number;
   subCategory?: number;
   order?: string;
+  keyword?: string;
   page?: number;
   size?: number;
 }
 // GET /products?order?category?subcategory?keyword? 상품 목록
 export const getProducts = async (params: ProductParams) =>
   await GET("/products", params);
+export const getAllProductsByKeyword = async (keyword: string) =>
+  await GET("/admin/products", { keyword });
 export const useProducts = (params: ProductParams) =>
   useQuery(["product", params], () => getProducts(params));
 

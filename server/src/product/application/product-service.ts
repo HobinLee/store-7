@@ -12,6 +12,7 @@ import { SearchService } from "./search-service";
 import { SearchProduct } from "../dto/product-search-response";
 import { Wishes } from "@/user/domain/wishes";
 import { ProductFindQuery } from "../dto/product-find-query";
+import { ProductAdminResponse } from "../dto/product-admin-response";
 
 @Injectable()
 export class ProductService {
@@ -28,10 +29,14 @@ export class ProductService {
     userId: number
   ): Promise<ProductElementResponse[]> {
     const products = await this.products.findProductsByQueries(findQuery);
-
     return products.map((product) =>
       ProductElementResponse.of(product, userId)
     );
+  }
+
+  async getAllProductsByKeyword(keyword: string) {
+    const products = await this.products.findAllProductsByKeyword(keyword);
+    return products.map(ProductAdminResponse.of);
   }
 
   async getProduct(id: number, userId: number) {

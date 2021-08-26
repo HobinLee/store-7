@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const AdminPageWrapper = styled.div`
   display: flex;
   height: 100vh;
+  width: 100vw;
 `;
 
 export const SideBar = styled.div`
@@ -31,6 +32,7 @@ export const SideBarItem = styled.div<{ isCurrentPage: boolean }>`
   background-color: ${({ isCurrentPage }) =>
     isCurrentPage ? "#2465a5" : "#2a78c3"};
   cursor: pointer;
+  border-radius: 0 25px 25px 0;
   transition: 0.2s;
 
   img {
@@ -44,22 +46,25 @@ export const SideBarItem = styled.div<{ isCurrentPage: boolean }>`
 `;
 
 export const ContentBox = styled.div`
-  width: calc(100% - 300px);
+  width: calc(100vw - 300px);
   height: 100%;
   background-color: #f7f7f7;
-`;
+  overflow-y: scroll;
 
-export const AdminHome = styled.div``;
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
 
-export const AdminProduct = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 50px;
+  ::-webkit-scrollbar-track {
+    background: #f7f7f7;
+  }
 
-  input {
-    position: relative !important;
-    border: 1px solid black;
-    width: fit-content !important;
-    height: 20px !important;
+  ::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: #2a78c3;
+
+    :hover {
+      background: #2465a5;
+    }
   }
 `;
