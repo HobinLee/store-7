@@ -25,7 +25,6 @@ const ProductList = ({
   const [isEnd, setIsEnd] = useState(!pagination);
 
   const [page, setPage] = useState(1);
-  const [params, setParams] = useState(originParams);
 
   const nextPage = () => {
     if (status === "success" && !isEnd) {
