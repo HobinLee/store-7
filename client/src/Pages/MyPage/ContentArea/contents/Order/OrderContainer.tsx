@@ -3,6 +3,7 @@ import { DeleveryIcon, ReadyIcon, ProductIcon } from "@/assets";
 import OrderBox from "./OrderBox";
 import { MyOrderType, OrderStatus } from "@/shared/type";
 import { gap, media } from "@/styles/theme";
+import { QueryObserverResult } from "react-query";
 
 const ICONS = {
   [OrderStatus.Prepare]: ReadyIcon,

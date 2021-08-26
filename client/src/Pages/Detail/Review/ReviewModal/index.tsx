@@ -30,7 +30,7 @@ const ReviewModal = ({
   const { refetch: orderRefetch } = useMyOrders();
   const { refetch: reviewRefetch } = useMyReviews();
   const reviewVal = useInput(review.content);
-  const rate = useRef(review.rate);
+  const [rate, setRate] = useState(review.rate);
   const [file, setFile] = useState<File | undefined>(undefined);
   const [previewURL, setPreviewURL] = useState<string>(
     review.image && properties.imgURL + review.image
@@ -54,14 +54,14 @@ const ReviewModal = ({
     if (submitType === "post") {
       formData.append("orderId", orderId.toString());
       formData.append("productId", productId.toString());
-      formData.append("rate", rate.current);
+      formData.append("rate", rate);
       formData.append("content", reviewVal.value);
       file && formData.append("file", file);
       await postReview(formData);
       handleModalOpen(false, true);
       orderRefetch();
     } else if (submitType === "patch") {
-      formData.append("rate", rate.current);
+      formData.append("rate", rate);
       formData.append("content", reviewVal.value);
       if (file) {
         file && formData.append("file", file);
@@ -78,7 +78,7 @@ const ReviewModal = ({
         <div className="content">
           <div className="content__label">별점 평가</div>
           <span className="rating">
-            <Rating rate={rate} />
+            <Rating {...{ rate, setRate }} />
           </span>
         </div>
         <div className="content">
@@ -103,12 +103,17 @@ const ReviewModal = ({
         <div className="content">
           <div className="content__label">후기 작성</div>
           <ReivewInput
-            placeholder="자세하고 솔직한 리뷰는 다른 고객에게 큰 도움이 됩니다."
+            placeholder="자세하고 솔직한 리뷰는 다른 고객에게 큰 도움이 됩니다. (10자 이상)"
             defaultValue={reviewVal.value}
             onChange={reviewVal.onChange}
           />
         </div>
-        <APIButton api={hanleSubmit} primary className="submit-btn">
+        <APIButton
+          api={hanleSubmit}
+          primary
+          className="submit-btn"
+          disabled={rate === "0" || reviewVal.value.length < 10}
+        >
           완료
         </APIButton>
       </Wrapper>
