@@ -12,7 +12,9 @@ type VIPropsType = {
   message?: string;
   type?: string;
   onChange?: (e: ChangeEvent) => void;
+  onInput?: ({ target }: { target: HTMLTextAreaElement }) => void;
   className?: string;
+  maxLength?: number;
 };
 
 const ValidationInput = ({
@@ -22,7 +24,9 @@ const ValidationInput = ({
   placeholder,
   type = "text",
   onChange = null,
+  onInput = null,
   className,
+  maxLength,
 }: VIPropsType) => {
   const [isFirstType, setIsFirstType] = useState(true);
   const checkValidStyle = isFirstType || validation.isValid;
@@ -48,9 +52,13 @@ const ValidationInput = ({
             onChange && onChange(e);
             input.onChange(e);
           }}
+          onInput={(e) => {
+            onInput && onInput({ target: e.target as HTMLTextAreaElement });
+          }}
           onBlur={handleBlurInput}
           placeholder={placeholder}
           wrap="virtual"
+          maxLength={maxLength}
         />
       ) : (
         <input
@@ -81,6 +89,7 @@ const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   ${gap("1rem", "column")}
+  position: relative;
 
   input {
     box-sizing: border-box;
@@ -108,6 +117,9 @@ const InputWrapper = styled.div`
 
   .input__err-message {
     color: ${({ theme }) => theme.color.error_color};
+    position: absolute;
+    left: 0;
+    bottom: -2rem;
   }
 `;
 

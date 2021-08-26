@@ -45,7 +45,7 @@ const Wrapper = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 100;
+  z-index: 200;
 `;
 
 const Modal = styled.div`
@@ -78,7 +78,7 @@ const Background = styled.div`
   left: 0;
   background-color: #000;
   opacity: 0.5;
-  z-index: 50;
+  z-index: 100;
 `;
 
 export default ModalWrapper;

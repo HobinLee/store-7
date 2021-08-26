@@ -26,7 +26,7 @@ const AddressModal = ({ closeModal, setAddress }) => {
 
   // 기본배송지
   const [defaultId, setDefaultId] = useState(
-    destinations?.find((i) => i.isDefault).id
+    destinations?.find((i) => i.isDefault)?.id
   );
   const handleCheck = async (id: number) => {
     setDefaultId(id);

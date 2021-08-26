@@ -73,13 +73,13 @@ const Review = () => {
           <div className="buttons">
             <div className="buttons__left">
               <span
-                className={sortBy === "popularity" && "selected"}
+                className={sortBy === "popularity" ? "selected" : ""}
                 onClick={() => setSortBy("popularity")}
               >
                 베스트순
               </span>
               <span
-                className={sortBy === "latest" && "selected"}
+                className={sortBy === "latest" ? "selected" : ""}
                 onClick={() => setSortBy("latest")}
               >
                 최신순
@@ -105,6 +105,7 @@ const Review = () => {
                   <div onClick={() => handleClickRating("all")}>전체</div>
                   {reviews.rates.map((rate) => (
                     <div
+                      key={rate.rate}
                       onClick={() => handleClickRating(rate.rate.toString())}
                     >
                       <Rating value={rate.rate} readOnly />

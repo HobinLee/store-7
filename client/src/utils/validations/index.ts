@@ -7,7 +7,6 @@ const PW_REGEX_RULE =
   /^(?=.*[A-Za-z])(?=.*[0-9])([^\s]){10,}|(?=.*[A-Za-z])(?=.*[<>{}|;:.,~!?@#$%^=&*\”\\/])([^\s]){10,}|(?=.*[0-9])(?=.*[<>{}|;:.,~!?@#$%^=&*\”\\/])([^\s]){10,}$/;
 
 const PW_MIN_LEN = 10;
-const REVIEW_MIN_LENGTH = 10;
 
 const PHONE_NUMBER_REGEX = /^010-?([0-9]{4})-?([0-9]{4})$/;
 
@@ -19,7 +18,8 @@ export const VALIDATION_ERR_MSG = {
   INVALID_NAME: "이름을 작성해 주세요",
   INVALID_ADDRESS_NAME: "배송지명을 작성해 주세요",
   INVALID_PHONE: "올바른 양식이 아닙니다",
-  INVALID_REVIEW: "10자 이상의 리뷰를 작성해주세요.",
+  INVALID_REVIEW: "리뷰를 작성해주세요.",
+  INVALID_QUESTION: "문의를 작성해주세요.",
 };
 
 export const validateEmail = (email: string): boolean => {
@@ -34,8 +34,8 @@ export const validatePhoneNumber = (phoneNumber: string): boolean => {
   return PHONE_NUMBER_REGEX.test(phoneNumber);
 };
 
-export const validateReview = (review: string): boolean => {
-  return review.length >= REVIEW_MIN_LENGTH;
+export const validateTextarea = (review: string): boolean => {
+  return review.length > 0;
 };
 
 export const validateReviewRate = (rate: string): boolean => {

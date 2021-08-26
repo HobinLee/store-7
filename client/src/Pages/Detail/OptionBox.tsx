@@ -105,67 +105,70 @@ const OptionBox = ({
   }, [numValue.value]);
 
   return (
-    <Wrapper>
-      <div className="select-option">
-        <div>수량</div>
-        <div className="select-option__right">
-          <div className="num-input">
-            <RenderNumInput />
-            <div>
-              <button type="button" onClick={() => handleClickNumVal(1)}>
-                <Triangle className="num-input__up" />
-              </button>
-              <button type="button" onClick={() => handleClickNumVal(-1)}>
-                <Triangle className="num-input__down" />
-              </button>
+    <>
+      <Wrapper>
+        <div className="select-option">
+          <div>수량</div>
+          <div className="select-option__right">
+            <div className="num-input">
+              <RenderNumInput />
+              <div>
+                <button type="button" onClick={() => handleClickNumVal(1)}>
+                  <Triangle className="num-input__up" />
+                </button>
+                <button type="button" onClick={() => handleClickNumVal(-1)}>
+                  <Triangle className="num-input__down" />
+                </button>
+              </div>
             </div>
+            {convertToKRW(product.price)}
           </div>
-          {convertToKRW(product.price)}
         </div>
-      </div>
 
-      <div className="total-price">
-        <div>총 합계금액</div>
-        {convertToKRW(10000 * parseInt(numValue.value))}
-      </div>
-
-      <div className="buttons">
-        <div>
-          <WishIcon
-            onClick={handleClickWish}
-            className={isMyWish ? "is-wish" : "not-wish"}
-          />
+        <div className="total-price">
+          <div>총 합계금액</div>
+          {convertToKRW(10000 * parseInt(numValue.value))}
         </div>
-        <Button onClick={handlePostCart}>장바구니</Button>
-        <Button onClick={handleBuyImmediately} primary>
-          바로 구매
-        </Button>
-      </div>
 
+        <div className="buttons">
+          <div>
+            <WishIcon
+              onClick={handleClickWish}
+              className={isMyWish ? "is-wish" : "not-wish"}
+            />
+          </div>
+          <Button onClick={handlePostCart}>장바구니</Button>
+          <Button onClick={handleBuyImmediately} primary>
+            바로 구매
+          </Button>
+        </div>
+      </Wrapper>
       {isCartAlertShown && (
-        <ModalWrapper
+        <Alert
           title="장바구니에 상품을 담았습니다"
           className="alert"
           hideCloseBtn
         >
           <>
             <Button
-              className="alert__button"
+              className="alert-button"
               primary
               onClick={() => (window.location.href = "/cart")}
+              size="large"
             >
               장바구니 보러가기
             </Button>
             <Button
-              className="alert__button"
+              className="alert-button"
               onClick={() => setIsCartAlertShown(false)}
+              size="large"
             >
               쇼핑 계속하기
             </Button>
           </>
-        </ModalWrapper>
+        </Alert>
       )}
-    </Wrapper>
+    </>
   );
 };
 
@@ -264,17 +267,17 @@ const Wrapper = styled.div`
       stroke-width: 2rem;
     }
   }
-  .alert {
-    width: auto;
-    &__button {
-      width: 100%;
-      margin-top: 2rem;
-    }
-  }
 `;
 
 const NumInput = styled(Input)`
   width: 3rem;
   text-align: center;
   padding: 1rem;
+`;
+
+const Alert = styled(ModalWrapper)`
+  width: 30rem;
+  .alert-button {
+    margin-top: 1.5rem;
+  }
 `;
