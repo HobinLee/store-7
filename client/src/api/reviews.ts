@@ -4,7 +4,9 @@ import { DELETE, GET, PATCH, POST } from "@/utils/axios";
 export const postReview = (data: FormData) => POST("/reviews", data);
 
 // PATCH /reviews/:id
-export const patchReview = (id: number) => PATCH(`/reviews/${id}`);
+export const patchReview = ({ id, data }: { id: number; data: FormData }) =>
+  PATCH(`/reviews/${id}`, data);
 
 // DELETE /reviews/:id
-export const deleteReview = (id: number) => DELETE(`/reviews/${id}`);
+export const deleteReview = ({ id }: { id: number }) =>
+  DELETE(`/reviews/${id}`);

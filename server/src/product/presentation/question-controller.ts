@@ -10,7 +10,7 @@ export class QuestionController {
   constructor(private readonly questionService: QuestionService) {}
 
   @Post()
-  async postQuestion(
+  async createQuestion(
     @Body() body: { userId: number; data: QuestionPostRequest }
   ) {
     return await this.questionService.createQuestion({
