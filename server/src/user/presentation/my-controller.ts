@@ -7,6 +7,9 @@ import {
   Post,
   Delete,
   Query,
+  Res,
+  All,
+  HttpStatus,
 } from "@nestjs/common";
 import {
   MyInfoResponse,
@@ -20,10 +23,21 @@ import { DestinationResponse } from "@/destination/dto/destination-response";
 import { MyService } from "../application/my-service";
 import { WishRequest } from "../dto/wish-request";
 import { OrderResponse } from "@/order/dto/order-response";
+import { Response } from "express";
 
 @Controller("/my")
 export class MyController {
   constructor(private readonly myService: MyService) {}
+
+  @All()
+  async isUser(@Body("userId") userId: number, @Res() res: Response) {
+    if (!userId) {
+      res.status(HttpStatus.UNAUTHORIZED);
+      return {
+        message: "로그인이 필요한 서비스입니다.",
+      };
+    }
+  }
 
   // info
   @Get("/info")

@@ -11,6 +11,7 @@ import useDebounce from "@/hooks/useDebounce";
 import useDidMountEffect from "@/hooks/useDidMountEffect";
 import { useRecoilValue } from "recoil";
 import { loginState } from "@/store/state";
+import { QueryObserverResult } from "react-query";
 
 type ItemType = {
   id: number;
@@ -21,6 +22,7 @@ type ItemType = {
   isWish: boolean;
   amount: number;
   image: string;
+  refetch?: () => Promise<QueryObserverResult<unknown>>;
 };
 
 const Item = ({
@@ -31,9 +33,11 @@ const Item = ({
   discountRate,
   isWish,
   image,
+  refetch,
 }: ItemType) => {
   const [isMyWish, setIsMyWish] = useState(isWish);
   const debounceIsMyWish = useDebounce<boolean>(isMyWish, 300);
+  const isLogin = useRecoilValue(loginState);
 
   const tags = useMemo(() => {
     const tags = [];
@@ -42,17 +46,20 @@ const Item = ({
     }
     return tags;
   }, []);
+  const pathname = location.pathname.split("/")[1];
   const handleClickWish = async (e: Event) => {
     e.stopPropagation();
-    const isLogin = useRecoilValue(loginState);
     if (!isLogin) {
       return;
     }
     setIsMyWish((isMyWish) => !isMyWish);
   };
 
-  useDidMountEffect(() => {
-    debounceIsMyWish ? postWishProduct(id) : deleteWishProduct(id);
+  useDidMountEffect(async () => {
+    debounceIsMyWish ? await postWishProduct(id) : await deleteWishProduct(id);
+    if (pathname === "mypage") {
+      refetch();
+    }
   }, [debounceIsMyWish]);
 
   return (

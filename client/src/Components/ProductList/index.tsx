@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { media } from "@/styles/theme";
 import { UseQueryResult } from "react-query";
 import { Loading } from "@/shared/styled";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ProductParams } from "@/api/products";
 import { useLazyLoad } from "@/hooks/useLazyLoad";
 import { useEffect } from "react";
@@ -31,11 +31,14 @@ const ProductList = ({
       setPage(page + 1);
     }
   };
-
   const { ref } = useLazyLoad(nextPage);
-  const { data: newProducts, status } = useQuery({ ...originParams, page });
-  const [products, setProducts] = useState([]);
+  const {
+    data: newProducts,
+    status,
+    refetch,
+  } = useQuery(originParams && { ...originParams, page });
 
+  const [products, setProducts] = useState([]);
   useEffect(() => {
     if (status === "success") {
       setProducts([...products, ...newProducts]);
@@ -47,7 +50,7 @@ const ProductList = ({
     if (status === "error") {
       setIsEnd(true);
     }
-  }, [newProducts]);
+  }, [newProducts, status]);
 
   useEffect(() => {
     setPage(1);
@@ -58,7 +61,7 @@ const ProductList = ({
   return (
     <ProductWrapList>
       {products?.map((product: ProductElementType) => (
-        <Item {...product} key={product.id} />
+        <Item {...product} refetch={refetch} key={product.id} />
       ))}
       {status === "loading" && (
         <div className="loading-indicator">
