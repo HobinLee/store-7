@@ -72,6 +72,7 @@ const CategoryPage = ({ params }) => {
 };
 
 const Wrapper = styled(PageWrapper)`
+  padding-top: 10rem;
   .page-contents {
     padding: 0 5rem;
     position: relative;

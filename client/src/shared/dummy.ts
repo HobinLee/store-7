@@ -28,7 +28,8 @@ export const categories: MainCategoryType[] = [
   {
     id: 100,
     name: "문구",
-    brief: "",
+    brief: "세상 하나뿐인 필통을 위해",
+    fontColor: "#333",
     backgroundImg: CategoryBanner1,
     subCategories: [
       {
@@ -48,7 +49,8 @@ export const categories: MainCategoryType[] = [
   {
     id: 200,
     name: "리빙",
-    brief: "",
+    brief: "날 안 사고 살 수 있겠어?",
+    fontColor: "#333",
     backgroundImg: CategoryBanner2,
     subCategories: [
       {
@@ -113,7 +115,7 @@ export const categories: MainCategoryType[] = [
   {
     id: 500,
     name: "ㅋㅋ에디션",
-    brief: "",
+    brief: "즐겁게 살자구ㅋㅋ",
     fontColor: "#555",
     font: "BMKIRANGHAERANG",
     backgroundImg: CategoryBanner5,
@@ -169,7 +171,7 @@ export const categories: MainCategoryType[] = [
   {
     id: 700,
     name: "배달이 친구들",
-    brief: "",
+    brief: "만나서 반가워",
     fontColor: "#32BF9A",
     backgroundImg: CategoryBanner7,
     subCategories: [
@@ -190,14 +192,14 @@ export const categories: MainCategoryType[] = [
   {
     id: 800,
     name: "선물하기",
-    brief: "",
+    brief: "주면 200% 친해지는",
     backgroundImg: CategoryBanner8,
     subCategories: [],
   },
   {
     id: 900,
     name: "콜라보레이션",
-    brief: "",
+    brief: "우아한 콜라보",
     fontColor: "#32BF9A",
     backgroundImg: CategoryBanner9,
     subCategories: [],
