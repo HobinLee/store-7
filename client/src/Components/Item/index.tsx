@@ -34,6 +34,7 @@ const Item = ({
 }: ItemType) => {
   const [isMyWish, setIsMyWish] = useState(isWish);
   const debounceIsMyWish = useDebounce<boolean>(isMyWish, 300);
+  const isLogin = useRecoilValue(loginState);
 
   const tags = useMemo(() => {
     const tags = [];
@@ -44,7 +45,6 @@ const Item = ({
   }, []);
   const handleClickWish = async (e: Event) => {
     e.stopPropagation();
-    const isLogin = useRecoilValue(loginState);
     if (!isLogin) {
       return;
     }
