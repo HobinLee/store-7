@@ -51,8 +51,6 @@ const Container = styled.div`
       flex-direction: column;
       align-items: center;
       margin-top: 1rem;
-      svg {
-      }
       p {
         ${({ theme }) => theme.font.small}
         margin-top: 0.5rem;

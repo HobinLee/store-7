@@ -3,15 +3,11 @@ import Menu from "./Menu";
 import Navigator from "./Navigator";
 import { gap, media } from "@/styles/theme";
 
-interface HeaderPropsType {
-  category?: string;
-}
-
-const Header = ({ category }: HeaderPropsType) => {
+const Header = () => {
   return (
     <TopWrapper>
       <Navigator />
-      <Menu category={category} />
+      <Menu />
     </TopWrapper>
   );
 };

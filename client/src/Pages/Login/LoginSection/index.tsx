@@ -3,8 +3,6 @@ import styled from "styled-components";
 import { useSetRecoilState } from "recoil";
 import { loginState } from "@/store/state";
 import { signIn } from "@/api/auth";
-import { Link } from "@/Router";
-import Button from "@/Components/Button";
 import APIButton from "@/Components/APIButton";
 import OAuthLoginSection from "../OAuthLoginSection";
 import { gap, media } from "@/styles/theme";
