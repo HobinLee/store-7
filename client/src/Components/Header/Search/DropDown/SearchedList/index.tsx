@@ -1,17 +1,20 @@
 import styled from "styled-components";
+import { Delete } from "@/assets";
+import { hideScroll } from "@/styles/theme";
 
 const SearchList = ({ list, handleSearch, handleDelete }) => {
   const generateList = list.map((keyword, idx) => (
     <li key={idx} onClick={() => handleSearch(keyword)}>
-      {" "}
-      {keyword}{" "}
-      <div
+      <span>{keyword}</span>
+      <button
         className="search-list__delte-item"
         onClick={(e) => {
           e.stopPropagation();
           handleDelete(keyword);
         }}
-      ></div>
+      >
+        <Delete />
+      </button>
     </li>
   ));
 
@@ -25,43 +28,60 @@ const SearchList = ({ list, handleSearch, handleDelete }) => {
           <span className="no-list">최근 검색내역이 없습니다</span>
         )}
       </ul>
-      <div className="search-list__delte-all" onClick={() => handleDelete()}>
+      <button className="search-list__delte-all" onClick={() => handleDelete()}>
         전체 삭제
-      </div>
+      </button>
     </SearchListWrapper>
   );
 };
 
 const SearchListWrapper = styled.div`
   max-height: 100%;
+  display: flex;
+  flex-direction: column;
   ul {
     height: auto;
     max-height: 16rem;
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
+    ${hideScroll}
     margin-top: 1rem;
   }
 
   li {
+    box-sizing: border-box;
     color: ${({ theme }) => theme.color.grey1};
-    padding: 1rem;
+    padding: 0;
     max-width: 100%;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    &:hover {
+    word-break: break-all;
+    word-wrap: wrap;
+
+    span {
+      width: 100%;
+      padding: 1rem;
+    }
+    span:hover {
       background: ${({ theme }) => theme.color.background};
     }
+
     .search-list__delte-item {
       width: 1.5rem;
+      min-width: 1.5rem;
       height: 1.5rem;
-      right: 0;
-      top: 0;
-      background-color: ${({ theme }) => theme.color.grey2};
-      border-radius: 50%;
       cursor: pointer;
+      margin-right: 0.5rem;
+      svg {
+        width: 1.3rem;
+        height: 1.3rem;
+      }
+      &:hover {
+        opacity: 0.5;
+      }
     }
   }
 
@@ -71,10 +91,12 @@ const SearchListWrapper = styled.div`
   }
 
   .search-list__delte-all {
+    align-self: flex-end;
     text-align: right;
     color: ${({ theme }) => theme.color.grey2};
     cursor: pointer;
     padding-top: 1rem;
+    border: none;
   }
 `;
 

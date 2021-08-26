@@ -3,11 +3,14 @@ import styled from "styled-components";
 import { getSiblingIndex } from "@/utils/node";
 import { Link } from "@/Router";
 import { categories } from "@/shared/dummy";
-import { media } from "@/styles/theme";
+import { hideScroll, media } from "@/styles/theme";
 import { CategoryType } from "@/Pages/Category";
 const Menu = ({ category }: { category?: string }) => {
   const [categoryId, setCurrentCategory] = useState<number>(
     category ? parseInt(category) : 0
+  );
+  const [isSubCategoryOpened, setIsSubCategoryOpened] = useState(
+    category ? parseInt(category) : false
   );
   const [padding, setPadding] = useState(0);
 
@@ -39,6 +42,7 @@ const Menu = ({ category }: { category?: string }) => {
   };
 
   const handleMouseMove = (e) => {
+    setIsSubCategoryOpened(true);
     if (!checkChangeCategory(e)) return;
 
     const $li: HTMLElement = e.target.closest("LI");
@@ -49,6 +53,10 @@ const Menu = ({ category }: { category?: string }) => {
       setCurrentCategory(id);
       getPadding($li);
     }
+  };
+
+  const handleMouseLeave = () => {
+    setIsSubCategoryOpened(false);
   };
 
   const generateMainCategory = (
@@ -81,22 +89,23 @@ const Menu = ({ category }: { category?: string }) => {
       padding={padding}
       width={getWidth(categories[categoryId / 100]?.subCategories)}
     >
-      {categories[categoryId / 100]?.subCategories?.map(
-        (subCategory: CategoryType) => (
-          <li key={subCategory.id}>
-            <Link
-              to={`/category?category=${categoryId}&subCategory=${subCategory.id}`}
-            >
-              {subCategory.name}
-            </Link>
-          </li>
-        )
-      )}
+      {isSubCategoryOpened &&
+        categories[categoryId / 100]?.subCategories?.map(
+          (subCategory: CategoryType) => (
+            <li key={subCategory.id}>
+              <Link
+                to={`/category?category=${categoryId}&subCategory=${subCategory.id}`}
+              >
+                {subCategory.name}
+              </Link>
+            </li>
+          )
+        )}
     </SubCategoryWrapper>
   );
 
   return (
-    <Wrapper>
+    <Wrapper id="category" onMouseLeave={handleMouseLeave}>
       {generateMainCategory}
       {generateSubCategory}
     </Wrapper>
@@ -122,9 +131,6 @@ const Wrapper = styled.div`
   li {
     cursor: pointer;
     text-align: center;
-    &:hover {
-      color: ${({ theme }) => theme.color.primary3};
-    }
     a {
       display: block;
       padding: 1rem;
@@ -136,18 +142,13 @@ const Wrapper = styled.div`
 `;
 
 const MainCategoryWrapper = styled.ul`
-  padding: 0.5rem 0;
   width: auto;
   justify-content: space-between;
   display: flex;
   flex-direction: row;
   overflow-x: scroll;
-  color: ${({ theme }) => theme.color.grey2};
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-  &::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera*/
-  }
+  font-weight: normal;
+  color: #555;
 
   li {
     flex-shrink: 0;
@@ -156,8 +157,9 @@ const MainCategoryWrapper = styled.ul`
   .selected {
     font-weight: bolder;
     a {
-      color: ${({ theme }) => theme.color.primary3};
+      color: ${({ theme }) => theme.color.primary1};
     }
+    border-bottom: 3px solid ${({ theme }) => theme.color.primary1};
   }
 `;
 
@@ -197,10 +199,8 @@ const SubCategoryWrapper = styled.ul<{ padding: number; width: number }>`
     padding: 0;
     justify-content: flex-start;
   }
-  ${({ theme }) => theme.font.small}
-  overflow-x: scroll;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  ${({ theme }) => theme.font.medium}
+  ${hideScroll}
   color: ${({ theme }) => theme.color.grey1};
 
   &::-webkit-scrollbar {
@@ -208,7 +208,7 @@ const SubCategoryWrapper = styled.ul<{ padding: number; width: number }>`
   }
 
   li {
-    padding: 1rem 3rem;
+    padding: 0rem 3rem;
     flex-shrink: 0;
   }
 `;
