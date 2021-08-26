@@ -18,7 +18,10 @@ export class Reviews {
     private readonly s3Repository: S3Repository
   ) {}
 
-  async findReviewsByProductId(productId: number) {
+  async findReviewsByProductId(
+    productId: number,
+    sortBy: "popularity" | "latest"
+  ) {
     const result = await this.reviewRepository.find({
       relations: ["product", "order", "order.user"],
       where: {
@@ -26,6 +29,7 @@ export class Reviews {
           id: productId,
         },
       },
+      order: sortBy === "latest" ? { id: "DESC" } : { rate: "DESC" },
     });
     return result;
   }

@@ -12,7 +12,6 @@ import {
 import { ProductService } from "../application/product-service";
 import { ProductElementResponse } from "../dto/product-element-response";
 import { ProductResponse } from "@/product/dto/product-response";
-import { ReviewResponse } from "@/product/dto/review-response";
 import { QuestionResponse } from "@/product/dto/question-response";
 import { FileFieldsInterceptor } from "@nestjs/platform-express";
 import { ProductUploadRequest } from "@/product/dto/product-upload-request";
@@ -21,6 +20,9 @@ import {
   ProductFindQuery,
   ProductSearchQuery,
 } from "../dto/product-find-query";
+import { ProductReviewsQuery } from "../dto/product-request";
+import { Review } from "../entity/review";
+import { ReviewRate } from "../dto/review-rate";
 
 @Controller("/products")
 export class ProductController {
@@ -64,8 +66,16 @@ export class ProductController {
   }
 
   @Get("/:id/reviews")
-  async getReviews(@Param("id") id: number): Promise<ReviewResponse> {
-    return await this.productService.getProductReviews(id);
+  async getReviews(
+    @Param("id") id: number,
+    @Query() query: ProductReviewsQuery
+  ): Promise<{
+    averageRate: number;
+    rates: ReviewRate[];
+    reviews: Review[];
+    length: number;
+  }> {
+    return await this.productService.getProductReviews(id, query);
   }
 
   @Get("/:id/questions")

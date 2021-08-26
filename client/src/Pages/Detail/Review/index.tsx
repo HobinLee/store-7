@@ -4,14 +4,35 @@ import ReviewBox from "./ReviewBox";
 import { useState } from "react";
 import { gap } from "@/styles/theme";
 import { useProductReviews } from "@/api/products";
+import Checkbox from "@/Components/Checkbox";
+import { useEffect } from "react";
+import useDebounce from "@/hooks/useDebounce";
 
 const Review = () => {
   const pathname = location.pathname.split("detail/")[1];
+
+  const [sortBy, setSortBy] = useState<"popularity" | "latest">("popularity");
+  const [isPhotoOnly, setIsPhotoOnly] = useState(false);
+  const [rating, setRating] = useState<"1" | "2" | "3" | "4" | "5" | "all">(
+    "all"
+  );
+
   const {
     status,
     data: reviews,
     error,
-  } = useProductReviews(parseInt(pathname));
+    refetch,
+  } = useProductReviews(parseInt(pathname), {
+    sortBy,
+    isPhotoOnly,
+    rating,
+  });
+
+  const debouncedSortBy = useDebounce(sortBy);
+  const debouncedIsPhotoOnly = useDebounce(isPhotoOnly);
+  useEffect(() => {
+    refetch();
+  }, [debouncedSortBy, debouncedIsPhotoOnly, rating]);
 
   return (
     status !== "loading" && (
@@ -20,7 +41,7 @@ const Review = () => {
           <div>
             <div>
               <div>
-                상품후기 <span className="total">{reviews.reviews.length}</span>
+                상품후기 <span className="total">{reviews.length}</span>
               </div>
               <div className="average-rate">{reviews.averageRate || 0}/5</div>
             </div>
@@ -36,7 +57,7 @@ const Review = () => {
                   content={{
                     value: item.rate,
                     count: item.count,
-                    totalCount: reviews.reviews.length,
+                    totalCount: reviews.length,
                   }}
                 />
               ))}
@@ -46,10 +67,25 @@ const Review = () => {
         <Filter>
           <div className="buttons">
             <div>
-              <span>베스트순</span>
-              <span>최신순</span>
+              <span
+                className={sortBy === "popularity" && "selected"}
+                onClick={() => setSortBy("popularity")}
+              >
+                베스트순
+              </span>
+              <span
+                className={sortBy === "latest" && "selected"}
+                onClick={() => setSortBy("latest")}
+              >
+                최신순
+              </span>
             </div>
-            <div>사진리뷰</div>
+            <Checkbox
+              label="사진리뷰"
+              size="small"
+              isChecked={isPhotoOnly}
+              handleCheck={() => setIsPhotoOnly(!isPhotoOnly)}
+            />
           </div>
 
           <button className="rate-sort">별점</button>
@@ -112,6 +148,10 @@ const Filter = styled.div`
     span {
       :nth-child(2) {
         margin-left: 1rem;
+      }
+      &.selected {
+        color: ${({ theme }) => theme.color.primary1};
+        font-weight: 500;
       }
     }
     div:first-child {
