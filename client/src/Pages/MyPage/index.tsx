@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { PageWrapper, Contents } from "@/shared/styled";
@@ -8,8 +8,13 @@ import ContentArea from "./ContentArea";
 
 import { useMyInfo } from "@/api/my";
 
-const MyPage = () => {
+const MyPage = ({ location }) => {
   const [current, setCurrent] = useState("order");
+
+  useEffect(() => {
+    const sub = location.split("mypage/")[1];
+    setCurrent(sub || "order");
+  }, [location]);
 
   return (
     <MyPageWrapper>

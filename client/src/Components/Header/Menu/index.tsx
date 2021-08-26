@@ -5,6 +5,7 @@ import { Link } from "@/Router";
 import { categories } from "@/shared/dummy";
 import { media } from "@/styles/theme";
 import { CategoryType } from "@/Pages/Category";
+
 const Menu = ({ category }: { category?: string }) => {
   const [categoryId, setCurrentCategory] = useState<number>(
     category ? parseInt(category) : 0

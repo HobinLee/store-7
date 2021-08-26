@@ -6,6 +6,10 @@ export class MyReviewResponse {
   content: string;
   image?: string;
   authorName: string;
+  product: {
+    id: number;
+    name: string;
+  };
   date: Date;
 
   static of(review: Review): MyReviewResponse {
@@ -14,7 +18,8 @@ export class MyReviewResponse {
       content = review.content,
       image = review.image,
       authorName = review.order.user.name,
-      date = review.createdAt;
+      date = review.createdAt,
+      product = { id: review.product.id, name: review.product.name };
 
     return {
       id,
@@ -23,6 +28,7 @@ export class MyReviewResponse {
       image,
       authorName,
       date,
+      product,
     };
   }
 }

@@ -22,13 +22,7 @@ const Nav = ({ setCurrent, current }: NavProps) => {
       {navItems.map(({ Icon, Gif, title, path }, i) => {
         const isSelected = path === current;
         return (
-          <li
-            key={i}
-            onClick={() => {
-              setCurrent(path);
-            }}
-            className="nav"
-          >
+          <li key={i} className="nav">
             <Link to={`/mypage/${path}`}>
               <NavItem {...{ Icon, Gif, title, isSelected }} />
             </Link>

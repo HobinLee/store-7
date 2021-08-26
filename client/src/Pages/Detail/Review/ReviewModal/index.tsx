@@ -158,7 +158,7 @@ const Wrapper = styled.form`
         height: 100%;
       }
     }
-    &__.rating {
+    &__rating {
       transform: scale(1.8);
       width: 15rem;
       margin-left: 6rem;
