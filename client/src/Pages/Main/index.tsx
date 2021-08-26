@@ -7,6 +7,9 @@ import BannerSection from "./BannerSection/";
 import ReviewSection from "./ReviewSection/";
 import ProductSection from "./ProductSection/";
 import { gap, media } from "@/styles/theme";
+import { useSetRecoilState } from "recoil";
+import { selectedCategoryState } from "@/store/category";
+import { useEffect } from "react";
 
 export interface SectionType {
   title: string;
@@ -22,6 +25,15 @@ const SECTION_TYPES: {
 };
 
 const MainPage = () => {
+  const setSelectedCategoryState = useSetRecoilState(selectedCategoryState);
+
+  useEffect(() => {
+    setSelectedCategoryState({
+      categoryId: -1,
+      subCategoryId: -1,
+    });
+  }, []);
+
   return (
     <>
       <Header />
