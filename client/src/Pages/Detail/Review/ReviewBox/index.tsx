@@ -50,8 +50,13 @@ const ReviewBox = ({
 
 const EditAndDeleteButtons = ({ handleClickEditButton, review, refetch }) => {
   const handleClickDeleteButton = async () => {
-    const result = await deleteReview({ id: review?.id });
-    refetch();
+    const confirm = window.confirm(
+      "고객님이 작성한 후기는 다른 고객님들께 많은 도움이 됩니다. 정말로 삭제하시겠어요?"
+    );
+    if (confirm) {
+      const result = await deleteReview({ id: review?.id });
+      refetch();
+    } 
   };
   const { id, rate, content, image } = review;
 
