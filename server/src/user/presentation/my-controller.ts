@@ -31,7 +31,6 @@ export class MyController {
 
   @All()
   async isUser(@Body("userId") userId: number, @Res() res: Response) {
-    console.log(userId);
     if (!userId) {
       res.status(HttpStatus.UNAUTHORIZED);
       return {
@@ -106,7 +105,6 @@ export class MyController {
 
   @Post("/wishes")
   async postWishProduct(@Body() body: WishRequest) {
-    console.log(1, body.userId);
     return await this.myService.createWishProduct(body);
   }
 
