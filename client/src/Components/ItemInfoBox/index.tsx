@@ -13,11 +13,13 @@ import { useCallback } from "react";
 import { QueryObserverResult } from "react-query";
 import properties from "@/config/properties";
 import CartSelects from "./CartSelects";
+import { moveTo } from "@/Router";
 
 export type ItemInfoBoxProps = {
   id: number;
   name: string;
   amount: number;
+  productId: number;
   productOptionId?: number;
   option?: string;
   options?: ProductOptionType[];
@@ -44,6 +46,7 @@ const ItemInfoBox = ({
   id,
   name,
   amount,
+  productId,
   productOptionId,
   option,
   options,
@@ -110,7 +113,12 @@ const ItemInfoBox = ({
         {checkboxVisible && <Checkbox {...{ isChecked, handleCheck }} />}
         <img role="img" src={properties.imgURL + images[0]} />
         <div className="info__content">
-          <div className="info__name">{name}</div>
+          <div
+            onClick={() => moveTo(`/detail/${productId}`)}
+            className="info__name"
+          >
+            {name}
+          </div>
           <RenderNumInput />
         </div>
       </div>
@@ -148,6 +156,7 @@ const Wrapper = styled.div`
       width: 100%;
     }
     &__name {
+      cursor: pointer;
       ${({ theme }) => theme.font.large};
       ${media.mobile} {
         padding-right: 3rem;
