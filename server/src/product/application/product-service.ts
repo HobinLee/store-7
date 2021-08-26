@@ -54,16 +54,21 @@ export class ProductService {
       productId,
       sortBy
     );
-    const filtered =
-      (isPhotoOnly === "true" &&
-        reviews.filter((review) => review.image !== null)) ||
+
+    const rateFiltered =
       (rating !== "all" &&
         reviews.filter((review) => review.rate === parseInt(rating))) ||
+      reviews ||
       reviews;
+
+    const photoFiltered =
+      (isPhotoOnly === "true" &&
+        rateFiltered.filter((review) => review.image !== null)) ||
+      rateFiltered;
 
     const result = ReviewResponse.of(reviews);
 
-    return { ...result, reviews: filtered, length: result.reviews.length };
+    return { ...result, reviews: photoFiltered, length: result.reviews.length };
   }
 
   async getQuestion(id: number) {

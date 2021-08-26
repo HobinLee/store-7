@@ -7,15 +7,16 @@ import { useProductReviews } from "@/api/products";
 import Checkbox from "@/Components/Checkbox";
 import { useEffect } from "react";
 import useDebounce from "@/hooks/useDebounce";
+import Rating from "@/Components/Rating";
 
 const Review = () => {
   const pathname = location.pathname.split("detail/")[1];
 
   const [sortBy, setSortBy] = useState<"popularity" | "latest">("popularity");
   const [isPhotoOnly, setIsPhotoOnly] = useState(false);
-  const [rating, setRating] = useState<"1" | "2" | "3" | "4" | "5" | "all">(
-    "all"
-  );
+  const [rating, setRating] = useState<string>("all");
+  const debouncedSortBy = useDebounce(sortBy, 200);
+  const debouncedIsPhotoOnly = useDebounce(isPhotoOnly, 200);
 
   const {
     status,
@@ -23,16 +24,20 @@ const Review = () => {
     error,
     refetch,
   } = useProductReviews(parseInt(pathname), {
-    sortBy,
-    isPhotoOnly,
+    sortBy: debouncedSortBy,
+    isPhotoOnly: debouncedIsPhotoOnly,
     rating,
   });
 
-  const debouncedSortBy = useDebounce(sortBy);
-  const debouncedIsPhotoOnly = useDebounce(isPhotoOnly);
   useEffect(() => {
     refetch();
   }, [debouncedSortBy, debouncedIsPhotoOnly, rating]);
+
+  const [isRatingModalOpened, setIsRatingModalOpened] = useState(false);
+  const handleClickRating = (rating) => {
+    setRating(rating);
+    setIsRatingModalOpened(false);
+  };
 
   return (
     status !== "loading" && (
@@ -66,7 +71,7 @@ const Review = () => {
 
         <Filter>
           <div className="buttons">
-            <div>
+            <div className="buttons__left">
               <span
                 className={sortBy === "popularity" && "selected"}
                 onClick={() => setSortBy("popularity")}
@@ -88,7 +93,28 @@ const Review = () => {
             />
           </div>
 
-          <button className="rate-sort">별점</button>
+          <div
+            className="rating"
+            onMouseEnter={() => setIsRatingModalOpened(true)}
+            onMouseLeave={() => setIsRatingModalOpened(false)}
+          >
+            <button className="rate-sort">별점</button>
+            {isRatingModalOpened && (
+              <div>
+                <ReviewModal>
+                  <div onClick={() => handleClickRating("all")}>전체</div>
+                  {reviews.rates.map((rate) => (
+                    <div
+                      onClick={() => handleClickRating(rate.rate.toString())}
+                    >
+                      <Rating value={rate.rate} readOnly />
+                      <div>{`(${rate.count}개)`}</div>
+                    </div>
+                  ))}
+                </ReviewModal>
+              </div>
+            )}
+          </div>
         </Filter>
 
         <ReviewsWrapper>
@@ -145,27 +171,62 @@ const Filter = styled.div`
     & > * {
       cursor: pointer;
     }
+    &__left {
+      padding: 0.5rem 0;
+      padding-right: 1.5rem;
+      border-right: 0.1rem solid ${({ theme }) => theme.color.line};
+    }
     span {
       :nth-child(2) {
         margin-left: 1rem;
       }
       &.selected {
-        color: ${({ theme }) => theme.color.primary1};
+        color: ${({ theme }) => theme.color.primary3};
         font-weight: 500;
       }
     }
-    div:first-child {
-      padding: 0.5rem 0;
-      padding-right: 1.5rem;
-      border-right: 0.1rem solid ${({ theme }) => theme.color.line};
+  }
+  .rating {
+    position: relative;
+    .rate-sort {
+      ${({ theme }) => theme.font.medium};
+      cursor: pointer;
+      padding: 1.5rem 2rem;
+      background-color: ${({ theme }) => theme.color.background};
+      border-radius: 0.8rem;
+    }
+    & > div {
+      position: absolute;
+      top: 4.6rem;
+      width: 20rem;
+      right: 0;
+      z-index: 5;
+      padding-top: 1rem;
     }
   }
-  .rate-sort {
-    ${({ theme }) => theme.font.medium};
-    cursor: pointer;
+`;
+
+const ReviewModal = styled.div`
+  background-color: ${({ theme }) => theme.color.background};
+  border-radius: 0.8rem;
+  box-sizing: border-box;
+  & > div {
+    height: 4rem;
     padding: 1.5rem 2rem;
-    background-color: ${({ theme }) => theme.color.background};
-    border-radius: 0.8rem;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    ${gap("1.5rem")}
+    &:hover {
+      background-color: ${({ theme }) => theme.color.light_grey1};
+    }
+    &:first-child {
+      border-radius: 1rem 1rem 0 0;
+    }
+    &:last-child {
+      border-radius: 0 0 1rem 1rem;
+    }
   }
 `;
 
