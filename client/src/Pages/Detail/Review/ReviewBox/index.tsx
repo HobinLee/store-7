@@ -57,7 +57,6 @@ const ReviewBox = ({
     </Wrapper>
   );
 };
-
 const EditAndDeleteButtons = ({ handleClickEditButton, review, refetch }) => {
   const handleClickDeleteButton = async () => {
     const confirm = window.confirm(

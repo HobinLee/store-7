@@ -482,6 +482,10 @@ export const reviews: ReviewType[] = [
       "https://store.baemin.com/data/board/upload/goodsreview/eea0b21ff31b55a0",
     authorName: "쭈니쭈니",
     date: new Date(),
+    product: {
+      id: 7,
+      name: "더미더미",
+    },
   },
   {
     id: 1,
@@ -492,6 +496,10 @@ export const reviews: ReviewType[] = [
       "https://store.baemin.com/data/board/upload/goodsreview/4d9f2950f11c0478",
     authorName: "우아한개발자",
     date: new Date(),
+    product: {
+      id: 7,
+      name: "더미더미",
+    },
   },
   {
     id: 1,
@@ -501,5 +509,9 @@ export const reviews: ReviewType[] = [
     content: "와 너무 귀여워요 ㅠㅠ",
     authorName: "호비",
     date: new Date(),
+    product: {
+      id: 7,
+      name: "더미더미",
+    },
   },
 ];
