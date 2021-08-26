@@ -9,8 +9,7 @@ const Wish = () => {
     <Wrapper data-testid="test__wishlist">
       <Section
         title="찜리스트"
-        description="최근 30일 내에 진행중인 주문정보입니다."
-        lineType="long1"
+        description="회원님께서 찜한 상품 목록입니다."
         data-testid="test__section"
       >
         <ProductList useQuery={useMyWishes} />

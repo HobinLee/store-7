@@ -8,7 +8,6 @@ const SectionProps: SectionProps = {
   title: "test title",
   description: "test description",
   children: <div data-testid="test__children">children</div>,
-  lineType: "long1",
 };
 
 describe("<Section />", () => {
