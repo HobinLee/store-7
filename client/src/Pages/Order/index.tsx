@@ -480,11 +480,13 @@ const OrderPage = () => {
   }, [isLoggedin]);
 
   return (
-    <Wrapper>
+    <>
       <Header />
-      <RenderContent />
-      <Footer />
-    </Wrapper>
+      <Wrapper>
+        <RenderContent />
+        <Footer />
+      </Wrapper>
+    </>
   );
 };
 
