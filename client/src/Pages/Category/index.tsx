@@ -39,7 +39,6 @@ const CategoryPage = ({ params }) => {
   );
 
   useEffect(() => {
-    const newState = {};
     setSelectedCategoryState({
       categoryId: parseInt(params.category) ?? 0,
       subCategoryId: params.subCategory ? parseInt(params.subCategory) : -1,

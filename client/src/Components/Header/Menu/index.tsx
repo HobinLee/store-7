@@ -100,7 +100,7 @@ const Menu = () => {
     !categories[highlighted.categoryId / 100]?.subCategories.length &&
     !categories[selected.categoryId / 100]?.subCategories.length;
 
-  const generateSubCategory = () => (
+  const generateSubCategory = (
     <SubCategoryWrapper
       padding={padding}
       width={getWidth(categories[highlighted.categoryId / 100]?.subCategories)}
@@ -127,7 +127,7 @@ const Menu = () => {
   return (
     <Wrapper id="category" onMouseLeave={handleMouseLeave}>
       {generateMainCategory}
-      {checkHideSubCategory && generateSubCategory}
+      {!checkHideSubCategory && generateSubCategory}
     </Wrapper>
   );
 };
