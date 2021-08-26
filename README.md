@@ -2,7 +2,7 @@
 <h2 align='center'>ESTP 이정민 임용성 / 이호빈 홍영준 ENTJ</h2>
 <h2 align='center'>https://store-7.woowahan-techcamp.shop/welcome</h2>
 
-![image](https://user-images.githubusercontent.com/50590192/130985327-54df57b8-e9be-439a-971e-e328d827de83.png)
+<img src='./client/src/assets/welcome/welcome.gif'/>
 
 ## Tect Stack
 
