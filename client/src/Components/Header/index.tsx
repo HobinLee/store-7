@@ -23,6 +23,7 @@ const TopWrapper = styled.div`
   border-radius: 0 0 2rem 2rem;
   background: ${({ theme }) => theme.color.white};
   ${media.mobile} {
+    position: -webkit-sticky;
     position: sticky;
     top: -7rem;
   }
