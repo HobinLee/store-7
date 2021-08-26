@@ -11,11 +11,11 @@ import AdminProductCreate from "./Create";
 export type Page = "Home" | "Product" | "Order" | "ProductCreate";
 
 const AdminPage = () => {
-  const [currentPage, setPage] = useState<Page>("Product");
+  const [currentPage, setPage] = useState<Page>("Home");
   const Pages = {
     Home: <AdminHome />,
     Product: <AdminProduct setPage={setPage} />,
-    ProductCreate: <AdminProductCreate />,
+    ProductCreate: <AdminProductCreate setPage={setPage} />,
   };
 
   const SidebarItem = (name: Page, icon: string) => {

@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-import { LINE_LINK } from "@/assets";
 import LoadingSpinner from "@/assets/spinner.png";
 import { gap, media } from "@/styles/theme";
 

@@ -3,7 +3,7 @@ import properties from "../../../config/properties";
 import { AdminProductType } from "@/shared/type";
 import { FC, MouseEvent, useEffect, useState } from "react";
 import SearchInput from "./SearchInput";
-import { getAllProductsByKeyword } from "@/api/products";
+import { deleteProduct, getAllProductsByKeyword } from "@/api/products";
 import { Page } from "..";
 
 interface Props {
@@ -103,6 +103,20 @@ const AdminProduct: FC<Props> = ({ setPage }) => {
   );
 };
 
+const productDeleteClickHandler = (e, id: number) => {
+  e.stopPropagation();
+  const result = confirm("정말 삭제하시겠습니까?");
+  if (result) {
+    deleteProduct({ id })
+      .then(() => {
+        alert("삭제되었습니다.");
+      })
+      .catch((err) => {
+        alert("삭제하는데 뭔가 이상한 에러가?!");
+      });
+  }
+};
+
 const convertProductsToElement = (
   products: AdminProductType[],
   setProductDetail
@@ -121,7 +135,12 @@ const convertProductsToElement = (
         <div>{product.orderWait}건</div>
         <div>{product.salse}개</div>
         <div>
-          <button className="delete">삭제</button>
+          <button
+            className="delete"
+            onClick={(e) => productDeleteClickHandler(e, product.id)}
+          >
+            삭제
+          </button>
         </div>
       </S.ProductItem>
     );

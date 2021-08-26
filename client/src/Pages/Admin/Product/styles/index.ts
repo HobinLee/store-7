@@ -184,6 +184,7 @@ export const ProductDetailBackground = styled.div<{ isShowed: boolean }>`
   left: 0;
   top: 0;
   transition: 0.2s;
+  overflow: hidden;
   background-color: #00000057;
   animation-name: ${({ isShowed }) => (isShowed ? BackgroundShow : "none")};
   animation-duration: 1s;

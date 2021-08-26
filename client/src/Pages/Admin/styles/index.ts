@@ -46,6 +46,7 @@ export const SideBarItem = styled.div<{ isCurrentPage: boolean }>`
 `;
 
 export const ContentBox = styled.div`
+  position: relative;
   width: calc(100vw - 300px);
   height: 100%;
   background-color: #f7f7f7;
