@@ -9,6 +9,8 @@ import properties from "@/config/properties";
 import { useState, useMemo } from "react";
 import useDebounce from "@/hooks/useDebounce";
 import useDidMountEffect from "@/hooks/useDidMountEffect";
+import { useRecoilValue } from "recoil";
+import { loginState } from "@/store/state";
 
 type ItemType = {
   id: number;
@@ -42,6 +44,10 @@ const Item = ({
   }, []);
   const handleClickWish = async (e: Event) => {
     e.stopPropagation();
+    const isLogin = useRecoilValue(loginState);
+    if (!isLogin) {
+      return;
+    }
     setIsMyWish((isMyWish) => !isMyWish);
   };
 
