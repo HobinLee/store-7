@@ -47,8 +47,14 @@ const CartSelects = ({
     }
   };
 
+  // 상품옵션
+  const [optionId, setOptionId] = useState(productOptionId);
+
   const handlePatchCart = async () => {
-    await patchCart(id, { amount: parseInt(debouncedNumValue) });
+    await patchCart(id, {
+      amount: parseInt(debouncedNumValue),
+      productOptionId: optionId,
+    });
     refetch();
   };
   useEffect(() => {
@@ -60,20 +66,18 @@ const CartSelects = ({
       const itemPrice = itemToUpdate.price / itemToUpdate.amount;
       itemToUpdate.amount = parseInt(debouncedNumValue);
       itemToUpdate.price = itemPrice * parseInt(debouncedNumValue);
+      itemToUpdate.productOptionId = optionId;
 
       localStorage.setItem("carts", JSON.stringify(exist));
       setCartItems(exist);
     }
-  }, [debouncedNumValue]);
+  }, [debouncedNumValue, optionId]);
 
   const RenderNumInput = useCallback(() => {
     return (
       <NumInput defaultValue={numValue.value} onChange={numValue.onChange} />
     );
   }, [numValue.value]);
-
-  // 상품옵션
-  const [optionId, setOptionId] = useState(productOptionId);
 
   return (
     <Wrapper>

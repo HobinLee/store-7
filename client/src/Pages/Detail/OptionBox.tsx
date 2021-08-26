@@ -49,10 +49,6 @@ const OptionBox = ({
     product.options[0]?.id
   );
 
-  // useEffect(() => {
-  //   console.log(productOption, typeof productOption);
-  // }, [productOption]);
-
   // 장바구니
   const handlePostCart = async () => {
     try {

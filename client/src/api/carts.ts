@@ -15,7 +15,7 @@ export const postCart = (data: {
 export const patchCart = (
   id: number,
   data: {
-    productOptionId?: string;
+    productOptionId?: number;
     amount?: number;
   }
 ) => PATCH(`/carts/${id}`, data);

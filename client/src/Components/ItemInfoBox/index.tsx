@@ -34,7 +34,9 @@ export type ItemInfoBoxProps = {
 export const output = ({ price, deliveryCost }) => {
   return {
     priceOutput: `총 ${convertToKRW(price)}`,
-    deliveryOutput: `배송비 ${convertToKRW(deliveryCost)}`,
+    deliveryOutput: `배송비 ${
+      deliveryCost === 0 ? "무료" : convertToKRW(deliveryCost)
+    }`,
   };
 };
 
@@ -61,7 +63,7 @@ const ItemInfoBox = ({
   const pathname = location.pathname.split("/")[1];
 
   const optionValue =
-    options?.find((i) => i.id === productOptionId).value || "";
+    options?.find((i) => i.id === productOptionId)?.value || "";
 
   const handleDeleteCart = async () => {
     try {

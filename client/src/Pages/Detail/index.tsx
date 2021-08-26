@@ -67,7 +67,6 @@ const DetailPage = () => {
   const [isZoomOpened, setIsZoomOpened] = useState(false);
 
   const RenderTabComponent = useCallback(() => {
-    console.log(product && product);
     switch (selectedTab) {
       case "first":
         return <DetailInfo {...{ product }} />;
