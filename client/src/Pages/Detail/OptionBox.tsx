@@ -127,7 +127,7 @@ const OptionBox = ({
 
         <div className="total-price">
           <div>총 합계금액</div>
-          {convertToKRW(10000 * parseInt(numValue.value))}
+          {convertToKRW(product.price * parseInt(numValue.value))}
         </div>
 
         <div className="buttons">
