@@ -14,13 +14,11 @@ import {
 import { useEffect } from "react";
 import { useMyDestinations, useMyInfo } from "@/api/my";
 import { DestinationType, ICart, PartialCart } from "@/shared/type";
-import { postPaymentReady } from "@/api/payment";
-import properties from "@/config/properties";
 import CartOrderBox from "@/Components/CartOrderBox";
 import { convertToPhoneNumber } from "@/utils/util";
 import { postOrder } from "@/api/orders";
 import { moveTo } from "@/Router";
-import { Title, Content, Info, Payment } from "../index";
+import { Title, Content, Info, Payment, handleKakaoPay } from "../index";
 
 const LoggedinContent = () => {
   // 상품목록
@@ -85,30 +83,10 @@ const LoggedinContent = () => {
     });
   };
 
-  // 카카오페이
-  const handleKakaoPay = async () => {
-    const res = await postPaymentReady({
-      cid: "TC0ONETIME",
-      item_name: "item",
-      quantity: "1",
-      total_amount: "11",
-      tax_free_amount: "11",
-      approval_url: `${properties.baseURL}/payment/approve`,
-      cancel_url: properties.baseURL,
-      fail_url: properties.baseURL,
-    });
-    if (res) {
-      try {
-        handlePostOrder();
-      } finally {
-        window.open(res.url);
-      }
-    }
-  };
-
   // 결제 버튼 클릭
   const handlePay = () => {
-    if (payment === "kakaopay") handleKakaoPay();
+    if (payment === "kakaopay")
+      handleKakaoPay(handlePostOrder, orderItems.items);
     else {
       try {
         handlePostOrder();
