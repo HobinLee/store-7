@@ -61,7 +61,7 @@ const LoggedinContent = () => {
   useEffect(() => {
     if (destinationsStatus !== "loading")
       setAddress(destinations.find((i) => i.isDefault === true));
-  }, [destinationsStatus]);
+  }, [destinations]);
 
   const [isAddressModalOpened, setIsAddressModalOpened] = useState(false);
 

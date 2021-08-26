@@ -22,7 +22,6 @@ const ProductList = ({
   params: originParams,
   pagination,
 }: ProductListProps) => {
-  console.log("안녕?");
   const [isEnd, setIsEnd] = useState(!pagination);
 
   const [page, setPage] = useState(1);
