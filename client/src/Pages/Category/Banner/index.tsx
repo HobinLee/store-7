@@ -60,7 +60,7 @@ const BGWrapper = styled.div`
   height: 30rem;
   top: 0;
   left: 0;
-  margin-top: 10rem;
+  margin-top: 13rem;
   position: fixed;
   overflow: hidden;
   ${({ theme }) => theme.flexCenter}
@@ -73,8 +73,7 @@ const BGWrapper = styled.div`
     height: 24rem;
   }
   ${media.mobile} {
-    margin-top: 10.6rem;
-    height: 16.8rem;
+    height: 17rem;
   }
 `;
 

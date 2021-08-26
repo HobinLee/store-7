@@ -1,8 +1,10 @@
+import { categories } from "@/shared/dummy";
 import { media } from "@/styles/theme";
 import { useState } from "react";
 import styled from "styled-components";
 
 export interface FilterProps {
+  categoryId?: number;
   currentFilter?: FilterType;
   setFilter: (filter: FilterType) => void;
 }
@@ -35,7 +37,7 @@ export const filters: FilterType[] = [
   },
 ];
 
-const Filter = ({ currentFilter, setFilter }: FilterProps) => {
+const Filter = ({ categoryId, currentFilter, setFilter }: FilterProps) => {
   const generateButtons = filters.map((filter: FilterType) => (
     <button
       className={`buttons__btn ${
@@ -49,20 +51,25 @@ const Filter = ({ currentFilter, setFilter }: FilterProps) => {
     </button>
   ));
   return (
-    <FilterWrapper>
+    <FilterWrapper
+      hasSubCategories={
+        categoryId
+          ? !!categories[categoryId / 100]?.subCategories.length
+          : false
+      }
+    >
       <div className="buttons">{generateButtons}</div>
     </FilterWrapper>
   );
 };
 
-const FilterWrapper = styled.div`
+const FilterWrapper = styled.div<{ hasSubCategories: boolean }>`
   ${({ theme }) => theme.flexCenter}
   ${({ theme }) => theme.font.medium}
   justify-content: flex-end;
   padding: 2rem 0;
   position: -webkit-sticky;
   position: sticky;
-  top: 13.9rem;
   width: 100%;
   background: white;
   z-index: 20;
@@ -81,8 +88,13 @@ const FilterWrapper = styled.div`
   & > div:nth-child(1) {
     background: ${({ theme }) => theme.color.white};
   }
+
+  ${media.tablet} {
+    top: ${({ hasSubCategories }) => (hasSubCategories ? 15 : 10)}rem;
+  }
+
   ${media.mobile} {
-    top: 10.6rem;
+    top: 6rem;
   }
 `;
 

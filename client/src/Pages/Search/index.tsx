@@ -7,20 +7,22 @@ import ProductList from "@/Components/ProductList";
 
 const SearchPage = ({ params }) => {
   return (
-    <Wrapper>
+    <>
       <Header />
-      <Contents>
-        <div className="search-page__keyword">
-          <span>{params.keyword}</span>
-        </div>
-        <ProductList
-          useQuery={useSearchProducts}
-          params={params}
-          pagination={true}
-        />
-      </Contents>
-      <Footer />
-    </Wrapper>
+      <Wrapper>
+        <Contents>
+          <div className="search-page__keyword">
+            <span>{params.keyword}</span>
+          </div>
+          <ProductList
+            useQuery={useSearchProducts}
+            params={params}
+            pagination={true}
+          />
+        </Contents>
+        <Footer />
+      </Wrapper>
+    </>
   );
 };
 

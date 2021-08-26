@@ -303,7 +303,7 @@ const Tab = styled.div`
   background: rgba(255, 255, 255, 0.9);
   z-index: 1;
   ${media.mobile} {
-    top: 10.6rem;
+    margin-top: 13rem;
   }
 `;
 
