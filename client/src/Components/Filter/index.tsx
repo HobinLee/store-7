@@ -73,7 +73,6 @@ const FilterWrapper = styled.div<{ hasSubCategories: boolean }>`
   padding: 2rem 0;
   position: -webkit-sticky;
   position: sticky;
-  top: 13.9rem;
   width: 100%;
   background: white;
   z-index: 20;

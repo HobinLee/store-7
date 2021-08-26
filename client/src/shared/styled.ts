@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import LoadingSpinner from "@/assets/spinner.png";
-import { gap, hideScroll, media } from "@/styles/theme";
+import { gap, media } from "@/styles/theme";
 
 export const PageWrapper = styled.div`
   position: relative;
