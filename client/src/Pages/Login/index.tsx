@@ -3,8 +3,10 @@ import styled from "styled-components";
 import Input from "@/Components/Input";
 import Button from "@/Components/Button";
 import useInput from "@/hooks/useInput";
-import { gap } from "@/styles/theme";
+import { gap, media } from "@/styles/theme";
 import LoginSection from "./LoginSection";
+import { Back } from "@/assets";
+import { Link } from "@/Router";
 
 const LoginPage = () => {
   const name = useInput("");
@@ -37,6 +39,9 @@ const LoginPage = () => {
           </span>
         </Form>
       </LoginContent>
+      <Link to="/">
+        <Back />
+      </Link>
     </LoginPageWrapper>
   );
 };
@@ -78,6 +83,27 @@ const LoginPageWrapper = styled(PageWrapper)`
     a:last-child {
       border: none;
     }
+
+    ${media.mobile} {
+      margin-top: 5rem;
+      a {
+        ${({ theme }) => theme.font.medium};
+      }
+    }
+  }
+  & > a {
+    display: none;
+  }
+  ${media.mobile} {
+    padding: 10rem 5rem;
+
+    & > a {
+      display: block;
+      position: fixed;
+      padding: 2rem;
+      left: 0;
+      top: 0;
+    }
   }
 `;
 
@@ -85,11 +111,22 @@ const LoginContent = styled.div`
   padding: 3rem 14.5rem;
   margin: auto;
   width: 30rem;
+  ${media.tablet} {
+    padding: 0;
+  }
+  ${media.mobile} {
+    padding: 0;
+    width: 100%;
+  }
 `;
 
 const Title = styled.h3`
   text-align: center;
   ${({ theme }) => theme.font.large}
+  ${media.mobile} {
+    padding: 0;
+    width: 100%;
+  }
 `;
 
 const Form = styled.form`
@@ -97,7 +134,11 @@ const Form = styled.form`
   height: auto;
   display: flex;
   flex-direction: column;
-  ${gap("2rem", "column")}
+  padding-top: 6rem;
+  border-top: 1px solid ${({ theme }) => theme.color.light_grey2};
+  ${gap("2rem", "column")} ${media.mobile} {
+    ${gap("4rem", "column")}
+  }
 `;
 
 export default LoginPage;
