@@ -133,7 +133,8 @@ const CartPage = () => {
                           cart
                         )
                       }
-                      productOptionName={cart.productOptionName}
+                      productOptionId={cart.productOptionId}
+                      options={cart.options}
                       refetch={refetch}
                       setCartItems={setCartItems}
                       checkboxVisible

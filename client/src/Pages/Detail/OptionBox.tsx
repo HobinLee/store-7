@@ -45,11 +45,13 @@ const OptionBox = ({
   }, [numValue.value]);
 
   // 상품옵션
-  const [productOption, setProductOption] = useState<string[]>([]);
+  const [productOptionId, setProductOptionId] = useState(
+    product.options[0]?.id
+  );
 
-  useEffect(() => {
-    console.log(productOption, typeof productOption);
-  }, [productOption]);
+  // useEffect(() => {
+  //   console.log(productOption, typeof productOption);
+  // }, [productOption]);
 
   // 장바구니
   const handlePostCart = async () => {
@@ -59,8 +61,7 @@ const OptionBox = ({
           data: {
             product: { id: productId },
             amount: parseInt(numValue.value),
-            productOptionId: parseInt(productOption[0]),
-            productOptionName: productOption[1],
+            productOptionId,
           },
         });
       } else {
@@ -81,8 +82,7 @@ const OptionBox = ({
             amount: parseInt(numValue.value),
             price: product.price * parseInt(numValue.value),
             productId: productId,
-            productOptionId: parseInt(productOption[0]),
-            productOptionName: productOption[1],
+            productOptionId,
           },
         ];
         localStorage.setItem("carts", JSON.stringify(exist));
@@ -105,8 +105,7 @@ const OptionBox = ({
             amount: numValue.value,
             price: product.price * parseInt(numValue.value),
             productId,
-            productOptionId: productOption[0],
-            productOptionName: productOption[1],
+            productOptionId,
           },
         ],
         totalPrice: product.price * parseInt(numValue.value),
@@ -150,15 +149,12 @@ const OptionBox = ({
               <div className="select-option__right">
                 <select
                   onChange={(e) => {
-                    setProductOption(e.target.value.split(","));
+                    setProductOptionId(parseInt(e.target.value));
                   }}
-                  defaultValue={productOption}
+                  defaultValue={productOptionId}
                 >
                   {product.options.map((option) => (
-                    <option
-                      key={option.id}
-                      value={[option.id.toString(), option.value]}
-                    >
+                    <option key={option.id} value={option.id}>
                       {option.value} (재고: {option.stock}개)
                     </option>
                   ))}

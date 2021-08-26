@@ -6,7 +6,7 @@ import { Close } from "@/assets";
 import { deleteCart } from "@/api/carts";
 import { useRecoilValue } from "recoil";
 import { loginState } from "@/store/state";
-import { CartType } from "@/shared/type";
+import { CartType, ProductOptionType } from "@/shared/type";
 import { SetStateAction } from "react";
 import { Dispatch } from "react";
 import { useCallback } from "react";
@@ -18,7 +18,9 @@ export type ItemInfoBoxProps = {
   id: number;
   name: string;
   amount: number;
-  productOptionName?: string;
+  productOptionId?: number;
+  option?: string;
+  options?: ProductOptionType[];
   price: number;
   deliveryCost: number;
   images?: string[];
@@ -40,7 +42,9 @@ const ItemInfoBox = ({
   id,
   name,
   amount,
-  productOptionName,
+  productOptionId,
+  option,
+  options,
   price,
   deliveryCost,
   images,
@@ -55,6 +59,9 @@ const ItemInfoBox = ({
   const isLoggedin = useRecoilValue(loginState);
 
   const pathname = location.pathname.split("/")[1];
+
+  const optionValue =
+    options?.find((i) => i.id === productOptionId).value || "";
 
   const handleDeleteCart = async () => {
     try {
@@ -75,10 +82,22 @@ const ItemInfoBox = ({
 
   const RenderNumInput = useCallback(() => {
     if (pathname === "cart")
-      return <CartSelects {...{ id, amount, refetch, setCartItems }} />;
+      return (
+        <CartSelects
+          {...{
+            id,
+            amount,
+            refetch,
+            setCartItems,
+            option,
+            options,
+            productOptionId,
+          }}
+        />
+      );
     return (
       <div className="info__amount">
-        {productOptionName} {amount}개
+        {optionValue} {amount}개
       </div>
     );
   }, []);
@@ -88,7 +107,7 @@ const ItemInfoBox = ({
       <div className="info">
         {checkboxVisible && <Checkbox {...{ isChecked, handleCheck }} />}
         <img role="img" src={properties.imgURL + images[0]} />
-        <div>
+        <div className="info__content">
           <div className="info__name">{name}</div>
           <RenderNumInput />
         </div>
@@ -115,10 +134,17 @@ const Wrapper = styled.div`
   padding: 2rem;
   box-sizing: border-box;
   position: relative;
+  ${media.mobile} {
+    padding: 1rem;
+  }
   .info {
     display: flex;
     align-items: flex-start;
+    width: 100%;
     ${gap("2rem")}
+    &__content {
+      width: 100%;
+    }
     &__name {
       ${({ theme }) => theme.font.large};
       ${media.mobile} {
@@ -127,13 +153,15 @@ const Wrapper = styled.div`
       }
     }
     &__num {
-      margin-top: 1rem;
       display: flex;
       align-items: center;
       ${gap("1rem")};
     }
     &__amount {
       margin-top: 3rem;
+    }
+    ${media.mobile} {
+      ${gap("1rem")}
     }
   }
   img {
@@ -147,7 +175,7 @@ const Wrapper = styled.div`
     ${({ theme }) => theme.flexCenter};
     font-weight: 700;
     justify-content: flex-end;
-    ${gap("2rem")}
+    ${gap("2rem")};
     ${media.mobile} {
       margin-top: 2rem;
     }
@@ -175,7 +203,6 @@ const Wrapper = styled.div`
         ${({ theme }) => theme.flexCenter};
         cursor: pointer;
         width: 1.6rem;
-        /* height: 1.6rem; */
         border: none;
         padding: 0.4rem;
         background: ${({ theme }) => theme.color.primary2};
@@ -190,6 +217,21 @@ const Wrapper = styled.div`
       transform: rotate(90deg);
       fill: white;
       height: 1.2rem;
+    }
+  }
+  .select-option {
+    ${({ theme }) => theme.flexCenter};
+    ${({ theme }) => theme.font.medium};
+    justify-content: start;
+    ${gap("1rem")};
+    select {
+      cursor: pointer;
+      border: 0.1rem solid ${({ theme }) => theme.color.line};
+      padding: 0.8rem 1rem;
+      border-radius: 0.5rem;
+    }
+    ${media.mobile} {
+      margin-top: 1rem;
     }
   }
 `;

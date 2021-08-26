@@ -1,3 +1,4 @@
+import { ProductOption } from "@/product/entity/option";
 import { Cart } from "../entity/cart";
 
 export class CartResponse {
@@ -7,6 +8,7 @@ export class CartResponse {
   deliveryCost: number;
   images: string[];
   productOptionId: number;
+  options: ProductOption[];
   amount: number;
   productId: number;
 
@@ -18,7 +20,14 @@ export class CartResponse {
       images = cart.product.getImagesAsString(),
       productOptionId = cart.productOptionId,
       amount = cart.amount,
-      productId = cart.product.id;
+      productId = cart.product.id,
+      options = cart.product.options.map((option) => {
+        return {
+          id: option.id,
+          value: option.value,
+          stock: option.stock,
+        };
+      });
 
     return {
       id,
@@ -27,6 +36,7 @@ export class CartResponse {
       deliveryCost,
       images,
       productOptionId,
+      options,
       amount,
       productId,
     } as CartResponse;

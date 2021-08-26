@@ -14,7 +14,7 @@ export class Carts {
   async findCartsByUserId(userId: number): Promise<Cart[]> {
     return this.cartRepository.find({
       where: { user: { id: userId } },
-      relations: ["user", "product", "product.images"],
+      relations: ["user", "product", "product.images", "product.options"],
     });
   }
 

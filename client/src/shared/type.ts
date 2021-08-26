@@ -135,7 +135,7 @@ export interface ICart {
   deliveryCost: number;
   images: string[];
   productOptionId: number;
-  productOptionName?: string;
+  options: ProductOptionType[];
   amount: number;
   productId: number;
 }
