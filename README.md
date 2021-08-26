@@ -1,11 +1,8 @@
 <h1 align='center'>ET들</h1>
 <h2 align='center'>ESTP 이정민 임용성 / 이호빈 홍영준 ENTJ</h2>
-<h2 align='center'>https://store-7.woowahan-techcamp.shop/</h2>
+<h2 align='center'>https://store-7.woowahan-techcamp.shop/welcome</h2>
 
-<div>
-  <img width='400' src='https://user-images.githubusercontent.com/50590192/129288074-c4d4989d-6571-4ced-ac90-7bb85ab85f13.png' />
-  <img width='400' src='https://user-images.githubusercontent.com/50590192/129291909-936e20a5-f705-488a-9c92-6df511bd2942.png' />
-</div>
+![image](https://user-images.githubusercontent.com/50590192/130985327-54df57b8-e9be-439a-971e-e328d827de83.png)
 
 ## Tect Stack
 
@@ -42,5 +39,10 @@
 하루종일 앉아서 개발하다보니 정말 ET가 될 것 같습니다..  
 ~~근데 우리 ET는 오른손잡이에요.. 열심히해서 양손잡이 ET가 되도록 팀에 기여하겠습니다~~
 
+
+<div>
+  <img width='400' src='https://user-images.githubusercontent.com/50590192/129288074-c4d4989d-6571-4ced-ac90-7bb85ab85f13.png' />
+  <img width='400' src='https://user-images.githubusercontent.com/50590192/129291909-936e20a5-f705-488a-9c92-6df511bd2942.png' />
+</div>
 
 ![image](https://user-images.githubusercontent.com/50590192/129292862-2f056d36-b992-42e2-a569-c6693a7ef8cf.png)
