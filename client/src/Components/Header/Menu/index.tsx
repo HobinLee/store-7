@@ -156,8 +156,10 @@ const MainCategoryWrapper = styled.ul`
   font-weight: normal;
   color: #555;
   height: 100%;
-  ${({ theme }) => theme.font.large};
-  font-weight: normal;
+  ${media.mobile} {
+    ${({ theme }) => theme.font.large};
+    font-weight: normal;
+  }
   ${hideScroll}
 
   li {
