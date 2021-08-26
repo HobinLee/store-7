@@ -13,6 +13,7 @@ import { SearchProduct } from "../dto/product-search-response";
 import { Wishes } from "@/user/domain/wishes";
 import { ProductFindQuery } from "../dto/product-find-query";
 import { ProductAdminResponse } from "../dto/product-admin-response";
+import { ProductReviewsQuery } from "../dto/product-request";
 
 @Injectable()
 export class ProductService {
@@ -47,9 +48,27 @@ export class ProductService {
     throw new Error("404 Product NotFound");
   }
 
-  async getProductReviews(productId: number) {
-    const reviews = await this.reviews.findReviewsByProductId(productId);
-    return ReviewResponse.of(reviews);
+  async getProductReviews(productId: number, query: ProductReviewsQuery) {
+    const { sortBy, isPhotoOnly, rating } = query;
+    const reviews = await this.reviews.findReviewsByProductId(
+      productId,
+      sortBy
+    );
+
+    const rateFiltered =
+      (rating !== "all" &&
+        reviews.filter((review) => review.rate === parseInt(rating))) ||
+      reviews ||
+      reviews;
+
+    const photoFiltered =
+      (isPhotoOnly === "true" &&
+        rateFiltered.filter((review) => review.image !== null)) ||
+      rateFiltered;
+
+    const result = ReviewResponse.of(reviews);
+
+    return { ...result, reviews: photoFiltered, length: result.reviews.length };
   }
 
   async getQuestion(id: number) {

@@ -11,6 +11,7 @@ export interface ReviewListType {
   averageRate: number;
   rates: { rate: number; count: number }[];
   reviews: ReviewType[];
+  length: number;
 }
 
 export interface QuestionType {

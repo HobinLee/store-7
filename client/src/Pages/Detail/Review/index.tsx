@@ -4,14 +4,40 @@ import ReviewBox from "./ReviewBox";
 import { useState } from "react";
 import { gap } from "@/styles/theme";
 import { useProductReviews } from "@/api/products";
+import Checkbox from "@/Components/Checkbox";
+import { useEffect } from "react";
+import useDebounce from "@/hooks/useDebounce";
+import Rating from "@/Components/Rating";
 
 const Review = () => {
   const pathname = location.pathname.split("detail/")[1];
+
+  const [sortBy, setSortBy] = useState<"popularity" | "latest">("popularity");
+  const [isPhotoOnly, setIsPhotoOnly] = useState(false);
+  const [rating, setRating] = useState<string>("all");
+  const debouncedSortBy = useDebounce(sortBy, 200);
+  const debouncedIsPhotoOnly = useDebounce(isPhotoOnly, 200);
+
   const {
     status,
     data: reviews,
     error,
-  } = useProductReviews(parseInt(pathname));
+    refetch,
+  } = useProductReviews(parseInt(pathname), {
+    sortBy: debouncedSortBy,
+    isPhotoOnly: debouncedIsPhotoOnly,
+    rating,
+  });
+
+  useEffect(() => {
+    refetch();
+  }, [debouncedSortBy, debouncedIsPhotoOnly, rating]);
+
+  const [isRatingModalOpened, setIsRatingModalOpened] = useState(false);
+  const handleClickRating = (rating) => {
+    setRating(rating);
+    setIsRatingModalOpened(false);
+  };
 
   return (
     status !== "loading" && (
@@ -20,7 +46,7 @@ const Review = () => {
           <div>
             <div>
               <div>
-                상품후기 <span className="total">{reviews.reviews.length}</span>
+                상품후기 <span className="total">{reviews.length}</span>
               </div>
               <div className="average-rate">{reviews.averageRate || 0}/5</div>
             </div>
@@ -36,7 +62,7 @@ const Review = () => {
                   content={{
                     value: item.rate,
                     count: item.count,
-                    totalCount: reviews.reviews.length,
+                    totalCount: reviews.length,
                   }}
                 />
               ))}
@@ -45,14 +71,50 @@ const Review = () => {
 
         <Filter>
           <div className="buttons">
-            <div>
-              <span>베스트순</span>
-              <span>최신순</span>
+            <div className="buttons__left">
+              <span
+                className={sortBy === "popularity" && "selected"}
+                onClick={() => setSortBy("popularity")}
+              >
+                베스트순
+              </span>
+              <span
+                className={sortBy === "latest" && "selected"}
+                onClick={() => setSortBy("latest")}
+              >
+                최신순
+              </span>
             </div>
-            <div>사진리뷰</div>
+            <Checkbox
+              label="사진리뷰"
+              size="small"
+              isChecked={isPhotoOnly}
+              handleCheck={() => setIsPhotoOnly(!isPhotoOnly)}
+            />
           </div>
 
-          <button className="rate-sort">별점</button>
+          <div
+            className="rating"
+            onMouseEnter={() => setIsRatingModalOpened(true)}
+            onMouseLeave={() => setIsRatingModalOpened(false)}
+          >
+            <button className="rate-sort">별점</button>
+            {isRatingModalOpened && (
+              <div>
+                <ReviewModal>
+                  <div onClick={() => handleClickRating("all")}>전체</div>
+                  {reviews.rates.map((rate) => (
+                    <div
+                      onClick={() => handleClickRating(rate.rate.toString())}
+                    >
+                      <Rating value={rate.rate} readOnly />
+                      <div>{`(${rate.count}개)`}</div>
+                    </div>
+                  ))}
+                </ReviewModal>
+              </div>
+            )}
+          </div>
         </Filter>
 
         <ReviewsWrapper>
@@ -109,23 +171,62 @@ const Filter = styled.div`
     & > * {
       cursor: pointer;
     }
-    span {
-      :nth-child(2) {
-        margin-left: 1rem;
-      }
-    }
-    div:first-child {
+    &__left {
       padding: 0.5rem 0;
       padding-right: 1.5rem;
       border-right: 0.1rem solid ${({ theme }) => theme.color.line};
     }
+    span {
+      :nth-child(2) {
+        margin-left: 1rem;
+      }
+      &.selected {
+        color: ${({ theme }) => theme.color.primary3};
+        font-weight: 500;
+      }
+    }
   }
-  .rate-sort {
-    ${({ theme }) => theme.font.medium};
-    cursor: pointer;
+  .rating {
+    position: relative;
+    .rate-sort {
+      ${({ theme }) => theme.font.medium};
+      cursor: pointer;
+      padding: 1.5rem 2rem;
+      background-color: ${({ theme }) => theme.color.background};
+      border-radius: 0.8rem;
+    }
+    & > div {
+      position: absolute;
+      top: 4.6rem;
+      width: 20rem;
+      right: 0;
+      z-index: 5;
+      padding-top: 1rem;
+    }
+  }
+`;
+
+const ReviewModal = styled.div`
+  background-color: ${({ theme }) => theme.color.background};
+  border-radius: 0.8rem;
+  box-sizing: border-box;
+  & > div {
+    height: 4rem;
     padding: 1.5rem 2rem;
-    background-color: ${({ theme }) => theme.color.background};
-    border-radius: 0.8rem;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    ${gap("1.5rem")}
+    &:hover {
+      background-color: ${({ theme }) => theme.color.light_grey1};
+    }
+    &:first-child {
+      border-radius: 1rem 1rem 0 0;
+    }
+    &:last-child {
+      border-radius: 0 0 1rem 1rem;
+    }
   }
 `;
 

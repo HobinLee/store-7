@@ -27,7 +27,8 @@ export class ProductResponse {
       images = product.getImagesAsString(),
       details = product.getDetailImagesAsString(),
       isWish =
-        product.wishes.filter((wish) => wish.user.id === userId).length === 1;
+        product.wishes?.filter((wish) => wish.user?.id === userId).length ===
+          1 || false;
 
     return {
       id,

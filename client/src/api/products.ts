@@ -10,6 +10,12 @@ export interface ProductParams {
   page?: number;
   size?: number;
 }
+export interface ReviewParams {
+  sortBy?: "popularity" | "latest";
+  isPhotoOnly?: boolean;
+  rating?: string;
+}
+
 // GET /products?order?category?subcategory?keyword? 상품 목록
 export const getProducts = async (params: ProductParams) =>
   await GET("/products", params);
@@ -23,11 +29,13 @@ const getProduct = (id: number): Promise<ProductType> => GET(`/products/${id}`);
 export const useProduct = (id: number) =>
   useQuery(["product", id], () => getProduct(id));
 
-// GET /products/:id/reviews 리뷰 리스트
-const getProductReviews = (id: number): Promise<ReviewListType> =>
-  GET(`/products/${id}/reviews`);
-export const useProductReviews = (id: number) =>
-  useQuery(["reviews", id], () => getProductReviews(id));
+// GET /products/:id/reviews?sortBy?isPhotoOnly?rating? 리뷰 리스트
+const getProductReviews = (
+  id: number,
+  params: ReviewParams
+): Promise<ReviewListType> => GET(`/products/${id}/reviews`, params);
+export const useProductReviews = (id: number, params: ReviewParams) =>
+  useQuery(["reviews", id, params], () => getProductReviews(id, params));
 
 // GET /products/:id/questions 문의 리스트
 const getProductQuestions = (id: number): Promise<QuestionType[]> =>

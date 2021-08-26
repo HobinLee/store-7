@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import { Reviews } from "@/product/domain/reviews";
-import { ReviewResponse } from "@/product/dto/review-response";
 import {
   CreateReviewPostRequest,
   ReviewPatchRequest,
@@ -10,10 +9,6 @@ import {
 export class ReviewService {
   constructor(private readonly reviews: Reviews) {}
 
-  async getReviewsByProductId(productId: number) {
-    const reviews = await this.reviews.findReviewsByProductId(productId);
-    return ReviewResponse.of(reviews);
-  }
   async createReview(review: CreateReviewPostRequest, image) {
     const fileName = image ? this.reviews.addImage(image) : "";
     await this.reviews.createReview({
