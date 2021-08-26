@@ -6,7 +6,7 @@ import GiftSection from "./GiftSection";
 import BannerSection from "./BannerSection/";
 import ReviewSection from "./ReviewSection/";
 import ProductSection from "./ProductSection/";
-import { gap } from "@/styles/theme";
+import { gap, media } from "@/styles/theme";
 
 export interface SectionType {
   title: string;
@@ -43,6 +43,7 @@ const MainPage = () => {
 };
 
 const Wrapper = styled(PageWrapper)`
+  padding-top: 17rem;
   .main__contents-wrapper {
     width: 100%;
     height: 100%;
@@ -62,6 +63,9 @@ const Wrapper = styled(PageWrapper)`
         margin-bottom: 2rem;
       }
     }
+  }
+  ${media.mobile} {
+    padding-top: 0;
   }
 `;
 
