@@ -70,6 +70,10 @@ const TopWrapper = styled.div`
       display: none;
     }
   }
+
+  .close-btn {
+    display: none;
+  }
 `;
 
 export default Header;
