@@ -94,58 +94,59 @@ const CartPage = () => {
   };
 
   return (
-    status !== "loading" && (
-      <Wrapper>
-        <Header />
+    <>
+      <Header />
+      {status !== "loading" && (
+        <Wrapper>
+          <div className="contents">
+            <Title>
+              장바구니{" "}
+              <span className="other">
+                <Arrow className="arrow" /> 주문/결제
+              </span>
+            </Title>
 
-        <div className="contents">
-          <Title>
-            장바구니{" "}
-            <span className="other">
-              <Arrow className="arrow" /> 주문/결제
-            </span>
-          </Title>
-
-          <Content>
-            {!cartItems || cartItems?.items.length === 0 ? (
-              <div className="empty">장바구니에 담긴 상품이 없습니다.</div>
-            ) : (
-              <div className="items">
-                <div>
-                  <Checkbox
-                    label="모두선택"
-                    isChecked={checkItems?.length === cartItems?.items.length}
-                    handleCheck={() =>
-                      handleAllCheck(
-                        checkItems?.length !== cartItems?.items.length
-                      )
-                    }
-                  />
+            <Content>
+              {!cartItems || cartItems?.items.length === 0 ? (
+                <div className="empty">장바구니에 담긴 상품이 없습니다.</div>
+              ) : (
+                <div className="items">
+                  <div>
+                    <Checkbox
+                      label="모두선택"
+                      isChecked={checkItems?.length === cartItems?.items.length}
+                      handleCheck={() =>
+                        handleAllCheck(
+                          checkItems?.length !== cartItems?.items.length
+                        )
+                      }
+                    />
+                  </div>
+                  {cartItems?.items.map((cart) => (
+                    <ItemInfoBox
+                      key={cart.id}
+                      {...(cart as ICart)}
+                      isChecked={checkItems?.find((i) => i.id === cart.id)}
+                      handleCheck={() =>
+                        handleSingleCheck(
+                          !checkItems?.find((i) => i.id === cart.id),
+                          cart
+                        )
+                      }
+                      refetch={refetch}
+                      setCartItems={setCartItems}
+                      checkboxVisible
+                    />
+                  ))}
                 </div>
-                {cartItems?.items.map((cart) => (
-                  <ItemInfoBox
-                    key={cart.id}
-                    {...(cart as ICart)}
-                    isChecked={checkItems?.find((i) => i.id === cart.id)}
-                    handleCheck={() =>
-                      handleSingleCheck(
-                        !checkItems?.find((i) => i.id === cart.id),
-                        cart
-                      )
-                    }
-                    refetch={refetch}
-                    setCartItems={setCartItems}
-                    checkboxVisible
-                  />
-                ))}
-              </div>
-            )}
-            <CartOrderBox {...{ info }} />
-          </Content>
-        </div>
-        <Footer />
-      </Wrapper>
-    )
+              )}
+              <CartOrderBox {...{ info }} />
+            </Content>
+          </div>
+          <Footer />
+        </Wrapper>
+      )}
+    </>
   );
 };
 

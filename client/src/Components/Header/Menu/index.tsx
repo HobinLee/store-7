@@ -5,13 +5,14 @@ import { Link } from "@/Router";
 import { categories } from "@/shared/dummy";
 import { hideScroll, media } from "@/styles/theme";
 import { CategoryType } from "@/Pages/Category";
-const Menu = ({ category }: { category?: string }) => {
-  const [categoryId, setCurrentCategory] = useState<number>(
-    category ? parseInt(category) : -1
-  );
-  const [isSubCategoryOpened, setIsSubCategoryOpened] = useState(
-    category ? parseInt(category) : false
-  );
+import { useRecoilState, useRecoilValue } from "recoil";
+import { hoveredCategoryState, selectedCategoryState } from "@/store/category";
+
+const Menu = () => {
+  const selected = useRecoilValue(selectedCategoryState);
+  const [hovered, setHoveredCategoryState] =
+    useRecoilState(hoveredCategoryState);
+
   const [padding, setPadding] = useState(0);
 
   const checkChangeCategory = ({
@@ -42,29 +43,36 @@ const Menu = ({ category }: { category?: string }) => {
   };
 
   const handleMouseMove = (e) => {
-    setIsSubCategoryOpened(true);
     if (!checkChangeCategory(e)) return;
 
     const $li: HTMLElement = e.target.closest("LI");
     const currentIndex = getSiblingIndex($li);
     const id = categories[currentIndex]?.id ?? 0;
 
-    if (id !== categoryId) {
-      setCurrentCategory(id);
+    if (id !== hovered.categoryId) {
+      setHoveredCategoryState({
+        ...hovered,
+        categoryId: id,
+      });
       getPadding($li);
     }
   };
 
   const handleMouseLeave = () => {
-    setIsSubCategoryOpened(false);
+    setHoveredCategoryState({
+      ...hovered,
+      categoryId: -1,
+    });
   };
+
+  const highlighted = hovered.categoryId < 0 ? selected : hovered;
 
   const generateMainCategory = (
     <MainCategoryWrapper onMouseMove={handleMouseMove}>
       {categories.map((category: CategoryType) => (
         <li
           key={category.id}
-          className={categoryId === category.id ? "selected" : ""}
+          className={highlighted.categoryId === category.id ? "selected" : ""}
         >
           <Link to={`/category?category=${category.id}`}>{category.name}</Link>
         </li>
@@ -85,24 +93,30 @@ const Menu = ({ category }: { category?: string }) => {
   };
 
   const generateSubCategory = () => {
-    if (categoryId < 1) return;
+    if (highlighted.categoryId < 1) return;
     return (
       <SubCategoryWrapper
         padding={padding}
-        width={getWidth(categories[categoryId / 100]?.subCategories)}
+        width={getWidth(
+          categories[highlighted.categoryId / 100]?.subCategories
+        )}
       >
-        {isSubCategoryOpened &&
-          categories[categoryId / 100]?.subCategories?.map(
-            (subCategory: CategoryType) => (
-              <li key={subCategory.id}>
-                <Link
-                  to={`/category?category=${categoryId}&subCategory=${subCategory.id}`}
-                >
-                  {subCategory.name}
-                </Link>
-              </li>
-            )
-          )}
+        {categories[highlighted.categoryId / 100]?.subCategories?.map(
+          (subCategory: CategoryType) => (
+            <li
+              key={subCategory.id}
+              className={
+                selected.subCategoryId === subCategory.id ? "selected" : ""
+              }
+            >
+              <Link
+                to={`/category?category=${highlighted.categoryId}&subCategory=${subCategory.id}`}
+              >
+                {subCategory.name}
+              </Link>
+            </li>
+          )
+        )}
       </SubCategoryWrapper>
     );
   };
@@ -202,7 +216,11 @@ const setPadding = (padding: number, width: number): string => {
   }
 };
 
-const SubCategoryWrapper = styled.ul<{ padding: number; width: number }>`
+const SubCategoryWrapper = styled.ul<{
+  padding: number;
+  width: number;
+  //isMouseOut: boolean;
+}>`
   box-sizing: border-box;
   display: flex;
   justify-content: center;
@@ -226,6 +244,27 @@ const SubCategoryWrapper = styled.ul<{ padding: number; width: number }>`
   li {
     padding: 0rem 3rem;
     flex-shrink: 0;
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+
+  .selected {
+    font-weight: bolder;
+    a {
+      color: ${({ theme }) => theme.color.primary1};
+    }
+  }
+
+  ${media.tablet} {
+    display: flex;
+    border-top: 1px solid ${({ theme }) => theme.color.light_grey1};
+    padding: 0;
+    justify-content: flex-start;
+
+    li {
+      padding: 0rem 1rem;
+    }
   }
 `;
 

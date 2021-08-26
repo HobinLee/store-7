@@ -1,11 +1,11 @@
 import styled, { css } from "styled-components";
 import LoadingSpinner from "@/assets/spinner.png";
-import { gap, hideScroll, media } from "@/styles/theme";
+import { gap, media } from "@/styles/theme";
 
 export const PageWrapper = styled.div`
   position: relative;
   width: 100%;
-  padding-top: 20rem;
+  padding-top: 10rem;
   padding-bottom: 30rem;
   min-height: 100vh;
   box-sizing: border-box;

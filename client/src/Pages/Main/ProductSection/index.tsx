@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { SectionType } from "..";
-import { useEffect, useState } from "react";
 import ProductList from "@/Components/ProductList";
 import { useProducts } from "@/api/products";
 
