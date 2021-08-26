@@ -292,7 +292,7 @@ const Tab = styled.div`
   position: -webkit-sticky;
   position: sticky;
   ${gap("2rem")}
-  top: 14.6rem;
+  top: 13.9rem;
   background: rgba(255, 255, 255, 0.9);
   z-index: 1;
   ${media.mobile} {

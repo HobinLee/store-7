@@ -1,7 +1,6 @@
 import { useKeywords } from "@/api/search";
 import useDebounce from "@/hooks/useDebounce";
-import React, { useState } from "react";
-import { useEffect } from "react";
+import { hideScroll } from "@/styles/theme";
 import styled from "styled-components";
 
 const AutoList = ({ keyword, handleSearch }) => {
@@ -32,6 +31,7 @@ const AutoListWrapper = styled.ul`
   flex-direction: column;
   max-height: 16rem;
   overflow-y: scroll;
+  ${hideScroll}
   li {
     color: ${({ theme }) => theme.color.grey1};
     padding: 1rem;
