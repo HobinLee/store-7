@@ -1,11 +1,14 @@
 import styled, { css } from "styled-components";
 import { Link } from "@/Router";
 import {
-  DeleveryIcon,
-  WishIcon,
-  QuestionIcon,
-  ReviewIcon,
-  UserIcon,
+  Delivery,
+  Wish,
+  Question,
+  Review,
+  DeliveryActive,
+  WishActive,
+  QuestionActive,
+  ReviewActive,
 } from "@/assets";
 
 export interface NavProps {
@@ -16,7 +19,7 @@ export interface NavProps {
 const Nav = ({ setCurrent, current }: NavProps) => {
   return (
     <NavWrpper data-testid="test__nav">
-      {navItems.map(({ Icon, title, path }, i) => {
+      {navItems.map(({ Icon, Gif, title, path }, i) => {
         const isSelected = path === current;
         return (
           <li
@@ -27,7 +30,7 @@ const Nav = ({ setCurrent, current }: NavProps) => {
             className="nav"
           >
             <Link to={`/mypage/${path}`}>
-              <NavItem {...{ Icon, title, isSelected }} />
+              <NavItem {...{ Icon, Gif, title, isSelected }} />
             </Link>
           </li>
         );
@@ -53,49 +56,46 @@ const NavWrpper = styled.ul`
 const ICON_SIZE = 60;
 const navItems = [
   {
-    Icon: (props) => (
-      <DeleveryIcon width={ICON_SIZE} height={ICON_SIZE} {...props} />
-    ),
+    Icon: <img src={Delivery} width={ICON_SIZE} height={ICON_SIZE} />,
+    Gif: <img src={DeliveryActive} width={ICON_SIZE} height={ICON_SIZE} />,
     title: "주문목록 / 배송조회",
     path: "order",
   },
   {
-    Icon: (props) => (
-      <WishIcon width={ICON_SIZE} height={ICON_SIZE} {...props} />
-    ),
+    Icon: <img src={Wish} width={ICON_SIZE} height={ICON_SIZE} />,
+    Gif: <img src={WishActive} width={ICON_SIZE} height={ICON_SIZE} />,
+
     title: "내 찜목록",
     path: "wish",
   },
 
   {
-    Icon: (props) => (
-      <QuestionIcon width={ICON_SIZE} height={ICON_SIZE} {...props} />
-    ),
+    Icon: <img src={Question} width={ICON_SIZE} height={ICON_SIZE} />,
+    Gif: <img src={QuestionActive} width={ICON_SIZE} height={ICON_SIZE} />,
+
     title: "나의 상품문의",
     path: "question",
   },
   {
-    Icon: (props) => (
-      <ReviewIcon width={ICON_SIZE} height={ICON_SIZE} {...props} />
-    ),
+    Icon: <img src={Review} width={ICON_SIZE} height={ICON_SIZE} />,
+    Gif: <img src={ReviewActive} width={ICON_SIZE} height={ICON_SIZE} />,
+
     title: "나의 상품후기",
     path: "review",
   },
-  {
-    Icon: (props) => (
-      <UserIcon width={ICON_SIZE} height={ICON_SIZE} {...props} />
-    ),
-    title: "회원정보 변경",
-    path: "userinfo",
-  },
+  // {
+  //   Icon: (props) => (
+  //     <UserIcon width={ICON_SIZE} height={ICON_SIZE} {...props} />
+  //   ),
+  //   title: "회원정보 변경",
+  //   path: "userinfo",
+  // },
 ];
 
-const NavItem = ({ Icon, title, isSelected }) => {
+const NavItem = ({ Icon, Gif, title, isSelected }) => {
   return (
     <NavItemWrapper isSelected={isSelected}>
-      <div>
-        <Icon fill={isSelected ? "#2ac1bc" : "black"} />
-      </div>
+      <div>{isSelected ? Gif : Icon}</div>
       <h3>{title}</h3>
     </NavItemWrapper>
   );
