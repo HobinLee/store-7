@@ -9,6 +9,9 @@ import { useProducts } from "@/api/products";
 import ProductList from "@/Components/ProductList";
 import { media } from "@/styles/theme";
 import { useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { useEffect } from "react";
+import { selectedCategoryState } from "@/store/category";
 
 export interface CategoryType {
   id: number;
@@ -31,24 +34,41 @@ export type CategoryParamType = {
 
 const CategoryPage = ({ params }) => {
   const [filter, setFilter] = useState(filters[0]);
+  const [selected, setSelectedCategoryState] = useRecoilState(
+    selectedCategoryState
+  );
+
+  useEffect(() => {
+    const newState = {};
+    setSelectedCategoryState({
+      categoryId: parseInt(params.category) ?? 0,
+      subCategoryId: params.subCategory ? parseInt(params.subCategory) : -1,
+    });
+  }, [params]);
 
   return (
-    <Wrapper>
-      <BGWrapper></BGWrapper>
-      <Header category={params.category} />
-      <CategoryBanner params={params} />
-      <div className="page-contents">
-        <div className="products-wrapper">
-          <Filter setFilter={setFilter} currentFilter={filter} />
-          <ProductList
-            useQuery={useProducts}
-            params={{ ...params, order: filter.value }}
-            pagination={true}
-          />
+    <>
+      <Header />
+      <Wrapper>
+        <BGWrapper></BGWrapper>
+        <CategoryBanner params={params} />
+        <div className="page-contents">
+          <div className="products-wrapper">
+            <Filter
+              categoryId={selected.categoryId}
+              setFilter={setFilter}
+              currentFilter={filter}
+            />
+            <ProductList
+              useQuery={useProducts}
+              params={{ ...params, order: filter.value }}
+              pagination={true}
+            />
+          </div>
         </div>
-      </div>
-      <Footer />
-    </Wrapper>
+        <Footer />
+      </Wrapper>
+    </>
   );
 };
 
@@ -67,9 +87,7 @@ const Wrapper = styled(PageWrapper)`
   .products-wrapper {
     max-width: 110rem;
   }
-  padding-top: 10rem;
   ${media.mobile} {
-    padding-top: 10rem;
     .page-contents {
       padding: 0 1rem;
     }
@@ -85,7 +103,7 @@ const BGWrapper = styled.div`
   height: 30rem;
   top: 0;
   left: 0;
-  margin-top: 10rem;
+  margin-top: 13rem;
   position: fixed;
   overflow: hidden;
   ${({ theme }) => theme.flexCenter}
@@ -96,12 +114,6 @@ const BGWrapper = styled.div`
     height: auto;
     object-fit: cover;
   }
-  ${media.custom(1200)} {
-    img {
-      height: 30rem;
-      width: auto;
-    }
-  }
   ${media.custom(920)} {
     height: 24rem;
     img {
@@ -110,8 +122,8 @@ const BGWrapper = styled.div`
     }
   }
   ${media.mobile} {
-    margin-top: 10.6rem;
-    height: 16.4rem;
+    margin-top: 13rem;
+    height: 17rem;
     img {
       width: 100vw;
       height: auto;

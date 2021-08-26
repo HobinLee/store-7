@@ -1,8 +1,12 @@
+import { categories } from "@/shared/dummy";
+import { selectedCategoryState } from "@/store/category";
 import { media } from "@/styles/theme";
 import { useState } from "react";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 export interface FilterProps {
+  categoryId?: number;
   currentFilter?: FilterType;
   setFilter: (filter: FilterType) => void;
 }
@@ -36,6 +40,7 @@ export const filters: FilterType[] = [
 ];
 
 const Filter = ({ currentFilter, setFilter }: FilterProps) => {
+  const category = useRecoilValue(selectedCategoryState);
   const generateButtons = filters.map((filter: FilterType) => (
     <button
       className={`buttons__btn ${
@@ -49,20 +54,25 @@ const Filter = ({ currentFilter, setFilter }: FilterProps) => {
     </button>
   ));
   return (
-    <FilterWrapper>
+    <FilterWrapper
+      hasSubCategories={
+        category.categoryId < 0
+          ? false
+          : !!categories[category.categoryId / 100]?.subCategories.length
+      }
+    >
       <div className="buttons">{generateButtons}</div>
     </FilterWrapper>
   );
 };
 
-const FilterWrapper = styled.div`
+const FilterWrapper = styled.div<{ hasSubCategories: boolean }>`
   ${({ theme }) => theme.flexCenter}
   ${({ theme }) => theme.font.medium}
   justify-content: flex-end;
   padding: 2rem 0;
   position: -webkit-sticky;
   position: sticky;
-  top: 14.6rem;
   width: 100%;
   background: white;
   z-index: 20;
@@ -81,8 +91,11 @@ const FilterWrapper = styled.div`
   & > div:nth-child(1) {
     background: ${({ theme }) => theme.color.white};
   }
+
+  top: ${({ hasSubCategories }) => (hasSubCategories ? 17.5 : 13.9)}rem;
+
   ${media.mobile} {
-    top: 10.6rem;
+    top: ${({ hasSubCategories }) => (hasSubCategories ? 9.5 : 6)}rem;
   }
 `;
 

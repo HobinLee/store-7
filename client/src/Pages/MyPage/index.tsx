@@ -17,15 +17,17 @@ const MyPage = ({ location }) => {
   }, [location]);
 
   return (
-    <MyPageWrapper>
+    <>
       <Header />
-      <Contents>
-        <ContentHeader setCurrent={setCurrent} current={current} />
-        <ContentBody>
-          <ContentArea current={current} />
-        </ContentBody>
-      </Contents>
-    </MyPageWrapper>
+      <MyPageWrapper>
+        <Contents>
+          <ContentHeader setCurrent={setCurrent} current={current} />
+          <ContentBody>
+            <ContentArea current={current} />
+          </ContentBody>
+        </Contents>
+      </MyPageWrapper>
+    </>
   );
 };
 

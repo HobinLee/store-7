@@ -3,11 +3,9 @@ import styled from "styled-components";
 import { useSetRecoilState } from "recoil";
 import { loginState } from "@/store/state";
 import { signIn } from "@/api/auth";
-import { Link } from "@/Router";
-import Button from "@/Components/Button";
 import APIButton from "@/Components/APIButton";
 import OAuthLoginSection from "../OAuthLoginSection";
-import { gap } from "@/styles/theme";
+import { gap, media } from "@/styles/theme";
 import Input from "@/Components/Input";
 import properties from "@/config/properties";
 
@@ -34,21 +32,23 @@ const LoginSection = () => {
     <Form onSubmit={() => handleSignin(true)}>
       <h3>회원 로그인</h3>
       <Input
-        placeholder="아이디 입력"
+        className="login-input"
+        placeholder="이메일 입력"
         defaultValue={email.value}
         onChange={email.onChange}
       />
       <Input
+        className="login-input"
         placeholder="비밀번호 입력"
         defaultValue={password.value}
         type="password"
         onChange={password.onChange}
       />
       <APIButton
+        className="login-form__login"
         api={() => handleSignin(false)}
         primary
         disabled={!checkSignupable()}
-        className={"login-form__login"}
       >
         로그인
       </APIButton>
@@ -56,11 +56,6 @@ const LoginSection = () => {
         시연용 아이디로 로그인
       </APIButton>
       <OAuthLoginSection />
-      <div className="login-form__footer">
-        <Link to="/signup">회원가입</Link>
-        <Link to="/findid">아이디 찾기</Link>
-        <Link to="/findpw">비밀번호 찾기</Link>
-      </div>
     </Form>
   );
 };
@@ -70,6 +65,7 @@ const Form = styled.form`
   height: auto;
   display: flex;
   flex-direction: column;
+  padding-bottom: 6rem;
   ${gap("2rem", "column")}
 
   h3 {
@@ -86,6 +82,13 @@ const Form = styled.form`
     color: ${({ theme }) => theme.color.primary3};
     &:disabled {
       background-color: ${({ theme }) => theme.color.light_grey1};
+    }
+  }
+  ${media.mobile} {
+    .login-input {
+      height: 5rem;
+      padding: 0 2rem;
+      border: 1px solid ${({ theme }) => theme.color.light_grey1};
     }
   }
 `;

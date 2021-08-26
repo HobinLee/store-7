@@ -5,12 +5,12 @@ import { gap, media } from "@/styles/theme";
 export const PageWrapper = styled.div`
   position: relative;
   width: 100%;
-  padding-top: 20rem;
+  padding-top: 10rem;
   padding-bottom: 30rem;
   min-height: 100vh;
   box-sizing: border-box;
   ${media.mobile} {
-    padding-top: 12rem;
+    padding-top: 0;
     max-width: 100vw;
   }
 `;

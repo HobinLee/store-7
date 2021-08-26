@@ -21,6 +21,8 @@ import { useEffect } from "react";
 import useDidMountEffect from "@/hooks/useDidMountEffect";
 import { deleteWishProduct, postWishProduct } from "@/api/my";
 import useDebounce from "@/hooks/useDebounce";
+import { selectedCategoryState } from "@/store/category";
+import { categories } from "@/shared/dummy";
 
 const topHeight = innerWidth > 500 ? 700 : 400;
 
@@ -35,6 +37,7 @@ export const tabs = [
 ];
 
 const DetailPage = () => {
+  const category = useRecoilValue(selectedCategoryState);
   const productId = location.pathname.split("detail/")[1];
   const {
     status,
@@ -89,84 +92,98 @@ const DetailPage = () => {
   }, [debounceIsMyWish]);
 
   return (
-    status !== "loading" && (
-      <Wrapper>
-        <Header />
-
-        <Contents>
-          <InfoBox>
-            <div
-              data-testid="image-box"
-              onClick={() => setIsZoomOpened(true)}
-              onMouseLeave={() => setIsZoomOpened(false)}
-              className="img-box"
-            >
-              <img
-                id="image"
-                src={properties.imgURL + product.images[0]}
-                className="thumbnail"
-              />
-              {isZoomOpened && (
-                <>
-                  <ZoomLens data-testid="zoom-lens" id="zoom-lens" />
-                  <ZoomModal />
-                </>
-              )}
-            </div>
-            <Info>
-              <div className="title">{product.name}</div>
-
-              <div className="list">
-                <div className="list__item">
-                  <div className="list__item--title">판매가격</div>
-                  <div className="list__item--content price">
-                    {convertToKRW(product.price)}
-                  </div>
-                </div>
-                <div className="list__item">
-                  <div className="list__item--title">배송정보</div>
-                  <div className="list__item--content">
-                    {convertToKRW(product.deliveryCost)}
-                  </div>
-                </div>
-              </div>
-
-              <OptionBox
-                key="option-box"
-                {...{ numValue, handleClickNumVal, product, refetch, isMyWish }}
-              />
-            </Info>
-          </InfoBox>
-        </Contents>
-        <Scroll selectedTab={selectedTab}>
-          <Tab>
-            {tabs.map((tab) => (
-              <TabA
-                key={tab.title}
-                onClick={() => handleSelectTab(tab.id)}
-                isSelected={selectedTab === tab.id}
+    <>
+      <Header />
+      {status !== "loading" && (
+        <Wrapper>
+          <Contents>
+            <InfoBox>
+              <div
+                data-testid="image-box"
+                onClick={() => setIsZoomOpened(true)}
+                onMouseLeave={() => setIsZoomOpened(false)}
+                className="img-box"
               >
-                {tab.title}
-              </TabA>
-            ))}
-          </Tab>
-
-          <div className="bottom-wrapper">
-            <div>
-              <TabPage>
-                <RenderTabComponent />
-              </TabPage>
-              <div className="option-box">
-                <OptionBox
-                  {...{ numValue, handleClickNumVal, product, isMyWish }}
+                <img
+                  id="image"
+                  src={properties.imgURL + product.images[0]}
+                  className="thumbnail"
                 />
+                {isZoomOpened && (
+                  <>
+                    <ZoomLens data-testid="zoom-lens" id="zoom-lens" />
+                    <ZoomModal />
+                  </>
+                )}
+              </div>
+              <Info>
+                <div className="title">{product.name}</div>
+
+                <div className="list">
+                  <div className="list__item">
+                    <div className="list__item--title">판매가격</div>
+                    <div className="list__item--content price">
+                      {convertToKRW(product.price)}
+                    </div>
+                  </div>
+                  <div className="list__item">
+                    <div className="list__item--title">배송정보</div>
+                    <div className="list__item--content">
+                      {convertToKRW(product.deliveryCost)}
+                    </div>
+                  </div>
+                </div>
+
+                <OptionBox
+                  key="option-box"
+                  {...{
+                    numValue,
+                    handleClickNumVal,
+                    product,
+                    refetch,
+                    isMyWish,
+                  }}
+                />
+              </Info>
+            </InfoBox>
+          </Contents>
+          <Scroll selectedTab={selectedTab}>
+            <Tab
+              hasSubCategories={
+                category.categoryId < 0
+                  ? false
+                  : !!categories[category.categoryId / 100]?.subCategories
+                      .length
+              }
+            >
+              {tabs.map((tab) => (
+                <TabA
+                  key={tab.title}
+                  onClick={() => handleSelectTab(tab.id)}
+                  isSelected={selectedTab === tab.id}
+                >
+                  {tab.title}
+                </TabA>
+              ))}
+            </Tab>
+
+            <div className="bottom-wrapper">
+              <div>
+                <TabPage>
+                  <RenderTabComponent />
+                </TabPage>
+                <div className="option-box">
+                  <OptionBox
+                    {...{ numValue, handleClickNumVal, product, isMyWish }}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        </Scroll>
-        <Footer />
-      </Wrapper>
-    )
+          </Scroll>
+          <Footer />
+        </Wrapper>
+      )}
+    </>
   );
 };
 
@@ -287,16 +304,17 @@ const Scroll = styled.div<{ selectedTab: string }>`
   }
 `;
 
-const Tab = styled.div`
+const Tab = styled.div<{ hasSubCategories: boolean }>`
   ${({ theme }) => theme.flexCenter}
   position: -webkit-sticky;
   position: sticky;
   ${gap("2rem")}
-  top: 14.6rem;
   background: rgba(255, 255, 255, 0.9);
   z-index: 1;
+  top: ${({ hasSubCategories }) => (hasSubCategories ? 17.2 : 13.6)}rem;
+
   ${media.mobile} {
-    top: 10.6rem;
+    top: ${({ hasSubCategories }) => (hasSubCategories ? 9.2 : 5.7)}rem;
   }
 `;
 

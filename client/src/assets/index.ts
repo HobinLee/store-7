@@ -3,6 +3,7 @@ export { default as Banner2 } from "./banner2.gif";
 export { default as Banner3 } from "./banner3.gif";
 export { default as Logo } from "./logo.png";
 export { default as Close } from "./close.svg";
+export { default as Delete } from "./delete.svg";
 export { default as Back } from "./back.svg";
 export { default as Arrow } from "./arrow.svg";
 export { default as Check } from "./check.svg";
@@ -10,7 +11,6 @@ export { default as WishIcon } from "./wish.svg";
 export { default as Triangle } from "./triangle.svg";
 export { default as SecretpenImg } from "./secretpen.png";
 export { default as TrayImg } from "./tray.png";
-export { default as Cart } from "./cart.svg";
 export { default as Search } from "./search.svg";
 export { default as Loading } from "./loading.svg";
 export { default as AddUser } from "./addUser.svg";
@@ -24,6 +24,12 @@ export { default as King } from "./king.svg";
 export { default as ProductIcon } from "./product.svg";
 export { default as ReadyIcon } from "./ready.svg";
 export { default as GoodIcon } from "./good.svg";
+
+export { default as Cart } from "./cart.svg";
+export { default as Logout } from "./logout.svg";
+export { default as Login } from "./login.svg";
+export { default as Home } from "./home.svg";
+export { default as MyPage } from "./mypage.svg";
 
 // caregory banner
 export { default as CategoryBanner0 } from "./banners/0.gif";

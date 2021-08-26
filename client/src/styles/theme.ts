@@ -118,3 +118,11 @@ export const media = {
   tablet: customMediaQuery(1100),
   mobile: customMediaQuery(500),
 };
+
+export const hideScroll = css`
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+  }
+`;

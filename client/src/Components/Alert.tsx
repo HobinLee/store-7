@@ -1,4 +1,5 @@
 import { alertState } from "@/store/state";
+import { media } from "@/styles/theme";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
@@ -68,6 +69,9 @@ const AlertWrapper = styled.div`
   width: 100%;
   bottom: 5vh;
   left: 0;
+  ${media.mobile} {
+    bottom: 9rem;
+  }
 
   .alert__message {
     width: fit-content;

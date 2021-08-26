@@ -1,16 +1,22 @@
-import { useState } from "react";
 import styled from "styled-components";
 import { getSiblingIndex } from "@/utils/node";
 import { Link } from "@/Router";
 import { categories } from "@/shared/dummy";
-import { media } from "@/styles/theme";
+import { hideScroll, media } from "@/styles/theme";
 import { CategoryType } from "@/Pages/Category";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  categoryPaddingState,
+  hoveredCategoryState,
+  selectedCategoryState,
+} from "@/store/category";
 
-const Menu = ({ category }: { category?: string }) => {
-  const [categoryId, setCurrentCategory] = useState<number>(
-    category ? parseInt(category) : 0
-  );
-  const [padding, setPadding] = useState(0);
+const Menu = () => {
+  const selected = useRecoilValue(selectedCategoryState);
+  const [hovered, setHoveredCategoryState] =
+    useRecoilState(hoveredCategoryState);
+
+  const [padding, setPadding] = useRecoilState(categoryPaddingState);
 
   const checkChangeCategory = ({
     target,
@@ -39,6 +45,13 @@ const Menu = ({ category }: { category?: string }) => {
     setPadding(barWidth - 2 * left - width);
   };
 
+  const setHoveredCategoryId = (id) => {
+    setHoveredCategoryState({
+      ...hovered,
+      categoryId: id,
+    });
+  };
+
   const handleMouseMove = (e) => {
     if (!checkChangeCategory(e)) return;
 
@@ -46,18 +59,24 @@ const Menu = ({ category }: { category?: string }) => {
     const currentIndex = getSiblingIndex($li);
     const id = categories[currentIndex]?.id ?? 0;
 
-    if (id !== categoryId) {
-      setCurrentCategory(id);
+    if (id !== hovered.categoryId) {
+      setHoveredCategoryId(id);
       getPadding($li);
     }
   };
+
+  const handleMouseLeave = () => {
+    setHoveredCategoryId(-1);
+  };
+
+  const highlighted = hovered.categoryId < 0 ? selected : hovered;
 
   const generateMainCategory = (
     <MainCategoryWrapper onMouseMove={handleMouseMove}>
       {categories.map((category: CategoryType) => (
         <li
           key={category.id}
-          className={categoryId === category.id ? "selected" : ""}
+          className={highlighted.categoryId === category.id ? "selected" : ""}
         >
           <Link to={`/category?category=${category.id}`}>{category.name}</Link>
         </li>
@@ -77,16 +96,25 @@ const Menu = ({ category }: { category?: string }) => {
     );
   };
 
-  const generateSubCategory = (
+  const checkHideSubCategory =
+    !categories[highlighted.categoryId / 100]?.subCategories.length &&
+    !categories[selected.categoryId / 100]?.subCategories.length;
+
+  const generateSubCategory = () => (
     <SubCategoryWrapper
       padding={padding}
-      width={getWidth(categories[categoryId / 100]?.subCategories)}
+      width={getWidth(categories[highlighted.categoryId / 100]?.subCategories)}
     >
-      {categories[categoryId / 100]?.subCategories?.map(
+      {categories[highlighted.categoryId / 100]?.subCategories?.map(
         (subCategory: CategoryType) => (
-          <li key={subCategory.id}>
+          <li
+            key={subCategory.id}
+            className={
+              selected.subCategoryId === subCategory.id ? "selected" : ""
+            }
+          >
             <Link
-              to={`/category?category=${categoryId}&subCategory=${subCategory.id}`}
+              to={`/category?category=${highlighted.categoryId}&subCategory=${subCategory.id}`}
             >
               {subCategory.name}
             </Link>
@@ -97,9 +125,9 @@ const Menu = ({ category }: { category?: string }) => {
   );
 
   return (
-    <Wrapper>
+    <Wrapper id="category" onMouseLeave={handleMouseLeave}>
       {generateMainCategory}
-      {generateSubCategory}
+      {checkHideSubCategory && generateSubCategory}
     </Wrapper>
   );
 };
@@ -115,17 +143,17 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   ${({ theme }) => theme.font.medium}
+  ${hideScroll}
 
   ul {
     width: 100%;
+    box-sizing: border-box;
   }
 
   li {
+    ${({ theme }) => theme.flexCenter}
     cursor: pointer;
     text-align: center;
-    &:hover {
-      color: ${({ theme }) => theme.color.primary3};
-    }
     a {
       display: block;
       padding: 1rem;
@@ -137,18 +165,19 @@ const Wrapper = styled.div`
 `;
 
 const MainCategoryWrapper = styled.ul`
-  padding: 0.5rem 0;
   width: auto;
   justify-content: space-between;
   display: flex;
   flex-direction: row;
   overflow-x: scroll;
-  color: ${({ theme }) => theme.color.grey2};
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-  &::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera*/
+  font-weight: normal;
+  color: #555;
+  height: 100%;
+  ${media.mobile} {
+    ${({ theme }) => theme.font.large};
+    font-weight: normal;
   }
+  ${hideScroll}
 
   li {
     flex-shrink: 0;
@@ -157,8 +186,13 @@ const MainCategoryWrapper = styled.ul`
   .selected {
     font-weight: bolder;
     a {
-      color: ${({ theme }) => theme.color.primary3};
+      color: ${({ theme }) => theme.color.primary1};
     }
+    border-bottom: 3px solid ${({ theme }) => theme.color.primary1};
+  }
+
+  ${media.mobile} {
+    height: 6rem;
   }
 `;
 
@@ -185,12 +219,16 @@ const setPadding = (padding: number, width: number): string => {
   }
 };
 
-const SubCategoryWrapper = styled.ul<{ padding: number; width: number }>`
+const SubCategoryWrapper = styled.ul<{
+  padding: number;
+  width: number;
+}>`
   box-sizing: border-box;
   display: flex;
   justify-content: center;
   flex-direction: row;
   z-index: 30;
+  height: 3.6rem;
 
   ${({ padding, width }) => setPadding(padding, width)}
   ${media.mobile} {
@@ -198,10 +236,8 @@ const SubCategoryWrapper = styled.ul<{ padding: number; width: number }>`
     padding: 0;
     justify-content: flex-start;
   }
-  ${({ theme }) => theme.font.small}
-  overflow-x: scroll;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  ${({ theme }) => theme.font.medium}
+  ${hideScroll}
   color: ${({ theme }) => theme.color.grey1};
 
   &::-webkit-scrollbar {
@@ -209,8 +245,29 @@ const SubCategoryWrapper = styled.ul<{ padding: number; width: number }>`
   }
 
   li {
-    padding: 1rem 3rem;
+    padding: 0rem 3rem;
     flex-shrink: 0;
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+
+  .selected {
+    font-weight: bolder;
+    a {
+      color: ${({ theme }) => theme.color.primary1};
+    }
+  }
+
+  ${media.tablet} {
+    display: flex;
+    border-top: 1px solid ${({ theme }) => theme.color.light_grey1};
+    padding: 0;
+    justify-content: flex-start;
+
+    li {
+      padding: 0rem 1rem;
+    }
   }
 `;
 
