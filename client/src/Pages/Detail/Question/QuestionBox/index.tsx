@@ -5,13 +5,7 @@ import { YYYY_M_D_H_m } from "@/utils/util";
 import { Link } from "@/Router";
 import { deleteQuestion } from "@/api/questions";
 import { QueryObserverResult } from "react-query";
-
-interface QuestionForm {
-  id: number;
-  question: string;
-  type: string;
-  isSecret: false;
-}
+import { QuestionForm } from "@/Pages/MyPage/ContentArea/contents/Question";
 
 const QuestionBox = ({
   question,
@@ -73,8 +67,11 @@ const QuestionBox = ({
 
 const EditAndDeleteButtons = ({ handleClickEditButton, question, refetch }) => {
   const handleClickDeleteButton = async () => {
-    const result = await deleteQuestion({ id: question?.id });
-    refetch();
+    const confirm = window.confirm("정말 삭제하겠습니까?");
+    if (confirm) {
+      const result = await deleteQuestion({ id: question?.id });
+      refetch();
+    }
   };
   const { id, question: q, type, isSecret } = question;
 
