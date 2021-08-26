@@ -37,7 +37,9 @@ const Navigator = () => {
       <Link to="/">
         <img width="170" style={{ marginTop: "1rem" }} src={HeaderLogo} />
       </Link>
-      <SearchBar />
+      <div className="search-area">
+        <SearchBar />
+      </div>
       <Nav>
         {isLoggedin ? (
           <>
@@ -92,6 +94,12 @@ const Wrapper = styled.div`
     padding: 0;
     height: 7rem;
     justify-content: center;
+  }
+  .search-area {
+    width: 40vw;
+    ${media.custom(800)} {
+      display: none;
+    }
   }
 `;
 
