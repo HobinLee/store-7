@@ -18,7 +18,7 @@ const reviewBoxProps: ReviewType = {
 
 describe("<ReviewBox />", () => {
   it("should render component in document", () => {
-    const { container } = render(<ReviewBox {...reviewBoxProps} />);
+    const { container } = render(<ReviewBox {...{ review: reviewBoxProps }} />);
     expect(container).toBeInTheDocument();
 
     expect(screen.queryByText(AUTHOR)).toBeInTheDocument();
