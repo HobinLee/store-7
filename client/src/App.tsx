@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import MainPage from "@/Pages/Main";
 import LoginPage from "@/Pages/Login";
-import { Router, Route, PageComponentType, RouteSetType } from "./Router";
+import { Router, Route, RouteSetType } from "./Router";
 import CategoryPage from "./Pages/Category";
 import DetailPage from "./Pages/Detail";
 import CartPage from "./Pages/Cart";
@@ -20,9 +20,11 @@ import Alert from "./Components/Alert";
 import { verifyToken } from "./api/auth";
 import SearchPage from "./Pages/Search";
 import AdminPage from "./Pages/Admin";
+import WelcomePage from "./Pages/Welcome";
 
 const routes: RouteSetType[] = [
   ["/", MainPage, true],
+  ["/welcome", WelcomePage, true],
   ["/login", LoginPage, true],
   ["/signup", SignupPage],
   ["/category", CategoryPage],

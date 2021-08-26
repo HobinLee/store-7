@@ -46,3 +46,8 @@ export { default as Delivery } from "./mypage/delivery.png";
 export { default as Wish } from "./mypage/wish.png";
 export { default as Question } from "./mypage/question.png";
 export { default as Review } from "./mypage/review.png";
+
+// 7팀 화이팅
+export { default as Welcome } from "./welcome/welcome.gif";
+export { default as BackOffice } from "./welcome/backoffice.gif";
+export { default as HomePage } from "./welcome/homepage.gif";
