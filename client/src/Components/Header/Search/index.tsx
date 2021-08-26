@@ -61,6 +61,7 @@ const Search = () => {
     searchValue.setValue(keyword);
 
     setNewSearchList(makeNewSearchedList(keyword));
+
     moveTo(`/search?category=${category.id}&keyword=${keyword}`);
   };
 

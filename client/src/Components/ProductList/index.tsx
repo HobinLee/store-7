@@ -22,9 +22,12 @@ const ProductList = ({
   params: originParams,
   pagination,
 }: ProductListProps) => {
+  const [isEnd, setIsEnd] = useState(!pagination);
+
   const [params, setParams] = useState(originParams);
+
   const nextPage = () => {
-    if (status === "success") {
+    if (status === "success" && !isEnd) {
       const newParams = {
         ...params,
         page: (params.page ?? 1) + 1,
@@ -32,19 +35,29 @@ const ProductList = ({
       setParams(newParams);
     }
   };
+
   const { ref } = useLazyLoad(nextPage);
   const { data: newProducts, status } = useQuery(params);
   const [products, setProducts] = useState([]);
-  const [isEnd, setIsEnd] = useState(!pagination);
 
   useEffect(() => {
-    if (newProducts?.length < PRODUCT_PER_PAGE) {
-      setIsEnd(true);
-    }
     if (status === "success") {
       setProducts([...products, ...newProducts]);
+
+      if (newProducts?.length < PRODUCT_PER_PAGE) {
+        setIsEnd(true);
+      }
+    }
+    if (status === "error") {
+      setIsEnd(true);
     }
   }, [newProducts]);
+
+  useEffect(() => {
+    setParams(originParams);
+    setIsEnd(!pagination);
+    setProducts([]);
+  }, [originParams]);
 
   return (
     <ProductWrapList>
