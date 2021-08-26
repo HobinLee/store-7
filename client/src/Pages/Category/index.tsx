@@ -33,22 +33,24 @@ const CategoryPage = ({ params }) => {
   const [filter, setFilter] = useState(filters[0]);
 
   return (
-    <Wrapper>
-      <BGWrapper></BGWrapper>
+    <>
       <Header category={params.category} />
-      <CategoryBanner params={params} />
-      <div className="page-contents">
-        <div className="products-wrapper">
-          <Filter setFilter={setFilter} currentFilter={filter} />
-          <ProductList
-            useQuery={useProducts}
-            params={{ ...params, order: filter.value }}
-            pagination={true}
-          />
+      <Wrapper>
+        <BGWrapper></BGWrapper>
+        <CategoryBanner params={params} />
+        <div className="page-contents">
+          <div className="products-wrapper">
+            <Filter setFilter={setFilter} currentFilter={filter} />
+            <ProductList
+              useQuery={useProducts}
+              params={{ ...params, order: filter.value }}
+              pagination={true}
+            />
+          </div>
         </div>
-      </div>
-      <Footer />
-    </Wrapper>
+        <Footer />
+      </Wrapper>
+    </>
   );
 };
 

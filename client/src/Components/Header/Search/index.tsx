@@ -188,11 +188,11 @@ const SearchWrapper = styled.form`
     text-align: left;
 
     ${media.tablet} {
-      width: 22vw;
+      width: 20%;
     }
   }
 
-  ${media.mobile} {
+  ${media.custom(800)} {
     display: none;
   }
 `;
