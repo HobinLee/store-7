@@ -12,7 +12,7 @@ import APIButton from "@/Components/APIButton";
 import { useMyOrders, useMyReviews } from "@/api/my";
 import useValidation from "@/hooks/useValidation";
 import {
-  validateReview,
+  validateTextarea,
   validateReviewRate,
   VALIDATION_ERR_MSG,
 } from "@/utils/validations";
@@ -26,7 +26,7 @@ interface ReviewModalProps {
   productId?: number;
   review?: ReviewForm;
 }
-const MIN_REVIEW_LENGTH = 10;
+
 const ReviewModal = ({
   handleModalOpen,
   orderId,
@@ -36,7 +36,7 @@ const ReviewModal = ({
 }: ReviewModalProps) => {
   const { refetch: orderRefetch } = useMyOrders();
   const { refetch: reviewRefetch } = useMyReviews();
-  const reviewValidation = useValidation(validateReview);
+  const reviewValidation = useValidation(validateTextarea);
   const rateValidation = useValidation(validateReviewRate);
   const reviewVal = useInput(review.content);
   const [rate, setRate] = useState(review.rate);
@@ -64,7 +64,7 @@ const ReviewModal = ({
     reader.readAsDataURL(targetFile);
   };
 
-  const hanleSubmit = async (e) => {
+  const hanleSubmit = async (e: Event) => {
     e.preventDefault();
     const formData = new FormData();
     if (submitType === "post") {
@@ -84,6 +84,12 @@ const ReviewModal = ({
       handleModalOpen(false, true);
       reviewRefetch();
     }
+  };
+
+  // 글자 수
+  const [contentLen, setContentLen] = useState(0);
+  const handleContentInput = ({ target }: { target: HTMLTextAreaElement }) => {
+    setContentLen(target.value.length);
   };
 
   return (
@@ -115,14 +121,21 @@ const ReviewModal = ({
         </div>
 
         <div className="content">
-          <div className="content__label">후기 작성</div>
+          <div>
+            <div className="content__label">후기 작성</div>
+            <div>
+              <span>{contentLen}</span>/100
+            </div>
+          </div>
           <ValidationInput
             input={reviewVal}
             validation={reviewValidation}
-            placeholder="자세하고 솔직한 리뷰는 다른 고객에게 큰 도움이 됩니다. (10자 이상)"
+            placeholder="자세하고 솔직한 리뷰는 다른 고객에게 큰 도움이 됩니다."
             message={VALIDATION_ERR_MSG.INVALID_REVIEW}
             className="content__review"
             type="textarea"
+            onInput={handleContentInput}
+            maxLength={99}
           />
         </div>
         <APIButton
@@ -158,7 +171,7 @@ const Wrapper = styled.form`
         height: 100%;
       }
     }
-    &__.rating {
+    &__rating {
       transform: scale(1.8);
       width: 15rem;
       margin-left: 6rem;
@@ -170,6 +183,14 @@ const Wrapper = styled.form`
       line-height: 2rem;
       ${({ theme }) => theme.font.medium};
       ${({ theme }) => theme.borderRadius.medium};
+    }
+    & > div {
+      display: flex;
+      justify-content: space-between;
+      span {
+        color: ${({ theme }) => theme.color.primary1};
+        font-weight: 800;
+      }
     }
   }
 
