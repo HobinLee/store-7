@@ -127,6 +127,7 @@ export interface CartType {
   totalPayment: number;
   items: PartialCart[];
 }
+
 export interface ICart {
   id: number;
   name: string;
@@ -134,6 +135,7 @@ export interface ICart {
   deliveryCost: number;
   images: string[];
   productOptionId: number;
+  productOptionName?: string;
   amount: number;
   productId: number;
 }

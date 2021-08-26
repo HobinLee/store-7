@@ -7,6 +7,7 @@ export const postCart = (data: {
       id: number;
     };
     productOptionId?: number;
+    productOptionName?: string;
     amount: number;
   };
 }) => POST("/carts", data);

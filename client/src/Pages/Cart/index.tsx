@@ -133,6 +133,7 @@ const CartPage = () => {
                           cart
                         )
                       }
+                      productOptionName={cart.productOptionName}
                       refetch={refetch}
                       setCartItems={setCartItems}
                       checkboxVisible

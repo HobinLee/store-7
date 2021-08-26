@@ -29,6 +29,9 @@ export class Cart {
   @Column({ type: "int", name: "product_option_id", nullable: true })
   productOptionId: number;
 
+  @Column({ length: 32, name: "product_option_name", nullable: true })
+  productOptionName: string;
+
   @Column({ type: "int" })
   amount: number;
 

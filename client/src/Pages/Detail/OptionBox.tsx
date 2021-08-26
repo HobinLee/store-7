@@ -13,6 +13,7 @@ import { isMyWishInDetail, loginState } from "@/store/state";
 import { CartType, ProductType } from "@/shared/type";
 import { InputType } from "@/hooks/useInput";
 import { useCallback } from "react";
+import { useEffect } from "react";
 
 type OptionBoxProps = {
   numValue: InputType;
@@ -44,7 +45,11 @@ const OptionBox = ({
   }, [numValue.value]);
 
   // 상품옵션
-  const [productOptionId, setProductOptionId] = useState(null);
+  const [productOption, setProductOption] = useState<string[]>([]);
+
+  useEffect(() => {
+    console.log(productOption, typeof productOption);
+  }, [productOption]);
 
   // 장바구니
   const handlePostCart = async () => {
@@ -54,7 +59,8 @@ const OptionBox = ({
           data: {
             product: { id: productId },
             amount: parseInt(numValue.value),
-            productOptionId,
+            productOptionId: parseInt(productOption[0]),
+            productOptionName: productOption[1],
           },
         });
       } else {
@@ -75,7 +81,8 @@ const OptionBox = ({
             amount: parseInt(numValue.value),
             price: product.price * parseInt(numValue.value),
             productId: productId,
-            productOptionId,
+            productOptionId: parseInt(productOption[0]),
+            productOptionName: productOption[1],
           },
         ];
         localStorage.setItem("carts", JSON.stringify(exist));
@@ -98,7 +105,8 @@ const OptionBox = ({
             amount: numValue.value,
             price: product.price * parseInt(numValue.value),
             productId,
-            productOptionId,
+            productOptionId: productOption[0],
+            productOptionName: productOption[1],
           },
         ],
         totalPrice: product.price * parseInt(numValue.value),
@@ -141,11 +149,16 @@ const OptionBox = ({
               <div>{product.option}</div>
               <div className="select-option__right">
                 <select
-                  onChange={(e) => setProductOptionId(e.target.value)}
-                  defaultValue={productOptionId}
+                  onChange={(e) => {
+                    setProductOption(e.target.value.split(","));
+                  }}
+                  defaultValue={productOption}
                 >
                   {product.options.map((option) => (
-                    <option key={option.id} value={option.id}>
+                    <option
+                      key={option.id}
+                      value={[option.id.toString(), option.value]}
+                    >
                       {option.value} (재고: {option.stock}개)
                     </option>
                   ))}
