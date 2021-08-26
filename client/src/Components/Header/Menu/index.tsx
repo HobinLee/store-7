@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { getSiblingIndex } from "@/utils/node";
 import { Link } from "@/Router";
 import { categories } from "@/shared/dummy";
-import { media } from "@/styles/theme";
+import { hideScroll, media } from "@/styles/theme";
 import { CategoryType } from "@/Pages/Category";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
