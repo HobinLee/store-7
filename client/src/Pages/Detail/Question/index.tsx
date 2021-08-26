@@ -8,7 +8,11 @@ import { gap } from "@/styles/theme";
 
 const Question = () => {
   const [isModalOpened, setIsModalOpened] = useState(false);
-  const handleModalOpen = (val: boolean) => {
+  const handleModalOpen = (val: boolean, justClose: boolean = false) => {
+    if (justClose) {
+      setIsModalOpened(false);
+      return;
+    }
     if (!val) {
       const submit = window.confirm(
         "작성하고 있던 내용이 유실됩니다. 정말 다른 페이지로 이동하시겠어요?"
@@ -22,6 +26,7 @@ const Question = () => {
     status,
     data: questions,
     error,
+    refetch,
   } = useProductQuestions(parseInt(pathname));
 
   return (
@@ -42,7 +47,7 @@ const Question = () => {
           ))}
         </QuestionsWrapper>
         {isModalOpened && (
-          <QuestionModal submitType="post" {...{ handleModalOpen }} />
+          <QuestionModal submitType="post" {...{ handleModalOpen, refetch }} />
         )}
       </div>
     )
