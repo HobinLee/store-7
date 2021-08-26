@@ -119,23 +119,26 @@ const DetailPage = () => {
               <Info>
                 <div className="title">{product.name}</div>
 
-                <div className="list">
-                  <div className="list__item">
-                    <div className="list__item--title">판매가격</div>
-                    <div className="list__item--content price">
-                      {convertToKRW(product.price)}
+                <div>
+                  <div className="list">
+                    <div className="list__item">
+                      <div className="list__item--title">판매가격</div>
+                      <div className="list__item--content price">
+                        {convertToKRW(product.price)}
+                      </div>
                     </div>
                   </div>
                   <div className="list__item">
-                    <div className="list__item--title">배송정보</div>
+                    <div className="list__item--title">배송비</div>
                     <div className="list__item--content">
-                      {convertToKRW(product.deliveryCost)}
+                      {product.deliveryCost === 0
+                        ? "무료"
+                        : convertToKRW(product.deliveryCost)}
                     </div>
                   </div>
                 </div>
 
                 <OptionBox
-                  key="option-box"
                   {...{
                     numValue,
                     handleClickNumVal,
@@ -219,6 +222,9 @@ const InfoBox = styled.div`
     object-fit: cover;
     background-color: lightgray;
     border-radius: 2rem;
+    ${media.tablet} {
+      max-height: 43.5rem;
+    }
   }
   .img-box {
     cursor: zoom-in;
@@ -250,6 +256,7 @@ const Info = styled.div`
       margin-top: 2rem;
       ${({ theme }) => theme.font.medium}
       &--title {
+        width: 6rem;
       }
       &--content {
         margin-left: 3rem;
@@ -297,9 +304,6 @@ const Scroll = styled.div<{ selectedTab: string }>`
         ${({ theme }) => theme.borderRadius.small};
         padding: 1rem 1.5rem;
       }
-    }
-    .total-price {
-      margin-top: 2rem;
     }
   }
 `;

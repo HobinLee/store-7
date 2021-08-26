@@ -11,6 +11,9 @@ const itemInfoBoxProps: ItemInfoBoxProps = {
   amount: 1000,
   price: 10000,
   deliveryCost: 2500,
+  productOptionId: 0,
+  options: [],
+  productId: 0,
 };
 
 describe("<ItemInfoBox />", () => {

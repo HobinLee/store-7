@@ -96,6 +96,11 @@ export class AdminProductType {
   salse: number;
 }
 
+export interface ProductOptionType {
+  id: number;
+  value: string;
+  stock: number;
+}
 export interface ProductType {
   id: number;
   name: string;
@@ -106,6 +111,11 @@ export interface ProductType {
   category: string;
   subCategory: string;
   option: string;
+  options: {
+    id: number;
+    value: string;
+    stock: number;
+  }[];
   images: string[];
   details: string[];
   isWish: boolean;
@@ -117,6 +127,7 @@ export interface CartType {
   totalPayment: number;
   items: PartialCart[];
 }
+
 export interface ICart {
   id: number;
   name: string;
@@ -124,6 +135,7 @@ export interface ICart {
   deliveryCost: number;
   images: string[];
   productOptionId: number;
+  options: ProductOptionType[];
   amount: number;
   productId: number;
 }
