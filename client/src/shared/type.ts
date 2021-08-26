@@ -3,7 +3,11 @@ export interface ReviewType {
   rate: number;
   content: string;
   image?: string;
-  authorName: string;
+  authorName?: string;
+  product?: {
+    id: number;
+    name: string;
+  };
   date: Date;
 }
 

@@ -37,7 +37,7 @@ export class Reviews {
   //TODO : 해결하쇼 유저 아이디로 order찾기
   async findReviewsByUserId(userId) {
     return await this.reviewRepository.find({
-      relations: ["order", "order.user"],
+      relations: ["order", "order.user", "product"],
       where: { order: { user: { id: userId } } },
     });
   }
