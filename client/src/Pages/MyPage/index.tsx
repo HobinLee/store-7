@@ -12,15 +12,17 @@ const MyPage = () => {
   const [current, setCurrent] = useState("order");
 
   return (
-    <MyPageWrapper>
+    <>
       <Header />
-      <Contents>
-        <ContentHeader setCurrent={setCurrent} current={current} />
-        <ContentBody>
-          <ContentArea current={current} />
-        </ContentBody>
-      </Contents>
-    </MyPageWrapper>
+      <MyPageWrapper>
+        <Contents>
+          <ContentHeader setCurrent={setCurrent} current={current} />
+          <ContentBody>
+            <ContentArea current={current} />
+          </ContentBody>
+        </Contents>
+      </MyPageWrapper>
+    </>
   );
 };
 
