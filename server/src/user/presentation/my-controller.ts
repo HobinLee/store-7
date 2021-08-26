@@ -65,7 +65,7 @@ export class MyController {
   async getMyQuestions(
     @Body("userId") userId: number
   ): Promise<QuestionResponse[]> {
-    return await this.myService.findMyQeustions(userId);
+    return await this.myService.findMyQuestions(userId);
   }
 
   // orders

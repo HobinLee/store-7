@@ -56,7 +56,7 @@ const Question = () => {
             handleModalOpen,
             refetch,
           }}
-          qeustion={{
+          question={{
             id: question.id,
             type: question.type,
             question: question.question,

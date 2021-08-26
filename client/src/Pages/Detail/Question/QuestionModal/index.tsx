@@ -17,27 +17,27 @@ export const TYPES = ["상품", "배송", "반품", "교환", "환불", "기타"
 interface QuestionModal {
   handleModalOpen: Function;
   submitType: string;
-  qeustion?: QuestionForm;
+  question?: QuestionForm;
   refetch: () => Promise<QueryObserverResult<unknown>>;
 }
 const QuestionModal = ({
   handleModalOpen,
-  qeustion = { type: "상품", question: "", isSecret: false },
+  question = { type: "상품", question: "", isSecret: false },
   submitType,
   refetch,
 }: QuestionModal) => {
-  const questionVal = useInput(qeustion.question);
+  const questionVal = useInput(question.question);
   const pathname = location.pathname.split("detail/")[1];
   const questionValidation = useValidation(validateTextarea);
 
   // 문의 유형
-  const [type, setType] = useState(qeustion.type);
+  const [type, setType] = useState(question.type);
   const handleSetType = (val: string) => {
     setType(val);
   };
 
   // 비밀글
-  const [isSecret, setIsSecret] = useState<boolean>(qeustion.isSecret);
+  const [isSecret, setIsSecret] = useState<boolean>(question.isSecret);
 
   const handleSumbit = async () => {
     if (submitType === "post") {
@@ -51,7 +51,7 @@ const QuestionModal = ({
       refetch();
     } else if (submitType === "patch") {
       await patchQuestion({
-        id: qeustion.id,
+        id: question.id,
         question: {
           type: type,
           question: questionVal.value,

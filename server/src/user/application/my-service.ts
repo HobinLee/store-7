@@ -74,8 +74,8 @@ export class MyService {
     return reviews.map(MyReviewResponse.of);
   }
 
-  // qeustions
-  async findMyQeustions(userId: number) {
+  // questions
+  async findMyQuestions(userId: number) {
     const questions = await this.questions.findQuestionsByUserId(userId);
     return questions.map(QuestionResponse.of);
   }
