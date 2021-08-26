@@ -89,84 +89,91 @@ const DetailPage = () => {
   }, [debounceIsMyWish]);
 
   return (
-    status !== "loading" && (
-      <Wrapper>
-        <Header />
-
-        <Contents>
-          <InfoBox>
-            <div
-              data-testid="image-box"
-              onClick={() => setIsZoomOpened(true)}
-              onMouseLeave={() => setIsZoomOpened(false)}
-              className="img-box"
-            >
-              <img
-                id="image"
-                src={properties.imgURL + product.images[0]}
-                className="thumbnail"
-              />
-              {isZoomOpened && (
-                <>
-                  <ZoomLens data-testid="zoom-lens" id="zoom-lens" />
-                  <ZoomModal />
-                </>
-              )}
-            </div>
-            <Info>
-              <div className="title">{product.name}</div>
-
-              <div className="list">
-                <div className="list__item">
-                  <div className="list__item--title">판매가격</div>
-                  <div className="list__item--content price">
-                    {convertToKRW(product.price)}
-                  </div>
-                </div>
-                <div className="list__item">
-                  <div className="list__item--title">배송정보</div>
-                  <div className="list__item--content">
-                    {convertToKRW(product.deliveryCost)}
-                  </div>
-                </div>
-              </div>
-
-              <OptionBox
-                key="option-box"
-                {...{ numValue, handleClickNumVal, product, refetch, isMyWish }}
-              />
-            </Info>
-          </InfoBox>
-        </Contents>
-        <Scroll selectedTab={selectedTab}>
-          <Tab>
-            {tabs.map((tab) => (
-              <TabA
-                key={tab.title}
-                onClick={() => handleSelectTab(tab.id)}
-                isSelected={selectedTab === tab.id}
+    <>
+      <Header />
+      {status !== "loading" && (
+        <Wrapper>
+          <Contents>
+            <InfoBox>
+              <div
+                data-testid="image-box"
+                onClick={() => setIsZoomOpened(true)}
+                onMouseLeave={() => setIsZoomOpened(false)}
+                className="img-box"
               >
-                {tab.title}
-              </TabA>
-            ))}
-          </Tab>
-
-          <div className="bottom-wrapper">
-            <div>
-              <TabPage>
-                <RenderTabComponent />
-              </TabPage>
-              <div className="option-box">
-                <OptionBox
-                  {...{ numValue, handleClickNumVal, product, isMyWish }}
+                <img
+                  id="image"
+                  src={properties.imgURL + product.images[0]}
+                  className="thumbnail"
                 />
+                {isZoomOpened && (
+                  <>
+                    <ZoomLens data-testid="zoom-lens" id="zoom-lens" />
+                    <ZoomModal />
+                  </>
+                )}
+              </div>
+              <Info>
+                <div className="title">{product.name}</div>
+
+                <div className="list">
+                  <div className="list__item">
+                    <div className="list__item--title">판매가격</div>
+                    <div className="list__item--content price">
+                      {convertToKRW(product.price)}
+                    </div>
+                  </div>
+                  <div className="list__item">
+                    <div className="list__item--title">배송정보</div>
+                    <div className="list__item--content">
+                      {convertToKRW(product.deliveryCost)}
+                    </div>
+                  </div>
+                </div>
+
+                <OptionBox
+                  key="option-box"
+                  {...{
+                    numValue,
+                    handleClickNumVal,
+                    product,
+                    refetch,
+                    isMyWish,
+                  }}
+                />
+              </Info>
+            </InfoBox>
+          </Contents>
+          <Scroll selectedTab={selectedTab}>
+            <Tab>
+              {tabs.map((tab) => (
+                <TabA
+                  key={tab.title}
+                  onClick={() => handleSelectTab(tab.id)}
+                  isSelected={selectedTab === tab.id}
+                >
+                  {tab.title}
+                </TabA>
+              ))}
+            </Tab>
+
+            <div className="bottom-wrapper">
+              <div>
+                <TabPage>
+                  <RenderTabComponent />
+                </TabPage>
+                <div className="option-box">
+                  <OptionBox
+                    {...{ numValue, handleClickNumVal, product, isMyWish }}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        </Scroll>
-        <Footer />
-      </Wrapper>
-    )
+          </Scroll>
+          <Footer />
+        </Wrapper>
+      )}
+    </>
   );
 };
 
