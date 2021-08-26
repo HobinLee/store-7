@@ -46,11 +46,13 @@ export const Router = ({ children }): ReactElement => {
     params: decodeParams(),
   });
 
-  const setCurrentLocation = () =>
+  const setCurrentLocation = () => {
     setLocation({
       location: window.location.pathname,
       params: decodeParams(),
     });
+    document.documentElement.scrollTo(0, 0);
+  };
 
   const handlePushState = (e: HistoryEvent) => {
     const path = e.detail.pathname;

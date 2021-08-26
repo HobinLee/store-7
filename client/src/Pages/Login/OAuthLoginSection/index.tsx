@@ -2,6 +2,7 @@ import GithubSVG from "@/assets/githubLogin.svg";
 import GoogleSVG from "@/assets/googleLogin.svg";
 import { gap } from "@/styles/theme";
 import styled from "styled-components";
+import ET from "@/assets/et.png";
 import APIButton from "@/Components/APIButton";
 import properties from "@/config/properties";
 import { Link } from "@/Router";
@@ -23,7 +24,9 @@ const OAuthLoginSection = () => {
         <GoogleSVG height="100%" />
       </APIButton>
       <button className="et-login">
-        <Link to="/signup">회원가입</Link>
+        <Link to="/signup">
+          <img src={ET} />
+        </Link>
       </button>
     </Wrapper>
   );
@@ -64,6 +67,10 @@ const Wrapper = styled.div`
       width: 100%;
       height: 100%;
       ${({ theme }) => theme.flexCenter}
+    }
+    img {
+      height: 130%;
+      width: auto;
     }
   }
 `;
