@@ -1,11 +1,24 @@
 import styled from "styled-components";
 import { ReviewType } from "@/shared/type";
 import Rating from "@/Components/Rating";
-import { gap, media, theme } from "@/styles/theme";
+import { gap, media } from "@/styles/theme";
 import { YYYY_M_D_H_m } from "@/utils/util";
 import properties from "@/config/properties";
+import { deleteReview } from "@/api/reviews";
+import { QueryObserverResult } from "react-query";
+import { ReviewForm } from "@/Pages/MyPage/ContentArea/contents/Review";
 
-const ReviewBox = (review: ReviewType) => {
+const ReviewBox = ({
+  review,
+  refetch,
+  handleClickEditButton,
+}: {
+  review: ReviewType;
+  refetch?: () => Promise<QueryObserverResult<any, unknown>>;
+  handleClickEditButton?: (review: ReviewForm) => void;
+}) => {
+  const pathname = location.pathname.split("/")[1];
+
   return (
     <Wrapper>
       <div>
@@ -16,6 +29,11 @@ const ReviewBox = (review: ReviewType) => {
         <Header>
           <div className="author">{review.authorName}</div>
           <div className="date">{YYYY_M_D_H_m(review.date)}</div>
+          {pathname && (
+            <EditAndDeleteButtons
+              {...{ review, refetch, handleClickEditButton }}
+            />
+          )}
         </Header>
 
         <div className="content">{review.content}</div>
@@ -27,6 +45,30 @@ const ReviewBox = (review: ReviewType) => {
         )}
       </div>
     </Wrapper>
+  );
+};
+
+const EditAndDeleteButtons = ({ handleClickEditButton, review, refetch }) => {
+  const handleClickDeleteButton = async () => {
+    const confirm = window.confirm(
+      "고객님이 작성한 후기는 다른 고객님들께 많은 도움이 됩니다. 정말로 삭제하시겠어요?"
+    );
+    if (confirm) {
+      const result = await deleteReview({ id: review?.id });
+      refetch();
+    } 
+  };
+  const { id, rate, content, image } = review;
+
+  return (
+    <div className="buttons">
+      <button
+        onClick={() => handleClickEditButton({ id, rate, content, image })}
+      >
+        수정
+      </button>
+      <button onClick={handleClickDeleteButton}>삭제</button>
+    </div>
   );
 };
 

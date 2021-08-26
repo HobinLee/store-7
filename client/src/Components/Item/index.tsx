@@ -6,7 +6,7 @@ import { convertToKRW } from "@/utils/util";
 import { postWishProduct, deleteWishProduct } from "@/api/my";
 import { media } from "@/styles/theme";
 import properties from "@/config/properties";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import useDebounce from "@/hooks/useDebounce";
 import useDidMountEffect from "@/hooks/useDidMountEffect";
 
@@ -33,7 +33,13 @@ const Item = ({
   const [isMyWish, setIsMyWish] = useState(isWish);
   const debounceIsMyWish = useDebounce<boolean>(isMyWish, 300);
 
-  const tags = ["new", "best"];
+  const tags = useMemo(() => {
+    const tags = [];
+    if (discountRate) {
+      tags.push("sale");
+    }
+    return tags;
+  }, []);
   const handleClickWish = async (e: Event) => {
     e.stopPropagation();
     setIsMyWish((isMyWish) => !isMyWish);

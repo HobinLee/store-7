@@ -17,7 +17,6 @@ const Order = () => {
         description={`${
           myInfoStatus !== "loading" ? myInfo.name : " "
         }님의 주문 내역입니다.`}
-        lineType="long1"
       >
         {ordersStatus !== "loading" && (
           <div className="orders">

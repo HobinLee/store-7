@@ -4,8 +4,14 @@ import {
   Body,
   UploadedFiles,
   UseInterceptors,
+  Patch,
+  Delete,
+  Param,
 } from "@nestjs/common";
-import { CreateReviewPostRequest } from "../dto/review-request";
+import {
+  CreateReviewPostRequest,
+  UpdateReviewPatchRequest,
+} from "../dto/review-request";
 import { ReviewService } from "../application/review-service";
 import { FileFieldsInterceptor } from "@nestjs/platform-express";
 
@@ -20,5 +26,20 @@ export class ReviewController {
     @Body() body: CreateReviewPostRequest
   ) {
     return await this.reviewService.createReview(body, files.file);
+  }
+
+  @UseInterceptors(FileFieldsInterceptor([{ name: "file" }]))
+  @Patch("/:id")
+  async updateReview(
+    @Param("id") id: number,
+    @UploadedFiles() files,
+    @Body() review: UpdateReviewPatchRequest
+  ) {
+    return await this.reviewService.updateReview(id, review, files.file);
+  }
+
+  @Delete("/:id")
+  async deleteReview(@Param("id") id: number) {
+    return await this.reviewService.deletereview(id);
   }
 }

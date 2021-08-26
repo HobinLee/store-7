@@ -13,7 +13,7 @@ const ReviewList = ({ reviews }: ReviewListProps) => (
     {reviews.map((review: ReviewType, idx: number) => (
       <li key={idx}>
         <Link to={`/detail/${review.id}`}>
-          <ReviewBox {...review} />
+          <ReviewBox {...{ review }} key={review.id} />
         </Link>
       </li>
     ))}

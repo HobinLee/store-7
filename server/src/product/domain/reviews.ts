@@ -3,8 +3,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Review } from "@/product/entity/review";
 import {
+  ReviewPatchReqeust,
   ReviewPostReqeust,
-  ReviewPatchRequest,
 } from "@/product/dto/review-request";
 import { S3Repository } from "@/product/infrastructure/s3-repository";
 
@@ -53,17 +53,17 @@ export class Reviews {
     await this.reviewRepository.insert(review);
   }
 
-  async updateReview(id: number, review: ReviewPatchRequest) {
-    await this.reviewRepository.update({ id }, { ...review.content });
+  async updateReview(id: number, review: ReviewPatchReqeust) {
+    await this.reviewRepository.update({ id }, review);
   }
 
   async deleteReview(id: number) {
     this.reviewRepository.delete({ id });
   }
 
-  addImage(image) {
+  async addImage(image) {
     const fileName = generateRandomFileName();
-    this.s3Repository.putObject(fileName, image[0]);
+    await this.s3Repository.putObject(fileName, image[0]);
     return fileName;
   }
 }

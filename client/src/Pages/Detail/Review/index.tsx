@@ -119,7 +119,7 @@ const Review = () => {
 
         <ReviewsWrapper>
           {reviews.reviews.map((review) => (
-            <ReviewBox key={review.id} {...review} />
+            <ReviewBox key={review.id} {...{ review }} />
           ))}
         </ReviewsWrapper>
       </div>

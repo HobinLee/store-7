@@ -3,7 +3,6 @@ import styled from "styled-components";
 export interface SectionProps {
   title: string;
   description?: string;
-  lineType: string;
   children: JSX.Element | JSX.Element[];
 }
 
@@ -11,7 +10,6 @@ const Section = ({
   title,
   description = "",
   children,
-  lineType,
 }: SectionProps) => {
   return (
     <SectionWrapper data-testid="test__section">

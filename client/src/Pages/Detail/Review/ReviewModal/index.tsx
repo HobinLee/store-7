@@ -5,24 +5,52 @@ import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
 import { gap } from "@/styles/theme";
 import { useState } from "react";
-import { postReview } from "@/api/reviews";
-import { useRef } from "react";
+import { patchReview, postReview } from "@/api/reviews";
+import { ReviewForm } from "@/Pages/MyPage/ContentArea/contents/Review";
+import properties from "@/config/properties";
+import APIButton from "@/Components/APIButton";
+import { useMyOrders, useMyReviews } from "@/api/my";
+import useValidation from "@/hooks/useValidation";
+import {
+  validateReview,
+  validateReviewRate,
+  VALIDATION_ERR_MSG,
+} from "@/utils/validations";
+import { useEffect } from "react";
+import ValidationInput from "@/Components/Input/ValidationInput";
 
 interface ReviewModalProps {
+  submitType: string;
   handleModalOpen: Function;
-  id: number;
-  productId: number;
+  orderId?: number;
+  productId?: number;
+  review?: ReviewForm;
 }
-
+const MIN_REVIEW_LENGTH = 10;
 const ReviewModal = ({
   handleModalOpen,
-  id: orderId,
+  orderId,
   productId,
+  review = { rate: "0", content: "", image: "" },
+  submitType,
 }: ReviewModalProps) => {
-  const reviewVal = useInput("");
-  const rate = useRef("");
+  const { refetch: orderRefetch } = useMyOrders();
+  const { refetch: reviewRefetch } = useMyReviews();
+  const reviewValidation = useValidation(validateReview);
+  const rateValidation = useValidation(validateReviewRate);
+  const reviewVal = useInput(review.content);
+  const [rate, setRate] = useState(review.rate);
   const [file, setFile] = useState<File | undefined>(undefined);
-  const [previewURL, setPreviewURL] = useState("");
+  const [previewURL, setPreviewURL] = useState<string>(
+    review.image && properties.imgURL + review.image
+  );
+
+  useEffect(() => {
+    reviewValidation.onCheck(reviewVal.value);
+    rateValidation.onCheck(rate);
+  }, [rate, reviewVal]);
+
+  const isSubmitable = reviewValidation.isValid && rateValidation.isValid;
 
   const selectImg = ({ target }: { target: HTMLInputElement }) => {
     const reader = new FileReader();
@@ -36,23 +64,35 @@ const ReviewModal = ({
     reader.readAsDataURL(targetFile);
   };
 
-  const hanleSubmit = async () => {
+  const hanleSubmit = async (e) => {
+    e.preventDefault();
     const formData = new FormData();
-    formData.append("orderId", orderId.toString());
-    formData.append("productId", productId.toString());
-    formData.append("rate", rate.current);
-    formData.append("content", reviewVal.value);
-    file && formData.append("file", file);
-    await postReview(formData);
+    if (submitType === "post") {
+      formData.append("orderId", orderId.toString());
+      formData.append("productId", productId.toString());
+      formData.append("rate", rate);
+      formData.append("content", reviewVal.value);
+      file && formData.append("file", file);
+      await postReview(formData);
+      handleModalOpen(false, true);
+      orderRefetch();
+    } else if (submitType === "patch") {
+      formData.append("rate", rate);
+      formData.append("content", reviewVal.value);
+      file && formData.append("file", file);
+      await patchReview({ id: review.id, data: formData });
+      handleModalOpen(false, true);
+      reviewRefetch();
+    }
   };
 
   return (
     <ModalWrapper title="후기작성" closeModal={() => handleModalOpen(false)}>
-      <Wrapper onSubmit={hanleSubmit}>
+      <Wrapper>
         <div className="content">
           <div className="content__label">별점 평가</div>
-          <span className="rating">
-            <Rating rate={rate} />
+          <span className="content__rating">
+            <Rating {...{ rate, setRate }} />
           </span>
         </div>
         <div className="content">
@@ -76,16 +116,23 @@ const ReviewModal = ({
 
         <div className="content">
           <div className="content__label">후기 작성</div>
-          <ReivewInput
-            placeholder="자세하고 솔직한 리뷰는 다른 고객에게 큰 도움이 됩니다."
-            defaultValue={reviewVal.value}
-            onChange={reviewVal.onChange}
+          <ValidationInput
+            input={reviewVal}
+            validation={reviewValidation}
+            placeholder="자세하고 솔직한 리뷰는 다른 고객에게 큰 도움이 됩니다. (10자 이상)"
+            message={VALIDATION_ERR_MSG.INVALID_REVIEW}
+            className="content__review"
+            type="textarea"
           />
         </div>
-
-        <SubmitBtn type="submit" primary>
+        <APIButton
+          api={hanleSubmit}
+          primary
+          className="submit-btn"
+          disabled={!isSubmitable}
+        >
           완료
-        </SubmitBtn>
+        </APIButton>
       </Wrapper>
     </ModalWrapper>
   );
@@ -111,12 +158,21 @@ const Wrapper = styled.form`
         height: 100%;
       }
     }
-    .rating {
+    &__.rating {
       transform: scale(1.8);
       width: 15rem;
       margin-left: 6rem;
     }
+    &__review {
+      border: 0.1rem solid ${({ theme }) => theme.color.line};
+      height: 10rem;
+      padding: 1.5rem;
+      line-height: 2rem;
+      ${({ theme }) => theme.font.medium};
+      ${({ theme }) => theme.borderRadius.medium};
+    }
   }
+
   .upload-btn {
     ${({ theme }) => theme.font.large}
     width: 100%;
@@ -127,18 +183,11 @@ const Wrapper = styled.form`
     box-sizing: border-box;
     text-align: center;
   }
-`;
-
-const ReivewInput = styled.textarea`
-  border: 0.1rem solid ${({ theme }) => theme.color.line};
-  height: 10rem;
-  padding: 1.5rem;
-  ${({ theme }) => theme.borderRadius.medium};
-`;
-
-const SubmitBtn = styled(Button)`
-  width: 100%;
-  margin-top: 3rem;
+  .submit-btn {
+    width: 100%;
+    margin-top: 3rem;
+    height: 6rem;
+  }
 `;
 
 export default ReviewModal;
