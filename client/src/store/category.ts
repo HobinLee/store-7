@@ -8,6 +8,11 @@ export const selectedCategoryState = atom({
   },
 });
 
+export const categoryPaddingState = atom({
+  key: "categoryPadding",
+  default: 0,
+});
+
 export const hoveredCategoryState = atom({
   key: "hoveredCategory",
   default: {
