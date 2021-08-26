@@ -62,7 +62,7 @@ const FilterWrapper = styled.div`
   padding: 2rem 0;
   position: -webkit-sticky;
   position: sticky;
-  top: 14.6rem;
+  top: 13.9rem;
   width: 100%;
   background: white;
   z-index: 20;
