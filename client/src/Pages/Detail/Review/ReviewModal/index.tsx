@@ -6,11 +6,18 @@ import ModalWrapper from "@/Components/ModalWrapper";
 import { gap } from "@/styles/theme";
 import { useState } from "react";
 import { patchReview, postReview } from "@/api/reviews";
-import { useRef } from "react";
 import { ReviewForm } from "@/Pages/MyPage/ContentArea/contents/Review";
 import properties from "@/config/properties";
 import APIButton from "@/Components/APIButton";
 import { useMyOrders, useMyReviews } from "@/api/my";
+import useValidation from "@/hooks/useValidation";
+import {
+  validateReview,
+  validateReviewRate,
+  VALIDATION_ERR_MSG,
+} from "@/utils/validations";
+import { useEffect } from "react";
+import ValidationInput from "@/Components/Input/ValidationInput";
 
 interface ReviewModalProps {
   submitType: string;
@@ -19,7 +26,7 @@ interface ReviewModalProps {
   productId?: number;
   review?: ReviewForm;
 }
-
+const MIN_REVIEW_LENGTH = 10;
 const ReviewModal = ({
   handleModalOpen,
   orderId,
@@ -29,12 +36,21 @@ const ReviewModal = ({
 }: ReviewModalProps) => {
   const { refetch: orderRefetch } = useMyOrders();
   const { refetch: reviewRefetch } = useMyReviews();
+  const reviewValidation = useValidation(validateReview);
+  const rateValidation = useValidation(validateReviewRate);
   const reviewVal = useInput(review.content);
   const [rate, setRate] = useState(review.rate);
   const [file, setFile] = useState<File | undefined>(undefined);
   const [previewURL, setPreviewURL] = useState<string>(
     review.image && properties.imgURL + review.image
   );
+
+  useEffect(() => {
+    reviewValidation.onCheck(reviewVal.value);
+    rateValidation.onCheck(rate);
+  }, [rate, reviewVal]);
+
+  const isSubmitable = reviewValidation.isValid && rateValidation.isValid;
 
   const selectImg = ({ target }: { target: HTMLInputElement }) => {
     const reader = new FileReader();
@@ -63,9 +79,7 @@ const ReviewModal = ({
     } else if (submitType === "patch") {
       formData.append("rate", rate);
       formData.append("content", reviewVal.value);
-      if (file) {
-        file && formData.append("file", file);
-      }
+      file && formData.append("file", file);
       await patchReview({ id: review.id, data: formData });
       handleModalOpen(false, true);
       reviewRefetch();
@@ -77,7 +91,7 @@ const ReviewModal = ({
       <Wrapper>
         <div className="content">
           <div className="content__label">별점 평가</div>
-          <span className="rating">
+          <span className="content__rating">
             <Rating {...{ rate, setRate }} />
           </span>
         </div>
@@ -102,17 +116,20 @@ const ReviewModal = ({
 
         <div className="content">
           <div className="content__label">후기 작성</div>
-          <ReivewInput
+          <ValidationInput
+            input={reviewVal}
+            validation={reviewValidation}
             placeholder="자세하고 솔직한 리뷰는 다른 고객에게 큰 도움이 됩니다. (10자 이상)"
-            defaultValue={reviewVal.value}
-            onChange={reviewVal.onChange}
+            message={VALIDATION_ERR_MSG.INVALID_REVIEW}
+            className="content__review"
+            type="textarea"
           />
         </div>
         <APIButton
           api={hanleSubmit}
           primary
           className="submit-btn"
-          disabled={rate === "0" || reviewVal.value.length < 10}
+          disabled={!isSubmitable}
         >
           완료
         </APIButton>
@@ -141,12 +158,21 @@ const Wrapper = styled.form`
         height: 100%;
       }
     }
-    .rating {
+    &__.rating {
       transform: scale(1.8);
       width: 15rem;
       margin-left: 6rem;
     }
+    &__review {
+      border: 0.1rem solid ${({ theme }) => theme.color.line};
+      height: 10rem;
+      padding: 1.5rem;
+      line-height: 2rem;
+      ${({ theme }) => theme.font.medium};
+      ${({ theme }) => theme.borderRadius.medium};
+    }
   }
+
   .upload-btn {
     ${({ theme }) => theme.font.large}
     width: 100%;
@@ -160,15 +186,8 @@ const Wrapper = styled.form`
   .submit-btn {
     width: 100%;
     margin-top: 3rem;
+    height: 6rem;
   }
-`;
-
-const ReivewInput = styled.textarea`
-  border: 0.1rem solid ${({ theme }) => theme.color.line};
-  height: 10rem;
-  padding: 1.5rem;
-  ${({ theme }) => theme.font.medium};
-  ${({ theme }) => theme.borderRadius.medium};
 `;
 
 export default ReviewModal;

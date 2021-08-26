@@ -12,6 +12,7 @@ type VIPropsType = {
   message?: string;
   type?: string;
   onChange?: (e: ChangeEvent) => void;
+  className?: string;
 };
 
 const ValidationInput = ({
@@ -21,6 +22,7 @@ const ValidationInput = ({
   placeholder,
   type = "text",
   onChange = null,
+  className,
 }: VIPropsType) => {
   const [isFirstType, setIsFirstType] = useState(true);
   const checkValidStyle = isFirstType || validation.isValid;
@@ -34,17 +36,39 @@ const ValidationInput = ({
 
   return (
     <InputWrapper>
-      <input
-        className={checkValidStyle ? "valid-input" : "invalid-input"}
-        defaultValue={input.value}
-        onChange={(e) => {
-          onChange && onChange(e);
-          input.onChange(e);
-        }}
-        onBlur={handleBlurInput}
-        placeholder={placeholder}
-        type={type}
-      />
+      {type === "textarea" ? (
+        <textarea
+          className={
+            checkValidStyle
+              ? `${className} valid-input `
+              : `${className} invalid-input`
+          }
+          defaultValue={input.value}
+          onChange={(e) => {
+            onChange && onChange(e);
+            input.onChange(e);
+          }}
+          onBlur={handleBlurInput}
+          placeholder={placeholder}
+          wrap="virtual"
+        />
+      ) : (
+        <input
+          className={
+            checkValidStyle
+              ? `${className} valid-input`
+              : `${className} invalid-input`
+          }
+          defaultValue={input.value}
+          onChange={(e) => {
+            onChange && onChange(e);
+            input.onChange(e);
+          }}
+          onBlur={handleBlurInput}
+          placeholder={placeholder}
+          type={type}
+        />
+      )}
       {!checkValidStyle && message && (
         <small className="input__err-message">{message}</small>
       )}
