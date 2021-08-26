@@ -3,6 +3,7 @@ export { default as Banner2 } from "./banner2.gif";
 export { default as Banner3 } from "./banner3.gif";
 export { default as Logo } from "./logo.png";
 export { default as Close } from "./close.svg";
+export { default as Delete } from "./delete.svg";
 export { default as Back } from "./back.svg";
 export { default as Arrow } from "./arrow.svg";
 export { default as Check } from "./check.svg";
