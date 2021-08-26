@@ -8,6 +8,7 @@ import { moveTo } from "@/Router";
 import { categories } from "@/shared/dummy";
 import { MainCategoryType } from "@/Pages/Category";
 import { Delete, Arrow } from "@/assets";
+import { media } from "@/styles/theme";
 
 const LS_SEARCH = "search";
 
@@ -161,7 +162,6 @@ const SearchWrapper = styled.form`
         }
       }
     }
-
     svg {
       position: absolute;
       right: 0.5rem;
@@ -170,19 +170,16 @@ const SearchWrapper = styled.form`
       fill: #999;
     }
   }
-
   .opened {
     svg {
       transform: rotate(-90deg);
     }
   }
-
   .closed {
     svg {
       transform: rotate(90deg);
     }
   }
-
   .search-input {
     ${({ theme }) => theme.font.medium}
     ::placeholder {
@@ -206,6 +203,9 @@ const SearchBox = styled.div`
   background: ${({ theme }) => theme.color.white};
   .search-list__title {
     font-weight: bolder;
+  }
+  ${media.tablet} {
+    width: 22vw;
   }
 `;
 
