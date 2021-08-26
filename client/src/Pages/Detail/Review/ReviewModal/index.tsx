@@ -5,24 +5,36 @@ import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
 import { gap } from "@/styles/theme";
 import { useState } from "react";
-import { postReview } from "@/api/reviews";
+import { patchReview, postReview } from "@/api/reviews";
 import { useRef } from "react";
+import { ReviewForm } from "@/Pages/MyPage/ContentArea/contents/Review";
+import properties from "@/config/properties";
+import APIButton from "@/Components/APIButton";
+import { useMyOrders, useMyReviews } from "@/api/my";
 
 interface ReviewModalProps {
+  submitType: string;
   handleModalOpen: Function;
-  id: number;
-  productId: number;
+  orderId?: number;
+  productId?: number;
+  review?: ReviewForm;
 }
 
 const ReviewModal = ({
   handleModalOpen,
-  id: orderId,
+  orderId,
   productId,
+  review = { rate: "0", content: "", image: "" },
+  submitType,
 }: ReviewModalProps) => {
-  const reviewVal = useInput("");
-  const rate = useRef("");
+  const { refetch: orderRefetch } = useMyOrders();
+  const { refetch: reviewRefetch } = useMyReviews();
+  const reviewVal = useInput(review.content);
+  const rate = useRef(review.rate);
   const [file, setFile] = useState<File | undefined>(undefined);
-  const [previewURL, setPreviewURL] = useState("");
+  const [previewURL, setPreviewURL] = useState<string>(
+    review.image && properties.imgURL + review.image
+  );
 
   const selectImg = ({ target }: { target: HTMLInputElement }) => {
     const reader = new FileReader();
@@ -36,19 +48,33 @@ const ReviewModal = ({
     reader.readAsDataURL(targetFile);
   };
 
-  const hanleSubmit = async () => {
+  const hanleSubmit = async (e) => {
+    e.preventDefault();
     const formData = new FormData();
-    formData.append("orderId", orderId.toString());
-    formData.append("productId", productId.toString());
-    formData.append("rate", rate.current);
-    formData.append("content", reviewVal.value);
-    file && formData.append("file", file);
-    await postReview(formData);
+    if (submitType === "post") {
+      formData.append("orderId", orderId.toString());
+      formData.append("productId", productId.toString());
+      formData.append("rate", rate.current);
+      formData.append("content", reviewVal.value);
+      file && formData.append("file", file);
+      await postReview(formData);
+      handleModalOpen(false, true);
+      orderRefetch();
+    } else if (submitType === "patch") {
+      formData.append("rate", rate.current);
+      formData.append("content", reviewVal.value);
+      if (file) {
+        file && formData.append("file", file);
+      }
+      await patchReview({ id: review.id, data: formData });
+      handleModalOpen(false, true);
+      reviewRefetch();
+    }
   };
 
   return (
     <ModalWrapper title="후기작성" closeModal={() => handleModalOpen(false)}>
-      <Wrapper onSubmit={hanleSubmit}>
+      <Wrapper>
         <div className="content">
           <div className="content__label">별점 평가</div>
           <span className="rating">
@@ -82,10 +108,9 @@ const ReviewModal = ({
             onChange={reviewVal.onChange}
           />
         </div>
-
-        <SubmitBtn type="submit" primary>
+        <APIButton api={hanleSubmit} primary className="submit-btn">
           완료
-        </SubmitBtn>
+        </APIButton>
       </Wrapper>
     </ModalWrapper>
   );
@@ -127,18 +152,18 @@ const Wrapper = styled.form`
     box-sizing: border-box;
     text-align: center;
   }
+  .submit-btn {
+    width: 100%;
+    margin-top: 3rem;
+  }
 `;
 
 const ReivewInput = styled.textarea`
   border: 0.1rem solid ${({ theme }) => theme.color.line};
   height: 10rem;
   padding: 1.5rem;
+  ${({ theme }) => theme.font.medium};
   ${({ theme }) => theme.borderRadius.medium};
-`;
-
-const SubmitBtn = styled(Button)`
-  width: 100%;
-  margin-top: 3rem;
 `;
 
 export default ReviewModal;
