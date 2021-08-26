@@ -37,6 +37,16 @@ const OptionBox = ({
     setIsMyWish((isMyWish) => !isMyWish);
   };
 
+  const RenderNumInput = useCallback(() => {
+    return (
+      <NumInput defaultValue={numValue.value} onChange={numValue.onChange} />
+    );
+  }, [numValue.value]);
+
+  // 상품옵션
+  const [productOptionId, setProductOptionId] = useState(null);
+
+  // 장바구니
   const handlePostCart = async () => {
     try {
       if (isLoggedin && status !== "loading") {
@@ -44,6 +54,7 @@ const OptionBox = ({
           data: {
             product: { id: productId },
             amount: parseInt(numValue.value),
+            productOptionId,
           },
         });
       } else {
@@ -64,6 +75,7 @@ const OptionBox = ({
             amount: parseInt(numValue.value),
             price: product.price * parseInt(numValue.value),
             productId: productId,
+            productOptionId,
           },
         ];
         localStorage.setItem("carts", JSON.stringify(exist));
@@ -75,6 +87,7 @@ const OptionBox = ({
     }
   };
 
+  // 바로구매
   const handleBuyImmediately = () => {
     localStorage.setItem(
       "orders",
@@ -85,6 +98,7 @@ const OptionBox = ({
             amount: numValue.value,
             price: product.price * parseInt(numValue.value),
             productId,
+            productOptionId,
           },
         ],
         totalPrice: product.price * parseInt(numValue.value),
@@ -98,15 +112,10 @@ const OptionBox = ({
     moveTo("/order");
   };
 
-  const RenderNumInput = useCallback(() => {
-    return (
-      <NumInput defaultValue={numValue.value} onChange={numValue.onChange} />
-    );
-  }, [numValue.value]);
-
   return (
     <>
       <Wrapper>
+        {/* 상품수량 */}
         <div className="select-option">
           <div>수량</div>
           <div className="select-option__right">
@@ -123,6 +132,27 @@ const OptionBox = ({
             </div>
             {convertToKRW(product.price)}
           </div>
+        </div>
+
+        {/* 상품옵션 */}
+        <div className="select-option option">
+          {product.option && (
+            <>
+              <div>{product.option}</div>
+              <div className="select-option__right">
+                <select
+                  onChange={(e) => setProductOptionId(e.target.value)}
+                  defaultValue={productOptionId}
+                >
+                  {product.options.map((option) => (
+                    <option key={option.id} value={option.id}>
+                      {option.value} (재고: {option.stock}개)
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </>
+          )}
         </div>
 
         <div className="total-price">
@@ -183,9 +213,6 @@ const Wrapper = styled.div`
   box-sizing: border-box;
   background: #fff;
   border-radius: 2rem;
-  ${media.tablet} {
-    width: 25rem;
-  }
 
   .select-option {
     ${({ theme }) => theme.flexCenter}
@@ -195,8 +222,21 @@ const Wrapper = styled.div`
     width: 100%;
     padding: 1.5rem 0;
     border-radius: 1rem;
+    &.option {
+      background: #fff;
+    }
     &__right {
-      ${({ theme }) => theme.flexCenter}
+      ${({ theme }) => theme.flexCenter};
+      justify-content: space-between;
+      width: 18rem;
+
+      select {
+        cursor: pointer;
+        width: 100%;
+        border: 0.1rem solid ${({ theme }) => theme.color.line};
+        padding: 0.8rem 1rem;
+        border-radius: 0.5rem;
+      }
       .num-input {
         ${({ theme }) => theme.flexCenter}
         margin-right: 2rem;
@@ -235,17 +275,10 @@ const Wrapper = styled.div`
     padding: 2.25rem 0;
     border-top: 0.1rem solid ${({ theme }) => theme.color.line};
     width: 100%;
-    margin-top: 10rem;
     color: ${({ theme }) => theme.color.primary1};
     & > * {
       ${({ theme }) => theme.font.medium}
       color: ${({ theme }) => theme.color.title_active};
-    }
-    ${media.mobile} {
-      margin-top: 7rem;
-    }
-    ${media.tablet} {
-      margin-top: 3rem;
     }
   }
   .buttons {

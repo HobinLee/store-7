@@ -33,10 +33,10 @@ const Review = () => {
     refetch();
   }, [debouncedSortBy, debouncedIsPhotoOnly, rating]);
 
-  const [isRatingModalOpened, setIsRatingModalOpened] = useState(false);
+  const [isRateDropdownOpened, setIsRateDropdownOpened] = useState(false);
   const handleClickRating = (rating) => {
     setRating(rating);
-    setIsRatingModalOpened(false);
+    setIsRateDropdownOpened(false);
   };
 
   return (
@@ -95,13 +95,13 @@ const Review = () => {
 
           <div
             className="rating"
-            onMouseEnter={() => setIsRatingModalOpened(true)}
-            onMouseLeave={() => setIsRatingModalOpened(false)}
+            onMouseEnter={() => setIsRateDropdownOpened(true)}
+            onMouseLeave={() => setIsRateDropdownOpened(false)}
           >
             <button className="rate-sort">별점</button>
-            {isRatingModalOpened && (
+            {isRateDropdownOpened && (
               <div>
-                <ReviewModal>
+                <RateDropdown>
                   <div onClick={() => handleClickRating("all")}>전체</div>
                   {reviews.rates.map((rate) => (
                     <div
@@ -112,7 +112,7 @@ const Review = () => {
                       <div>{`(${rate.count}개)`}</div>
                     </div>
                   ))}
-                </ReviewModal>
+                </RateDropdown>
               </div>
             )}
           </div>
@@ -207,7 +207,7 @@ const Filter = styled.div`
   }
 `;
 
-const ReviewModal = styled.div`
+const RateDropdown = styled.div`
   background-color: ${({ theme }) => theme.color.background};
   border-radius: 0.8rem;
   box-sizing: border-box;
