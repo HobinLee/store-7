@@ -93,7 +93,7 @@ export class Product {
       stock: product.stock,
       category: product.category,
       subCategory: product.subCategory,
-      option: product.option ? product.option.value : null,
+      option: product.option ? JSON.parse(product.option).value : null,
     } as Product;
   }
 

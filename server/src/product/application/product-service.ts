@@ -83,7 +83,8 @@ export class ProductService {
     this.products.addImages(images, product);
     this.products.addDetailImages(detailImages, product);
     if (productBody.option) {
-      this.products.addOption(productBody.option.list, product);
+      const option = JSON.parse(productBody.option);
+      this.products.addOption(option.list, product);
     }
     return product.id;
   }

@@ -6,13 +6,5 @@ export interface ProductUploadRequest {
   stock: number;
   category: string;
   subCategory: string;
-  option?: {
-    value: string;
-    list: [
-      {
-        name: string;
-        stock: number;
-      }
-    ];
-  };
+  option?: string;
 }
