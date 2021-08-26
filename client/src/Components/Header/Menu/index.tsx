@@ -6,14 +6,18 @@ import { categories } from "@/shared/dummy";
 import { media } from "@/styles/theme";
 import { CategoryType } from "@/Pages/Category";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { hoveredCategoryState, selectedCategoryState } from "@/store/category";
+import {
+  categoryPaddingState,
+  hoveredCategoryState,
+  selectedCategoryState,
+} from "@/store/category";
 
 const Menu = () => {
   const selected = useRecoilValue(selectedCategoryState);
   const [hovered, setHoveredCategoryState] =
     useRecoilState(hoveredCategoryState);
 
-  const [padding, setPadding] = useState(0);
+  const [padding, setPadding] = useRecoilState(categoryPaddingState);
 
   const checkChangeCategory = ({
     target,
@@ -92,8 +96,12 @@ const Menu = () => {
     );
   };
 
+  const checkHideSubCategory =
+    !categories[highlighted.categoryId / 100]?.subCategories.length &&
+    !categories[selected.categoryId / 100]?.subCategories.length;
+
   const generateSubCategory = () => {
-    if (highlighted.categoryId < 1) return;
+    if (checkHideSubCategory) return;
     return (
       <SubCategoryWrapper
         padding={padding}
@@ -219,13 +227,13 @@ const setPadding = (padding: number, width: number): string => {
 const SubCategoryWrapper = styled.ul<{
   padding: number;
   width: number;
-  //isMouseOut: boolean;
 }>`
   box-sizing: border-box;
   display: flex;
   justify-content: center;
   flex-direction: row;
   z-index: 30;
+  height: 3.6rem;
 
   ${({ padding, width }) => setPadding(padding, width)}
   ${media.mobile} {

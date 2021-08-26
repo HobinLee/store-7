@@ -1,4 +1,11 @@
-import { Injectable, NestMiddleware, Next, Req, Res } from "@nestjs/common";
+import {
+  HttpStatus,
+  Injectable,
+  NestMiddleware,
+  Next,
+  Req,
+  Res,
+} from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { NextFunction, Request, Response } from "express";
 import properties from "./config/properties/properties";
@@ -17,6 +24,8 @@ export class LoggerMiddleware implements NestMiddleware {
     } catch (e) {
       console.log(e.message);
       res.clearCookie(properties.auth.tokenKey);
+      res.status(HttpStatus.PRECONDITION_FAILED);
+      return { message: "토큰이 만료되었습니다" };
     } finally {
       next();
     }

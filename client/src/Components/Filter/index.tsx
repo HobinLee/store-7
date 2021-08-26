@@ -1,6 +1,8 @@
 import { categories } from "@/shared/dummy";
+import { selectedCategoryState } from "@/store/category";
 import { media } from "@/styles/theme";
 import { useState } from "react";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 export interface FilterProps {
@@ -37,7 +39,8 @@ export const filters: FilterType[] = [
   },
 ];
 
-const Filter = ({ categoryId, currentFilter, setFilter }: FilterProps) => {
+const Filter = ({ currentFilter, setFilter }: FilterProps) => {
+  const category = useRecoilValue(selectedCategoryState);
   const generateButtons = filters.map((filter: FilterType) => (
     <button
       className={`buttons__btn ${
@@ -53,9 +56,9 @@ const Filter = ({ categoryId, currentFilter, setFilter }: FilterProps) => {
   return (
     <FilterWrapper
       hasSubCategories={
-        categoryId
-          ? !!categories[categoryId / 100]?.subCategories.length
-          : false
+        category.categoryId < 0
+          ? false
+          : !!categories[category.categoryId / 100]?.subCategories.length
       }
     >
       <div className="buttons">{generateButtons}</div>
@@ -89,12 +92,10 @@ const FilterWrapper = styled.div<{ hasSubCategories: boolean }>`
     background: ${({ theme }) => theme.color.white};
   }
 
-  ${media.tablet} {
-    top: ${({ hasSubCategories }) => (hasSubCategories ? 15 : 10)}rem;
-  }
+  top: ${({ hasSubCategories }) => (hasSubCategories ? 17.5 : 13.9)}rem;
 
   ${media.mobile} {
-    top: 6rem;
+    top: ${({ hasSubCategories }) => (hasSubCategories ? 9.5 : 6)}rem;
   }
 `;
 
