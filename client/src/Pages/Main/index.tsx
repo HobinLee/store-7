@@ -23,20 +23,22 @@ const SECTION_TYPES: {
 
 const MainPage = () => {
   return (
-    <Wrapper>
+    <>
       <Header />
-      <BannerSection />
-      <Contents>
-        <div className="main__contents-wrapper">
-          <ProductSection {...SECTION_TYPES.hot} />
-          <GiftSection />
-          <ProductSection {...SECTION_TYPES.discount} />
-          <ReviewSection />
-          <ProductSection {...SECTION_TYPES.new} />
-        </div>
-      </Contents>
-      <Footer />
-    </Wrapper>
+      <Wrapper>
+        <BannerSection />
+        <Contents>
+          <div className="main__contents-wrapper">
+            <ProductSection {...SECTION_TYPES.hot} />
+            <GiftSection />
+            <ProductSection {...SECTION_TYPES.discount} />
+            <ReviewSection />
+            <ProductSection {...SECTION_TYPES.new} />
+          </div>
+        </Contents>
+        <Footer />
+      </Wrapper>
+    </>
   );
 };
 
