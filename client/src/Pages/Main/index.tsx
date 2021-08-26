@@ -55,7 +55,6 @@ const MainPage = () => {
 };
 
 const Wrapper = styled(PageWrapper)`
-  padding-top: 17rem;
   .main__contents-wrapper {
     width: 100%;
     height: 100%;
