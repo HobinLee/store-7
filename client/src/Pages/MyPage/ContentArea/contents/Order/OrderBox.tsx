@@ -23,7 +23,11 @@ const OrderBox = ({
   productName,
 }: MyOrderType & { type: string }) => {
   const [isModalOpened, setIsModalOpened] = useState(false);
-  const handleModalOpen = (val: boolean) => {
+  const handleModalOpen = (val: boolean, justClose = false) => {
+    if (justClose) {
+      setIsModalOpened(false);
+      return;
+    }
     if (!val) {
       const submit = window.confirm(
         "작성하고 있던 내용이 유실됩니다. 정말 다른 페이지로 이동하시겠어요?"
@@ -53,7 +57,10 @@ const OrderBox = ({
             </div>
           </div>
           {isModalOpened && (
-            <ReviewModal {...{ handleModalOpen, id, productId }} />
+            <ReviewModal
+              submitType="post"
+              {...{ handleModalOpen, orderId: id, productId }}
+            />
           )}
         </div>
       </Wrapper>
