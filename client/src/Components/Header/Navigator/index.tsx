@@ -97,6 +97,7 @@ const Wrapper = styled.div`
   }
   .search-area {
     width: 40vw;
+    max-width: 60rem;
     ${media.custom(800)} {
       display: none;
     }

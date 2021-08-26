@@ -8,6 +8,8 @@ import OAuthLoginSection from "../OAuthLoginSection";
 import { gap, media } from "@/styles/theme";
 import Input from "@/Components/Input";
 import properties from "@/config/properties";
+import { moveTo } from "@/Router";
+import Button from "@/Components/Button";
 
 const LoginSection = () => {
   const email = useInput("");
@@ -52,10 +54,10 @@ const LoginSection = () => {
       >
         로그인
       </APIButton>
-      <APIButton api={() => handleSignin(true)} className={"login-form__demo"}>
-        시연용 아이디로 로그인
-      </APIButton>
-      <OAuthLoginSection />
+      <Button onClick={() => moveTo("/signup")} className={"login-form__demo"}>
+        회원가입
+      </Button>
+      <OAuthLoginSection handleETLogin={async () => handleSignin(true)} />
     </Form>
   );
 };

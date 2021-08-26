@@ -5,9 +5,12 @@ import styled from "styled-components";
 import ET from "@/assets/et.png";
 import APIButton from "@/Components/APIButton";
 import properties from "@/config/properties";
-import { Link } from "@/Router";
 
-const OAuthLoginSection = () => {
+const OAuthLoginSection = ({
+  handleETLogin,
+}: {
+  handleETLogin: () => Promise<void>;
+}) => {
   const handleGithubLogin = async () => {
     window.location.href = properties.baseURL + "/auth/githubLogin";
   };
@@ -23,11 +26,9 @@ const OAuthLoginSection = () => {
       <APIButton api={handleGoogleLogin} className="google-login">
         <GoogleSVG height="100%" />
       </APIButton>
-      <button className="et-login">
-        <Link to="/signup">
-          <img src={ET} />
-        </Link>
-      </button>
+      <APIButton api={handleETLogin} className={"et-login"} primary={true}>
+        <img className="et-icon" src={ET} alt="et-icon" />
+      </APIButton>
     </Wrapper>
   );
 };
@@ -46,31 +47,47 @@ const Wrapper = styled.div`
     cursor: pointer;
     transition: 0.4s;
     &:hover {
+      svg {
+        display: none;
+      }
       opacity: 0.8;
+      ::after {
+        font-size: 1rem;
+      }
     }
   }
 
   .github-login {
     background: ${({ theme }) => theme.color.body};
+    color: white;
+    &:hover::after {
+      content: "깃헙 로그인";
+    }
   }
 
   .google-login {
     background: white;
     border: 1px solid ${({ theme }) => theme.color.light_grey2};
+    &:hover::after {
+      content: "구글 로그인";
+    }
   }
   .et-login {
     background: ${({ theme }) => theme.color.primary1};
     color: white;
     width: 100%;
-    a {
-      display: block;
-      width: 100%;
-      height: 100%;
-      ${({ theme }) => theme.flexCenter}
-    }
-    img {
+    ${({ theme }) => theme.flexCenter}
+    .et-icon {
       height: 130%;
       width: auto;
+    }
+    &:hover {
+      .et-icon {
+        display: none;
+      }
+    }
+    &:hover::after {
+      content: "시연용 로그인";
     }
   }
 `;
