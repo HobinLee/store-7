@@ -8,7 +8,7 @@ import { CategoryType } from "@/Pages/Category";
 
 const Menu = ({ category }: { category?: string }) => {
   const [categoryId, setCurrentCategory] = useState<number>(
-    category ? parseInt(category) : 0
+    category ? parseInt(category) : -1
   );
   const [isSubCategoryOpened, setIsSubCategoryOpened] = useState(
     category ? parseInt(category) : false
@@ -85,30 +85,33 @@ const Menu = ({ category }: { category?: string }) => {
     );
   };
 
-  const generateSubCategory = (
-    <SubCategoryWrapper
-      padding={padding}
-      width={getWidth(categories[categoryId / 100]?.subCategories)}
-    >
-      {isSubCategoryOpened &&
-        categories[categoryId / 100]?.subCategories?.map(
-          (subCategory: CategoryType) => (
-            <li key={subCategory.id}>
-              <Link
-                to={`/category?category=${categoryId}&subCategory=${subCategory.id}`}
-              >
-                {subCategory.name}
-              </Link>
-            </li>
-          )
-        )}
-    </SubCategoryWrapper>
-  );
+  const generateSubCategory = () => {
+    if (categoryId < 1) return;
+    return (
+      <SubCategoryWrapper
+        padding={padding}
+        width={getWidth(categories[categoryId / 100]?.subCategories)}
+      >
+        {isSubCategoryOpened &&
+          categories[categoryId / 100]?.subCategories?.map(
+            (subCategory: CategoryType) => (
+              <li key={subCategory.id}>
+                <Link
+                  to={`/category?category=${categoryId}&subCategory=${subCategory.id}`}
+                >
+                  {subCategory.name}
+                </Link>
+              </li>
+            )
+          )}
+      </SubCategoryWrapper>
+    );
+  };
 
   return (
     <Wrapper id="category" onMouseLeave={handleMouseLeave}>
       {generateMainCategory}
-      {generateSubCategory}
+      {generateSubCategory()}
     </Wrapper>
   );
 };
@@ -124,12 +127,15 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   ${({ theme }) => theme.font.medium}
+  ${hideScroll}
 
   ul {
     width: 100%;
+    box-sizing: border-box;
   }
 
   li {
+    ${({ theme }) => theme.flexCenter}
     cursor: pointer;
     text-align: center;
     a {
@@ -150,6 +156,10 @@ const MainCategoryWrapper = styled.ul`
   overflow-x: scroll;
   font-weight: normal;
   color: #555;
+  height: 100%;
+  ${({ theme }) => theme.font.large};
+  font-weight: normal;
+  ${hideScroll}
 
   li {
     flex-shrink: 0;
@@ -161,6 +171,10 @@ const MainCategoryWrapper = styled.ul`
       color: ${({ theme }) => theme.color.primary1};
     }
     border-bottom: 3px solid ${({ theme }) => theme.color.primary1};
+  }
+
+  ${media.mobile} {
+    height: 6rem;
   }
 `;
 

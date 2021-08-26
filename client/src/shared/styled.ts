@@ -10,7 +10,7 @@ export const PageWrapper = styled.div`
   min-height: 100vh;
   box-sizing: border-box;
   ${media.mobile} {
-    padding-top: 12rem;
+    padding-top: 0;
     max-width: 100vw;
   }
 `;
