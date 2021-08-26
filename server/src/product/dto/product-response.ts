@@ -1,3 +1,4 @@
+import { ProductOption } from "../entity/option";
 import { Product } from "../entity/product";
 
 export class ProductResponse {
@@ -10,6 +11,7 @@ export class ProductResponse {
   category: string;
   subCategory: string;
   option: string;
+  options: ProductOption[];
   images: string[];
   details: string[];
   isWish: boolean;
@@ -23,6 +25,13 @@ export class ProductResponse {
       category = product.category,
       subCategory = product.subCategory,
       option = product.option,
+      options = product.options.map((option) => {
+        return {
+          id: option.id,
+          value: option.value,
+          stock: option.stock,
+        };
+      }),
       stock = product.stock,
       images = product.getImagesAsString(),
       details = product.getDetailImagesAsString(),
@@ -39,6 +48,7 @@ export class ProductResponse {
       category,
       subCategory,
       option,
+      options,
       stock,
       images,
       details,
