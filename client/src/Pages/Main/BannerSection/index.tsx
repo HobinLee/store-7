@@ -29,7 +29,7 @@ const BannerSection = () => {
   return (
     <Carousel infinity>
       {banners.map((banner) => (
-        <Banner banner={banner} />
+        <Banner banner={banner} key={banner.id} />
       ))}
     </Carousel>
   );
