@@ -2,17 +2,13 @@ import CategoryBanner from "./Banner";
 import Filter, { filters } from "../../Components/Filter";
 
 import Header from "@/Components/Header";
-import { PageWrapper, Contents } from "@/shared/styled";
+import { PageWrapper } from "@/shared/styled";
 import styled from "styled-components";
 import Footer from "@/Components/Footer";
-import { ProductParams, useProducts } from "@/api/products";
-import ProductList from "@/Components/ProductList";
+import { useProducts } from "@/api/products";
+import InfiniteScroll from "@/Components/ProductList/InfiniteScroll";
 import { media } from "@/styles/theme";
 import { useState } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { useEffect } from "react";
-import { selectedCategoryState } from "@/store/category";
-import { locationState } from "@/store/history";
 
 export interface CategoryType {
   id: number;
@@ -34,41 +30,9 @@ export type CategoryParamType = {
 };
 
 const START_PAGE = 1;
-const DEFAULT_ORDER = "default";
 
 const CategoryPage = () => {
   const [filter, setFilter] = useState(filters[0]);
-  const { params } = useRecoilValue(locationState);
-  const [productsParams, setProductsParams] = useState<ProductParams>({});
-  const setSelectedCategoryState = useSetRecoilState(selectedCategoryState);
-
-  useEffect(() => {
-    setProductsParams({
-      ...params,
-      page: START_PAGE,
-      order: DEFAULT_ORDER,
-    });
-
-    setSelectedCategoryState({
-      categoryId: parseInt(params.category) ?? 0,
-      subCategoryId: params.subCategory ? parseInt(params.subCategory) : -1,
-    });
-  }, [params]);
-
-  useEffect(() => {
-    setProductsParams({
-      ...productsParams,
-      order: filter.value,
-      page: START_PAGE,
-    });
-  }, [filter]);
-
-  const nextPage = () => {
-    setProductsParams({
-      ...productsParams,
-      page: productsParams.page + 1,
-    });
-  };
 
   return (
     <>
@@ -79,10 +43,10 @@ const CategoryPage = () => {
         <div className="page-contents">
           <div className="products-wrapper">
             <Filter setFilter={setFilter} currentFilter={filter} />
-            <ProductList
+            <InfiniteScroll
               useQuery={useProducts}
-              productParams={productsParams}
-              nextPage={nextPage}
+              order={filter.value}
+              isPaginated={true}
             />
           </div>
         </div>
