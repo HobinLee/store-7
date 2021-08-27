@@ -26,3 +26,7 @@ export const patchOrders = ({ id, data }) => PATCH(`/orders/${id}`, data);
 
 // GET /orders/:id 백오피스 주문 상세정보 보기
 export const getOrder = ({ id }) => GET(`/orders/${id}`);
+
+// POST /orders/:id 주문번호 넣기
+export const postOrderNum = (id: number, orderNum: string) =>
+  POST(`/orders/${id}`, { orderNum });

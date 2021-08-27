@@ -57,6 +57,9 @@ export class Order {
   @Column({ type: "int" })
   price: number;
 
+  @Column({ length: 15, nullable: true })
+  orderNum: string;
+
   @CreateDateColumn({
     type: "timestamp",
     name: "created_at",
