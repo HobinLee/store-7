@@ -44,6 +44,9 @@ const AdminProductCreate: FC<Props> = ({ setPage }) => {
   };
 
   useEffect(() => {
+    if (discount > 100) {
+      setDiscount(100);
+    }
     const finalPrice = price * (1 - discount / 100);
     setDiscountResult(finalPrice);
   }, [price, discount]);
