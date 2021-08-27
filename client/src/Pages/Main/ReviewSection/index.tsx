@@ -11,7 +11,7 @@ const ReviewSection = () => {
 
   return (
     <SectionWrapper>
-      <div className="title">유저들의 상품 후기</div>$
+      <div className="title">유저들의 상품 후기</div>
       {status !== "loading" && <ReviewList reviews={reviews} />}
     </SectionWrapper>
   );

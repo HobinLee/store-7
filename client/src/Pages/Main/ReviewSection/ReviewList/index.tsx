@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import ReviewBox from "@/Pages/Detail/Review/ReviewBox";
 import { ReviewType } from "@/shared/type";
-import { Link } from "@/Router";
 import { gap, media } from "@/styles/theme";
+import ReviewCard from "@/Pages/Detail/Review/ReviewCard";
 
 export interface ReviewListProps {
   reviews: ReviewType[];
@@ -12,14 +11,11 @@ const ReviewList = ({ reviews }: ReviewListProps) => (
   <ReviewListWrapper>
     {reviews.map((review: ReviewType, idx: number) => (
       <li key={idx}>
-        <Link to={`/detail/${review.id}`}>
-          <ReviewBox {...{ review }} key={review.id} />
-        </Link>
+        <ReviewCard {...{ review }} key={review.id} />
       </li>
     ))}
   </ReviewListWrapper>
 );
-
 const ReviewListWrapper = styled.ul`
   width: 100%;
   display: flex;
@@ -28,10 +24,30 @@ const ReviewListWrapper = styled.ul`
 
   li {
     width: 100%;
-    & > a > div {
+    & > div {
+      flex: 1;
+    }
+  }
+
+  ${media.mobile} {
+    flex-direction: column;
+    ${gap("0rem")}
+    ${gap("2rem", "column")}
+  }
+`;
+
+const T = styled.ul`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  ${gap("2rem")}
+
+  li {
+    width: 100%;
+    & > div {
+      flex: 1;
       padding: 1rem 0;
       display: flex;
-      flex-direction: column-reverse;
       border: none;
       ${gap("2rem", "column-reverse")}
 
@@ -82,47 +98,6 @@ const ReviewListWrapper = styled.ul`
 
     &:hover img {
       transform: scale(1.05);
-    }
-  }
-
-  ${media.mobile} {
-    width: auto;
-    flex-direction: column;
-    li {
-      margin: 0;
-      .content {
-        margin: 0;
-        height: 30vw;
-        flex-direction: row;
-        align-items: flex-start;
-        .content-img {
-          ${({ theme }) => theme.borderRadius.medium}
-          width: 30vw;
-          min-width: 30vw;
-          height: 30vw;
-          img {
-            min-height: 30vw;
-          }
-        }
-
-        span {
-          margin-left: 1rem;
-          width: 100%;
-          max-height: calc(30vw - 8rem);
-          height: auto;
-          margin-top: 7rem;
-        }
-      }
-      & > a > div {
-        position: relative;
-        width: 100%;
-      }
-      & > a > div > div:first-child {
-        top: 2rem;
-        left: calc(30vw + 1rem);
-        position: absolute;
-        flex-direction: column;
-      }
     }
   }
 `;
