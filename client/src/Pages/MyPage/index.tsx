@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-
+import Footer from "@/Components/Footer";
 import { PageWrapper, Contents } from "@/shared/styled";
 import Header from "@/Components/Header";
 import Nav from "./Nav";
@@ -26,6 +26,7 @@ const MyPage = ({ location }) => {
             <ContentArea current={current} />
           </ContentBody>
         </Contents>
+        <Footer />
       </MyPageWrapper>
     </>
   );
