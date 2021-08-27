@@ -20,7 +20,6 @@ export class OrderService {
   async findOrderByOrderNum(orderNum: number): Promise<OrderResponse[]> {
     try {
       const orders = await this.orders.findOrderByOrderNum(orderNum);
-      console.log("orders", orders);
       return orders.map(OrderResponse.of);
     } catch (e) {
       throw Error(e.message);

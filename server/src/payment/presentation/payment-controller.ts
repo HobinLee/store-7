@@ -36,9 +36,9 @@ export class PaymentController {
       return {
         url: json.next_redirect_pc_url,
       };
-
-      //   Redirect(json.next_redirect_pc_url);
-    } catch (e) {}
+    } catch (e) {
+      throw Error(e.message);
+    }
   }
 
   @Get("/approve")
@@ -67,12 +67,14 @@ export class PaymentController {
       return json.aid
         ? {
             status: 301,
-            url: properties.client + "/order/success",
+            url: properties.client,
           }
         : {
             status: 500,
             message: "payment failed",
           };
-    } catch (e) {}
+    } catch (e) {
+      throw Error(e.message);
+    }
   }
 }
