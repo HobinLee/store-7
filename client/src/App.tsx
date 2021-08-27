@@ -7,7 +7,7 @@ import DetailPage from "./Pages/Detail";
 import CartPage from "./Pages/Cart";
 import MyPage from "./Pages/MyPage";
 import OrderPage from "./Pages/Order";
-import OrderSuccess from "./Pages/OrderSuccess";
+import OrderResultPage from "./Pages/OrderResult";
 import { theme } from "./styles/theme";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "./styles/global-style";
@@ -30,7 +30,7 @@ const routes: RouteSetType[] = [
   ["/signup", SignupPage],
   ["/category", CategoryPage],
   ["/order", OrderPage, true],
-  ["/order/success", OrderSuccess],
+  ["/order", OrderResultPage],
   ["/detail", DetailPage],
   ["/cart", CartPage],
   ["/mypage", MyPage],

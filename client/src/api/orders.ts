@@ -1,4 +1,5 @@
 import { GET, PATCH, POST } from "@/utils/axios";
+import { useQuery } from "react-query";
 
 // POST /orders 주문하기
 export const postOrder = ({
@@ -16,7 +17,9 @@ export const postOrder = ({
 }) => POST("/orders", { data });
 
 // GET /orders/:orderNum 주문번호로 주문 가져오기
-export const getOrdersByOrderNum = ({ orderNum }) => GET(`/orders/${orderNum}`);
+const getOrdersByOrderNum = (orderNum: number) => GET(`/orders/${orderNum}`);
+export const useOrdersByOrderNum = (orderNum: number) =>
+  useQuery(["orders", orderNum], () => getOrdersByOrderNum(orderNum));
 
 // GET /orders 백오피스 주문리스트 보기
 export const getOrders = () => GET("/orders");

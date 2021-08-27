@@ -25,6 +25,13 @@ export class Orders {
     });
   }
 
+  async findOrderByOrderNum(orderNum: number) {
+    return await this.orderRepository.find({
+      relations: ["user", "product", "product.images"],
+      where: { orderNum },
+    });
+  }
+
   async findCurrentOrdersByUserId(userId: number) {
     return await this.orderRepository.find({
       relations: ["user", "product", "product.images"],
@@ -63,11 +70,16 @@ export class Orders {
     });
   }
 
-  createOrder(order: CreateOrderRequest) {
-    this.orderRepository.insert(order);
+  async createOrder(order: CreateOrderRequest) {
+    const result = await this.orderRepository.insert(order);
+    return (await this.findOrderById(result.raw.insertId)).id;
   }
 
   async updateOrderStatus(id: number, status: OrderStatus) {
     return await this.orderRepository.update({ id }, { status });
+  }
+
+  async updateOrderNum(id: number, orderNum: string) {
+    await this.orderRepository.update({ id }, { orderNum });
   }
 }

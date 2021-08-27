@@ -5,8 +5,21 @@ import Footer from "@/Components/Footer";
 import Button from "@/Components/Button";
 import { moveTo } from "@/Router";
 import { gap } from "@/styles/theme";
+import { useOrdersByOrderNum } from "@/api/orders";
+import { useEffect } from "react";
 
-const OrderSuccess = () => {
+const OrderResult = () => {
+  const orderNum = location.pathname.split("order/")[1];
+  const {
+    status,
+    data: orders,
+    error,
+  } = useOrdersByOrderNum(parseInt(orderNum));
+
+  useEffect(() => {
+    if (orders) console.log(orders);
+  }, [status]);
+
   return (
     <Wrapper>
       <Header />
@@ -64,4 +77,4 @@ const Wrapper = styled(PageWrapper)`
   }
 `;
 
-export default OrderSuccess;
+export default OrderResult;
