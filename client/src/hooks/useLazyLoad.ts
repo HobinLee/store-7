@@ -13,7 +13,7 @@ export const useLazyLoad = (
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            if (entry.isIntersecting) {
+            if (entry.isIntersecting && ref.current) {
               observer.unobserve(ref.current);
               action();
             }

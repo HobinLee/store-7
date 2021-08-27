@@ -5,11 +5,11 @@ import Header from "@/Components/Header";
 import { PageWrapper, Contents } from "@/shared/styled";
 import styled from "styled-components";
 import Footer from "@/Components/Footer";
-import { useProducts } from "@/api/products";
+import { ProductParams, useProducts } from "@/api/products";
 import ProductList from "@/Components/ProductList";
 import { media } from "@/styles/theme";
 import { useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { useEffect } from "react";
 import { selectedCategoryState } from "@/store/category";
 
@@ -32,36 +32,59 @@ export type CategoryParamType = {
   order?: string;
 };
 
-const CategoryPage = ({ params }) => {
+const START_PAGE = 1;
+const DEFAULT_ORDER = "default";
+
+const CategoryPage = ({ params: URIparams }) => {
   const [filter, setFilter] = useState(filters[0]);
-  const [selected, setSelectedCategoryState] = useRecoilState(
-    selectedCategoryState
-  );
+  const [productsParams, setProductsParams] = useState<ProductParams>({
+    ...URIparams,
+  });
+  const setSelectedCategoryState = useSetRecoilState(selectedCategoryState);
 
   useEffect(() => {
-    setSelectedCategoryState({
-      categoryId: parseInt(params.category) ?? 0,
-      subCategoryId: params.subCategory ? parseInt(params.subCategory) : -1,
+    setProductsParams({
+      ...URIparams,
+      page: START_PAGE,
+      order: DEFAULT_ORDER,
     });
-  }, [params]);
+
+    setSelectedCategoryState({
+      categoryId: parseInt(URIparams.category) ?? 0,
+      subCategoryId: URIparams.subCategory
+        ? parseInt(URIparams.subCategory)
+        : -1,
+    });
+  }, [URIparams]);
+
+  useEffect(() => {
+    setProductsParams({
+      ...productsParams,
+      order: filter.value,
+      page: START_PAGE,
+    });
+  }, [filter]);
+
+  const nextPage = () => {
+    setProductsParams({
+      ...productsParams,
+      page: productsParams.page + 1,
+    });
+  };
 
   return (
     <>
       <Header />
       <Wrapper>
-        <BGWrapper></BGWrapper>
-        <CategoryBanner params={params} />
+        <BGWrapper />
+        <CategoryBanner />
         <div className="page-contents">
           <div className="products-wrapper">
-            <Filter
-              categoryId={selected.categoryId}
-              setFilter={setFilter}
-              currentFilter={filter}
-            />
+            <Filter setFilter={setFilter} currentFilter={filter} />
             <ProductList
               useQuery={useProducts}
-              params={{ ...params, order: filter.value }}
-              pagination={true}
+              productParams={productsParams}
+              nextPage={nextPage}
             />
           </div>
         </div>

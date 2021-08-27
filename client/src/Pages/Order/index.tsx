@@ -8,6 +8,36 @@ import { loginState } from "@/store/state";
 import { useCallback } from "react";
 import LoggedinContent from "./OrderContent/LoggedinContent";
 import LoggedoutContent from "./OrderContent/LoggedoutContent";
+import { postPaymentReady } from "@/api/payment";
+import properties from "@/config/properties";
+import { ICart } from "@/shared/type";
+
+// 카카오페이
+export const handleKakaoPay = async (
+  handlePostOrder: Function,
+  items: Partial<ICart>[]
+) => {
+  const res = await postPaymentReady({
+    cid: "TC0ONETIME",
+    item_name:
+      items.length === 1
+        ? items[0].name
+        : `${items[0].name}외 ${items.length - 1}개`,
+    quantity: items.length,
+    total_amount: items.reduce((sum, cart) => sum + cart.price, 0),
+    tax_free_amount: 0,
+    approval_url: `${properties.baseURL}/payment/approve`,
+    cancel_url: properties.baseURL,
+    fail_url: properties.baseURL,
+  });
+  if (res) {
+    try {
+      handlePostOrder();
+    } finally {
+      window.open(res.url);
+    }
+  }
+};
 
 const OrderPage = () => {
   const isLoggedin = useRecoilValue(loginState);

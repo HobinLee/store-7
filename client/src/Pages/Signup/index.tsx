@@ -151,6 +151,7 @@ const SignupPage = () => {
             validation={phoneValidation}
             placeholder="010-0000-0000"
             message={VALIDATION_ERR_MSG.INVALID_PHONE}
+            filter={convertToPhoneNumber}
           />
         </InputSection>
         <InputSection title="주소" brief="기본 배송지로 저장됩니다">

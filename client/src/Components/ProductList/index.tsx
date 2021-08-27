@@ -9,55 +9,42 @@ import { ProductParams } from "@/api/products";
 import { useLazyLoad } from "@/hooks/useLazyLoad";
 import { useEffect } from "react";
 
-const PRODUCT_PER_PAGE = 12;
+const PRODUCT_PER_PAGE = 4;
 
 interface ProductListProps {
   useQuery: (params: any) => UseQueryResult<ProductElementType[], unknown>;
-  params?: ProductParams;
-  pagination?: boolean;
+  productParams?: ProductParams;
+  nextPage?: () => void;
 }
 
 const ProductList = ({
   useQuery,
-  params: originParams,
-  pagination,
+  productParams,
+  nextPage,
 }: ProductListProps) => {
-  console.log("안녕?");
-  const [isEnd, setIsEnd] = useState(!pagination);
-
-  const [page, setPage] = useState(1);
-
-  const nextPage = () => {
-    if (status === "success" && !isEnd) {
-      setPage(page + 1);
-    }
-  };
-  const { ref } = useLazyLoad(nextPage);
-  const {
-    data: newProducts,
-    status,
-    refetch,
-  } = useQuery(originParams && { ...originParams, page });
-
   const [products, setProducts] = useState([]);
+  const [isEndPage, setIsEndPage] = useState(!nextPage);
+
+  const { ref } = useLazyLoad(nextPage);
+
+  const { data: newProducts, status, refetch } = useQuery(productParams);
+
   useEffect(() => {
     if (status === "success") {
-      setProducts([...products, ...newProducts]);
+      if (!productParams || productParams.page === 1) {
+        setProducts([...newProducts]);
+      } else {
+        setProducts([...products, ...newProducts]);
+      }
 
       if (newProducts?.length < PRODUCT_PER_PAGE) {
-        setIsEnd(true);
+        setIsEndPage(true);
       }
     }
     if (status === "error") {
-      setIsEnd(true);
+      setIsEndPage(true);
     }
   }, [newProducts, status]);
-
-  useEffect(() => {
-    setPage(1);
-    setIsEnd(!pagination);
-    setProducts([]);
-  }, [originParams]);
 
   return (
     <ProductWrapList>
@@ -69,7 +56,7 @@ const ProductList = ({
           <Loading />
         </div>
       )}
-      {status === "success" && !isEnd && (
+      {status === "success" && !isEndPage && (
         <div className="loading-indicator" ref={ref}>
           <Loading />
         </div>

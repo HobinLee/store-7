@@ -10,18 +10,21 @@ export class DestinationController {
   constructor(private readonly destinationService: DestinationService) {}
 
   @Post()
-  createDestination(
+  async createDestination(
     @Body() body: { data: DestinationRequest; userId: number }
-  ): string {
-    return this.destinationService.createDestination(body.userId, body.data);
+  ): Promise<string> {
+    return await this.destinationService.createDestination(
+      body.userId,
+      body.data
+    );
   }
 
   @Patch("/:id")
-  updateDestination(
+  async updateDestination(
     @Param("id") id: number,
     @Body() body: { data: DestinationModifyRequest; userId: number }
-  ): string {
-    return this.destinationService.updateDestination(id, body.data);
+  ): Promise<string> {
+    return await this.destinationService.updateDestination(id, body.data);
   }
 
   @Patch("/:id/default")
@@ -33,7 +36,7 @@ export class DestinationController {
   }
 
   @Delete("/:id")
-  deleteDestination(@Param("id") id: number): string {
-    return this.destinationService.deleteDestination(id);
+  async deleteDestination(@Param("id") id: number): Promise<string> {
+    return await this.destinationService.deleteDestination(id);
   }
 }

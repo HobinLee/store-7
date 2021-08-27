@@ -1,4 +1,9 @@
-import { ProductType, QuestionType, ReviewListType } from "@/shared/type";
+import {
+  ProductElementType,
+  ProductType,
+  QuestionType,
+  ReviewListType,
+} from "@/shared/type";
 import { DELETE, GET, POST } from "@/utils/axios";
 import { useQuery } from "react-query";
 
@@ -16,13 +21,15 @@ export interface ReviewParams {
   rating?: string;
 }
 
-// GET /products?order?category?subcategory?keyword? 상품 목록
-export const getProducts = async (params: ProductParams) =>
-  await GET("/products", params);
 export const getAllProductsByKeyword = async (keyword: string) =>
   await GET("/admin/products", { keyword });
+
+// GET /products?order?category?subcategory?keyword? 상품 목록
+export const getProducts = (
+  params: ProductParams
+): Promise<ProductElementType[]> => GET("/products", params);
 export const useProducts = (params: ProductParams) =>
-  useQuery(["product", params], () => getProducts(params));
+  useQuery(["products", params], () => getProducts(params));
 
 // GET /products/:id 상품 상세 정보
 const getProduct = (id: number): Promise<ProductType> => GET(`/products/${id}`);

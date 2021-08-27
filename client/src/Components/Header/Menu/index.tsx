@@ -181,6 +181,7 @@ const MainCategoryWrapper = styled.ul`
 
   li {
     flex-shrink: 0;
+    border-bottom: 3px solid ${({ theme }) => theme.color.white};
   }
 
   .selected {

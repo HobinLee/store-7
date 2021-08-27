@@ -7,13 +7,13 @@ import { ItemBannerType } from "@/shared/type";
 const giftList: ItemBannerType[] = [
   {
     title: "을지로에서 만든 쟁반",
-    id: 4,
+    id: 149,
     brief: "캬 ~ 좋다. 한 상 가득 을지로 쟁반",
     src: TrayImg,
   },
   {
     title: "쉿! 비밀펜",
-    id: 5,
+    id: 43,
     brief: "진짜진짜 아무한테도 말하지마",
     src: SecretpenImg,
     isWhite: true,

@@ -38,8 +38,8 @@ const MainPage = () => {
     <>
       <Header />
       <Wrapper>
-        <BannerSection />
         <Contents>
+          <BannerSection />
           <div className="main__contents-wrapper">
             <ProductSection {...SECTION_TYPES.hot} />
             <GiftSection />

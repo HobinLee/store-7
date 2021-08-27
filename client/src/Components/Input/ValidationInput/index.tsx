@@ -15,6 +15,7 @@ type VIPropsType = {
   onInput?: ({ target }: { target: HTMLTextAreaElement }) => void;
   className?: string;
   maxLength?: number;
+  filter?: (string) => string;
 };
 
 const ValidationInput = ({
@@ -25,6 +26,7 @@ const ValidationInput = ({
   type = "text",
   onChange = null,
   onInput = null,
+  filter = null,
   className,
   maxLength,
 }: VIPropsType) => {
@@ -47,7 +49,7 @@ const ValidationInput = ({
               ? `${className} valid-input `
               : `${className} invalid-input`
           }
-          defaultValue={input.value}
+          defaultValue={!!filter ? filter(input.value) : input.value}
           onChange={(e) => {
             onChange && onChange(e);
             input.onChange(e);
@@ -67,7 +69,7 @@ const ValidationInput = ({
               ? `${className} valid-input`
               : `${className} invalid-input`
           }
-          defaultValue={input.value}
+          defaultValue={filter ? filter(input.value) : input.value}
           onChange={(e) => {
             onChange && onChange(e);
             input.onChange(e);

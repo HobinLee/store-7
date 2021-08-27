@@ -2,7 +2,6 @@ import "jest-styled-components";
 import { render } from "@/utils/test-util";
 import { screen } from "@testing-library/react";
 import WistList from "./index";
-import { expectText } from "@/utils/test-util";
 import { sampleProducts } from "@/shared/dummy";
 
 describe("<WistList />", () => {

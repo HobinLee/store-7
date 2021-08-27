@@ -36,7 +36,8 @@ export class ProductController {
     @Query() query: ProductFindQuery,
     @Body("userId") userId: number
   ): Promise<ProductElementResponse[]> {
-    return await this.productService.getProducts(query, userId);
+    const result = await this.productService.getProducts(query, userId);
+    return result;
   }
 
   //auto complete

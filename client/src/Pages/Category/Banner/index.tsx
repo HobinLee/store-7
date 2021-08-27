@@ -5,24 +5,26 @@ import { useEffect } from "react";
 import styled, { css } from "styled-components";
 import Image from "@/Components/Image";
 import { CategoryParamType, CategoryType, MainCategoryType } from "../";
+import { useRecoilValue } from "recoil";
+import { selectedCategoryState } from "@/store/category";
 
 interface CategoryInfo extends MainCategoryType {
   subCategoryName?: string;
 }
 
-export const currentCategory = ({
-  category: categoryId,
-  subCategory: subCategoryId,
-}: CategoryParamType): CategoryInfo => {
+export const currentCategoryInfo = ({
+  categoryId,
+  subCategoryId,
+}): CategoryInfo => {
   const category: MainCategoryType = categories.find(
     (category: MainCategoryType) => {
-      const result = category.id.toString() === categoryId;
+      const result = category.id === categoryId;
       return result;
     }
   );
 
   const subCategoryName = category?.subCategories.find(
-    (subCategory: CategoryType) => subCategory.id.toString() === subCategoryId
+    (subCategory: CategoryType) => subCategory.id === subCategoryId
   )?.name;
 
   return {
@@ -31,11 +33,12 @@ export const currentCategory = ({
   };
 };
 
-const CategoryBanner = ({ params }: { params: CategoryParamType }) => {
-  const [info, setInfo] = useState(currentCategory(params));
+const CategoryBanner = () => {
+  const category = useRecoilValue(selectedCategoryState);
+  const [info, setInfo] = useState(currentCategoryInfo(category));
   useEffect(() => {
-    setInfo(currentCategory(params));
-  }, [params]);
+    setInfo(currentCategoryInfo(category));
+  }, [category]);
 
   return (
     <>
