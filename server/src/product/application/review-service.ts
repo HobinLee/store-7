@@ -5,13 +5,14 @@ import {
   ReviewPatchReqeust,
   UpdateReviewPatchRequest,
 } from "../dto/review-request";
+import { MyReviewResponse } from "../dto/review-my-response";
 
 @Injectable()
 export class ReviewService {
   constructor(private readonly reviews: Reviews) {}
 
   async createReview(review: CreateReviewPostRequest, image) {
-    const fileName = image ? await this.reviews.addImage(image) : "";
+    const fileName = image ? await this.reviews.addImage(image) : null;
     await this.reviews.createReview({
       ...review,
       image: fileName,
@@ -31,5 +32,10 @@ export class ReviewService {
 
   async deletereview(id: number) {
     await this.reviews.deleteReview(id);
+  }
+
+  async findRecentReviews(query) {
+    const reviews = await this.reviews.findRecentReviews(query);
+    return reviews.map(MyReviewResponse.of);
   }
 }
