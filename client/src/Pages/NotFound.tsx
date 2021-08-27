@@ -5,7 +5,7 @@ import { moveTo } from "@/Router";
 const NotFound = () => {
   return (
     <Wrapper>
-      <img src={Gif} />
+      <img className="gif" src={Gif} />
       <img onClick={() => moveTo("/")} className="button" src={GotoHome} />
     </Wrapper>
   );
@@ -17,8 +17,9 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100vh;
   background: #fff;
-  img {
-    width: 80%;
+  .gif {
+    max-width: 80%;
+    max-height: 80%;
   }
   .button {
     cursor: pointer;

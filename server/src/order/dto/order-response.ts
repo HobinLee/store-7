@@ -39,7 +39,7 @@ export class OrderResponse {
     if (productOptionId) {
       optionName = order.product.option;
       if (optionName) {
-        optionValue = order.product.options.filter(
+        optionValue = order.product.options?.filter(
           (option) => option.id === productOptionId
         )[0].value;
       }

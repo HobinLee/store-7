@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { media } from "@/styles/theme";
 import { UseQueryResult } from "react-query";
 import { Loading } from "@/shared/styled";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { ProductParams } from "@/api/products";
 import { useLazyLoad } from "@/hooks/useLazyLoad";
 import { useEffect } from "react";
