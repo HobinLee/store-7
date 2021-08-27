@@ -74,9 +74,7 @@ const CartSelects = ({
   }, [debouncedNumValue, optionId]);
 
   const RenderNumInput = useCallback(() => {
-    return (
-      <NumInput defaultValue={numValue.value} onChange={numValue.onChange} />
-    );
+    return <NumInput value={numValue.value} onChange={numValue.onChange} />;
   }, [numValue.value]);
 
   return (
@@ -105,7 +103,7 @@ const CartSelects = ({
             onChange={(e) => {
               setOptionId(parseInt(e.target.value));
             }}
-            defaultValue={optionId}
+            value={optionId}
           >
             {options.map((option) => (
               <option key={option.id} value={option.id}>
