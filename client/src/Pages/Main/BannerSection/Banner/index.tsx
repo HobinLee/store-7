@@ -8,21 +8,21 @@ export interface BannerProps {
   banners: ItemBannerType[];
 }
 
-const Banner = ({ banners }: BannerProps) => {
+const Banner = ({ banner }: { banner: ItemBannerType }) => {
   return (
     <BannerWrapper>
       <div className="banner-content">
-        <Link to={`/detail/${banners[0].id}`}>
+        <Link to={`/detail/${banner.id}`}>
           <div className="banner__info-wrapper">
             <div className="banner__info">
-              <h3 className="banner__title">{banners[0].title}</h3>
-              <div className="banner__brief">{banners[0].brief}</div>
+              <h3 className="banner__title">{banner.title}</h3>
+              <div className="banner__brief">{banner.brief}</div>
             </div>
             <div className="banner__button">
               <span>자세히 보기</span>
             </div>
           </div>
-          <Image src={banners[0].src} />
+          <Image src={banner.src} />
         </Link>
       </div>
     </BannerWrapper>
@@ -33,7 +33,6 @@ const BannerWrapper = styled.div`
   margin: 0 auto;
   max-width: 110rem;
   height: 40rem;
-  padding: 0 5rem;
 
   .banner-content {
     width: 100%;
