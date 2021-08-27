@@ -16,8 +16,10 @@ const Image = ({
   const [isLoading, setIsLoading] = useState(true);
   const [imageSrc, setImageSrc] = useState(lazyload ? null : src);
 
-  const setImage = () => setImageSrc(src);
-
+  const setImage = () => {
+    setImageSrc(src);
+    return true;
+  };
   const { ref } = useLazyLoad(setImage);
 
   const handleImageLoaded = () => {
