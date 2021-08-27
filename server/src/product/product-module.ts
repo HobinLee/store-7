@@ -40,10 +40,6 @@ const elasticsearchConfig = properties.elastic;
     ]),
     ElasticsearchModule.register({
       node: elasticsearchConfig.node,
-      auth: {
-        username: elasticsearchConfig.username,
-        password: elasticsearchConfig.password,
-      },
     }),
   ],
   controllers: [

@@ -4,9 +4,10 @@ import LeftArrowIcon from "../../../assets/left-arrow.png";
 import AddIcon from "../../../assets/add.png";
 import DeleteIcon from "../../../assets/delete.png";
 import { Page } from "..";
-import { ChangeEvent, FC, useState } from "react";
+import { ChangeEvent, FC, KeyboardEvent, MouseEvent, useState } from "react";
 import { useEffect } from "react";
 import { postProduct } from "@/api/products";
+import { CATEGORY } from "@/shared/type";
 
 interface Props {
   setPage: (name: Page) => void;
@@ -31,6 +32,9 @@ const AdminProductCreate: FC<Props> = ({ setPage }) => {
   const [image, setImage] = useState<File>();
   const [detailImages, setDetailImages] = useState<File[]>([]);
 
+  const [categoryOpened, setCategoryOpened] = useState(false);
+  const [subCategoryOpened, setSubCategoryOpened] = useState(false);
+
   const backButtonClickHandler = () => {
     setPage("Product");
   };
@@ -40,6 +44,9 @@ const AdminProductCreate: FC<Props> = ({ setPage }) => {
   };
 
   useEffect(() => {
+    if (discount > 100) {
+      setDiscount(100);
+    }
     const finalPrice = price * (1 - discount / 100);
     setDiscountResult(finalPrice);
   }, [price, discount]);
@@ -200,6 +207,44 @@ const AdminProductCreate: FC<Props> = ({ setPage }) => {
     return <span>파일 이름: {imageName}</span>;
   };
 
+  const categoryOpenHandler = () => {
+    setCategoryOpened(true);
+    setSubCategoryOpened(false);
+  };
+
+  const subCategoryOpenHandler = () => {
+    setCategoryOpened(false);
+    setSubCategoryOpened(true);
+  };
+
+  const categoryTypeHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+  };
+
+  const categorySelectHandler = (e: MouseEvent<HTMLElement>) => {
+    if (e.target instanceof HTMLLIElement) {
+      const selectedCategory = e.target.innerText;
+      setCategory(selectedCategory);
+      setSubCategory("");
+      setCategoryOpened(false);
+    }
+  };
+
+  const subCategorySelectHandler = (e: MouseEvent<HTMLElement>) => {
+    if (e.target instanceof HTMLLIElement) {
+      const selectedCategory = e.target.innerText;
+      setSubCategory(selectedCategory);
+      setSubCategoryOpened(false);
+    }
+  };
+
+  const getSubCategories = () => {
+    if (!category) return [];
+    return CATEGORY[category].list.map((subCategoryOfSelected) => (
+      <li>{subCategoryOfSelected.name}</li>
+    ));
+  };
+
   return (
     <S.AdminProductCreate>
       <img src={LeftArrowIcon} onClick={backButtonClickHandler} />
@@ -219,8 +264,53 @@ const AdminProductCreate: FC<Props> = ({ setPage }) => {
           <p className="info">할인된 금액: {discountResult}원</p>
         </div>
         {InputBox("재고", "number", setStock)}
-        {InputBox("카테고리", "text", setCategory)}
-        {InputBox("서브 카테고리", "text", setSubCategory)}
+        <div className="input-box">
+          <label>카테고리</label>
+          <div>
+            <input
+              type="text"
+              value={category}
+              onKeyDown={categoryTypeHandler}
+              onFocus={categoryOpenHandler}
+            />
+            <S.DropDownList
+              opened={categoryOpened}
+              onClick={categorySelectHandler}
+            >
+              <li>문구</li>
+              <li>리빙</li>
+              <li>책</li>
+              <li>배민그린</li>
+              <li>ㅋㅋ에디션</li>
+              <li>을지로 에디션</li>
+              <li>배달이 친구들</li>
+              <li>선물하기</li>
+              <li>콜라보레이션</li>
+            </S.DropDownList>
+          </div>
+        </div>
+        <div
+          className={
+            "input-box " + (getSubCategories().length == 0 ? "hide" : "")
+          }
+        >
+          <label>서브 카테고리</label>
+          <div>
+            <input
+              type="text"
+              value={subCategory}
+              onKeyDown={categoryTypeHandler}
+              onFocus={subCategoryOpenHandler}
+              disabled={getSubCategories().length == 0}
+            />
+            <S.DropDownList
+              opened={subCategoryOpened}
+              onClick={subCategorySelectHandler}
+            >
+              {getSubCategories()}
+            </S.DropDownList>
+          </div>
+        </div>
         <div className="option">
           <div className="input-box">
             <label>옵션</label>
@@ -269,8 +359,13 @@ const submitProduct = async ({
   formData.append("deliveryCost", deliveryCost);
   formData.append("discountRate", discount);
   formData.append("stock", stock);
-  formData.append("category", category);
-  formData.append("subCategory", subCategory);
+  formData.append("category", CATEGORY[category].code);
+  formData.append(
+    "subCategory",
+    CATEGORY[category].list.filter(
+      (subCategoryOfSelected) => subCategoryOfSelected.name === subCategory
+    )[0]?.id
+  );
   formData.append("images", image);
   for (let i = 0; i < detailImages.length; i++) {
     formData.append("details", detailImages[i]);
