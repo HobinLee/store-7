@@ -37,6 +37,10 @@ export const AdminProductCreate = styled.div`
       flex-direction: column;
       margin-bottom: 20px;
 
+      &.hide {
+        opacity: 0.5;
+      }
+
       > label {
         width: fit-content;
         background-color: white;
@@ -63,6 +67,10 @@ export const AdminProductCreate = styled.div`
 
           :focus {
             border: 1px solid #2a78c3;
+
+            + ul {
+              display: block;
+            }
           }
           ::-webkit-inner-spin-button {
             -webkit-appearance: none;
@@ -173,6 +181,29 @@ export const AdminProductCreate = styled.div`
           transform: scale(1.1);
         }
       }
+    }
+  }
+`;
+
+export const DropDownList = styled.ul<{ opened: boolean }>`
+  display: ${({ opened }) => (opened ? "block" : "none")};
+  position: absolute;
+  background-color: white;
+  width: 100%;
+  margin-top: -1px;
+  border: 1px solid #d2d2d2;
+  box-shadow: 3px 3px 5px gainsboro;
+  border-radius: 4px;
+  transition: 0.2s;
+  z-index: 3;
+  cursor: pointer;
+
+  > li {
+    padding: 10px;
+    font-size: 16px;
+
+    :hover {
+      background-color: #e8e8e8;
     }
   }
 `;
