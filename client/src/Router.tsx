@@ -1,31 +1,17 @@
-import {
-  useState,
-  useContext,
-  useEffect,
-  createContext,
-  ReactElement,
-} from "react";
+import { useEffect, ReactElement } from "react";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { decodeParams, URIParameterType } from "./utils/location";
+import { historyState, locationState } from "./store/history";
+import { decodeParams } from "./utils/location";
 
-interface RouterContextPropsType {
-  location: string;
-  params?: URIParameterType;
-}
-
-type PageComponentProps = { location?: string; params?: URIParameterType };
-
-export type PageComponentType = ({
-  location,
-  params,
-}: PageComponentProps) => JSX.Element;
+export type PageComponentType = () => JSX.Element;
 
 export type RouteSetType = [string, PageComponentType, boolean?];
 
 interface RouterType {
   exact?: boolean;
   path: string;
-  component: (props: PageComponentProps) => JSX.Element;
+  component: () => JSX.Element;
 }
 
 interface HistoryEvent extends Event {
@@ -34,17 +20,10 @@ interface HistoryEvent extends Event {
   };
 }
 
-const DEFAULT_LOCATION = "/";
-
-const RouterContext = createContext<RouterContextPropsType>({
-  location: DEFAULT_LOCATION,
-});
-
 export const Router = ({ children }): ReactElement => {
-  const [location, setLocation] = useState<RouterContextPropsType>({
-    location: window.location.pathname,
-    params: decodeParams(),
-  });
+  const setLocation = useSetRecoilState(locationState);
+  //TODO: 각 스크롤 이동마다 scroll위치 저장하기
+  const [history, setHistory] = useRecoilState(historyState);
 
   const setCurrentLocation = () => {
     setLocation({
@@ -69,15 +48,11 @@ export const Router = ({ children }): ReactElement => {
     addEvents();
   }, []);
 
-  return (
-    <RouterContext.Provider value={{ ...location }}>
-      {children}
-    </RouterContext.Provider>
-  );
+  return children;
 };
 
 export const Route = ({ exact, path, component: Component }: RouterType) => {
-  const { location, params } = useContext(RouterContext);
+  const { location } = useRecoilValue(locationState);
 
   const checkPath = (): boolean => {
     if (exact) {
@@ -87,7 +62,7 @@ export const Route = ({ exact, path, component: Component }: RouterType) => {
     }
   };
 
-  return checkPath() ? <Component location={location} params={params} /> : null;
+  return checkPath() ? <Component /> : null;
 };
 
 export const moveTo = (path: string) => {

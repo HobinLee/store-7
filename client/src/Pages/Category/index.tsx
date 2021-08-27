@@ -12,6 +12,7 @@ import { useState } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { useEffect } from "react";
 import { selectedCategoryState } from "@/store/category";
+import { locationState } from "@/store/history";
 
 export interface CategoryType {
   id: number;
@@ -35,27 +36,24 @@ export type CategoryParamType = {
 const START_PAGE = 1;
 const DEFAULT_ORDER = "default";
 
-const CategoryPage = ({ params: URIparams }) => {
+const CategoryPage = () => {
   const [filter, setFilter] = useState(filters[0]);
-  const [productsParams, setProductsParams] = useState<ProductParams>({
-    ...URIparams,
-  });
+  const { params } = useRecoilValue(locationState);
+  const [productsParams, setProductsParams] = useState<ProductParams>({});
   const setSelectedCategoryState = useSetRecoilState(selectedCategoryState);
 
   useEffect(() => {
     setProductsParams({
-      ...URIparams,
+      ...params,
       page: START_PAGE,
       order: DEFAULT_ORDER,
     });
 
     setSelectedCategoryState({
-      categoryId: parseInt(URIparams.category) ?? 0,
-      subCategoryId: URIparams.subCategory
-        ? parseInt(URIparams.subCategory)
-        : -1,
+      categoryId: parseInt(params.category) ?? 0,
+      subCategoryId: params.subCategory ? parseInt(params.subCategory) : -1,
     });
-  }, [URIparams]);
+  }, [params]);
 
   useEffect(() => {
     setProductsParams({
