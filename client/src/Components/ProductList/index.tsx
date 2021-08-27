@@ -4,7 +4,7 @@ import { media } from "@/styles/theme";
 import { UseQueryResult } from "react-query";
 import { Loading } from "@/shared/styled";
 import Item from "@/Components/Item";
-import { NoData } from "@/assets";
+import NoData from "@/Components/NoData";
 
 const ProductList = ({
   data: products,
@@ -48,10 +48,6 @@ const ProductWrapList = styled.ul`
     height: 30rem;
     width: 100%;
     ${({ theme }) => theme.flexCenter}
-  }
-  .load-next {
-    height: 30rem;
-    width: 100%;
   }
 `;
 
