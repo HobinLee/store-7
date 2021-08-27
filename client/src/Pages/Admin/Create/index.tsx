@@ -51,10 +51,6 @@ const AdminProductCreate: FC<Props> = ({ setPage }) => {
     setDiscountResult(finalPrice);
   }, [price, discount]);
 
-  useEffect(() => {
-    setSubCategory("");
-  }, [category]);
-
   const InputBox = (label, inputType, setMethod) => {
     return (
       <div className="input-box">
@@ -229,6 +225,7 @@ const AdminProductCreate: FC<Props> = ({ setPage }) => {
     if (e.target instanceof HTMLLIElement) {
       const selectedCategory = e.target.innerText;
       setCategory(selectedCategory);
+      setSubCategory("");
       setCategoryOpened(false);
     }
   };
@@ -242,12 +239,10 @@ const AdminProductCreate: FC<Props> = ({ setPage }) => {
   };
 
   const getSubCategories = () => {
-    if (category) {
-      return CATEGORY[category].list.map((subCategoryOfSelected) => {
-        return <li>{subCategoryOfSelected.name}</li>;
-      });
-    }
-    return [];
+    if (!category) return [];
+    return CATEGORY[category].list.map((subCategoryOfSelected) => (
+      <li>{subCategoryOfSelected.name}</li>
+    ));
   };
 
   return (
