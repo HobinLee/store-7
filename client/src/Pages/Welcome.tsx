@@ -1,5 +1,6 @@
 import { Welcome as Gif, HomePage, BackOffice } from "@/assets";
 import { moveTo } from "@/Router";
+import { media } from "@/styles/theme";
 import styled from "styled-components";
 
 const Welcome = () => {
@@ -19,8 +20,10 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100vh;
   background: #fff;
+  ${media.tablet} {
+    flex-direction: column;
+  }
   img {
-    cursor: pointer;
     margin: 5rem;
     width: 60%;
   }
@@ -29,8 +32,12 @@ const Wrapper = styled.div`
     display: flex;
     align-items: center;
     flex-direction: column;
-    div {
-      ${({ theme }) => theme.font.xlarge};
+    img {
+      cursor: pointer;
+    }
+    ${media.tablet} {
+      justify-content: center;
+      flex-direction: row;
     }
   }
 `;
