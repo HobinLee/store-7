@@ -5,6 +5,7 @@ import ReviewBox from "@/Pages/Detail/Review/ReviewBox";
 import { gap } from "@/styles/theme";
 import { useState } from "react";
 import ReviewModal from "@/Pages/Detail/Review/ReviewModal";
+import NoData from "@/Components/NoData";
 
 export interface ReviewForm {
   id?: number;
@@ -44,9 +45,13 @@ const Review = () => {
       >
         <ReviewsWrapper>
           {status !== "loading" ? (
-            reviews.map((review) => (
-              <ReviewBox {...{ review, refetch, handleClickEditButton }} />
-            ))
+            reviews.length > 0 ? (
+              reviews.map((review) => (
+                <ReviewBox {...{ review, refetch, handleClickEditButton }} />
+              ))
+            ) : (
+              <NoData />
+            )
           ) : (
             <div>스켈레톤 UI</div>
           )}

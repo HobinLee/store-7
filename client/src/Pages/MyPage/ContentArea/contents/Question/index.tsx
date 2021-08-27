@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Section from "../../../Section";
-
+import NoData from "@/Components/NoData";
 import { useMyQuestions } from "@/api/my";
 import QuestionBox from "@/Pages/Detail/Question/QuestionBox";
 import { gap } from "@/styles/theme";
@@ -40,13 +40,16 @@ const Question = () => {
     <Wrapper data-testid="test__question-content">
       <Section title="상품문의" description="회원님의 상품문의 내역입니다.">
         <QuestionsWrapper>
-          {status !== "loading" &&
+          {status !== "loading" && questions.length > 0 ? (
             questions.map((question: QuestionType, idx) => (
               <QuestionBox
                 {...{ question, refetch, handleClickEditButton }}
                 key={idx}
               />
-            ))}
+            ))
+          ) : (
+            <NoData />
+          )}
         </QuestionsWrapper>
       </Section>
       {isModalOpened && (

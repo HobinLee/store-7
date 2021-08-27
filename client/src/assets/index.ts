@@ -59,3 +59,8 @@ export { default as Review } from "./mypage/review.png";
 export { default as Welcome } from "./welcome/welcome.gif";
 export { default as BackOffice } from "./welcome/backoffice.gif";
 export { default as HomePage } from "./welcome/homepage.gif";
+
+// not found
+export { default as NotFound } from "./notfound/404.gif";
+export { default as NoData } from "./notfound/nodata.gif";
+export { default as GotoHome } from "./notfound/goto_home.gif";
