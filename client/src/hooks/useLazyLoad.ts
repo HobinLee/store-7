@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 const THRESHOLD = 0.05;
 
 export const useLazyLoad = (
-  action: () => void,
+  action: () => boolean,
   threshold: number = THRESHOLD
 ) => {
   const ref = useRef(null);
@@ -13,9 +13,8 @@ export const useLazyLoad = (
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              observer.unobserve(ref.current);
-              action();
+            if (entry.isIntersecting && action()) {
+              ref.current && observer.unobserve(ref.current);
             }
           });
         },
