@@ -1,7 +1,8 @@
 import { useEffect, ReactElement } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { historyState, locationState } from "./store/history";
+import { selectedCategoryState } from "./store/category";
+import { locationState } from "./store/history";
 import { decodeParams } from "./utils/location";
 
 export type PageComponentType = () => JSX.Element;
@@ -22,15 +23,25 @@ interface HistoryEvent extends Event {
 
 export const Router = ({ children }): ReactElement => {
   const setLocation = useSetRecoilState(locationState);
-  //TODO: 각 스크롤 이동마다 scroll위치 저장하기
-  const [history, setHistory] = useRecoilState(historyState);
+  const setSelectedCategoryState = useSetRecoilState(selectedCategoryState);
+
+  const setCurrentCategory = () => {
+    const params = decodeParams();
+
+    setSelectedCategoryState({
+      categoryId: parseInt(params.category) ?? 0,
+      subCategoryId: params.subCategory && parseInt(params.subCategory),
+    });
+  };
 
   const setCurrentLocation = () => {
     setLocation({
       location: window.location.pathname,
       params: decodeParams(),
     });
+
     document.documentElement.scrollTo(0, 0);
+    setCurrentCategory();
   };
 
   const handlePushState = (e: HistoryEvent) => {
@@ -39,9 +50,13 @@ export const Router = ({ children }): ReactElement => {
     setCurrentLocation();
   };
 
+  const handlePopState = (e) => {
+    setCurrentLocation();
+  };
+
   const addEvents = () => {
     window.addEventListener("pushstate", handlePushState);
-    window.addEventListener("popstate", setCurrentLocation);
+    window.addEventListener("popstate", handlePopState);
   };
 
   useEffect(() => {
