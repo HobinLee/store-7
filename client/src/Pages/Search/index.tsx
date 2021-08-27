@@ -4,21 +4,22 @@ import styled from "styled-components";
 import Footer from "@/Components/Footer";
 import { useSearchProducts } from "@/api/search";
 import ProductList from "@/Components/ProductList";
+import { useEffect } from "react";
 
-const SearchPage = ({ params }) => {
+const SearchPage = () => {
   return (
     <>
       <Header />
       <Wrapper>
         <Contents>
           <div className="search-page__keyword">
-            <span>{params.keyword}</span>
+            {/* <span>{params.keyword}</span> */}
           </div>
-          <ProductList
+          {/* <ProductList
             useQuery={useSearchProducts}
             params={params}
             pagination={true}
-          />
+          /> */}
         </Contents>
         <Footer />
       </Wrapper>

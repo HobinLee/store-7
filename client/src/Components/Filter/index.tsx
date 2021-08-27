@@ -6,7 +6,6 @@ import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 export interface FilterProps {
-  categoryId?: number;
   currentFilter?: FilterType;
   setFilter: (filter: FilterType) => void;
 }
@@ -40,7 +39,7 @@ export const filters: FilterType[] = [
 ];
 
 const Filter = ({ currentFilter, setFilter }: FilterProps) => {
-  const category = useRecoilValue(selectedCategoryState);
+  const selectedCategory = useRecoilValue(selectedCategoryState);
   const generateButtons = filters.map((filter: FilterType) => (
     <button
       className={`buttons__btn ${
@@ -56,9 +55,10 @@ const Filter = ({ currentFilter, setFilter }: FilterProps) => {
   return (
     <FilterWrapper
       hasSubCategories={
-        category.categoryId < 0
+        selectedCategory.categoryId < 0
           ? false
-          : !!categories[category.categoryId / 100]?.subCategories.length
+          : !!categories[selectedCategory.categoryId / 100]?.subCategories
+              .length
       }
     >
       <div className="buttons">{generateButtons}</div>
