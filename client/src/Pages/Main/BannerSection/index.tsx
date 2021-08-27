@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { Banner1, Banner2, Banner3 } from "@/assets";
 import Banner from "./Banner";
 import { ItemBannerType } from "@/shared/type";
-import Carousel from "@/Components/Carousel";
 
 const banners: ItemBannerType[] = [
   {
