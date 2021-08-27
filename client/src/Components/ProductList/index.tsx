@@ -8,6 +8,7 @@ import { useRef, useState } from "react";
 import { ProductParams } from "@/api/products";
 import { useLazyLoad } from "@/hooks/useLazyLoad";
 import { useEffect } from "react";
+import NoData from "../NoData";
 
 const PRODUCT_PER_PAGE = 4;
 
@@ -48,9 +49,13 @@ const ProductList = ({
 
   return (
     <ProductWrapList>
-      {products?.map((product: ProductElementType) => (
-        <Item {...product} refetch={refetch} key={product.id} />
-      ))}
+      {products?.length > 0 ? (
+        products.map((product: ProductElementType) => (
+          <Item {...product} refetch={refetch} key={product.id} />
+        ))
+      ) : (
+        <NoData />
+      )}
       {status === "loading" && (
         <div className="loading-indicator">
           <Loading />

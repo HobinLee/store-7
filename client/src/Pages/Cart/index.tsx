@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { loginState } from "@/store/state";
 import { CartType, ICart, PartialCart } from "@/shared/type";
+import NoData from "@/Components/NoData";
 
 const CartPage = () => {
   const isLoggedin = useRecoilValue(loginState);
@@ -108,7 +109,7 @@ const CartPage = () => {
 
             <Content>
               {!cartItems || cartItems?.items.length === 0 ? (
-                <div className="empty">장바구니에 담긴 상품이 없습니다.</div>
+                <NoData />
               ) : (
                 <div className="items">
                   <div>
@@ -202,15 +203,6 @@ const Content = styled.div`
     ${media.tablet} {
       padding-bottom: 0;
     }
-  }
-  .empty {
-    background-color: #fff;
-    width: 100%;
-    text-align: center;
-    padding: 5rem;
-    box-sizing: border-box;
-    border-radius: 1rem;
-    ${({ theme }) => theme.font.xlarge};
   }
 `;
 

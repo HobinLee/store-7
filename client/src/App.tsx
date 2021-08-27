@@ -21,6 +21,7 @@ import { verifyToken } from "./api/auth";
 import SearchPage from "./Pages/Search";
 import AdminPage from "./Pages/Admin";
 import WelcomePage from "./Pages/Welcome";
+import NotFound from "./Pages/NotFound";
 
 const routes: RouteSetType[] = [
   ["/", MainPage, true],
@@ -35,6 +36,7 @@ const routes: RouteSetType[] = [
   ["/mypage", MyPage],
   ["/search", SearchPage],
   ["/admin", AdminPage],
+  ["/404", NotFound, true],
 ];
 
 const App = () => {
