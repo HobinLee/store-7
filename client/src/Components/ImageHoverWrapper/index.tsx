@@ -1,17 +1,18 @@
 import styled from "styled-components";
+import Image from "@/Components/Image";
 
-const ImageHoverWrapper = ({ src }: { src: string }) => {
+const ImageHoverWrapper = ({ src, alt }: { src: string; alt?: string }) => {
   return (
     <Wrapper>
-      <img src={src} />
+      <Image {...{ src, alt }} lazyload={true} />
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
   overflow: hidden;
-
   ${({ theme }) => theme.borderRadius.medium}
+  height: 100%;
 
   & > img {
     display: block;

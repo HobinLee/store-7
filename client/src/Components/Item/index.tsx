@@ -1,6 +1,6 @@
 import { Link } from "@/Router";
 import styled, { css } from "styled-components";
-import ToggleImageWrapper from "../ToggleImageWrapper";
+import ImageHoverWrapper from "../ImageHoverWrapper";
 import { WishIcon } from "@/assets";
 import { convertToKRW } from "@/utils/util";
 import { postWishProduct, deleteWishProduct } from "@/api/my";
@@ -67,7 +67,7 @@ const Item = ({
       <Link to={`/detail/${id}`}>
         <ItemWrapper>
           <div className="thumbnail">
-            <ToggleImageWrapper src={properties.imgURL + image} />
+            <ImageHoverWrapper src={properties.imgURL + image} />
             <div className="thumbnail__tags">
               {tags.map((tag, idx) => (
                 <Tag tag={tag} key={idx}>
