@@ -7,14 +7,14 @@ interface Carousel {
   children: React.ReactNode;
   infinity?: boolean;
 }
-const DEFAULT_X = 0;
+const DEFAULT_X = -100;
 const DEFAULT_TRANSITION = "all .5s";
 
 type DIRECTION = "LEFT" | "RIGHT" | "STOP";
 
 const Carousel = ({ children, infinity = false }: Carousel) => {
   const [items, setItems] = useState(React.Children.toArray(children));
-  const [x, setX] = useState<number>(-100);
+  const [x, setX] = useState<number>(DEFAULT_X);
   const [dir, setDir] = useState<DIRECTION>("STOP");
   const [currentIndex, setCurrentIndex] = useState<number>(1);
   const [transitionValue, settransitionValue] = useState<string>();
@@ -29,6 +29,23 @@ const Carousel = ({ children, infinity = false }: Carousel) => {
     }
     return false;
   };
+
+  const moveItemToOpposite = (from: DIRECTION) => {
+    if (from === "STOP") {
+      return;
+    }
+
+    if (from === "LEFT") {
+      const endIndex = items.length - 1;
+      setItems((items) => [items[endIndex], ...items.slice(0, endIndex)]);
+      setX(DEFAULT_X);
+    }
+    if (from === "RIGHT") {
+      setItems((items) => [...items.slice(1), items[0]]);
+      setX(DEFAULT_X);
+    }
+  };
+
   const slide = (dir: DIRECTION) => {
     if (moving) return;
     if (!infinity && isEndBanner(dir, currentIndex)) {
@@ -37,12 +54,17 @@ const Carousel = ({ children, infinity = false }: Carousel) => {
 
     setMoving(true);
     settransitionValue(DEFAULT_TRANSITION);
+    setDir(dir);
+
     if (dir === "LEFT") {
       setCurrentIndex((index) => index - 1);
       setX((x) => x + 100);
-    } else if (dir === "RIGHT") {
+      return;
+    }
+    if (dir === "RIGHT") {
       setCurrentIndex((index) => index + 1);
       setX((x) => x - 100);
+      return;
     }
   };
 
@@ -52,21 +74,15 @@ const Carousel = ({ children, infinity = false }: Carousel) => {
     }
     setMoving(false);
     settransitionValue("none");
+
+    if (infinity && isEndBanner(dir, currentIndex)) {
+      setCurrentIndex((index) => {
+        const mount = dir === "LEFT" ? 1 : dir === "RIGHT" ? -1 : 0;
+        return index + mount;
+      });
+      moveItemToOpposite(dir);
+    }
   };
-
-  useEffect(() => {
-    console.log(transitionValue);
-    if (transitionValue !== "none") {
-      return;
-    }
-
-    if (currentIndex === 0) {
-      console.log(0);
-    }
-    if (currentIndex === items.length - 1) {
-      console.log(1);
-    }
-  }, [transitionValue]);
 
   useEffect(() => {
     setItems(React.Children.toArray(children));
@@ -95,12 +111,17 @@ const CarouselWrapper = styled.div`
   width: 100%;
   position: relative;
   overflow: hidden;
+
   .btn {
     top: 50%;
     transform: translateY(-50%);
     z-index: 5;
-    width: 6rem;
-    height: 6rem;
+    width: 7rem;
+    height: 7rem;
+    opacity: 0.8;
+    fill: ${({ theme }) => theme.color.white};
+    transition: fill 0.5s;
+
     &.left {
       position: absolute;
       left: 2rem;
@@ -111,6 +132,7 @@ const CarouselWrapper = styled.div`
     }
     &:hover {
       fill: ${({ theme }) => theme.color.primary1};
+      opacity: 1;
     }
   }
 `;
@@ -118,6 +140,7 @@ const CarouselWrapper = styled.div`
 const Slider = styled.div<{ x: number; transitionValue: string }>`
   width: 100%;
   display: flex;
+
   ${({ x, transitionValue }) => css`
     transform: translateX(${x}%);
     transition: ${transitionValue};

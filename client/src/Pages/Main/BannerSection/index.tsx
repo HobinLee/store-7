@@ -27,7 +27,7 @@ const banners: ItemBannerType[] = [
 
 const BannerSection = () => {
   return (
-    <Carousel>
+    <Carousel infinity>
       {banners.map((banner) => (
         <Banner banner={banner} />
       ))}
