@@ -103,13 +103,14 @@ const AdminProduct: FC<Props> = ({ setPage }) => {
   );
 };
 
-const productDeleteClickHandler = (e, id: number) => {
+const productDeleteClickHandler = (e, id: number, products, setProducts) => {
   e.stopPropagation();
   const result = confirm("정말 삭제하시겠습니까?");
   if (result) {
     deleteProduct({ id })
       .then(() => {
         alert("삭제되었습니다.");
+        setProducts(products.filter((product) => product.id !== id));
       })
       .catch((err) => {
         alert("삭제하는데 뭔가 이상한 에러가?!");
@@ -123,8 +124,7 @@ const convertProductsToElement = (
   setProductDetail
 ) => {
   const deleteHandler = (e, producId) => {
-    productDeleteClickHandler(e, producId);
-    setProducts(products.filter((product) => product.id !== producId));
+    productDeleteClickHandler(e, producId, products, setProducts);
   };
 
   return products.map((product) => {

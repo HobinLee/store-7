@@ -6,6 +6,12 @@ import { MouseEvent } from "react";
 import { useState } from "react";
 import * as S from "./styles";
 
+const OrderStatusColor = {
+  배송준비중: "red",
+  배송중: "yellow",
+  배송완료: "green",
+};
+
 const AdminOrder = () => {
   const [orders, setOrders] = useState<MyOrderType[]>([]);
 
@@ -43,12 +49,6 @@ const convertProductsToElement = (orders: MyOrderType[], setOrders) => {
   };
 
   return orders.map((order) => {
-    const getColor = (order: MyOrderType) => {
-      if (order.status === "배송준비중") return "red";
-      if (order.status === "배송중") return "yellow";
-      if (order.status === "배송완료") return "green";
-    };
-
     const changeOrderStatus = (e: MouseEvent<HTMLElement>, id) => {
       if (e.target instanceof HTMLLIElement) {
         const status = e.target.innerText;
@@ -82,7 +82,9 @@ const convertProductsToElement = (orders: MyOrderType[], setOrders) => {
         <div>{order.amount}개</div>
         <div>{order.price}원</div>
         <div className="status">
-          <label className={getColor(order)}>{order.status}</label>
+          <label className={OrderStatusColor[order.status]}>
+            {order.status}
+          </label>
           <S.OrderItemStatus onClick={(e) => changeOrderStatus(e, order.id)}>
             <li className="red">배송준비중</li>
             <li className="yellow">배송중</li>

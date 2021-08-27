@@ -178,7 +178,7 @@ const BackgroundShow = keyframes`
 
 export const ProductDetailBackground = styled.div<{ isShowed: boolean }>`
   display: ${({ isShowed }) => (isShowed ? "block" : "none")};
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
   left: 0;
