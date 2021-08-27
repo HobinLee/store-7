@@ -8,6 +8,7 @@ import Checkbox from "@/Components/Checkbox";
 import { useEffect } from "react";
 import useDebounce from "@/hooks/useDebounce";
 import Rating from "@/Components/Rating";
+import NoData from "@/Components/NoData";
 
 const Review = () => {
   const pathname = location.pathname.split("detail/")[1];
@@ -119,9 +120,15 @@ const Review = () => {
         </Filter>
 
         <ReviewsWrapper>
-          {reviews.reviews.map((review) => (
-            <ReviewBox key={review.id} {...{ review }} />
-          ))}
+          {reviews.reviews.length > 0 ? (
+            reviews.reviews.map((review) => (
+              <ReviewBox key={review.id} {...{ review }} />
+            ))
+          ) : (
+            <div className="no-data">
+              <NoData />
+            </div>
+          )}
         </ReviewsWrapper>
       </div>
     )
@@ -131,6 +138,10 @@ const Review = () => {
 const ReviewsWrapper = styled.div`
   margin-top: 3rem;
   ${gap("3rem", "column")}
+
+  .no-data {
+    width: 30%;
+  }
 `;
 
 const Header = styled.div`
