@@ -73,7 +73,6 @@ const ValidationInput = ({
           onChange={(e) => {
             onChange && onChange(e);
             input.onChange(e);
-            console.log(input.value);
           }}
           onBlur={handleBlurInput}
           placeholder={placeholder}

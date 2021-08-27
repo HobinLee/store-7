@@ -105,7 +105,6 @@ export class MyController {
 
   @Post("/wishes")
   async postWishProduct(@Body() body: WishRequest) {
-    console.log(1, body.userId);
     return await this.myService.createWishProduct(body);
   }
 

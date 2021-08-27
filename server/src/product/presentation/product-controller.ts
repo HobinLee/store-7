@@ -37,8 +37,6 @@ export class ProductController {
     @Body("userId") userId: number
   ): Promise<ProductElementResponse[]> {
     const result = await this.productService.getProducts(query, userId);
-    console.log("----------------------------------");
-    console.log(query, result);
     return result;
   }
 
