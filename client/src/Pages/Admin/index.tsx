@@ -7,6 +7,7 @@ import { useState } from "react";
 import AdminHome from "./Home";
 import AdminProduct from "./Product";
 import AdminProductCreate from "./Create";
+import AdminOrder from "./Order";
 
 export type Page = "Home" | "Product" | "Order" | "ProductCreate";
 
@@ -16,6 +17,7 @@ const AdminPage = () => {
     Home: <AdminHome />,
     Product: <AdminProduct setPage={setPage} />,
     ProductCreate: <AdminProductCreate setPage={setPage} />,
+    Order: <AdminOrder />,
   };
 
   const SidebarItem = (name: Page, icon: string) => {

@@ -98,9 +98,11 @@ export class Product {
   }
 
   getDiscountedPrice() {
-    return this.discountRate === 0
-      ? this.price
-      : this.price * ((100 - this.discountRate) / 100);
+    return Math.floor(
+      this.discountRate === 0
+        ? this.price
+        : this.price * ((100 - this.discountRate) / 100)
+    );
   }
 
   getThumbnailImage() {

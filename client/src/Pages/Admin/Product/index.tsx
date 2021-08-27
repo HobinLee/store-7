@@ -90,7 +90,7 @@ const AdminProduct: FC<Props> = ({ setPage }) => {
           <div>관리</div>
         </S.ProductListHeader>
         <S.ProductList>
-          {convertProductsToElement(products, setProductDetail)}
+          {convertProductsToElement(products, setProducts, setProductDetail)}
         </S.ProductList>
       </S.AdminProduct>
       <S.ProductDetailBackground
@@ -119,8 +119,14 @@ const productDeleteClickHandler = (e, id: number) => {
 
 const convertProductsToElement = (
   products: AdminProductType[],
+  setProducts,
   setProductDetail
 ) => {
+  const deleteHandler = (e, producId) => {
+    productDeleteClickHandler(e, producId);
+    setProducts(products.filter((product) => product.id !== producId));
+  };
+
   return products.map((product) => {
     return (
       <S.ProductItem
@@ -137,7 +143,7 @@ const convertProductsToElement = (
         <div>
           <button
             className="delete"
-            onClick={(e) => productDeleteClickHandler(e, product.id)}
+            onClick={(e) => deleteHandler(e, product.id)}
           >
             삭제
           </button>
