@@ -37,7 +37,7 @@ const OrderResult = () => {
         <div className="title">
           주문번호 {orderNum}
           <div className="title__sub">
-            주문자명과 주문번호로 주문내역을 주회할 수 있습니다.
+            주문번호로 주문내역을 주회할 수 있습니다.
           </div>
         </div>
 
@@ -95,6 +95,9 @@ const Wrapper = styled(PageWrapper)`
       width: 100%;
       padding: 0 5rem;
       box-sizing: border-box;
+    }
+    ${media.mobile} {
+      padding: 0;
     }
   }
 `;

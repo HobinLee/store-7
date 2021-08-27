@@ -36,13 +36,13 @@ const LoginSection = () => {
       <Input
         className="login-input"
         placeholder="이메일 입력"
-        defaultValue={email.value}
+        value={email.value}
         onChange={email.onChange}
       />
       <Input
         className="login-input"
         placeholder="비밀번호 입력"
-        defaultValue={password.value}
+        value={password.value}
         type="password"
         onChange={password.onChange}
       />
