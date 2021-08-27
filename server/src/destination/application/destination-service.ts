@@ -15,9 +15,12 @@ export class DestinationService {
     return destinations.map(DestinationResponse.of);
   }
 
-  createDestination(userId: number, destination: DestinationRequest): string {
+  async createDestination(
+    userId: number,
+    destination: DestinationRequest
+  ): Promise<string> {
     try {
-      this.destinations.createDestination({
+      await this.destinations.createDestination({
         ...destination,
         user: { id: userId },
         isDefault: destination.isDefault ? 1 : 0,
@@ -28,12 +31,12 @@ export class DestinationService {
     return "Created!";
   }
 
-  updateDestination(
+  async updateDestination(
     id: number,
     destinationModifyRequest: DestinationModifyRequest
-  ): string {
+  ): Promise<string> {
     try {
-      this.destinations.updateDestination(id, destinationModifyRequest);
+      await this.destinations.updateDestination(id, destinationModifyRequest);
     } catch (e) {
       throw Error(e.message);
     }
@@ -56,9 +59,9 @@ export class DestinationService {
     return "Updated!";
   }
 
-  deleteDestination(id: number): string {
+  async deleteDestination(id: number): Promise<string> {
     try {
-      this.destinations.deleteDestination(id);
+      await this.destinations.deleteDestination(id);
     } catch (e) {
       throw Error(e.message);
     }

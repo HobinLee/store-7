@@ -63,7 +63,6 @@ const AddressForm = ({
             isDefault: isFirst,
           },
         });
-        await refetch();
       } else {
         await patchDestination({
           id: addressToEdit.id,
@@ -75,7 +74,6 @@ const AddressForm = ({
             isDefault: addressToEdit.isDefault,
           },
         });
-        await refetch();
       }
     } catch (error) {
     } finally {
