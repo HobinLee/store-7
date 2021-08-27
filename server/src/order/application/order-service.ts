@@ -9,33 +9,46 @@ export class OrderService {
   constructor(private readonly orders: Orders) {}
 
   async findOrderById(id: number): Promise<OrderResponse> {
-    const orders = await this.orders.findOrderById(id);
-    return OrderResponse.of(orders);
+    try {
+      const orders = await this.orders.findOrderById(id);
+      return OrderResponse.of(orders);
+    } catch (e) {
+      throw Error(e.message);
+    }
   }
 
-  // async findOrderByOrderNum(orderNum: number): Promise<OrderResponse[]> {
-  //   try {
-  //     const data = await this.orders.findOrderByOrderNum(orderNum);
-  //     return data;
-  //   } catch (e) {
-  //     return e;
-  //   }
-  // }
+  async findOrderByOrderNum(orderNum: number): Promise<OrderResponse[]> {
+    try {
+      const orders = await this.orders.findOrderByOrderNum(orderNum);
+      console.log("orders", orders);
+      return orders.map(OrderResponse.of);
+    } catch (e) {
+      throw Error(e.message);
+    }
+  }
 
   async findOrders(): Promise<OrderResponse[]> {
-    const orders = await this.orders.findOrders();
-    return orders.map(OrderResponse.of);
+    try {
+      const orders = await this.orders.findOrders();
+      return orders.map(OrderResponse.of);
+    } catch (e) {
+      throw Error(e.message);
+    }
   }
 
   async findOrdersByUserId(userId: number): Promise<OrderResponse[]> {
-    const orders = await this.orders.findOrdersByUserId(userId);
-    return orders.map(OrderResponse.of);
+    try {
+      const orders = await this.orders.findOrdersByUserId(userId);
+      return orders.map(OrderResponse.of);
+    } catch (e) {
+      throw Error(e.message);
+    }
   }
 
-  createOrder(userId: number, order: OrderRequest): string {
+  async createOrder(userId: number, order: OrderRequest): Promise<number> {
     try {
       // 비회원은 id 7
-      this.orders.createOrder({
+      const orderId = await this.orders.createOrder({
         ...order,
         product: { id: order.productId },
         user: {
@@ -43,18 +56,27 @@ export class OrderService {
         },
         status: OrderStatus.Prepare,
       });
+      return orderId;
     } catch (e) {
       throw Error(e.message);
     }
-    return "Created!";
+  }
+
+  async updateOrderNum(id: number, orderNum: string): Promise<string> {
+    try {
+      await this.orders.updateOrderNum(id, orderNum);
+      return orderNum;
+    } catch (e) {
+      throw Error(e.message);
+    }
   }
 
   updateOrderStatus(id: number, status: OrderStatus): string {
     try {
       this.orders.updateOrderStatus(id, status);
+      return "Updated!";
     } catch (e) {
       throw Error(e.message);
     }
-    return "Updated!";
   }
 }

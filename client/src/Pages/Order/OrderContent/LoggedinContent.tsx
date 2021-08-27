@@ -16,9 +16,15 @@ import { useMyDestinations, useMyInfo } from "@/api/my";
 import { DestinationType, ICart, PartialCart } from "@/shared/type";
 import CartOrderBox from "@/Components/CartOrderBox";
 import { convertToPhoneNumber } from "@/utils/util";
-import { postOrder } from "@/api/orders";
 import { moveTo } from "@/Router";
-import { Title, Content, Info, Payment, handleKakaoPay } from "../index";
+import {
+  Title,
+  Content,
+  Info,
+  Payment,
+  handleKakaoPay,
+  handlePostOrder as handlePost,
+} from "../index";
 
 const LoggedinContent = () => {
   // 상품목록
@@ -66,22 +72,8 @@ const LoggedinContent = () => {
   // 요청사항
   const [request, setRequest] = useState("");
 
-  // create order
-  const handlePostOrder = () => {
-    orderItems.items.forEach(async (item) => {
-      await postOrder({
-        data: {
-          productId: item.productId,
-          addressee: addressee.value,
-          productOptionId: item.productOptionId,
-          price: item.price,
-          amount: item.amount,
-          destination: `${address.address} ${address.detailAddress}`,
-          request: request,
-        },
-      });
-    });
-  };
+  const handlePostOrder = () =>
+    handlePost(orderItems, address, addressee, request);
 
   // 결제 버튼 클릭
   const handlePay = () => {
