@@ -13,6 +13,7 @@ const START_PAGE = 1;
 const PRODUCT_PER_PAGE = 4;
 
 const ORDER_TYPE = {
+  default: { id: "DESC" },
   hot: { price: "DESC" },
   new: { createdAt: "DESC" },
   discount: { discountRate: "DESC" },
