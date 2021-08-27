@@ -1,3 +1,5 @@
 import styled from "styled-components";
 
-export const AdminHome = styled.div``;
+export const AdminHome = styled.div`
+  font-size: 30px;
+`;

@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Patch, Post, Param } from "@nestjs/common";
 import { OrderService } from "../application/order-service";
+import { OrderChangeRequest } from "../dto/order-change-request";
 import { OrderRequest } from "../dto/order-request";
 import { OrderResponse } from "../dto/order-response";
 import { OrderStatus } from "../entity/order";
@@ -26,15 +27,15 @@ export class OrderController {
   // }
 
   @Get("/:id")
-  async findOrderById(@Param("id") id: number): Promise<OrderResponse[]> {
+  async findOrderById(@Param("id") id: number): Promise<OrderResponse> {
     return await this.orderService.findOrderById(id);
   }
 
   @Patch("/:id")
   updateOrderStatus(
     @Param("id") id: number,
-    @Body() status: OrderStatus
+    @Body() changeRequest: OrderChangeRequest
   ): string {
-    return this.orderService.updateOrderStatus(id, status);
+    return this.orderService.updateOrderStatus(id, changeRequest.status);
   }
 }

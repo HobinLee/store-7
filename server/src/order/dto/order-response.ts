@@ -16,6 +16,8 @@ export class OrderResponse {
   createdAt: Date;
   reviewId?: number;
   image: string;
+  optionName: string;
+  optionValue: string;
 
   static of(order: Order): OrderResponse {
     const id = order.id,
@@ -32,6 +34,16 @@ export class OrderResponse {
       productName = order.product.name,
       reviewId = order.review ? order.review.id : 0,
       image = order.product.images[0] ? order.product.images[0].id : "bed";
+    let optionName = "",
+      optionValue = "";
+    if (productOptionId) {
+      optionName = order.product.option;
+      if (optionName) {
+        optionValue = order.product.options.filter(
+          (option) => option.id === productOptionId
+        )[0].value;
+      }
+    }
 
     return {
       id,
@@ -48,6 +60,8 @@ export class OrderResponse {
       productName,
       reviewId,
       image,
+      optionName,
+      optionValue,
     };
   }
 }

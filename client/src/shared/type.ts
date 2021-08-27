@@ -177,6 +177,8 @@ export interface MyOrderType {
   createdAt: Date;
   reviewId: number;
   image: string;
+  optionName: string;
+  optionValue: string;
 }
 
 export enum OrderStatus {

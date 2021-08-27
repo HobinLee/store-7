@@ -90,7 +90,7 @@ const AdminProduct: FC<Props> = ({ setPage }) => {
           <div>관리</div>
         </S.ProductListHeader>
         <S.ProductList>
-          {convertProductsToElement(products, setProductDetail)}
+          {convertProductsToElement(products, setProducts, setProductDetail)}
         </S.ProductList>
       </S.AdminProduct>
       <S.ProductDetailBackground
@@ -103,13 +103,14 @@ const AdminProduct: FC<Props> = ({ setPage }) => {
   );
 };
 
-const productDeleteClickHandler = (e, id: number) => {
+const productDeleteClickHandler = (e, id: number, products, setProducts) => {
   e.stopPropagation();
   const result = confirm("정말 삭제하시겠습니까?");
   if (result) {
     deleteProduct({ id })
       .then(() => {
         alert("삭제되었습니다.");
+        setProducts(products.filter((product) => product.id !== id));
       })
       .catch((err) => {
         alert("삭제하는데 뭔가 이상한 에러가?!");
@@ -119,8 +120,13 @@ const productDeleteClickHandler = (e, id: number) => {
 
 const convertProductsToElement = (
   products: AdminProductType[],
+  setProducts,
   setProductDetail
 ) => {
+  const deleteHandler = (e, producId) => {
+    productDeleteClickHandler(e, producId, products, setProducts);
+  };
+
   return products.map((product) => {
     return (
       <S.ProductItem
@@ -137,7 +143,7 @@ const convertProductsToElement = (
         <div>
           <button
             className="delete"
-            onClick={(e) => productDeleteClickHandler(e, product.id)}
+            onClick={(e) => deleteHandler(e, product.id)}
           >
             삭제
           </button>

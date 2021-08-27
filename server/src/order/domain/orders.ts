@@ -14,7 +14,7 @@ export class Orders {
 
   async findOrders() {
     return await this.orderRepository.find({
-      relations: ["user", "product", "product.images"],
+      relations: ["user", "product", "product.images", "product.options"],
     });
   }
 
@@ -47,7 +47,7 @@ export class Orders {
   }
 
   async findOrderById(id: number) {
-    return await this.orderRepository.find({ where: { id } });
+    return await this.orderRepository.findOne({ where: { id } });
   }
 
   async findOrdersByUserIdByDateRange(
