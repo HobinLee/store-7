@@ -10,7 +10,9 @@ import LoggedinContent from "./OrderContent/LoggedinContent";
 import LoggedoutContent from "./OrderContent/LoggedoutContent";
 import { postPaymentReady } from "@/api/payment";
 import properties from "@/config/properties";
-import { ICart } from "@/shared/type";
+import { DestinationType, ICart, PartialCart } from "@/shared/type";
+import { postOrder, postOrderNum } from "@/api/orders";
+import { InputType } from "@/hooks/useInput";
 
 // 카카오페이
 export const handleKakaoPay = async (
@@ -37,6 +39,43 @@ export const handleKakaoPay = async (
       window.open(res.url);
     }
   }
+};
+
+// create order
+export const handlePostOrder = (
+  orderItems: {
+    items: PartialCart[];
+  },
+  destination: Partial<DestinationType>,
+  addressee: InputType,
+  request: string
+) => {
+  const orderIds = [];
+
+  orderItems.items.forEach(async (item) => {
+    const id = await postOrder({
+      data: {
+        productId: item.productId,
+        addressee: addressee.value,
+        productOptionId: item.productOptionId,
+        price: item.price,
+        amount: item.amount,
+        destination: `${destination.address} ${destination.detailAddress}`,
+        request: request,
+      },
+    });
+
+    orderIds.push(id);
+
+    const date = new Date();
+    const orderNum = `${date.getFullYear()}${date.getMonth()}${date.getDate()}${date.getHours()}${date.getMinutes()}${
+      orderIds[0]
+    }`;
+    console.log("orderNum", orderNum);
+    orderIds.forEach(async (id) => {
+      await postOrderNum(id, orderNum);
+    });
+  });
 };
 
 const OrderPage = () => {
