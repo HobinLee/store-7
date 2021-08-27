@@ -5,13 +5,14 @@ import { LeftIcon, RightIcon } from "@/assets";
 
 interface Carousel {
   children: React.ReactNode;
+  infinity?: boolean;
 }
 const DEFAULT_X = 0;
 const DEFAULT_TRANSITION = "all .5s";
 
 type DIRECTION = "LEFT" | "RIGHT" | "STOP";
 
-const Carousel = ({ children }: Carousel) => {
+const Carousel = ({ children, infinity = false }: Carousel) => {
   const [items, setItems] = useState(React.Children.toArray(children));
   const [x, setX] = useState<number>(-100);
   const [dir, setDir] = useState<DIRECTION>("STOP");
@@ -19,16 +20,25 @@ const Carousel = ({ children }: Carousel) => {
   const [transitionValue, settransitionValue] = useState<string>();
   const [moving, setMoving] = useState<boolean>(false);
 
+  const isEndBanner = (dir, currentIndex) => {
+    if (currentIndex === 0 && dir === "LEFT") {
+      return true;
+    }
+    if (currentIndex === items.length - 1 && dir === "RIGHT") {
+      return true;
+    }
+    return false;
+  };
   const slide = (dir: DIRECTION) => {
     if (moving) return;
+    if (!infinity && isEndBanner(dir, currentIndex)) {
+      return;
+    }
+
     setMoving(true);
     settransitionValue(DEFAULT_TRANSITION);
-    setCurrentIndex((index) => index - 1);
     if (dir === "LEFT") {
-      setCurrentIndex((index) => {
-        if (index === 1) return index;
-        if (index) return index - 1;
-      });
+      setCurrentIndex((index) => index - 1);
       setX((x) => x + 100);
     } else if (dir === "RIGHT") {
       setCurrentIndex((index) => index + 1);
@@ -36,7 +46,10 @@ const Carousel = ({ children }: Carousel) => {
     }
   };
 
-  const onTransitionEnd = () => {
+  const onTransitionEnd = ({ target, currentTarget }) => {
+    if (target !== currentTarget) {
+      return;
+    }
     setMoving(false);
     settransitionValue("none");
   };
@@ -54,7 +67,7 @@ const Carousel = ({ children }: Carousel) => {
       console.log(1);
     }
   }, [transitionValue]);
-  
+
   useEffect(() => {
     setItems(React.Children.toArray(children));
   }, [children]);
@@ -81,6 +94,7 @@ const Carousel = ({ children }: Carousel) => {
 const CarouselWrapper = styled.div`
   width: 100%;
   position: relative;
+  overflow: hidden;
   .btn {
     top: 50%;
     transform: translateY(-50%);

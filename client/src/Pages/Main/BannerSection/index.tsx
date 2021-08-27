@@ -34,8 +34,5 @@ const BannerSection = () => {
     </Carousel>
   );
 };
-const Wrapper = styled.div`
-  display: flex;
-`;
 
 export default BannerSection;
