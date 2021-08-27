@@ -9,7 +9,7 @@ import { ProductParams } from "@/api/products";
 import { useLazyLoad } from "@/hooks/useLazyLoad";
 import { useEffect } from "react";
 
-const PRODUCT_PER_PAGE = 12;
+const PRODUCT_PER_PAGE = 4;
 const START_PAGE = 1;
 
 interface ProductListProps {
@@ -24,42 +24,49 @@ const ProductList = ({
   pagination,
 }: ProductListProps) => {
   const [isEnd, setIsEnd] = useState(!pagination);
-  const [page, setPage] = useState(START_PAGE);
   const [products, setProducts] = useState([]);
+  const [params, setParams] = useState({ ...originParams, page: START_PAGE });
 
   const nextPage = () => {
-    if (status === "success" && !isEnd) {
-      setPage(page + 1);
+    console.log(status, params);
+    if (status === "loading") {
+      return false;
     }
+    if (status === "success" && !isEnd) {
+      console.log("next!");
+      setParams({ ...originParams, page: params.page + 1 });
+      return true;
+    }
+    return true;
   };
 
   const { ref } = useLazyLoad(nextPage);
 
-  const {
-    data: newProducts,
-    status,
-    refetch,
-  } = useQuery({ ...originParams, page });
+  const { data: newProducts, status, refetch } = useQuery(params);
 
   const initStates = () => {
-    setPage(START_PAGE);
+    setParams({ ...originParams, page: START_PAGE });
     setIsEnd(!pagination);
   };
 
   useEffect(() => {
+    console.log(status);
     if (status === "success") {
-      if (page === 1) {
+      console.log(newProducts);
+      if (params.page === 1) {
         setProducts([...newProducts]);
       } else {
         setProducts([...products, ...newProducts]);
       }
 
       if (newProducts?.length < PRODUCT_PER_PAGE) {
+        console.log("a");
         setIsEnd(true);
       }
     }
     if (status === "error") {
       setIsEnd(true);
+      console.log("E");
     }
   }, [newProducts, status]);
 
@@ -74,11 +81,13 @@ const ProductList = ({
       ))}
       {status === "loading" && (
         <div className="loading-indicator">
+          ㄴㄴ
           <Loading />
         </div>
       )}
       {status === "success" && !isEnd && (
         <div className="loading-indicator" ref={ref}>
+          ㅇㅇ
           <Loading />
         </div>
       )}
