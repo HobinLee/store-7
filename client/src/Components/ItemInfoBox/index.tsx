@@ -184,11 +184,13 @@ const Wrapper = styled.div`
   }
   .price {
     ${({ theme }) => theme.flexCenter};
-    font-weight: 700;
     justify-content: flex-end;
     ${gap("2rem")};
     ${media.mobile} {
       margin-top: 2rem;
+    }
+    div {
+      font-weight: 700;
     }
   }
   .close-btn {

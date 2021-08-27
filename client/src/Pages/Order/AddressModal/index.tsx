@@ -7,7 +7,7 @@ import { Back } from "@/assets";
 import AddressForm from "../AddressForm";
 import { gap } from "@/styles/theme";
 import { useMyDestinations } from "@/api/my";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { patchDefaultDestination } from "@/api/destinations";
 
 const AddressModal = ({ closeModal, setAddress }) => {
@@ -20,9 +20,6 @@ const AddressModal = ({ closeModal, setAddress }) => {
     (page === "add" && "배송지 추가");
 
   const [addressToEdit, setAddressToEdit] = useState();
-  useEffect(() => {
-    setAddressToEdit(null);
-  }, [page]);
 
   // 기본배송지
   const [defaultId, setDefaultId] = useState(
@@ -33,6 +30,39 @@ const AddressModal = ({ closeModal, setAddress }) => {
     await patchDefaultDestination(id);
     refetch();
   };
+
+  useEffect(() => {
+    setDefaultId(destinations?.find((i) => i.isDefault)?.id);
+  }, [destinations]);
+
+  const RenderContents = useCallback(() => {
+    return (
+      <Contents>
+        {destinations.length > 0 ? (
+          destinations.map((address) => (
+            <AddressBox
+              key={address.id}
+              {...{
+                setPage,
+                address,
+                setAddress,
+                setAddressToEdit,
+                refetch,
+                closeModal,
+              }}
+              isChecked={
+                defaultId === address.id ||
+                destinations?.find((i) => i.isDefault)?.id === address.id
+              }
+              handleCheck={() => handleCheck(address.id)}
+            />
+          ))
+        ) : (
+          <div className="empty">첫 배송지 추가시 기본배송지로 설정됩니다.</div>
+        )}
+      </Contents>
+    );
+  }, [destinations]);
 
   return (
     <Wrapper {...{ closeModal, title }} hideCloseBtn={page !== "select"}>
@@ -46,35 +76,11 @@ const AddressModal = ({ closeModal, setAddress }) => {
         )}
 
         {page === "select" ? (
-          <Contents>
-            {status !== "loading" &&
-              (destinations.length > 0 ? (
-                destinations.map((address) => (
-                  <AddressBox
-                    key={address.id}
-                    {...{
-                      setPage,
-                      address,
-                      setAddress,
-                      setAddressToEdit,
-                      refetch,
-                      closeModal,
-                    }}
-                    isChecked={defaultId === address.id}
-                    handleCheck={() => handleCheck(address.id)}
-                  />
-                ))
-              ) : (
-                <div className="empty">
-                  첫 배송지 추가시 기본배송지로 설정됩니다.
-                </div>
-              ))}
-          </Contents>
+          <RenderContents />
         ) : (
           <AddressForm
             isFirst={destinations.length === 0}
-            gotoBack={() => setPage("select")}
-            {...{ addressToEdit, refetch, setAddressToEdit }}
+            {...{ addressToEdit, refetch, setAddressToEdit, setPage }}
           />
         )}
 

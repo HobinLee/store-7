@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import styled from "styled-components";
 import { AddressType, DestinationType } from "@/shared/type";
 import Button from "@/Components/Button";
@@ -16,16 +16,18 @@ import { QueryObserverResult } from "react-query";
 
 export interface AddressFormProps {
   addressToEdit?: DestinationType;
-  gotoBack: Function;
+  setAddressToEdit?: Dispatch<SetStateAction<DestinationType | null>>;
+  setPage: Dispatch<SetStateAction<"select" | "add" | "edit">>;
   refetch: () => Promise<QueryObserverResult<unknown>>;
   isFirst: boolean;
 }
 
 const AddressForm = ({
   addressToEdit,
-  gotoBack,
+  setPage,
   refetch,
   isFirst,
+  setAddressToEdit,
 }: AddressFormProps) => {
   const addressee = useInput(addressToEdit?.addressee || "");
   const nameValidation = useValidation((name: string) => !!name.length);
@@ -75,7 +77,8 @@ const AddressForm = ({
       }
     } catch (error) {
     } finally {
-      gotoBack();
+      setAddressToEdit(null);
+      setPage("select");
       refetch();
     }
   };
