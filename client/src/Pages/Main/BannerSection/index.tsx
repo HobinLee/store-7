@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Banner1, Banner2, Banner3 } from "@/assets";
 import Banner from "./Banner";
 import { ItemBannerType } from "@/shared/type";
+import Carousel from "@/Components/Carousel";
 
 const banners: ItemBannerType[] = [
   {
@@ -20,17 +21,17 @@ const banners: ItemBannerType[] = [
     brief: "여기는 영원히 아날로그야.",
     title: "을지로 목장갑. 위잉 뚝딱",
     src: Banner3,
-    id: 151,
+    id: 156,
   },
 ];
 
 const BannerSection = () => {
   return (
-    <Wrapper>
+    <Carousel>
       {banners.map((banner) => (
         <Banner banner={banner} />
       ))}
-    </Wrapper>
+    </Carousel>
   );
 };
 const Wrapper = styled.div`

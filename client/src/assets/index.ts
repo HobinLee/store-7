@@ -24,6 +24,8 @@ export { default as King } from "./king.svg";
 export { default as ProductIcon } from "./product.svg";
 export { default as ReadyIcon } from "./ready.svg";
 export { default as GoodIcon } from "./good.svg";
+export { default as LeftIcon } from "./left.svg";
+export { default as RightIcon } from "./right.svg";
 
 export { default as Cart } from "./cart.svg";
 export { default as Logout } from "./logout.svg";
