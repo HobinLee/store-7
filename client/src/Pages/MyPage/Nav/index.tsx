@@ -77,13 +77,13 @@ const navItems = [
     title: "나의 상품후기",
     path: "review",
   },
-  // {
-  //   Icon: (props) => (
-  //     <UserIcon width={ICON_SIZE} height={ICON_SIZE} {...props} />
-  //   ),
-  //   title: "회원정보 변경",
-  //   path: "userinfo",
-  // },
+  {
+    Icon: <img src={Review} width={ICON_SIZE} height={ICON_SIZE} />,
+    Gif: <img src={ReviewActive} width={ICON_SIZE} height={ICON_SIZE} />,
+
+    title: "내 정보 수정",
+    path: "userinfo",
+  },
 ];
 
 const NavItem = ({ Icon, Gif, title, isSelected }) => {
