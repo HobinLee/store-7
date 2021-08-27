@@ -12,7 +12,7 @@ import AdminOrder from "./Order";
 export type Page = "Home" | "Product" | "Order" | "ProductCreate";
 
 const AdminPage = () => {
-  const [currentPage, setPage] = useState<Page>("ProductCreate");
+  const [currentPage, setPage] = useState<Page>("Home");
   const Pages = {
     Home: <AdminHome />,
     Product: <AdminProduct setPage={setPage} />,
