@@ -10,69 +10,41 @@ import { useLazyLoad } from "@/hooks/useLazyLoad";
 import { useEffect } from "react";
 
 const PRODUCT_PER_PAGE = 4;
-const START_PAGE = 1;
 
 interface ProductListProps {
   useQuery: (params: any) => UseQueryResult<ProductElementType[], unknown>;
-  params?: ProductParams;
-  pagination?: boolean;
+  productParams?: ProductParams;
+  nextPage?: () => void;
 }
 
 const ProductList = ({
   useQuery,
-  params: originParams,
-  pagination,
+  productParams,
+  nextPage,
 }: ProductListProps) => {
-  const [isEnd, setIsEnd] = useState(!pagination);
   const [products, setProducts] = useState([]);
-  const [params, setParams] = useState({ ...originParams, page: START_PAGE });
-
-  const nextPage = () => {
-    console.log(status, params);
-    if (status === "loading") {
-      return false;
-    }
-    if (status === "success" && !isEnd) {
-      console.log("next!");
-      setParams({ ...originParams, page: params.page + 1 });
-      return true;
-    }
-    return true;
-  };
+  const [isEndPage, setIsEndPage] = useState(!nextPage);
 
   const { ref } = useLazyLoad(nextPage);
 
-  const { data: newProducts, status, refetch } = useQuery(params);
-
-  const initStates = () => {
-    setParams({ ...originParams, page: START_PAGE });
-    setIsEnd(!pagination);
-  };
+  const { data: newProducts, status, refetch } = useQuery(productParams);
 
   useEffect(() => {
-    console.log(status);
     if (status === "success") {
-      console.log(newProducts);
-      if (params.page === 1) {
+      if (!productParams || productParams.page === 1) {
         setProducts([...newProducts]);
       } else {
         setProducts([...products, ...newProducts]);
       }
 
       if (newProducts?.length < PRODUCT_PER_PAGE) {
-        console.log("a");
-        setIsEnd(true);
+        setIsEndPage(true);
       }
     }
     if (status === "error") {
-      setIsEnd(true);
-      console.log("E");
+      setIsEndPage(true);
     }
   }, [newProducts, status]);
-
-  useEffect(() => {
-    initStates();
-  }, [originParams]);
 
   return (
     <ProductWrapList>
@@ -81,13 +53,11 @@ const ProductList = ({
       ))}
       {status === "loading" && (
         <div className="loading-indicator">
-          ㄴㄴ
           <Loading />
         </div>
       )}
-      {status === "success" && !isEnd && (
+      {status === "success" && !isEndPage && (
         <div className="loading-indicator" ref={ref}>
-          ㅇㅇ
           <Loading />
         </div>
       )}

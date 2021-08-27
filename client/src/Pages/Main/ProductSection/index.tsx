@@ -13,7 +13,7 @@ const ProductSection = ({ title, type }: ProductSectionProps) => {
       <div className="title">{title}</div>
       <ProductList
         useQuery={useProducts}
-        params={{ order: type, size: MAIN_PAGE_PRODUCTS_SIZE }}
+        productParams={{ order: type, size: MAIN_PAGE_PRODUCTS_SIZE, page: 1 }}
       />
     </SectionWrapper>
   );

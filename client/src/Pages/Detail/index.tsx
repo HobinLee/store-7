@@ -45,6 +45,7 @@ const DetailPage = () => {
     error,
     refetch,
   } = useProduct(parseInt(productId));
+
   const [isMyWish, setIsMyWish] = useRecoilState(isMyWishInDetail);
   const debounceIsMyWish = useDebounce<boolean>(isMyWish, 300);
 

@@ -1,4 +1,3 @@
-import { Loading, Search } from "@/assets";
 import styled from "styled-components";
 
 const ImageHoverWrapper = ({ src }: { src: string }) => {
