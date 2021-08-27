@@ -8,9 +8,9 @@ import { OrderStatus } from "@/order/entity/order";
 export class OrderService {
   constructor(private readonly orders: Orders) {}
 
-  async findOrderById(id: number): Promise<OrderResponse[]> {
+  async findOrderById(id: number): Promise<OrderResponse> {
     const orders = await this.orders.findOrderById(id);
-    return orders.map(OrderResponse.of);
+    return OrderResponse.of(orders);
   }
 
   // async findOrderByOrderNum(orderNum: number): Promise<OrderResponse[]> {
