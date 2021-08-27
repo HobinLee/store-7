@@ -1,7 +1,5 @@
 import { CartResponse } from "@/cart/dto/cart-response";
-import { Review } from "@/product/entity/review";
 import { User } from "../entity/user";
-import { Order, OrderStatus } from "@/order/entity/order";
 import { Destination } from "@/destination/entity/destination";
 import { Wish } from "../entity/wish";
 
@@ -35,69 +33,6 @@ export class MyInfoResponse {
       profile,
       email,
       destinations,
-    };
-  }
-}
-
-export class MyReviewResponse {
-  id: number;
-  rate: number;
-  content: string;
-  image?: string;
-  authorName: string;
-
-  static of(review: Review): MyReviewResponse {
-    const id = review.id,
-      rate = review.rate,
-      content = review.content,
-      image = review.image,
-      authorName = review.order.user.name;
-
-    return {
-      id,
-      rate,
-      content,
-      image,
-      authorName,
-    };
-  }
-}
-
-export class MyOredersResponse {
-  id: number;
-  productId: number;
-  userId: number;
-  addressee: string;
-  productOptionId: number;
-  amount: number;
-  destination: string;
-  status: OrderStatus;
-  createdAt: Date;
-  reviewId: number;
-
-  static of(order: Order): MyOredersResponse {
-    const id = order.id,
-      productId = order.product.id,
-      userId = order.user.id,
-      addressee = order.addressee,
-      productOptionId = order.productOptionId,
-      amount = order.amount,
-      destination = order.destination,
-      status = order.status,
-      createdAt = order.createdAt,
-      reviewId = order.review.id;
-
-    return {
-      id,
-      productId,
-      userId,
-      addressee,
-      productOptionId,
-      amount,
-      destination,
-      status,
-      createdAt,
-      reviewId,
     };
   }
 }
