@@ -22,9 +22,7 @@ const Image = ({
   };
   const { ref } = useLazyLoad(setImage);
 
-  const handleImageLoaded = () => {
-    setIsLoading(false);
-  };
+  const handleImageLoaded = () => setIsLoading(false);
 
   return (
     <>

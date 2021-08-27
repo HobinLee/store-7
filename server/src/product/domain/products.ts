@@ -10,7 +10,7 @@ import { ProductFindQuery } from "../dto/product-find-query";
 
 const RANDOM_FILENAME_LENGTH = 32;
 const START_PAGE = 1;
-const PRODUCT_PER_PAGE = 12;
+const PRODUCT_PER_PAGE = 4;
 
 const ORDER_TYPE = {
   hot: { price: "DESC" },
