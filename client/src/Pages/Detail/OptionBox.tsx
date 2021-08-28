@@ -1,11 +1,10 @@
 import Button from "@/Components/Button";
-import Input from "@/Components/Input";
 import { useState } from "react";
 import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
-import { Triangle, WishIcon } from "@/assets";
+import { WishIcon } from "@/assets";
 import { convertToKRW } from "@/utils/util";
-import { gap, media } from "@/styles/theme";
+import { gap } from "@/styles/theme";
 import { postCart } from "@/api/carts";
 import { moveTo } from "@/Router";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -13,7 +12,7 @@ import { isMyWishInDetail, loginState } from "@/store/state";
 import { CartType, ProductType } from "@/shared/type";
 import { InputType } from "@/hooks/useInput";
 import { useCallback } from "react";
-import { useEffect } from "react";
+import NumInput from "@/Components/NumInput";
 
 type OptionBoxProps = {
   numValue: InputType;
@@ -39,7 +38,13 @@ const OptionBox = ({
   };
 
   const RenderNumInput = useCallback(() => {
-    return <NumInput value={numValue.value} onChange={numValue.onChange} />;
+    return (
+      <NumInput
+        numValue={numValue}
+        handleMinus={() => handleClickNumVal(-1)}
+        handlePlus={() => handleClickNumVal(1)}
+      />
+    );
   }, [numValue.value]);
 
   // 상품옵션
@@ -120,16 +125,8 @@ const OptionBox = ({
         <div className="select-option">
           <div>수량</div>
           <div className="select-option__right">
-            <div className="num-input">
+            <div>
               <RenderNumInput />
-              <div>
-                <button type="button" onClick={() => handleClickNumVal(1)}>
-                  <Triangle className="num-input__up" />
-                </button>
-                <button type="button" onClick={() => handleClickNumVal(-1)}>
-                  <Triangle className="num-input__down" />
-                </button>
-              </div>
             </div>
             {convertToKRW(product.price)}
           </div>
@@ -240,35 +237,6 @@ const Wrapper = styled.div`
         padding: 0.8rem 1rem;
         border-radius: 0.5rem;
       }
-      .num-input {
-        ${({ theme }) => theme.flexCenter}
-        margin-right: 2rem;
-        background: ${({ theme }) => theme.color.background};
-
-        div {
-          ${({ theme }) => theme.flexCenter}
-          flex-direction: column;
-          height: 2.5rem;
-          button {
-            ${({ theme }) => theme.flexCenter};
-            cursor: pointer;
-            width: 1.6rem;
-            border: none;
-            padding: 0.4rem;
-            background: ${({ theme }) => theme.color.primary2};
-          }
-        }
-        &__up {
-          transform: rotate(-90deg);
-          fill: white;
-          height: 1.1rem;
-        }
-        &__down {
-          transform: rotate(90deg);
-          fill: white;
-          height: 1.2rem;
-        }
-      }
     }
   }
   .total-price {
@@ -303,12 +271,6 @@ const Wrapper = styled.div`
       stroke-width: 2rem;
     }
   }
-`;
-
-const NumInput = styled(Input)`
-  width: 3rem;
-  text-align: center;
-  padding: 1rem;
 `;
 
 const Alert = styled(ModalWrapper)`

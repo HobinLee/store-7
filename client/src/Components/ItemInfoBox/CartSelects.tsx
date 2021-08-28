@@ -3,16 +3,15 @@ import { patchCart } from "@/api/carts";
 import { useRecoilValue } from "recoil";
 import { loginState } from "@/store/state";
 import { CartType, ProductOptionType } from "@/shared/type";
-import { Triangle } from "@/assets";
 import useInput from "@/hooks/useInput";
-import Input from "../Input";
 import useDebounce from "@/hooks/useDebounce";
 import { SetStateAction, useEffect } from "react";
 import { Dispatch } from "react";
 import { useCallback } from "react";
 import { QueryObserverResult } from "react-query";
 import { useState } from "react";
-import { media } from "@/styles/theme";
+import { media, gap } from "@/styles/theme";
+import NumInput from "@/Components/NumInput";
 
 interface CartSelectsProps {
   id: number;
@@ -74,25 +73,21 @@ const CartSelects = ({
   }, [debouncedNumValue, optionId]);
 
   const RenderNumInput = useCallback(() => {
-    return <NumInput value={numValue.value} onChange={numValue.onChange} />;
+    return (
+      <NumInput
+        numValue={numValue}
+        handleMinus={() => handleClickNumVal(-1)}
+        handlePlus={() => handleClickNumVal(1)}
+      />
+    );
   }, [numValue.value]);
 
   return (
     <Wrapper>
       {/* 수량 */}
-      <div className="info__num">
+      <div className="amount">
         <div>수량</div>
-        <div className="num-input">
-          <RenderNumInput />
-          <div>
-            <button type="button" onClick={() => handleClickNumVal(1)}>
-              <Triangle className="num-input__up" />
-            </button>
-            <button type="button" onClick={() => handleClickNumVal(-1)}>
-              <Triangle className="num-input__down" />
-            </button>
-          </div>
-        </div>
+        <RenderNumInput />
       </div>
 
       {/* 옵션 */}
@@ -130,15 +125,13 @@ const Wrapper = styled.div`
       text-overflow: ellipsis;
     }
   }
-  div {
-    white-space: nowrap;
+  .amount {
+    ${({ theme }) => theme.flexCenter};
+    ${gap("2rem")}
   }
-`;
-
-const NumInput = styled(Input)`
-  width: 3rem;
-  text-align: center;
-  padding: 1rem;
+  .num-input {
+    background: ${({ theme }) => theme.color.background};
+  }
 `;
 
 export default CartSelects;
