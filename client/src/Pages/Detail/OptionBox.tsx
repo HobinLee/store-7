@@ -1,4 +1,4 @@
-import Button from "@/Components/Button";
+import Button from "@/Components/Common/Button";
 import { useState } from "react";
 import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
@@ -12,7 +12,7 @@ import { isMyWishInDetail, loginState } from "@/store/state";
 import { CartType, ProductType } from "@/shared/type";
 import { InputType } from "@/hooks/useInput";
 import { useCallback } from "react";
-import NumInput from "@/Components/NumInput";
+import NumInput from "@/Components/Common/NumInput";
 
 type OptionBoxProps = {
   numValue: InputType;

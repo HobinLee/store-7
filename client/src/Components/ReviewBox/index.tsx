@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { ReviewType } from "@/shared/type";
-import Rating from "@/Components/Rating";
+import Rating from "@/Components/Common/Rating";
 import { gap, media } from "@/styles/theme";
 import { YYYY_M_D_H_m } from "@/utils/util";
 import properties from "@/config/properties";

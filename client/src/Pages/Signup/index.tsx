@@ -4,11 +4,11 @@ import styled from "styled-components";
 import { Link, moveTo } from "@/Router";
 import Address from "@/Components/Address";
 import useInput from "@/hooks/useInput";
-import InputSection from "@/Components/Input/InputSection";
+import InputSection from "@/Components/Common/Input/InputSection";
 import { DestinationType, UserType, AddressType } from "@/shared/type";
-import Button from "@/Components/Button";
+import Button from "@/Components/Common/Button";
 import useValidation from "@/hooks/useValidation";
-import ValidationInput from "@/Components/Input/ValidationInput";
+import ValidationInput from "@/Components/Common/Input/ValidationInput";
 import {
   validateEmail,
   validatePW,
@@ -20,7 +20,7 @@ import { useSetRecoilState } from "recoil";
 import { checkEmailExist, signup } from "@/api/users";
 import { loginState } from "@/store/state";
 import { convertToNumber, convertToPhoneNumber } from "@/utils/util";
-import APIButton from "@/Components/APIButton";
+import APIButton from "@/Components/Common/Button/APIButton";
 
 const SignupPage = () => {
   const email = useInput("");

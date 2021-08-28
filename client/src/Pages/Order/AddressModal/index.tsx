@@ -2,7 +2,7 @@ import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
 import { useState } from "react";
 import AddressBox from "../AddressBox";
-import Button from "@/Components/Button";
+import Button from "@/Components/Common/Button";
 import { Back } from "@/assets";
 import AddressForm from "../AddressForm";
 import { gap } from "@/styles/theme";

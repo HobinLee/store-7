@@ -11,7 +11,7 @@ import { useCallback } from "react";
 import { QueryObserverResult } from "react-query";
 import { useState } from "react";
 import { media, gap } from "@/styles/theme";
-import NumInput from "@/Components/NumInput";
+import NumInput from "@/Components/Common/NumInput";
 
 interface CartSelectsProps {
   id: number;

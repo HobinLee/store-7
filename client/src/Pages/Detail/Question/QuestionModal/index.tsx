@@ -1,15 +1,15 @@
-import Button from "@/Components/Button";
+import Button from "@/Components/Common/Button";
 import useInput from "@/hooks/useInput";
 import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
 import { useState } from "react";
 import { gap } from "@/styles/theme";
 import { postQuestion, patchQuestion } from "@/api/questions";
-import Checkbox from "@/Components/Checkbox";
+import Checkbox from "@/Components/Common/Checkbox";
 import { QuestionForm } from "@/Pages/MyPage/ContentArea/contents/Question";
-import APIButton from "@/Components/APIButton";
+import APIButton from "@/Components/Common/Button/APIButton";
 import { QueryObserverResult } from "react-query";
-import ValidationInput from "@/Components/Input/ValidationInput";
+import ValidationInput from "@/Components/Common/Input/ValidationInput";
 import { validateTextarea, VALIDATION_ERR_MSG } from "@/utils/validations";
 import useValidation from "@/hooks/useValidation";
 

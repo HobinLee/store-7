@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Section from "../../../Section";
-import NoData from "@/Components/NoData";
+import NoData from "@/Components/Common/NoData";
 import { useMyQuestions } from "@/api/my";
 import QuestionBox from "@/Pages/Detail/Question/QuestionBox";
 import { gap } from "@/styles/theme";

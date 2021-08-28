@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import InputSection from "@/Components/Input/InputSection";
+import InputSection from "@/Components/Common/Input/InputSection";
 import Section from "../../../Section";
-import ValidationInput from "@/Components/Input/ValidationInput";
+import ValidationInput from "@/Components/Common/Input/ValidationInput";
 import { gap } from "@/styles/theme";
 import { patchMe, useMyDestinations, useMyInfo } from "@/api/my";
 import useInput from "@/hooks/useInput";
@@ -11,8 +11,7 @@ import { validatePhoneNumber, VALIDATION_ERR_MSG } from "@/utils/validations";
 import useValidation from "@/hooks/useValidation";
 import { DestinationType } from "@/shared/type";
 import AddressModal from "@/Pages/Order/AddressModal";
-import Button from "@/Components/Button";
-import APIButton from "@/Components/APIButton";
+import APIButton from "@/Components/Common/Button/APIButton";
 
 const UserInfo = () => {
   const { status: myInfoStatus, data: myInfo, error } = useMyInfo();

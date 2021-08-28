@@ -3,13 +3,13 @@ import styled from "styled-components";
 import { useSetRecoilState } from "recoil";
 import { loginState } from "@/store/state";
 import { signIn } from "@/api/auth";
-import APIButton from "@/Components/APIButton";
+import APIButton from "@/Components/Common/Button/APIButton";
 import OAuthLoginSection from "../OAuthLoginSection";
 import { gap, media } from "@/styles/theme";
-import Input from "@/Components/Input";
+import Input from "@/Components/Common/Input";
 import properties from "@/config/properties";
 import { moveTo } from "@/Router";
-import Button from "@/Components/Button";
+import Button from "@/Components/Common/Button";
 
 const LoginSection = () => {
   const email = useInput("");
