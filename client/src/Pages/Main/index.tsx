@@ -68,6 +68,7 @@ const Wrapper = styled(PageWrapper)`
   }
   ${media.mobile} {
     padding-top: 0;
+    padding: 0rem;
   }
 `;
 
