@@ -51,7 +51,6 @@ const ValidationInput = ({
           }
           value={!!filter ? filter(input.value) : input.value}
           onChange={(e) => {
-            console.log("a");
             onChange && onChange(e);
             input.onChange(e);
           }}
