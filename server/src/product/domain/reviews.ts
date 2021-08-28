@@ -30,6 +30,7 @@ export class Reviews {
           id: productId,
         },
       },
+
       order: sortBy === "latest" ? { id: "DESC" } : { rate: "DESC" },
     });
     return result;
@@ -46,7 +47,7 @@ export class Reviews {
     return this.reviewRepository.find({
       relations: ["order", "order.user", "product"],
       order: { createdAt: "DESC" },
-      where: { image: Not(IsNull()) },
+      where: { image: Not(IsNull()), rate: 5 },
       take: query.size ?? REVIEW_PER_MAINPAGE,
     });
   }
