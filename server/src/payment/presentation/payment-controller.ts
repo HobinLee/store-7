@@ -1,14 +1,27 @@
 import properties from "@/config/properties/properties";
-import { Body, Controller, Query, Post, Get, Redirect } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Query,
+  Post,
+  Get,
+  Redirect,
+  HttpStatus,
+  Res,
+} from "@nestjs/common";
+import { Response } from "express";
 import fetch from "node-fetch";
 import { URLSearchParams } from "url";
 
-let tid;
-
 @Controller("/payment")
 export class PaymentController {
+  tid: string;
+
   @Post("/ready")
-  async postPaymentReady(@Body() body) {
+  async postPaymentReady(
+    @Body() body,
+    @Res({ passthrough: true }) res: Response
+  ) {
     const params = new URLSearchParams();
     params.append("cid", body.cid);
     params.append("partner_order_id", "1234512345");
@@ -31,22 +44,26 @@ export class PaymentController {
         body: params,
       });
       const json = await response.json();
-      tid = json.tid;
+      this.tid = json.tid;
 
       return {
         url: json.next_redirect_pc_url,
       };
     } catch (e) {
-      throw Error(e.message);
+      res.status(HttpStatus.BAD_REQUEST);
+      return { message: e.message };
     }
   }
 
   @Get("/approve")
   @Redirect()
-  async postPaymentApprove(@Query("pg_token") pg_token) {
+  async postPaymentApprove(
+    @Query("pg_token") pg_token: string,
+    @Res({ passthrough: true }) res: Response
+  ) {
     const params = new URLSearchParams();
     params.append("cid", "TC0ONETIME");
-    params.append("tid", tid);
+    params.append("tid", this.tid);
     params.append("pg_token", pg_token);
     params.append("partner_order_id", "1234512345");
     params.append("partner_user_id", "1234512345");
@@ -74,7 +91,8 @@ export class PaymentController {
             message: "payment failed",
           };
     } catch (e) {
-      throw Error(e.message);
+      res.status(HttpStatus.BAD_REQUEST);
+      return { message: e.message };
     }
   }
 }

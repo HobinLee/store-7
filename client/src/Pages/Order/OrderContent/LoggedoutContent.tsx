@@ -68,11 +68,7 @@ const LoggedoutContent = () => {
     if (payment === "kakaopay")
       handleKakaoPay(handlePostOrder, orderItems.items);
     else {
-      try {
-        handlePostOrder();
-      } finally {
-        moveTo("/order/success");
-      }
+      handlePostOrder();
     }
   };
 
