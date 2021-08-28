@@ -47,7 +47,6 @@ export class MyController {
 
   @Patch("/info")
   async patchInfo(@Body() body: { userId: number; data: MyInfoEditRequest }) {
-    console.log(body);
     return await this.myService.editMyInfo(body.userId, body.data);
   }
 

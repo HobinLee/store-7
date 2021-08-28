@@ -488,6 +488,11 @@ export const reviews: ReviewType[] = [
       id: 7,
       name: "더미더미",
     },
+    order: {
+      user: {
+        name: "et",
+      },
+    },
   },
   {
     id: 1,
@@ -502,6 +507,11 @@ export const reviews: ReviewType[] = [
       id: 7,
       name: "더미더미",
     },
+    order: {
+      user: {
+        name: "et",
+      },
+    },
   },
   {
     id: 1,
@@ -514,6 +524,11 @@ export const reviews: ReviewType[] = [
     product: {
       id: 7,
       name: "더미더미",
+    },
+    order: {
+      user: {
+        name: "et",
+      },
     },
   },
 ];
