@@ -1,10 +1,15 @@
+import { decodeParams } from "@/utils/location";
 import { atom } from "recoil";
 
+const initParams = decodeParams();
+
 export const selectedCategoryState = atom({
-  key: "selecteCategory",
+  key: "selectedCategory",
   default: {
-    categoryId: -1,
-    subCategoryId: 0,
+    categoryId: initParams.category ? parseInt(initParams.category) : 0,
+    subCategoryId: initParams.subCategory
+      ? parseInt(initParams.subCategory)
+      : null,
   },
 });
 
@@ -16,7 +21,7 @@ export const categoryPaddingState = atom({
 export const hoveredCategoryState = atom({
   key: "hoveredCategory",
   default: {
-    categoryId: -1,
-    subCategoryId: -1,
+    categoryId: null,
+    subCategoryId: null,
   },
 });

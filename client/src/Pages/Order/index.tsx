@@ -20,7 +20,6 @@ export const handleKakaoPay = async (
   handlePostOrder: Function,
   items: Partial<ICart>[]
 ) => {
-  console.log("asdf");
   const res = await postPaymentReady({
     cid: "TC0ONETIME",
     item_name:

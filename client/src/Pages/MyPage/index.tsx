@@ -7,8 +7,11 @@ import Nav from "./Nav";
 import ContentArea from "./ContentArea";
 
 import { useMyInfo } from "@/api/my";
+import { locationState } from "@/store/history";
+import { useRecoilValue } from "recoil";
 
-const MyPage = ({ location }) => {
+const MyPage = () => {
+  const { location } = useRecoilValue(locationState);
   const [current, setCurrent] = useState("order");
 
   useEffect(() => {

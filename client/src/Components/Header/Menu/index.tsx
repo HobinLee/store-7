@@ -228,7 +228,6 @@ const SubCategoryWrapper = styled.ul<{
   display: flex;
   justify-content: center;
   flex-direction: row;
-  z-index: 30;
   height: 3.6rem;
 
   ${({ padding, width }) => setPadding(padding, width)}

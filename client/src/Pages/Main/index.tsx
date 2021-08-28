@@ -25,15 +25,6 @@ const SECTION_TYPES: {
 };
 
 const MainPage = () => {
-  const setSelectedCategoryState = useSetRecoilState(selectedCategoryState);
-
-  useEffect(() => {
-    setSelectedCategoryState({
-      categoryId: -1,
-      subCategoryId: -1,
-    });
-  }, []);
-
   return (
     <>
       <Header />

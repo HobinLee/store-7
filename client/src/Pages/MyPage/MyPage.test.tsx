@@ -7,7 +7,7 @@ import MyPage from "./index";
 describe("<MyPage />", () => {
   let page;
   beforeEach(() => {
-    const { container } = render(<MyPage location="mypage/" />);
+    const { container } = render(<MyPage />);
     page = container;
   });
   it("should render component in document", () => {

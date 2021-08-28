@@ -5,6 +5,8 @@ import { useMyWishes } from "@/api/my";
 import ProductList from "@/Components/ProductList";
 
 const Wish = () => {
+  const myWishes = useMyWishes();
+
   return (
     <Wrapper data-testid="test__wishlist">
       <Section
@@ -12,7 +14,7 @@ const Wish = () => {
         description="회원님께서 찜한 상품 목록입니다."
         data-testid="test__section"
       >
-        <ProductList useQuery={useMyWishes} />
+        <ProductList {...myWishes} />
       </Section>
     </Wrapper>
   );

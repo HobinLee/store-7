@@ -25,9 +25,11 @@ export const getAllProductsByKeyword = async (keyword: string) =>
   await GET("/admin/products", { keyword });
 
 // GET /products?order?category?subcategory?keyword? 상품 목록
-export const getProducts = (
+export const getProducts = async (
   params: ProductParams
-): Promise<ProductElementType[]> => GET("/products", params);
+): Promise<ProductElementType[]> => {
+  return await GET("/products", params);
+};
 export const useProducts = (params: ProductParams) =>
   useQuery(["products", params], () => getProducts(params));
 

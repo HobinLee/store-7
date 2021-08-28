@@ -14,13 +14,13 @@ export interface SearchParams extends ProductParams {
   keyword: string;
 }
 
-const getSearchedProducts = async (searchParams: SearchParams) => {
+export const getSearchedProducts = async (searchParams: SearchParams) => {
   if (searchParams.keyword.length === 0) {
     moveTo("/");
     return [];
   }
 
-  return GET(`/products/search`, searchParams);
+  return await GET(`/products/search`, searchParams);
 };
 
 export const useSearchProducts = (searchParams: SearchParams) =>

@@ -1,31 +1,18 @@
-import {
-  useState,
-  useContext,
-  useEffect,
-  createContext,
-  ReactElement,
-} from "react";
+import { useEffect, ReactElement } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { decodeParams, URIParameterType } from "./utils/location";
+import { selectedCategoryState } from "./store/category";
+import { locationState } from "@/store/history";
+import { decodeParams } from "./utils/location";
 
-interface RouterContextPropsType {
-  location: string;
-  params?: URIParameterType;
-}
-
-type PageComponentProps = { location?: string; params?: URIParameterType };
-
-export type PageComponentType = ({
-  location,
-  params,
-}: PageComponentProps) => JSX.Element;
+export type PageComponentType = () => JSX.Element;
 
 export type RouteSetType = [string, PageComponentType, boolean?];
 
 interface RouterType {
   exact?: boolean;
   path: string;
-  component: (props: PageComponentProps) => JSX.Element;
+  component: () => JSX.Element;
 }
 
 interface HistoryEvent extends Event {
@@ -34,24 +21,27 @@ interface HistoryEvent extends Event {
   };
 }
 
-const DEFAULT_LOCATION = "/";
-
-const RouterContext = createContext<RouterContextPropsType>({
-  location: DEFAULT_LOCATION,
-});
-
 export const Router = ({ children }): ReactElement => {
-  const [location, setLocation] = useState<RouterContextPropsType>({
-    location: window.location.pathname,
-    params: decodeParams(),
-  });
+  const setLocation = useSetRecoilState(locationState);
+  const setSelectedCategoryState = useSetRecoilState(selectedCategoryState);
+
+  const setCurrentCategory = () => {
+    const params = decodeParams();
+
+    setSelectedCategoryState({
+      categoryId: params.category ? parseInt(params.category) : 0,
+      subCategoryId: params.subCategory && parseInt(params.subCategory),
+    });
+  };
 
   const setCurrentLocation = () => {
     setLocation({
       location: window.location.pathname,
       params: decodeParams(),
     });
+
     document.documentElement.scrollTo(0, 0);
+    setCurrentCategory();
   };
 
   const handlePushState = (e: HistoryEvent) => {
@@ -60,24 +50,24 @@ export const Router = ({ children }): ReactElement => {
     setCurrentLocation();
   };
 
+  const handlePopState = (e) => {
+    setCurrentLocation();
+  };
+
   const addEvents = () => {
     window.addEventListener("pushstate", handlePushState);
-    window.addEventListener("popstate", setCurrentLocation);
+    window.addEventListener("popstate", handlePopState);
   };
 
   useEffect(() => {
     addEvents();
   }, []);
 
-  return (
-    <RouterContext.Provider value={{ ...location }}>
-      {children}
-    </RouterContext.Provider>
-  );
+  return children;
 };
 
 export const Route = ({ exact, path, component: Component }: RouterType) => {
-  const { location, params } = useContext(RouterContext);
+  const { location } = useRecoilValue(locationState);
 
   const checkPath = (): boolean => {
     if (exact) {
@@ -87,7 +77,7 @@ export const Route = ({ exact, path, component: Component }: RouterType) => {
     }
   };
 
-  return checkPath() ? <Component location={location} params={params} /> : null;
+  return checkPath() ? <Component /> : null;
 };
 
 export const moveTo = (path: string) => {

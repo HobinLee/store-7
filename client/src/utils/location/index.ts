@@ -26,7 +26,7 @@ export const decodeParams = (
   vars.forEach((v) => {
     const pair = v.split("=");
     const key = decodeURIComponent(pair[0]);
-    const value = decodeURIComponent(pair[1]);
+    const value = pair[1] ? decodeURIComponent(pair[1]) : null;
 
     params[key] = value;
   });

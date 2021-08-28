@@ -1,17 +1,14 @@
 import CategoryBanner from "./Banner";
-import Filter, { filters } from "../../Components/Filter";
+import Filter, { filters, FilterType } from "../../Components/Filter";
 
 import Header from "@/Components/Header";
-import { PageWrapper, Contents } from "@/shared/styled";
+import { PageWrapper } from "@/shared/styled";
 import styled from "styled-components";
 import Footer from "@/Components/Footer";
-import { ProductParams, useProducts } from "@/api/products";
-import ProductList from "@/Components/ProductList";
+import { getProducts, useProducts } from "@/api/products";
+import InfiniteScroll from "@/Components/ProductList/InfiniteScroll";
 import { media } from "@/styles/theme";
 import { useState } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { useEffect } from "react";
-import { selectedCategoryState } from "@/store/category";
 
 export interface CategoryType {
   id: number;
@@ -32,45 +29,8 @@ export type CategoryParamType = {
   order?: string;
 };
 
-const START_PAGE = 1;
-const DEFAULT_ORDER = "default";
-
-const CategoryPage = ({ params: URIparams }) => {
-  const [filter, setFilter] = useState(filters[0]);
-  const [productsParams, setProductsParams] = useState<ProductParams>({
-    ...URIparams,
-  });
-  const setSelectedCategoryState = useSetRecoilState(selectedCategoryState);
-
-  useEffect(() => {
-    setProductsParams({
-      ...URIparams,
-      page: START_PAGE,
-      order: DEFAULT_ORDER,
-    });
-
-    setSelectedCategoryState({
-      categoryId: parseInt(URIparams.category) ?? 0,
-      subCategoryId: URIparams.subCategory
-        ? parseInt(URIparams.subCategory)
-        : -1,
-    });
-  }, [URIparams]);
-
-  useEffect(() => {
-    setProductsParams({
-      ...productsParams,
-      order: filter.value,
-      page: START_PAGE,
-    });
-  }, [filter]);
-
-  const nextPage = () => {
-    setProductsParams({
-      ...productsParams,
-      page: productsParams.page + 1,
-    });
-  };
+const CategoryPage = () => {
+  const [productOrder, setProductOrder] = useState<FilterType>(filters[0]);
 
   return (
     <>
@@ -80,11 +40,10 @@ const CategoryPage = ({ params: URIparams }) => {
         <CategoryBanner />
         <div className="page-contents">
           <div className="products-wrapper">
-            <Filter setFilter={setFilter} currentFilter={filter} />
-            <ProductList
-              useQuery={useProducts}
-              productParams={productsParams}
-              nextPage={nextPage}
+            <Filter setFilter={setProductOrder} currentFilter={productOrder} />
+            <InfiniteScroll
+              productAPI={getProducts}
+              order={productOrder.value}
             />
           </div>
         </div>
