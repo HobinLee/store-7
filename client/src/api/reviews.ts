@@ -1,4 +1,12 @@
 import { DELETE, GET, PATCH, POST } from "@/utils/axios";
+import { useQuery } from "react-query";
+
+// GET /reviews
+
+const getRecentReviews = (size) => GET("/reviews/recent", { size });
+
+export const useRecentReviews = (size) =>
+  useQuery(["recentReviews", size], () => getRecentReviews(size));
 
 // POST /reviews
 export const postReview = (data: FormData) => POST("/reviews", data);

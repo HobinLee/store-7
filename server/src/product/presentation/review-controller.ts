@@ -7,10 +7,13 @@ import {
   Patch,
   Delete,
   Param,
+  Get,
+  Query,
 } from "@nestjs/common";
 import {
   CreateReviewPostRequest,
   UpdateReviewPatchRequest,
+  RecentReviewsQuery,
 } from "../dto/review-request";
 import { ReviewService } from "../application/review-service";
 import { FileFieldsInterceptor } from "@nestjs/platform-express";
@@ -41,5 +44,10 @@ export class ReviewController {
   @Delete("/:id")
   async deleteReview(@Param("id") id: number) {
     return await this.reviewService.deletereview(id);
+  }
+
+  @Get("/recent")
+  async getRecentReviews(@Query() query: RecentReviewsQuery) {
+    return await this.reviewService.findRecentReviews(query);
   }
 }

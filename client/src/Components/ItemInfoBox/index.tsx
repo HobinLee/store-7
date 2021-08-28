@@ -102,6 +102,7 @@ const ItemInfoBox = ({
       );
     return (
       <div className="info__amount">
+        <span className="info__option">{option}</span>
         {optionValue} {amount}개
       </div>
     );
@@ -170,6 +171,10 @@ const Wrapper = styled.div`
     }
     &__amount {
       margin-top: 3rem;
+    }
+    &__option {
+      font-weight: 800;
+      margin-right: 0.5rem;
     }
     ${media.mobile} {
       ${gap("1rem")}

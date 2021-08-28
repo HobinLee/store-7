@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useInput from "@/hooks/useInput";
 import AddressModal from "../AddressModal";
 import ItemInfoBox from "@/Components/ItemInfoBox";
@@ -11,7 +11,6 @@ import {
   validatePhoneNumber,
   VALIDATION_ERR_MSG,
 } from "@/utils/validations";
-import { useEffect } from "react";
 import { useMyDestinations, useMyInfo } from "@/api/my";
 import { DestinationType, ICart, PartialCart } from "@/shared/type";
 import CartOrderBox from "@/Components/CartOrderBox";
@@ -80,11 +79,7 @@ const LoggedinContent = () => {
     if (payment === "kakaopay")
       handleKakaoPay(handlePostOrder, orderItems.items);
     else {
-      try {
-        handlePostOrder();
-      } finally {
-        moveTo("/order/success");
-      }
+      handlePostOrder();
     }
   };
 

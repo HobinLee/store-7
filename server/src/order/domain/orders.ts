@@ -27,7 +27,7 @@ export class Orders {
 
   async findOrderByOrderNum(orderNum: number) {
     return await this.orderRepository.find({
-      relations: ["user", "product", "product.images"],
+      relations: ["user", "product", "product.images", "product.options"],
       where: { orderNum },
     });
   }

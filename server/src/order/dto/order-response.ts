@@ -1,3 +1,4 @@
+import { Product } from "@/product/entity/product";
 import { OrderStatus } from "../entity/order";
 import { Order } from "../entity/order";
 
@@ -18,6 +19,7 @@ export class OrderResponse {
   image: string;
   optionName: string;
   optionValue: string;
+  product: Product;
 
   static of(order: Order): OrderResponse {
     const id = order.id,
@@ -33,6 +35,7 @@ export class OrderResponse {
       createdAt = order.createdAt,
       productName = order.product.name,
       reviewId = order.review ? order.review.id : 0,
+      product = order.product,
       image = order.product.images[0] ? order.product.images[0].id : "bed";
     let optionName = "",
       optionValue = "";
@@ -60,6 +63,7 @@ export class OrderResponse {
       productName,
       reviewId,
       image,
+      product,
       optionName,
       optionValue,
     };
