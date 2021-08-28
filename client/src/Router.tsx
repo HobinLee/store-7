@@ -1,8 +1,8 @@
 import { useEffect, ReactElement } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { selectedCategoryState } from "./store/category";
-import { locationState } from "./store/history";
+import { locationState } from "@/store/history";
 import { decodeParams } from "./utils/location";
 
 export type PageComponentType = () => JSX.Element;
@@ -28,8 +28,10 @@ export const Router = ({ children }): ReactElement => {
   const setCurrentCategory = () => {
     const params = decodeParams();
 
+    console.log(params);
+
     setSelectedCategoryState({
-      categoryId: parseInt(params.category) ?? 0,
+      categoryId: params.category ? parseInt(params.category) : 0,
       subCategoryId: params.subCategory && parseInt(params.subCategory),
     });
   };

@@ -2,11 +2,12 @@ import { decodeParams } from "@/utils/location";
 import { atom } from "recoil";
 
 const initParams = decodeParams();
+console.log(initParams);
 
 export const selectedCategoryState = atom({
   key: "selectedCategory",
   default: {
-    categoryId: parseInt(initParams.category) ?? 0,
+    categoryId: initParams.category ? parseInt(initParams.category) : 0,
     subCategoryId: initParams.subCategory
       ? parseInt(initParams.subCategory)
       : null,
