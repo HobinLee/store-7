@@ -8,6 +8,7 @@ import { Link } from "@/Router";
 import ImageHoverWrapper from "@/Components/ImageHoverWrapper";
 
 const ReviewCard = ({ review }: { review: ReviewType }) => {
+  console.log(review);
   return (
     <Wrapper>
       <div className="rating">
@@ -25,12 +26,13 @@ const ReviewCard = ({ review }: { review: ReviewType }) => {
       </div>
       <div className="info">
         <Link to={`/detail/${review.product.id}`}>
-          <Header>
-            {review.product.name} / {review.authorName}
-          </Header>
+          <Header>{review.product.name}</Header>
         </Link>
         <div className="content">{review.content}</div>
-        <div className="date">{YYYY_M_D_H_m(review.date)}</div>
+        <div className="bottom">
+          <div>{review.authorName}</div>
+          <div>{YYYY_M_D_H_m(review.date)}</div>
+        </div>
       </div>
     </Wrapper>
   );
@@ -84,9 +86,15 @@ const Wrapper = styled.div`
       height: 24rem;
     }
   }
-  .date {
-    text-align: right;
-    ${({ theme }) => theme.font.small};
+
+  .bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    > div:first-child {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
   }
 
   ${media.tablet} {

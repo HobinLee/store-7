@@ -14,6 +14,11 @@ const reviewBoxProps: ReviewType = {
   content: CONTENT,
   authorName: AUTHOR,
   date: DATE,
+  order: {
+    user: {
+      name: "et",
+    },
+  },
 };
 
 describe("<ReviewBox />", () => {

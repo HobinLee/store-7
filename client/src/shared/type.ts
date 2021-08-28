@@ -8,6 +8,11 @@ export interface ReviewType {
     id: number;
     name: string;
   };
+  order: {
+    user: {
+      name: string;
+    };
+  };
   date: Date;
 }
 
