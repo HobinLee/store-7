@@ -7,11 +7,7 @@ import { gap } from "@/styles/theme";
 import { patchMe, useMyDestinations, useMyInfo } from "@/api/my";
 import useInput from "@/hooks/useInput";
 import { convertToNumber, convertToPhoneNumber } from "@/utils/util";
-import {
-  validateEmail,
-  validatePhoneNumber,
-  VALIDATION_ERR_MSG,
-} from "@/utils/validations";
+import { validatePhoneNumber, VALIDATION_ERR_MSG } from "@/utils/validations";
 import useValidation from "@/hooks/useValidation";
 import { DestinationType } from "@/shared/type";
 import AddressModal from "@/Pages/Order/AddressModal";
@@ -23,7 +19,7 @@ const UserInfo = () => {
 
   // form
   const name = useInput(myInfo?.name ?? "");
-  const phone = useInput(convertToPhoneNumber(myInfo?.phoneNumber ?? ""));
+  const phone = useInput(myInfo?.phoneNumber ?? "", convertToPhoneNumber);
   const nameValidation = useValidation((name: string) => !!name?.length);
   const phoneValidation = useValidation(validatePhoneNumber);
 

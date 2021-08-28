@@ -14,11 +14,6 @@ const ProductSection = ({ title, type }: ProductSectionProps) => {
     size: MAIN_PAGE_PRODUCTS_SIZE,
     page: 1,
   });
-  console.log(product.data);
-  useEffect(() => {
-    // console.log(product.data, product.status);
-  }, [product]);
-
   return (
     <SectionWrapper {...{ title }}>
       <div className="title">{title}</div>
