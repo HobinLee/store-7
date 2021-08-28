@@ -1,5 +1,5 @@
 export type URIParameterType = {
-  [key: string]: string;
+  [key: string]: any;
 };
 
 export const encodeParams = (params: URIParameterType): string => {
