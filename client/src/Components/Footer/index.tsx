@@ -1,6 +1,7 @@
 import { gap, media } from "@/styles/theme";
 import styled from "styled-components";
 import { Logo } from "@/assets";
+import { Link } from "@/Router";
 
 const Footer = () => {
   return (
@@ -9,11 +10,10 @@ const Footer = () => {
 
       <div>
         <b>
-          <span>공지사항</span>
-          <span>1:1문의</span>
-          <span>이용약관</span>
-          <span>개인정보처리방침</span>
-          <span>판매처 안내</span>
+          <a href="https://github.com/danmin20">이정민</a>
+          <a href="https://github.com/LeagueLugas">임용성</a>
+          <a href="https://github.com/HobinLee">이호빈</a>
+          <a href="https://github.com/jjunyjjuny">홍영준</a>
         </b>
 
         <p>
@@ -48,8 +48,14 @@ const Wrapper = styled.div`
   b {
     ${({ theme }) => theme.font.medium};
     display: flex;
-    justify-content: space-between;
+    ${gap("6rem")}
     font-weight: 700;
+    ${media.tablet} {
+      justify-content: space-between;
+    }
+    a {
+      color: #000;
+    }
   }
   p {
     ${({ theme }) => theme.font.small};
@@ -57,6 +63,9 @@ const Wrapper = styled.div`
     line-height: 2rem;
     white-space: pre-line;
     color: ${({ theme }) => theme.color.grey1};
+    > & {
+      white-space: nowrap;
+    }
   }
   img {
     ${media.tablet} {
