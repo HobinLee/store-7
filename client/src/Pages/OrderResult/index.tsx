@@ -33,37 +33,39 @@ const OrderResult = () => {
     <Wrapper>
       <Header />
 
-      <div className="items">
-        <div className="title">
-          주문번호 {orderNum}
-          <div className="title__sub">
-            주문번호로 주문내역을 주회할 수 있습니다.
+      <div className="container">
+        <div className="items">
+          <div className="title">
+            주문번호 {orderNum}
+            <div className="title__sub">
+              주문번호로 주문내역을 주회할 수 있습니다.
+            </div>
           </div>
+
+          {ordersStatus !== "loading" &&
+            orders.map((order: OrderType) => (
+              <OrderBox key={order.id}>
+                <img
+                  width="100"
+                  src={properties.imgURL + order.product.images[0].id}
+                />
+                <div className="info">
+                  <div
+                    onClick={() => moveTo(`/detail/${order.product.id}`)}
+                    className="info__name"
+                  >
+                    {order.productName}
+                  </div>
+                  <div>
+                    <span className="info__option">{order.optionName}</span>
+                    {order.optionValue} {order.amount}개
+                  </div>
+                </div>
+
+                <div className="status">{order.status}</div>
+              </OrderBox>
+            ))}
         </div>
-
-        {ordersStatus !== "loading" &&
-          orders.map((order: OrderType) => (
-            <OrderBox key={order.id}>
-              <img
-                width="100"
-                src={properties.imgURL + order.product.images[0].id}
-              />
-              <div className="info">
-                <div
-                  onClick={() => moveTo(`/detail/${order.product.id}`)}
-                  className="info__name"
-                >
-                  {order.productName}
-                </div>
-                <div>
-                  <span className="info__option">{order.optionName}</span>
-                  {order.optionValue} {order.amount}개
-                </div>
-              </div>
-
-              <div className="status">{order.status}</div>
-            </OrderBox>
-          ))}
       </div>
       <Footer />
     </Wrapper>
@@ -71,9 +73,10 @@ const OrderResult = () => {
 };
 
 const Wrapper = styled(PageWrapper)`
-  ${({ theme }) => theme.flexCenter}
-  align-items: flex-start;
-
+  .container {
+    ${({ theme }) => theme.flexCenter}
+    align-items: flex-start;
+  }
   .title {
     margin-top: 10rem;
     margin-bottom: 5rem;
@@ -97,7 +100,7 @@ const Wrapper = styled(PageWrapper)`
       box-sizing: border-box;
     }
     ${media.mobile} {
-      padding: 0;
+      padding: 0 2rem;
     }
   }
 `;
