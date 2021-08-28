@@ -91,7 +91,9 @@ export const convertToNumber = (str: string): string => {
   return str.replace(regex, "").substring(0, maxLength);
 };
 
-export const convertToPhoneNumber = (origin: string): string => {
+export const convertToPhoneNumber = (origin?: string): string => {
+  if (!origin) return "";
+
   //010-23O8-1O24
   const numbers = convertToNumber(origin);
 

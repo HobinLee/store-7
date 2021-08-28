@@ -14,7 +14,6 @@ const ProductSection = ({ title, type }: ProductSectionProps) => {
     size: MAIN_PAGE_PRODUCTS_SIZE,
     page: 1,
   });
-
   return (
     <SectionWrapper {...{ title }}>
       <div className="title">{title}</div>

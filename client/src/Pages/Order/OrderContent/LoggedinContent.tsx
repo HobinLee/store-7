@@ -6,11 +6,7 @@ import { Arrow, ETPay, KakaoPay } from "@/assets";
 import InputSection from "@/Components/Input/InputSection";
 import useValidation from "@/hooks/useValidation";
 import ValidationInput from "@/Components/Input/ValidationInput";
-import {
-  validateEmail,
-  validatePhoneNumber,
-  VALIDATION_ERR_MSG,
-} from "@/utils/validations";
+import { validatePhoneNumber, VALIDATION_ERR_MSG } from "@/utils/validations";
 import { useMyDestinations, useMyInfo } from "@/api/my";
 import { DestinationType, ICart, PartialCart } from "@/shared/type";
 import CartOrderBox from "@/Components/CartOrderBox";
@@ -33,19 +29,15 @@ const LoggedinContent = () => {
   const { status: myInfoStatus, data: myInfo, error } = useMyInfo();
 
   // form
-  const email = useInput(myInfo?.email ?? "");
   const addressee = useInput(myInfo?.name ?? "");
-  const phone = useInput(convertToPhoneNumber(myInfo?.phoneNumber ?? ""));
-  const emailValidation = useValidation(validateEmail);
+  const phone = useInput(myInfo?.phoneNumber ?? "", convertToPhoneNumber);
   const nameValidation = useValidation((name: string) => !!name?.length);
   const phoneValidation = useValidation(validatePhoneNumber);
 
   useEffect(() => {
     if (myInfo) {
-      email.setValue(myInfo?.email);
       addressee.setValue(myInfo?.name);
-      phone.setValue(convertToPhoneNumber(myInfo?.phoneNumber));
-      emailValidation.onCheck(myInfo?.email ?? "");
+      phone.setValue(convertToPhoneNumber(myInfo?.phoneNumber ?? ""));
       nameValidation.onCheck(myInfo?.name ?? "");
       phoneValidation.onCheck(convertToPhoneNumber(myInfo?.phoneNumber ?? ""));
     }
@@ -83,11 +75,7 @@ const LoggedinContent = () => {
   };
 
   const isOrderable =
-    emailValidation.isValid &&
-    nameValidation.isValid &&
-    phoneValidation.isValid &&
-    !!payment &&
-    !!address;
+    nameValidation.isValid && phoneValidation.isValid && !!payment && !!address;
 
   return (
     myInfoStatus !== "loading" &&
@@ -117,14 +105,6 @@ const LoggedinContent = () => {
                   validation={nameValidation}
                   placeholder="이름"
                   message={VALIDATION_ERR_MSG.INVALID_NAME}
-                />
-              </InputSection>
-              <InputSection title="이메일">
-                <ValidationInput
-                  input={email}
-                  validation={emailValidation}
-                  placeholder="이메일을 입력해주세요"
-                  message={VALIDATION_ERR_MSG.INVALID_EMAIL}
                 />
               </InputSection>
               <InputSection

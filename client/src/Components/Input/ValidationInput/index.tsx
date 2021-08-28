@@ -49,7 +49,7 @@ const ValidationInput = ({
               ? `${className} valid-input `
               : `${className} invalid-input`
           }
-          defaultValue={!!filter ? filter(input.value) : input.value}
+          value={!!filter ? filter(input.value) : input.value}
           onChange={(e) => {
             onChange && onChange(e);
             input.onChange(e);
@@ -69,7 +69,7 @@ const ValidationInput = ({
               ? `${className} valid-input`
               : `${className} invalid-input`
           }
-          defaultValue={filter ? filter(input.value) : input.value}
+          value={filter ? filter(input.value) : input.value}
           onChange={(e) => {
             onChange && onChange(e);
             input.onChange(e);
