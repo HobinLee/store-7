@@ -29,9 +29,10 @@ export class ProductElementResponse {
       amount = product.stock,
       image = product.getThumbnailImage(),
       price = product.getDiscountedPrice(),
-      isWish =
-        product.wishes?.filter((wish) => wish?.user?.id === userId).length !==
-        0;
+      isWish = userId
+        ? product.wishes?.filter((wish) => wish?.user?.id === userId).length !==
+          0
+        : false;
 
     return new ProductElementResponse({
       id,
