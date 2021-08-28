@@ -10,6 +10,7 @@ export const enum HttpStatus {
   NOT_FOUND = 404,
   NOT_ACCEPTABLE = 406,
   PROXY_AUTHENTICATION_REQUIRED = 407,
+  PRECONDITION_FAILED = 412,
 }
 
 interface ErrorResponse extends Response {
@@ -26,6 +27,7 @@ export const handleHttpError = (error: HttpError) => {
 
   switch (error.status) {
     case HttpStatus.UNAUTHORIZED:
+    case HttpStatus.PRECONDITION_FAILED:
       moveTo("/login");
       break;
     default:

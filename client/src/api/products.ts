@@ -28,10 +28,12 @@ export const getAllProductsByKeyword = async (keyword: string) =>
 export const getProducts = async (
   params: ProductParams
 ): Promise<ProductElementType[]> => {
-  return await GET("/products", params);
+  return GET("/products", params);
 };
 export const useProducts = (params: ProductParams) =>
-  useQuery(["products", params], () => getProducts(params));
+  useQuery(["products", params], () => getProducts(params), {
+    cacheTime: 0,
+  });
 
 // GET /products/:id 상품 상세 정보
 const getProduct = (id: number): Promise<ProductType> => GET(`/products/${id}`);
