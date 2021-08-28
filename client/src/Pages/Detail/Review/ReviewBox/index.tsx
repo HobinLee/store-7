@@ -19,7 +19,6 @@ const ReviewBox = ({
   handleClickEditButton?: (review: ReviewForm) => void;
 }) => {
   const pathname = location.pathname.split("/")[1];
-  console.log(review);
   return (
     <Wrapper>
       <div className="info">

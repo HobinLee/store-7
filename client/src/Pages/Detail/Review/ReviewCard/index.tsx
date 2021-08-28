@@ -8,7 +8,6 @@ import { Link } from "@/Router";
 import ImageHoverWrapper from "@/Components/ImageHoverWrapper";
 
 const ReviewCard = ({ review }: { review: ReviewType }) => {
-  console.log(review);
   return (
     <Wrapper>
       <div className="rating">
