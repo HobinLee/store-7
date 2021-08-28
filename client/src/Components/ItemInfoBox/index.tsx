@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Checkbox from "@/Components/Checkbox";
+import Checkbox from "@/Components/Common/Checkbox";
 import { convertToKRW } from "@/utils/util";
 import { gap, media } from "@/styles/theme";
 import { Close } from "@/assets";

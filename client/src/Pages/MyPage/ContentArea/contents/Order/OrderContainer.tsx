@@ -2,7 +2,7 @@ import styled from "styled-components";
 import OrderBox from "./OrderBox";
 import { MyOrderType, OrderStatus } from "@/shared/type";
 import { gap } from "@/styles/theme";
-import NoData from "@/Components/NoData";
+import NoData from "@/Components/Common/NoData";
 
 interface OrdersContainer {
   orders: MyOrderType[];

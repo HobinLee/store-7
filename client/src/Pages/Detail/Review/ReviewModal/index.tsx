@@ -1,4 +1,4 @@
-import Rating from "@/Components/Rating";
+import Rating from "@/Components/Common/Rating";
 import useInput from "@/hooks/useInput";
 import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
@@ -7,7 +7,7 @@ import { useState } from "react";
 import { patchReview, postReview } from "@/api/reviews";
 import { ReviewForm } from "@/Pages/MyPage/ContentArea/contents/Review";
 import properties from "@/config/properties";
-import APIButton from "@/Components/APIButton";
+import APIButton from "@/Components/Common/Button/APIButton";
 import { useMyOrders, useMyReviews } from "@/api/my";
 import useValidation from "@/hooks/useValidation";
 import {
@@ -16,7 +16,7 @@ import {
   VALIDATION_ERR_MSG,
 } from "@/utils/validations";
 import { useEffect } from "react";
-import ValidationInput from "@/Components/Input/ValidationInput";
+import ValidationInput from "@/Components/Common/Input/ValidationInput";
 
 interface ReviewModalProps {
   submitType: string;

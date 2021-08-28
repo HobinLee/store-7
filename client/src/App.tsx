@@ -16,7 +16,7 @@ import "dayjs/locale/ko";
 import SignupPage from "@/Pages/Signup";
 import { useSetRecoilState } from "recoil";
 import { loginState } from "./store/state";
-import Alert from "./Components/Alert";
+import Alert from "./Components/Common/Alert";
 import { verifyToken } from "./api/auth";
 import SearchPage from "./Pages/Search";
 import AdminPage from "./Pages/Admin";

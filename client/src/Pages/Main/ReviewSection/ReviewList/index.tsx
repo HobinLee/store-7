@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { ReviewType } from "@/shared/type";
 import { gap, media } from "@/styles/theme";
-import ReviewCard from "@/Pages/Detail/Review/ReviewCard";
+import ReviewCard from "@/Pages/Main/ReviewSection/ReviewCard";
 
 export interface ReviewListProps {
   reviews: ReviewType[];

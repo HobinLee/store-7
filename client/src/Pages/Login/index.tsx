@@ -1,7 +1,7 @@
 import { PageWrapper } from "@/shared/styled";
 import styled from "styled-components";
-import Input from "@/Components/Input";
-import Button from "@/Components/Button";
+import Input from "@/Components/Common/Input";
+import Button from "@/Components/Common/Button";
 import useInput from "@/hooks/useInput";
 import { gap, media } from "@/styles/theme";
 import LoginSection from "./LoginSection";

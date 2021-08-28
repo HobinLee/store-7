@@ -1,4 +1,4 @@
-import { alert } from "@/Components/Alert";
+import { alert } from "@/Components/Common/Alert";
 import axios from "axios";
 import properties from "@/config/properties";
 import { handleHttpError } from "./error";

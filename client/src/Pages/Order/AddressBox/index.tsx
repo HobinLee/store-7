@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { DestinationType, UserType } from "@/shared/type";
-import Button from "@/Components/Button";
+import Button from "@/Components/Common/Button";
 import { SetStateAction } from "react";
 import { Dispatch } from "react";
 import { gap } from "@/styles/theme";
 import { deleteDestination } from "@/api/destinations";
-import Checkbox from "@/Components/Checkbox";
+import Checkbox from "@/Components/Common/Checkbox";
 import { QueryObserverResult } from "react-query";
 
 export type AddressBoxProps = {

@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import Button from "@/Components/Button";
+import Button from "@/Components/Common/Button";
 import QuestionBox from "./QuestionBox";
 import { useState } from "react";
 import QuestionModal from "./QuestionModal";
 import { useProductQuestions } from "@/api/products";
 import { gap } from "@/styles/theme";
-import NoData from "@/Components/NoData";
+import NoData from "@/Components/Common/NoData";
 
 const Question = () => {
   const [isModalOpened, setIsModalOpened] = useState(false);

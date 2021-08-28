@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Button from "@/Components/Button";
+import Button from "@/Components/Common/Button";
 import { convertToKRW } from "@/utils/util";
 import { gap, media } from "@/styles/theme";
 import { moveTo } from "@/Router";

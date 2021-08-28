@@ -1,4 +1,4 @@
-import { alert } from "@/Components/Alert";
+import { alert } from "@/Components/Common/Alert";
 import { moveTo } from "@/Router";
 
 export const enum HttpStatus {
@@ -29,6 +29,9 @@ export const handleHttpError = (error: HttpError) => {
     case HttpStatus.UNAUTHORIZED:
     case HttpStatus.PRECONDITION_FAILED:
       moveTo("/login");
+      break;
+    case HttpStatus.NOT_FOUND:
+      moveTo("/404");
       break;
     default:
       break;

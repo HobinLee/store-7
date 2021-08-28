@@ -4,7 +4,7 @@ import { media } from "@/styles/theme";
 import { UseQueryResult } from "react-query";
 import { Loading } from "@/shared/styled";
 import Item from "@/Components/Item";
-import NoData from "@/Components/NoData";
+import NoData from "@/Components/Common/NoData";
 
 const ProductList = ({
   data: products,

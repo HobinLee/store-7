@@ -5,14 +5,14 @@ import Footer from "@/Components/Footer";
 import ItemInfoBox from "@/Components/ItemInfoBox";
 import CartOrderBox from "../../Components/CartOrderBox";
 import { Arrow } from "@/assets";
-import Checkbox from "@/Components/Checkbox";
+import Checkbox from "@/Components/Common/Checkbox";
 import { gap, media } from "@/styles/theme";
 import { useMyCarts } from "@/api/my";
 import { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { loginState } from "@/store/state";
 import { CartType, ICart, PartialCart } from "@/shared/type";
-import NoData from "@/Components/NoData";
+import NoData from "@/Components/Common/NoData";
 
 const CartPage = () => {
   const isLoggedin = useRecoilValue(loginState);

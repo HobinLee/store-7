@@ -1,11 +1,11 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import styled from "styled-components";
 import { AddressType, DestinationType } from "@/shared/type";
-import Button from "@/Components/Button";
+import Button from "@/Components/Common/Button";
 import useInput from "@/hooks/useInput";
 import useValidation from "@/hooks/useValidation";
-import InputSection from "@/Components/Input/InputSection";
-import ValidationInput from "@/Components/Input/ValidationInput";
+import InputSection from "@/Components/Common/Input/InputSection";
+import ValidationInput from "@/Components/Common/Input/ValidationInput";
 import Address from "@/Components/Address";
 
 import { validatePhoneNumber, VALIDATION_ERR_MSG } from "@/utils/validations";

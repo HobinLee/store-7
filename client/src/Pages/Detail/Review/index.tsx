@@ -1,14 +1,14 @@
 import styled from "styled-components";
-import Progress from "@/Components/Progress";
-import ReviewBox from "./ReviewBox";
+import Progress from "@/Pages/Detail/Review/Progress";
+import ReviewBox from "../../../Components/ReviewBox";
 import { useState } from "react";
 import { gap } from "@/styles/theme";
 import { useProductReviews } from "@/api/products";
-import Checkbox from "@/Components/Checkbox";
+import Checkbox from "@/Components/Common/Checkbox";
 import { useEffect } from "react";
 import useDebounce from "@/hooks/useDebounce";
-import Rating from "@/Components/Rating";
-import NoData from "@/Components/NoData";
+import Rating from "@/Components/Common/Rating";
+import NoData from "@/Components/Common/NoData";
 
 const Review = () => {
   const pathname = location.pathname.split("detail/")[1];

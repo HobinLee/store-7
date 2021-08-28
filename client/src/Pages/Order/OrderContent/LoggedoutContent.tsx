@@ -2,9 +2,9 @@ import { useState } from "react";
 import useInput from "@/hooks/useInput";
 import ItemInfoBox from "@/Components/ItemInfoBox";
 import { Arrow, ETPay, KakaoPay } from "@/assets";
-import InputSection from "@/Components/Input/InputSection";
+import InputSection from "@/Components/Common/Input/InputSection";
 import useValidation from "@/hooks/useValidation";
-import ValidationInput from "@/Components/Input/ValidationInput";
+import ValidationInput from "@/Components/Common/Input/ValidationInput";
 import {
   validateEmail,
   validatePhoneNumber,

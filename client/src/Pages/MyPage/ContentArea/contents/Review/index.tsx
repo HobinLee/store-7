@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import Section from "../../../Section";
 import { useMyReviews } from "@/api/my";
-import ReviewBox from "@/Pages/Detail/Review/ReviewBox";
+import ReviewBox from "@/Components/ReviewBox";
 import { gap } from "@/styles/theme";
 import { useState } from "react";
 import ReviewModal from "@/Pages/Detail/Review/ReviewModal";
-import NoData from "@/Components/NoData";
+import NoData from "@/Components/Common/NoData";
 
 export interface ReviewForm {
   id?: number;

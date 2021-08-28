@@ -3,7 +3,7 @@ import GoogleSVG from "@/assets/googleLogin.svg";
 import { gap } from "@/styles/theme";
 import styled from "styled-components";
 import ET from "@/assets/et.png";
-import APIButton from "@/Components/APIButton";
+import APIButton from "@/Components/Common/Button/APIButton";
 import properties from "@/config/properties";
 
 const OAuthLoginSection = ({
