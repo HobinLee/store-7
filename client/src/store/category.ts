@@ -2,7 +2,6 @@ import { decodeParams } from "@/utils/location";
 import { atom } from "recoil";
 
 const initParams = decodeParams();
-console.log(initParams);
 
 export const selectedCategoryState = atom({
   key: "selectedCategory",

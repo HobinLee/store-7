@@ -28,8 +28,6 @@ export const Router = ({ children }): ReactElement => {
   const setCurrentCategory = () => {
     const params = decodeParams();
 
-    console.log(params);
-
     setSelectedCategoryState({
       categoryId: params.category ? parseInt(params.category) : 0,
       subCategoryId: params.subCategory && parseInt(params.subCategory),
