@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { SectionType } from "..";
 import ProductList from "@/Components/ProductList";
 import { useProducts } from "@/api/products";
+import { useEffect } from "react";
 
 export interface ProductSectionProps extends SectionType {}
 
@@ -13,6 +14,10 @@ const ProductSection = ({ title, type }: ProductSectionProps) => {
     size: MAIN_PAGE_PRODUCTS_SIZE,
     page: 1,
   });
+  console.log(product.data);
+  useEffect(() => {
+    // console.log(product.data, product.status);
+  }, [product]);
 
   return (
     <SectionWrapper {...{ title }}>
