@@ -1,5 +1,5 @@
 import CategoryBanner from "./Banner";
-import Filter, { filters } from "../../Components/Filter";
+import Filter, { filters, FilterType } from "../../Components/Filter";
 
 import Header from "@/Components/Header";
 import { PageWrapper } from "@/shared/styled";
@@ -30,7 +30,7 @@ export type CategoryParamType = {
 };
 
 const CategoryPage = () => {
-  const [filter, setFilter] = useState(filters[0]);
+  const [productOrder, setProductOrder] = useState<FilterType>(filters[0]);
 
   return (
     <>
@@ -40,8 +40,11 @@ const CategoryPage = () => {
         <CategoryBanner />
         <div className="page-contents">
           <div className="products-wrapper">
-            <Filter setFilter={setFilter} currentFilter={filter} />
-            <InfiniteScroll productAPI={getProducts} order={filter.value} />
+            <Filter setFilter={setProductOrder} currentFilter={productOrder} />
+            <InfiniteScroll
+              productAPI={getProducts}
+              order={productOrder.value}
+            />
           </div>
         </div>
         <Footer />

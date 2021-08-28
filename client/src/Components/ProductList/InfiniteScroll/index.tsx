@@ -8,7 +8,8 @@ import { useEffect } from "react";
 import NoData from "@/Components/NoData";
 import { useLazyLoad } from "@/hooks/useLazyLoad";
 import { useRecoilValue } from "recoil";
-import { locationState } from "@/store/history";
+import { LocaitionStateType, locationState } from "@/store/history";
+import { ProductParams } from "@/api/products";
 
 const START_PAGE = 1;
 const PRODUCT_PER_PAGE = 4;
@@ -22,10 +23,11 @@ let i = 0;
 
 const InfiniteScroll = ({ productAPI, order }: ProductListProps) => {
   i++;
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<ProductElementType[]>([]);
   const [isEndPage, setIsEndPage] = useState(false);
-  const { params: urlParams } = useRecoilValue(locationState);
-  const [productParam, setProductParam] = useState({
+  const { params: urlParams }: LocaitionStateType =
+    useRecoilValue(locationState);
+  const [productParam, setProductParam] = useState<ProductParams>({
     ...urlParams,
     order,
     page: START_PAGE,
