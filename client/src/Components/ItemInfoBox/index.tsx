@@ -206,37 +206,6 @@ const Wrapper = styled.div`
     fill: ${({ theme }) => theme.color.primary1};
   }
 
-  .num-input {
-    ${({ theme }) => theme.flexCenter}
-    margin-right: 2rem;
-    input {
-      background: ${({ theme }) => theme.color.background};
-    }
-    div {
-      ${({ theme }) => theme.flexCenter}
-      flex-direction: column;
-      height: 2.5rem;
-
-      button {
-        ${({ theme }) => theme.flexCenter};
-        cursor: pointer;
-        width: 1.6rem;
-        border: none;
-        padding: 0.4rem;
-        background: ${({ theme }) => theme.color.primary2};
-      }
-    }
-    &__up {
-      transform: rotate(-90deg);
-      fill: white;
-      height: 1.1rem;
-    }
-    &__down {
-      transform: rotate(90deg);
-      fill: white;
-      height: 1.2rem;
-    }
-  }
   .select-option {
     ${({ theme }) => theme.flexCenter};
     ${({ theme }) => theme.font.medium};
