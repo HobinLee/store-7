@@ -3,7 +3,7 @@ import { atom } from "recoil";
 
 export const DEFAULT_LOCATION = "/";
 
-interface LocaitionStateType {
+export interface LocaitionStateType {
   location: string;
   params?: URIParameterType;
 }

@@ -29,8 +29,6 @@ export type CategoryParamType = {
   order?: string;
 };
 
-const START_PAGE = 1;
-
 const CategoryPage = () => {
   const [filter, setFilter] = useState(filters[0]);
 
