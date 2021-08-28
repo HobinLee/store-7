@@ -1,11 +1,14 @@
-import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 import { Product } from "@/product/entity/product";
 import { User } from "./user";
 
 @Entity()
 export class Wish {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn()
+  user_id: number;
+
+  @PrimaryColumn()
+  product_id: number;
 
   @ManyToOne(() => User, (user) => user.wishes)
   @JoinColumn({ name: "user_id" })

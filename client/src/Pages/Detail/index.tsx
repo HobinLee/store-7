@@ -83,10 +83,12 @@ const DetailPage = () => {
   }, [product, selectedTab]);
 
   useEffect(() => {
-    setIsMyWish(product?.isWish);
+    setIsMyWish(product?.isWish ?? false);
   }, [product]);
 
   useDidMountEffect(() => {
+    if (product.isWish === debounceIsMyWish) return;
+
     debounceIsMyWish
       ? postWishProduct(product.id)
       : deleteWishProduct(product.id);
