@@ -1,7 +1,7 @@
 import ReviewModal from "@/Pages/Detail/Review/ReviewModal";
 import { Link } from "@/Router";
 import { MyOrderType, OrderStatus } from "@/shared/type";
-import { theme } from "@/styles/theme";
+import { media, theme } from "@/styles/theme";
 import { convertToKRW, YYYYMMDD_DOT } from "@/utils/util";
 import { useState } from "react";
 import styled, { css } from "styled-components";
@@ -130,6 +130,21 @@ const Wrapper = styled.div<{ type: string }>`
         padding-bottom: 0.5rem;
         border-bottom: 0.1rem solid ${({ theme }) => theme.color.light_grey1};
         line-height: 2rem;
+
+        ${media.tablet} {
+          font-weight: 500;
+          margin-bottom: 1rem;
+          line-height: 1.6rem;
+          font-size: 1.6rem;
+          padding-bottom: 0rem;
+          border-bottom: none;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          word-wrap: break-word;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+        }
       }
 
       .create-at {

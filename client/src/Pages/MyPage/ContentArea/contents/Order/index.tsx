@@ -4,6 +4,8 @@ import { useMyInfo, useMyOrders } from "@/api/my";
 import { Arrow } from "@/assets";
 import OrdersContainer from "./OrderContainer";
 import { OrderStatus } from "@/shared/type";
+import MobileOrderContainer from "./mobile/MobileOrderContainer";
+import { media } from "@/styles/theme";
 
 const Order = () => {
   const { status: ordersStatus, data: orders } = useMyOrders();
@@ -16,20 +18,25 @@ const Order = () => {
         title="나의 주문 현황"
         description={`${
           myInfoStatus !== "loading" ? myInfo.name : " "
-        }님의 주문 내역입니다.`}
+        } 님의 주문 내역입니다.`}
       >
         {ordersStatus !== "loading" && (
-          <div className="orders">
-            <OrdersContainer orders={prepare} type={OrderStatus.Prepare} />
-            <div className="arrow">
-              <Arrow />
+          <>
+            <div className="orders">
+              <OrdersContainer orders={prepare} type={OrderStatus.Prepare} />
+              <div className="arrow">
+                <Arrow />
+              </div>
+              <OrdersContainer orders={delivered} type={OrderStatus.Delivery} />
+              <div className="arrow">
+                <Arrow />
+              </div>
+              <OrdersContainer orders={arrival} type={OrderStatus.Arrival} />
             </div>
-            <OrdersContainer orders={delivered} type={OrderStatus.Delivery} />
-            <div className="arrow">
-              <Arrow />
+            <div className="mini-tablet__only">
+              <MobileOrderContainer {...{ prepare, delivered, arrival }} />
             </div>
-            <OrdersContainer orders={arrival} type={OrderStatus.Arrival} />
-          </div>
+          </>
         )}
       </Section>
     </Wrapper>
@@ -44,6 +51,15 @@ const Wrapper = styled.div`
       display: flex;
       justify-content: center;
       padding-top: 3rem;
+    }
+    ${media[768]} {
+      display: none;
+    }
+  }
+  .mini-tablet__only {
+    display: none;
+    ${media[768]} {
+      display: block;
     }
   }
 `;
