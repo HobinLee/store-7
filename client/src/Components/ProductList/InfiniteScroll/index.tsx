@@ -2,7 +2,6 @@ import { ProductElementType } from "@/shared/type";
 import Item from "@/Components/Item";
 import styled from "styled-components";
 import { media } from "@/styles/theme";
-import { UseQueryResult } from "react-query";
 import { Loading } from "@/shared/styled";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -12,64 +11,65 @@ import { useRecoilValue } from "recoil";
 import { locationState } from "@/store/history";
 
 const START_PAGE = 1;
-const PRODUCT_PER_PAGE = 12;
+const PRODUCT_PER_PAGE = 4;
 
 interface ProductListProps {
-  useQuery: (params: any) => UseQueryResult<ProductElementType[], unknown>;
+  productAPI: (params: any) => Promise<ProductElementType[]>;
   order?: string;
-  isPaginated?: boolean;
 }
 
-const InfiniteScroll = ({
-  useQuery,
-  order,
-  isPaginated = false,
-}: ProductListProps) => {
-  const [products, setProducts] = useState([]);
-  const [isEndPage, setIsEndPage] = useState(!isPaginated);
-  const [page, setPage] = useState(START_PAGE);
+let i = 0;
 
+const InfiniteScroll = ({ productAPI, order }: ProductListProps) => {
+  i++;
+  const [products, setProducts] = useState([]);
+  const [isEndPage, setIsEndPage] = useState(false);
   const { params: urlParams } = useRecoilValue(locationState);
+  const [productParam, setProductParam] = useState({
+    ...urlParams,
+    order,
+    page: START_PAGE,
+  });
+  const [status, setStatus] = useState<"loading" | "success" | "error">(
+    "success"
+  );
 
   useEffect(() => {
     setIsEndPage(false);
-    setPage(1);
+    setProductParam({ ...urlParams, order, page: START_PAGE });
   }, [urlParams, order]);
+
+  const addProduct = async () => {
+    setStatus("loading");
+    const newProducts = await productAPI(productParam);
+    setStatus(!newProducts ? "error" : "success");
+
+    if (productParam.page === START_PAGE) {
+      setProducts([...newProducts]);
+    } else {
+      setProducts([...products, ...newProducts]);
+    }
+
+    if (newProducts?.length < PRODUCT_PER_PAGE) {
+      setIsEndPage(true);
+    }
+  };
+
+  useEffect(() => {
+    addProduct();
+  }, [productParam]);
+
   const nextPage = () => {
-    setPage(page + 1);
+    setProductParam({ ...urlParams, order, page: productParam.page + 1 });
   };
 
   const { ref } = useLazyLoad(nextPage);
-
-  const {
-    data: newProducts,
-    status,
-    refetch,
-  } = useQuery({ ...urlParams, order, page });
-
-  useEffect(() => {
-    console.log(urlParams.category, page, newProducts);
-    if (status === "success") {
-      if (!urlParams || page === 1) {
-        setProducts([...newProducts]);
-      } else {
-        setProducts([...products, ...newProducts]);
-      }
-
-      if (newProducts?.length < PRODUCT_PER_PAGE) {
-        setIsEndPage(true);
-      }
-    }
-    if (status === "error") {
-      setIsEndPage(true);
-    }
-  }, [newProducts, status]);
 
   return (
     <ProductWrapList>
       {products?.length > 0 ? (
         products.map((product: ProductElementType) => (
-          <Item {...product} refetch={refetch} key={product.id} />
+          <Item {...product} key={product.id} />
         ))
       ) : (
         <NoData />

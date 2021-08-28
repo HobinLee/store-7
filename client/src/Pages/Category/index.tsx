@@ -5,7 +5,7 @@ import Header from "@/Components/Header";
 import { PageWrapper } from "@/shared/styled";
 import styled from "styled-components";
 import Footer from "@/Components/Footer";
-import { useProducts } from "@/api/products";
+import { getProducts, useProducts } from "@/api/products";
 import InfiniteScroll from "@/Components/ProductList/InfiniteScroll";
 import { media } from "@/styles/theme";
 import { useState } from "react";
@@ -43,11 +43,7 @@ const CategoryPage = () => {
         <div className="page-contents">
           <div className="products-wrapper">
             <Filter setFilter={setFilter} currentFilter={filter} />
-            <InfiniteScroll
-              useQuery={useProducts}
-              order={filter.value}
-              isPaginated={true}
-            />
+            <InfiniteScroll productAPI={getProducts} order={filter.value} />
           </div>
         </div>
         <Footer />
