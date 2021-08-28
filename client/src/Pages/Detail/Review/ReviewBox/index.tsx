@@ -19,10 +19,10 @@ const ReviewBox = ({
   handleClickEditButton?: (review: ReviewForm) => void;
 }) => {
   const pathname = location.pathname.split("/")[1];
-
+  console.log(pathname);
   return (
     <Wrapper>
-      <div>
+      <div className="info">
         <div className="rating">
           <Rating value={review.rate} readOnly color="#fff" />
         </div>
@@ -36,7 +36,7 @@ const ReviewBox = ({
             </Link>
           )}
 
-          {pathname && (
+          {pathname == "mypage" && (
             <EditAndDeleteButtons
               {...{ review, refetch, handleClickEditButton }}
             />
@@ -57,6 +57,7 @@ const ReviewBox = ({
     </Wrapper>
   );
 };
+
 const EditAndDeleteButtons = ({ handleClickEditButton, review, refetch }) => {
   const handleClickDeleteButton = async () => {
     const confirm = window.confirm(
@@ -104,7 +105,8 @@ const Wrapper = styled.div`
   position: relative;
 
   ${media.tablet} {
-    flex-direction: column;
+    flex-direction: column-reverse;
+    justify-content: flex-start;
   }
 
   .rating {
@@ -131,7 +133,6 @@ const Wrapper = styled.div`
 
   .content-img {
     max-width: 30rem;
-    max-height: 30rem;
     align-self: center;
     .image {
       padding-left: 2rem;

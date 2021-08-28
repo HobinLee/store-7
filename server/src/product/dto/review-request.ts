@@ -9,6 +9,7 @@ export interface ReviewPostReqeust {
   rate: number;
   image?: string;
 }
+
 export interface CreateReviewPostRequest {
   orderId: number;
   productId: number;
@@ -25,4 +26,8 @@ export interface ReviewPatchReqeust {
 export interface UpdateReviewPatchRequest {
   content: string;
   rate: number;
+}
+
+export interface RecentReviewsQuery {
+  size?: number;
 }

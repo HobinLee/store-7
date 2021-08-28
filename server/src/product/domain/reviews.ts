@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { IsNull, Not, Repository } from "typeorm";
 import { Review } from "@/product/entity/review";
 import {
   ReviewPatchReqeust,
@@ -9,6 +9,7 @@ import {
 import { S3Repository } from "@/product/infrastructure/s3-repository";
 
 const RANDOM_FILENAME_LENGTH = 32;
+const REVIEW_PER_MAINPAGE = 3;
 
 @Injectable()
 export class Reviews {
@@ -34,7 +35,6 @@ export class Reviews {
     return result;
   }
 
-  //TODO : 해결하쇼 유저 아이디로 order찾기
   async findReviewsByUserId(userId) {
     return await this.reviewRepository.find({
       relations: ["order", "order.user", "product"],
@@ -42,12 +42,14 @@ export class Reviews {
     });
   }
 
-  // async findLatelyReview(count: number) {
-  //   return this.reviewRepository.find({
-  //     relations: [],
-  //     where: {},
-  //   });
-  // }
+  async findRecentReviews(query) {
+    return this.reviewRepository.find({
+      relations: ["order", "order.user", "product"],
+      order: { createdAt: "DESC" },
+      where: { image: Not(IsNull()) },
+      take: query.size ?? REVIEW_PER_MAINPAGE,
+    });
+  }
 
   async createReview(review: ReviewPostReqeust) {
     await this.reviewRepository.insert(review);
