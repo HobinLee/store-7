@@ -29,6 +29,8 @@ const AddressBox = ({
   isChecked,
   handleCheck,
 }: AddressBoxProps) => {
+  const pathname = location.pathname.split("/")[1];
+
   const handleDelete = async (id: number) => {
     await deleteDestination(id);
     setPage("select");
@@ -61,9 +63,11 @@ const AddressBox = ({
           <Button onClick={() => handleDelete(address.id)} size="small">
             삭제
           </Button>
-          <Button size="small" onClick={handleEdit}>
-            수정
-          </Button>
+          {pathname !== "mypage" && (
+            <Button size="small" onClick={handleEdit}>
+              수정
+            </Button>
+          )}
         </div>
         <Button size="small" primary onClick={handleSelect}>
           선택

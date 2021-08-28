@@ -12,7 +12,8 @@ const getMyInfo = (): Promise<MyInfoType> => GET("/my/info");
 export const useMyInfo = () => useQuery(["userInfo"], () => getMyInfo());
 
 // PATCH /my/info 내 정보 수정
-export const patchMe = ({ data }) => PATCH("/my/info", data);
+export const patchMe = (data: { name: string; phoneNumber: string }) =>
+  PATCH("/my/info", { data });
 
 // GET /my/carts 내 장바구니
 const getMyCarts = (): Promise<CartType> => GET("/my/carts");
