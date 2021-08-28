@@ -46,8 +46,9 @@ export class MyController {
   }
 
   @Patch("/info")
-  async patchInfo(@Body() request: MyInfoEditRequest) {
-    return await this.myService.editMyInfo(request);
+  async patchInfo(@Body() body: { userId: number; data: MyInfoEditRequest }) {
+    console.log(body);
+    return await this.myService.editMyInfo(body.userId, body.data);
   }
 
   // carts
@@ -115,7 +116,7 @@ export class MyController {
     userId: number
   ) {
     try {
-      const result = await this.myService.deleteWishProduct({
+      await this.myService.deleteWishProduct({
         userId,
         productId,
       });

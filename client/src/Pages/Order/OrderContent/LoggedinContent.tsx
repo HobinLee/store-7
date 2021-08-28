@@ -15,7 +15,6 @@ import { useMyDestinations, useMyInfo } from "@/api/my";
 import { DestinationType, ICart, PartialCart } from "@/shared/type";
 import CartOrderBox from "@/Components/CartOrderBox";
 import { convertToPhoneNumber } from "@/utils/util";
-import { moveTo } from "@/Router";
 import {
   Title,
   Content,

@@ -37,8 +37,8 @@ export class MyService {
     return MyInfoResponse.of(user);
   }
 
-  async editMyInfo(request: MyInfoEditRequest) {
-    await this.users.updateUserInfo(request);
+  async editMyInfo(userId: number, request: MyInfoEditRequest) {
+    await this.users.updateUserInfo(userId, request);
   }
 
   // carts

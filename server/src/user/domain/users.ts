@@ -22,11 +22,8 @@ export class Users {
     });
   }
 
-  async updateUserInfo(request: MyInfoEditRequest) {
-    await this.userRepository.update(
-      { id: request.id },
-      { ...request.content }
-    );
+  async updateUserInfo(userId: number, request: MyInfoEditRequest) {
+    await this.userRepository.update({ id: userId }, { ...request });
   }
 
   async createAndGetUserId(createUser: CreateUserDTO): Promise<number> {
