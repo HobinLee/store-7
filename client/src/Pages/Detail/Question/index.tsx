@@ -5,6 +5,7 @@ import { useState } from "react";
 import QuestionModal from "./QuestionModal";
 import { useProductQuestions } from "@/api/products";
 import { gap } from "@/styles/theme";
+import NoData from "@/Components/NoData";
 
 const Question = () => {
   const [isModalOpened, setIsModalOpened] = useState(false);
@@ -42,9 +43,15 @@ const Question = () => {
           </Button>
         </Header>
         <QuestionsWrapper>
-          {questions.map((qna, idx) => (
-            <QuestionBox question={qna} key={idx} />
-          ))}
+          {questions.length > 0 ? (
+            questions.map((qna, idx) => (
+              <QuestionBox question={qna} key={idx} />
+            ))
+          ) : (
+            <div className="no-data">
+              <NoData />
+            </div>
+          )}
         </QuestionsWrapper>
         {isModalOpened && (
           <QuestionModal submitType="post" {...{ handleModalOpen, refetch }} />
@@ -57,6 +64,10 @@ const Question = () => {
 const QuestionsWrapper = styled.div`
   margin-top: 3rem;
   ${gap("3rem", "column")}
+
+  .no-data {
+    width: 30%;
+  }
 `;
 
 const Header = styled.div`

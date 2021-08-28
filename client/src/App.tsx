@@ -30,7 +30,7 @@ const routes: RouteSetType[] = [
   ["/signup", SignupPage],
   ["/category", CategoryPage],
   ["/order", OrderPage, true],
-  ["/order", OrderResultPage],
+  ["/result", OrderResultPage],
   ["/detail", DetailPage],
   ["/cart", CartPage],
   ["/mypage", MyPage],

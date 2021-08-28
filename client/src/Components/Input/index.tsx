@@ -4,7 +4,7 @@ import styled from "styled-components";
 type InputType = {
   placeholder?: string;
   required?: boolean;
-  defaultValue: string;
+  value: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
   onBlur?: ChangeEventHandler<HTMLInputElement>;
   type?: string;
@@ -14,20 +14,14 @@ type InputType = {
 const Input = ({
   placeholder,
   required = true,
-  defaultValue,
+  value,
   onChange,
   onBlur,
   type = "text",
   className,
 }: InputType) => (
   <Container
-    className={className}
-    placeholder={placeholder}
-    required={required}
-    defaultValue={defaultValue}
-    onChange={onChange}
-    onBlur={onBlur}
-    type={type}
+    {...{ className, placeholder, required, value, onChange, onBlur, type }}
     autoComplete="off"
   />
 );

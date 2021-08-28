@@ -39,9 +39,7 @@ const OptionBox = ({
   };
 
   const RenderNumInput = useCallback(() => {
-    return (
-      <NumInput defaultValue={numValue.value} onChange={numValue.onChange} />
-    );
+    return <NumInput value={numValue.value} onChange={numValue.onChange} />;
   }, [numValue.value]);
 
   // 상품옵션
@@ -147,7 +145,7 @@ const OptionBox = ({
                   onChange={(e) => {
                     setProductOptionId(parseInt(e.target.value));
                   }}
-                  defaultValue={productOptionId}
+                  value={productOptionId}
                 >
                   {product.options.map((option) => (
                     <option key={option.id} value={option.id}>

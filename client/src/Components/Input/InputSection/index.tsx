@@ -18,7 +18,7 @@ const InputSection = ({ title, input, brief, children }: FormSectionType) => {
       {brief && <small className="form__brief">{brief}</small>}
       {input ? (
         <Input
-          defaultValue={input.value}
+          value={input.value}
           onChange={input.onChange}
           placeholder={title}
         />

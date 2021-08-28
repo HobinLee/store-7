@@ -6,14 +6,12 @@ import useInput from "@/hooks/useInput";
 import { gap, media } from "@/styles/theme";
 import LoginSection from "./LoginSection";
 import { Back } from "@/assets";
-import { Link } from "@/Router";
+import { Link, moveTo } from "@/Router";
 
 const LoginPage = () => {
-  const name = useInput("");
-  const phoneNumber = useInput("");
+  const orderNum = useInput("");
   const checkLookupable = (): boolean => {
-    //TODO: validion Check하기(?)
-    return name.value.length > 0 && phoneNumber.value.length > 0;
+    return orderNum.value.length > 0;
   };
 
   return (
@@ -23,16 +21,16 @@ const LoginPage = () => {
         <Form>
           <Title>비회원 주문조회 하기</Title>
           <Input
-            placeholder="주문자명"
-            defaultValue={name.value}
-            onChange={name.onChange}
-          />
-          <Input
             placeholder="주문번호"
-            defaultValue={phoneNumber.value}
-            onChange={phoneNumber.onChange}
+            value={orderNum.value}
+            onChange={orderNum.onChange}
           />
-          <Button disabled={!checkLookupable()}>조회하기</Button>
+          <Button
+            disabled={!checkLookupable()}
+            onClick={() => moveTo(`/result/${orderNum.value}`)}
+          >
+            조회하기
+          </Button>
           <span>
             주문번호와 비밀번호를 잊으신 경우, 고객센터로 문의하여 주시기
             바랍니다.

@@ -11,6 +11,7 @@ export class CartResponse {
   options: ProductOption[];
   amount: number;
   productId: number;
+  option: string;
 
   static of(cart: Cart): CartResponse {
     const id = cart.id,
@@ -21,6 +22,7 @@ export class CartResponse {
       productOptionId = cart.productOptionId,
       amount = cart.amount,
       productId = cart.product.id,
+      option = cart.product.option,
       options = cart.product.options.map((option) => {
         return {
           id: option.id,
@@ -36,6 +38,7 @@ export class CartResponse {
       deliveryCost,
       images,
       productOptionId,
+      option,
       options,
       amount,
       productId,

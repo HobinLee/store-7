@@ -2,33 +2,68 @@ import styled from "styled-components";
 import { PageWrapper } from "@/shared/styled";
 import Header from "@/Components/Header";
 import Footer from "@/Components/Footer";
-import Button from "@/Components/Button";
-import { moveTo } from "@/Router";
-import { gap } from "@/styles/theme";
+import { gap, media } from "@/styles/theme";
 import { useOrdersByOrderNum } from "@/api/orders";
 import { useEffect } from "react";
+import properties from "@/config/properties";
+import { moveTo } from "@/Router";
+
+interface OrderType {
+  id: number;
+  optionName: string;
+  optionValue: string;
+  amount: number;
+  status: string;
+  productName: string;
+  product: {
+    id: number;
+    images: { id: string }[];
+  };
+}
 
 const OrderResult = () => {
-  const orderNum = location.pathname.split("order/")[1];
+  const orderNum = location.pathname.split("result/")[1];
   const {
-    status,
+    status: ordersStatus,
     data: orders,
     error,
   } = useOrdersByOrderNum(parseInt(orderNum));
 
-  useEffect(() => {
-    if (orders) console.log(orders);
-  }, [status]);
-
   return (
     <Wrapper>
       <Header />
-      <div className="title">결제가 완료되었습니다</div>
-      <div className="buttons">
-        <Button primary onClick={() => moveTo("/")}>
-          홈화면으로 돌아가기
-        </Button>
-        <Button>주문내역 확인하기</Button>
+
+      <div className="items">
+        <div className="title">
+          주문번호 {orderNum}
+          <div className="title__sub">
+            주문번호로 주문내역을 주회할 수 있습니다.
+          </div>
+        </div>
+
+        {ordersStatus !== "loading" &&
+          orders.map((order: OrderType) => (
+            <OrderBox key={order.id}>
+              <img
+                width="100"
+                src={properties.imgURL + order.product.images[0].id}
+              />
+              <div className="info">
+                <div
+                  onClick={() => moveTo(`/detail/${order.product.id}`)}
+                  className="info__name"
+                >
+                  {order.productName}
+                </div>
+                <div>
+                  <span className="info__option">{order.optionName}</span>
+                  {order.optionValue} {order.amount}개
+                </div>
+              </div>
+
+              <div className="status">{order.status}</div>
+            </OrderBox>
+          ))}
       </div>
       <Footer />
     </Wrapper>
@@ -36,44 +71,82 @@ const OrderResult = () => {
 };
 
 const Wrapper = styled(PageWrapper)`
-  background: #000;
-  color: #fff;
-  ${({ theme }) => theme.flexCenter};
-  flex-direction: column;
+  ${({ theme }) => theme.flexCenter}
+  align-items: flex-start;
 
   .title {
-    position: relative;
-    font-size: 10rem;
-    &::after {
-      content: "결제가 완료되었습니다";
-      position: absolute;
-      white-space: nowrap;
-      top: 0.5rem;
-      left: 0.5rem;
-      color: transparent;
-      -webkit-text-stroke: 0.3rem ${({ theme }) => theme.color.primary1};
-      animation: blink 0.8s linear infinite;
+    margin-top: 10rem;
+    margin-bottom: 5rem;
+    width: 100%;
+    ${({ theme }) => theme.font.xlarge};
+    &__sub {
+      margin-top: 2rem;
+      ${({ theme }) => theme.font.small};
     }
-  }
-  .buttons {
-    margin-top: 5rem;
-    display: flex;
-    ${gap("2rem")}
   }
 
-  @keyframes blink {
-    0% {
-      opacity: 1;
+  .items {
+    /* ${({ theme }) => theme.flexCenter}; */
+    display: flex;
+    flex-direction: column;
+    width: 90rem;
+    ${gap("2rem", "column")};
+    ${media.tablet} {
+      width: 100%;
+      padding: 0 5rem;
+      box-sizing: border-box;
     }
-    30% {
-      opacity: 0;
+    ${media.mobile} {
+      padding: 0;
     }
-    50% {
-      opacity: 1;
+  }
+`;
+
+const OrderBox = styled.div`
+  ${({ theme }) => theme.font.medium};
+  width: 100%;
+  background: white;
+  width: 100%;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-sizing: border-box;
+  display: flex;
+  ${media.mobile} {
+    padding: 1rem;
+  }
+  img {
+    width: 7rem;
+    height: 7rem;
+    background-color: ${({ theme }) => theme.color.grey1};
+    object-fit: cover;
+    border-radius: 0.5rem;
+  }
+
+  .info {
+    margin-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    ${gap("2rem")}
+    &__name {
+      cursor: pointer;
+      ${({ theme }) => theme.font.large};
     }
-    100% {
-      opacity: 0;
+    &__option {
+      font-weight: 800;
+      margin-right: 0.5rem;
     }
+    div {
+      margin: 0;
+    }
+  }
+
+  .status {
+    font-size: 2rem;
+    font-weight: 800;
+    white-space: nowrap;
   }
 `;
 

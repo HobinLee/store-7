@@ -13,12 +13,14 @@ import properties from "@/config/properties";
 import { DestinationType, ICart, PartialCart } from "@/shared/type";
 import { postOrder, postOrderNum } from "@/api/orders";
 import { InputType } from "@/hooks/useInput";
+import { moveTo } from "@/Router";
 
 // 카카오페이
 export const handleKakaoPay = async (
   handlePostOrder: Function,
   items: Partial<ICart>[]
 ) => {
+  console.log("asdf");
   const res = await postPaymentReady({
     cid: "TC0ONETIME",
     item_name:
@@ -71,10 +73,12 @@ export const handlePostOrder = (
     const orderNum = `${date.getFullYear()}${date.getMonth()}${date.getDate()}${date.getHours()}${date.getMinutes()}${
       orderIds[0]
     }`;
-    console.log("orderNum", orderNum);
+
     orderIds.forEach(async (id) => {
       await postOrderNum(id, orderNum);
     });
+
+    moveTo(`/result/${orderNum}`);
   });
 };
 
