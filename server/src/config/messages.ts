@@ -15,6 +15,9 @@ export default {
     SUCCESS_TO_UPDATE_DESTINATION: "배송지 수정 성공",
     SUCCESS_TO_UPDATE_DEFAULT_DESTINATION: "기본 배송지 수정 성공",
     SUCCESS_TO_DELETE_DESTINATION: "배송지 삭제 성공",
+
+    // order
+    SUCCESS_TO_UPDATE_ORDER_STATUS: "주문 상태 수정 성공",
   },
   failed: {
     // user
@@ -39,5 +42,15 @@ export default {
     FAILED_TO_UPDATE_DESTINATION: "배송지 수정 실패",
     FAILED_TO_UPDATE_DEFAULT_DESTINATION: "기본 배송지 수정 실패",
     FAILED_TO_DELETE_DESTINATION: "배송지 삭제 실패",
+
+    // order
+    FAILED_TO_FIND_ORDER_BY_ID: "주문id로 주문 가져오기 실패",
+    FAILED_TO_FIND_ORDER_BY_ORDER_NUM: "주문번호로 주문 가져오기 실패",
+    FAILED_TO_FIND_ORDERS_BY_USER_ID: "유저id로 주문 가져오기 실패",
+    FAILED_TO_FIND_ORDERS: "전체 주문 가져오기 실패",
+    FAILED_TO_CREATE_ORDER: "주문 생성 실패",
+    FAILED_TO_UPDATE_ORDER: "주문 수정 실패",
+    FAILED_TO_UPDATE_ORDER_NUM: "주문번호 수정 실패",
+    FAILED_TO_UPDATE_ORDER_STATUS: "주문 상태 수정 실패",
   },
 };
