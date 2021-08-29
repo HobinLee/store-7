@@ -50,10 +50,12 @@ export { default as DeliveryActive } from "./mypage/delivery_active.gif";
 export { default as WishActive } from "./mypage/wish_active.gif";
 export { default as QuestionActive } from "./mypage/question_active.gif";
 export { default as ReviewActive } from "./mypage/review_active.gif";
+export { default as MyInfoActive } from "./mypage/myinfo_active.gif";
 export { default as Delivery } from "./mypage/delivery.png";
 export { default as Wish } from "./mypage/wish.png";
 export { default as Question } from "./mypage/question.png";
 export { default as Review } from "./mypage/review.png";
+export { default as MyInfo } from "./mypage/myinfo.png";
 
 // 7팀 화이팅
 export { default as Welcome } from "./welcome/welcome.gif";
