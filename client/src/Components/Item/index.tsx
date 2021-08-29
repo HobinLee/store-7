@@ -125,7 +125,7 @@ const ItemWrapper = styled.div`
       ${({ theme }) => theme.font.medium};
       font-weight: 500;
       margin-bottom: 1rem;
-      line-height: 1.4em;
+      line-height: 1.4rem;
       overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;

@@ -36,9 +36,11 @@ const ReviewBox = ({
           )}
 
           {pathname == "mypage" && (
-            <EditAndDeleteButtons
-              {...{ review, refetch, handleClickEditButton }}
-            />
+            <div className="mobile__none">
+              <EditAndDeleteButtons
+                {...{ review, refetch, handleClickEditButton }}
+              />
+            </div>
           )}
         </Header>
 
@@ -136,6 +138,9 @@ const Wrapper = styled.div`
     .image {
       padding-left: 2rem;
       border-left: 0.1rem solid ${({ theme }) => theme.color.light_grey2};
+      ${media.mobile} {
+        border: none;
+      }
       img {
         width: 100%;
         border-radius: 1rem;

@@ -10,13 +10,13 @@ import {
   QuestionActive,
   ReviewActive,
 } from "@/assets";
+import { media } from "@/styles/theme";
 
 export interface NavProps {
-  setCurrent: (path: string) => void;
   current: string;
 }
 
-const Nav = ({ setCurrent, current }: NavProps) => {
+const Nav = ({ current }: NavProps) => {
   return (
     <NavWrpper data-testid="test__nav">
       {navItems.map(({ Icon, Gif, title, path }, i) => {
@@ -44,6 +44,20 @@ const NavWrpper = styled.ul`
   }
   & > li + li {
     margin-left: 5rem;
+  }
+
+  ${media.tablet} {
+    margin-right: 0rem;
+    & > li + li {
+      margin-left: 0rem;
+    }
+  }
+
+  ${media.mobile} {
+    margin-right: 0;
+    & > li + li {
+      margin-left: 1rem;
+    }
   }
 `;
 
@@ -96,6 +110,7 @@ const NavItem = ({ Icon, Gif, title, isSelected }) => {
 };
 
 const NavItemWrapper = styled.div<{ isSelected: boolean }>`
+  width: 100%;
   ${({ isSelected }) =>
     isSelected &&
     css`
@@ -110,5 +125,28 @@ const NavItemWrapper = styled.div<{ isSelected: boolean }>`
   flex-direction: column;
   align-items: center;
   white-space: nowrap;
+
+  & > div {
+    flex: 1;
+  }
+
+  ${media.tablet} {
+    & > div {
+      margin-top: 3rem;
+      & > img {
+        width: 6rem;
+        height: 6rem;
+      }
+    }
+  }
+  ${media.mobile} {
+    & > div {
+      margin-top: 2rem;
+      & > img {
+        width: 5rem;
+        height: 5rem;
+      }
+    }
+  }
 `;
 export default Nav;

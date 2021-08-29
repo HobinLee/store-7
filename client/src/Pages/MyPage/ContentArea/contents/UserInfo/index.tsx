@@ -59,67 +59,69 @@ const UserInfo = () => {
           title="회원정보 변경"
           description="회원 정보를 변경/수정할 수 있습니다."
         >
-          <Info>
-            <div className="user-info">
-              <InputSection title="이름">
-                <ValidationInput
-                  input={name}
-                  validation={nameValidation}
-                  placeholder="이름"
-                  message={VALIDATION_ERR_MSG.INVALID_NAME}
-                />
-              </InputSection>
-              <InputSection title="이메일">
-                <input value={myInfo?.email} disabled />
-              </InputSection>
-              <InputSection title="휴대폰 번호">
-                <ValidationInput
-                  input={phone}
-                  validation={phoneValidation}
-                  placeholder="010-0000-0000"
-                  message={VALIDATION_ERR_MSG.INVALID_PHONE}
-                />
-              </InputSection>
+          <div className="info-box">
+            <Info>
+              <div className="user-info">
+                <InputSection title="이름">
+                  <ValidationInput
+                    input={name}
+                    validation={nameValidation}
+                    placeholder="이름"
+                    message={VALIDATION_ERR_MSG.INVALID_NAME}
+                  />
+                </InputSection>
+                <InputSection title="이메일">
+                  <input value={myInfo?.email} disabled />
+                </InputSection>
+                <InputSection title="휴대폰 번호">
+                  <ValidationInput
+                    input={phone}
+                    validation={phoneValidation}
+                    placeholder="010-0000-0000"
+                    message={VALIDATION_ERR_MSG.INVALID_PHONE}
+                  />
+                </InputSection>
 
-              <APIButton
-                primary
-                size="large"
-                disabled={!isEditable}
-                api={handleEditInfo}
-              >
-                저장
-              </APIButton>
-            </div>
-          </Info>
-
-          <Info>
-            <div className="label">
-              기본 배송지
-              <div
-                className="address-btn"
-                onClick={() => setIsAddressModalOpened(true)}
-              >
-                변경
+                <APIButton
+                  primary
+                  size="large"
+                  disabled={!isEditable}
+                  api={handleEditInfo}
+                >
+                  저장
+                </APIButton>
               </div>
-            </div>
+            </Info>
 
-            <div className="address-info">
-              {address ? (
-                <>
-                  <div className="name">
-                    <div>{address?.name}</div> <div>{address?.postCode}</div>
-                  </div>
-                  <div>{address?.address}</div>
-                  <div>{address?.detailAddress}</div>
-                  <div className="user">
-                    {address?.addressee} {address?.phoneNumber}
-                  </div>
-                </>
-              ) : (
-                <div>배송지를 추가해주세요</div>
-              )}
-            </div>
-          </Info>
+            <Info>
+              <div className="label">
+                기본 배송지
+                <div
+                  className="address-btn"
+                  onClick={() => setIsAddressModalOpened(true)}
+                >
+                  변경
+                </div>
+              </div>
+
+              <div className="address-info">
+                {address ? (
+                  <>
+                    <div className="name">
+                      <div>{address?.name}</div> <div>{address?.postCode}</div>
+                    </div>
+                    <div>{address?.address}</div>
+                    <div>{address?.detailAddress}</div>
+                    <div className="user">
+                      {address?.addressee} {address?.phoneNumber}
+                    </div>
+                  </>
+                ) : (
+                  <div>배송지를 추가해주세요</div>
+                )}
+              </div>
+            </Info>
+          </div>
         </Section>
       </Wrapper>
       {isAddressModalOpened && (
@@ -132,10 +134,16 @@ const UserInfo = () => {
   );
 };
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  width: 100%;
+  & .info-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+`;
 
 export const Info = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;

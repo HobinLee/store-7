@@ -14,9 +14,10 @@ const Wrapper = styled.div`
   width: 100%;
   text-align: center;
   box-sizing: border-box;
-  border-radius: 1rem;
+  border-radius: 2rem;
   ${({ theme }) => theme.font.xlarge};
   img {
+    border-radius: 2rem;
     width: 30rem;
   }
 `;
