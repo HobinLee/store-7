@@ -90,6 +90,7 @@ export class ProductService {
   }
 
   async deleteProduct(id: number) {
+    this.serachService.deleteProduct(id);
     await this.products.deleteProduct(id);
   }
 

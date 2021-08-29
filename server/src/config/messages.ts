@@ -39,6 +39,7 @@ export default {
     EMAIL_EXIST: "이미 존재하는 이메일입니다",
     FAIL_GET_ACCESS_TOKEN: "엑세스 토큰을 얻어오는 데 실패했습니다",
     FAILED_TO_INSERT_ES: "검색 DB에 저장 실패",
+    FAILED_TO_DELTE_ES: "검색 DB에 인덱스 삭제 실패",
 
     //cart
     FAILED_TO_FIND_CARTS_BY_USER_ID: "장바구니 가져오기 실패",
