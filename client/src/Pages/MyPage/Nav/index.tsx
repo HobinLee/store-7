@@ -5,10 +5,12 @@ import {
   Wish,
   Question,
   Review,
+  MyInfo,
   DeliveryActive,
   WishActive,
   QuestionActive,
   ReviewActive,
+  MyInfoActive,
 } from "@/assets";
 import { media } from "@/styles/theme";
 
@@ -92,8 +94,8 @@ const navItems = [
     path: "review",
   },
   {
-    Icon: <img src={Review} width={ICON_SIZE} height={ICON_SIZE} />,
-    Gif: <img src={ReviewActive} width={ICON_SIZE} height={ICON_SIZE} />,
+    Icon: <img src={MyInfo} width={ICON_SIZE} height={ICON_SIZE} />,
+    Gif: <img src={MyInfoActive} width={ICON_SIZE} height={ICON_SIZE} />,
 
     title: "내 정보 수정",
     path: "userinfo",
