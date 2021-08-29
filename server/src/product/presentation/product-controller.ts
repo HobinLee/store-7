@@ -47,8 +47,9 @@ export class ProductController {
   }
 
   //search result
-  @Get("/keywords/:keyword")
-  async getKeywords(@Param("keyword") keyword: string) {
+  @Get("/keywords")
+  async getKeywords(@Query("keyword") keyword: string) {
+    console.log(keyword);
     return this.searchService.findKeywords(keyword);
   }
 
