@@ -1,14 +1,15 @@
 import { useKeywords } from "@/api/search";
-import useDebounce from "@/hooks/useDebounce";
+import useThrottle from "@/hooks/useThrottle";
 import { hideScroll } from "@/styles/theme";
+import { useEffect } from "react";
 import styled from "styled-components";
 
 const AutoList = ({ keyword, handleSearch }) => {
   const handleClick = (v) => {
     handleSearch(v);
   };
-  const debouncedSearchInput = useDebounce<string>(keyword, 200);
-  const { data: autoList } = useKeywords(debouncedSearchInput);
+  const throttledSearchInput = useThrottle<string>(keyword, 200);
+  const { data: autoList, status } = useKeywords(throttledSearchInput);
 
   const generateAutoList = autoList?.map((value, idx) => (
     <li key={idx} onClick={() => handleClick(value)}>
