@@ -8,25 +8,16 @@ import { moveTo } from "@/Router";
 import { categories } from "@/shared/dummy";
 import { MainCategoryType } from "@/Pages/Category";
 import { Delete, Arrow } from "@/assets";
+import { media } from "@/styles/theme";
 
 const LS_SEARCH = "search";
 
 const Search = () => {
   const searchValue = useInput("");
 
-  const [isMenuOpened, setIsMenuOpened] = useState(false);
-  const handleMenuOpen = () => {
-    setIsMenuOpened(!isMenuOpened);
-  };
-
   const [category, setCategory] = useState<MainCategoryType>(categories[0]);
   const handleCategory = (category) => {
     setCategory(category);
-  };
-
-  const [isSearchBoxOpened, setIsSearchBoxOpened] = useState(false);
-  const handleSearchBox = () => {
-    setIsSearchBoxOpened(!isSearchBoxOpened);
   };
 
   const [searchList, setSearchList] = useState<string[]>(
@@ -71,30 +62,25 @@ const Search = () => {
         key === "Enter" && handleSearch((target as HTMLInputElement).value);
       }}
     >
-      <div
-        onClick={handleMenuOpen}
-        className={`input-box__select ${isMenuOpened ? "opened" : "closed"}`}
-      >
+      <div className="input-box__select">
         {category.name}
         <Arrow />
-        {isMenuOpened && (
-          <DropdownWrapper>
-            {categories.map((mainCategory: MainCategoryType) => (
-              <DropdownItem
-                onClick={() => handleCategory(mainCategory)}
-                key={mainCategory.id}
-              >
-                {mainCategory.name}
-              </DropdownItem>
-            ))}
-          </DropdownWrapper>
-        )}
+        <DropdownWrapper>
+          {categories.map((mainCategory: MainCategoryType) => (
+            <DropdownItem
+              onClick={() => handleCategory(mainCategory)}
+              key={mainCategory.id}
+            >
+              {mainCategory.name}
+            </DropdownItem>
+          ))}
+        </DropdownWrapper>
       </div>
-      <div style={{ position: "relative" }} onClick={handleSearchBox}>
+      <div className="search-bar" style={{ position: "relative" }}>
         <input
           className="search-input"
           placeholder="검색어를 입력해주세요."
-          defaultValue={searchValue.value}
+          value={searchValue.value}
           onChange={searchValue.onChange}
         />
         {searchValue.value.length > 0 && (
@@ -102,22 +88,17 @@ const Search = () => {
             <Delete />
           </ResetButton>
         )}
-        {isSearchBoxOpened && (
-          <SearchBox>
-            {searchValue.value?.length ? (
-              <AutoList
-                keyword={searchValue.value}
-                handleSearch={handleSearch}
-              />
-            ) : (
-              <SearchList
-                list={searchList}
-                handleSearch={handleSearch}
-                handleDelete={handleDeleteSearchList}
-              />
-            )}
-          </SearchBox>
-        )}
+        <SearchBox>
+          {searchValue.value?.length ? (
+            <AutoList keyword={searchValue.value} handleSearch={handleSearch} />
+          ) : (
+            <SearchList
+              list={searchList}
+              handleSearch={handleSearch}
+              handleDelete={handleDeleteSearchList}
+            />
+          )}
+        </SearchBox>
       </div>
     </SearchWrapper>
   );
@@ -136,22 +117,24 @@ const SearchWrapper = styled.form`
   }
 
   .input-box__select {
+    display: block;
     color: ${({ theme }) => theme.color.grey1};
     position: relative;
     border-right: 0.2rem solid ${({ theme }) => theme.color.light_grey2};
-    padding: 0.6rem 2rem;
+    padding: 1.25rem 2rem;
     min-width: 11rem;
     max-width: 14rem;
     box-sizing: border-box;
-    height: 100%;
     font-size: 1.4rem;
     text-align: left;
+    height: 100%;
     cursor: pointer;
 
     & > div {
+      display: none;
       box-shadow: none;
       border: 1px solid ${({ theme }) => theme.color.primary1};
-      top: 3.4rem;
+      top: 4rem;
       right: -0.3rem;
       background: ${({ theme }) => theme.color.white};
       & > div {
@@ -161,29 +144,27 @@ const SearchWrapper = styled.form`
         }
       }
     }
-
     svg {
       position: absolute;
       right: 0.5rem;
       height: 0.8rem;
       margin-top: 0.2rem;
       fill: #999;
-    }
-  }
-
-  .opened {
-    svg {
-      transform: rotate(-90deg);
-    }
-  }
-
-  .closed {
-    svg {
       transform: rotate(90deg);
+    }
+    &:hover {
+      > div {
+        display: block;
+      }
+      > svg {
+        transform: rotate(-90deg);
+      }
     }
   }
 
   .search-input {
+    box-sizing: border-box;
+    width: calc(100% - 3rem);
     ${({ theme }) => theme.font.medium}
     ::placeholder {
       color: ${({ theme }) => theme.color.light_grey2};
@@ -193,6 +174,15 @@ const SearchWrapper = styled.form`
     padding: 1rem 1.5rem;
     margin-right: 2rem;
     text-align: left;
+  }
+  .search-bar {
+    & > div {
+      display: none;
+    }
+
+    &:hover > div {
+      display: block;
+    }
   }
 `;
 
