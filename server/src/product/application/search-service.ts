@@ -30,6 +30,24 @@ export class SearchService {
     }
   }
 
+  async deleteProduct(id: number) {
+    try {
+      await this.searchService.deleteByQuery({
+        index: this.index,
+        body: {
+          query: {
+            match: {
+              id: id.toString(),
+            },
+          },
+        },
+      });
+    } catch (e) {
+      console.error(e);
+      throw Error(messages.failed.FAILED_TO_INSERT_ES);
+    }
+  }
+
   async findKeywords(keyword: string): Promise<string[]> {
     return await this.searchProductNames(keyword);
   }
