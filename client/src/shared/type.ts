@@ -77,7 +77,7 @@ export interface ItemType {
 
 //메인 페이지, 카테고리 등에서 나오는 Item버튼을 만드는데 사용되는 타입
 
-export class ProductElementType {
+export interface ProductElementType {
   id: number;
   name: string;
   price: number;
@@ -88,7 +88,7 @@ export class ProductElementType {
   image: string;
 }
 
-export class AdminProductType {
+export interface AdminProductType {
   id: number;
   name: string;
   price: number;

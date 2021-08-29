@@ -45,7 +45,8 @@ const Item = ({
       tags.push("sale");
     }
     return tags;
-  }, []);
+  }, [discountRate]);
+
   const pathname = location.pathname.split("/")[1];
   const handleClickWish = async (e: Event) => {
     e.stopPropagation();

@@ -15,15 +15,15 @@ import { convertToKRW } from "@/utils/util";
 import { useProduct } from "@/api/products";
 import properties from "@/config/properties";
 import { useCallback } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { isMyWishInDetail } from "@/store/state";
-import { useEffect } from "react";
+import { useRecoilValue } from "recoil";
+import { loginState } from "@/store/state";
 import useDidMountEffect from "@/hooks/useDidMountEffect";
 import { deleteWishProduct, postWishProduct } from "@/api/my";
 import useDebounce from "@/hooks/useDebounce";
 import { selectedCategoryState } from "@/store/category";
 import { categories } from "@/shared/dummy";
 import { Image } from "@/Components/Common";
+import { useEffect } from "react";
 
 const topHeight = innerWidth > 500 ? 700 : 400;
 
@@ -46,11 +46,22 @@ const DetailPage = () => {
     error,
     refetch,
   } = useProduct(parseInt(productId));
-
-  const [isMyWish, setIsMyWish] = useRecoilState(isMyWishInDetail);
+  
+  const [isClicked, setIsClicked] = useState<boolean>(false);
+  const [isMyWish, setIsMyWish] = useState(product?.isWish);
   const debounceIsMyWish = useDebounce<boolean>(isMyWish, 300);
-
+  const isLogin = useRecoilValue(loginState);
   const numValue = useInput("1");
+
+  const handleClickWish = async (e: Event) => {
+    e.stopPropagation();
+    if (!isLogin) {
+      return;
+    }
+    setIsClicked(true);
+    setIsMyWish((isMyWish) => !isMyWish);
+  };
+
   const handleClickNumVal = (val: 1 | -1) => {
     let num = parseInt(numValue.value);
     if (val === 1) {
@@ -66,7 +77,22 @@ const DetailPage = () => {
     setSelectedTab(val);
   };
 
+  useEffect(() => {
+    if (product) {
+      setIsMyWish(product?.isWish);
+    }
+  }, [product]);
+
   const [isZoomOpened, setIsZoomOpened] = useState(false);
+
+  useDidMountEffect(async () => {
+    if (isClicked) {
+      debounceIsMyWish
+        ? await postWishProduct(product.id)
+        : await deleteWishProduct(product.id);
+      setIsClicked(false);
+    }
+  }, [debounceIsMyWish]);
 
   const RenderTabComponent = useCallback(() => {
     switch (selectedTab) {
@@ -82,18 +108,6 @@ const DetailPage = () => {
         return;
     }
   }, [product, selectedTab]);
-
-  useEffect(() => {
-    setIsMyWish(product?.isWish ?? false);
-  }, [product]);
-
-  useDidMountEffect(() => {
-    if (product.isWish === debounceIsMyWish) return;
-
-    debounceIsMyWish
-      ? postWishProduct(product.id)
-      : deleteWishProduct(product.id);
-  }, [debounceIsMyWish]);
 
   return (
     <>
@@ -150,6 +164,7 @@ const DetailPage = () => {
                     product,
                     refetch,
                     isMyWish,
+                    handleClickWish,
                   }}
                 />
               </Info>
@@ -182,7 +197,13 @@ const DetailPage = () => {
                 </TabPage>
                 <div className="option-box">
                   <OptionBox
-                    {...{ numValue, handleClickNumVal, product, isMyWish }}
+                    {...{
+                      numValue,
+                      handleClickNumVal,
+                      product,
+                      isMyWish,
+                      handleClickWish,
+                    }}
                   />
                 </div>
               </div>
