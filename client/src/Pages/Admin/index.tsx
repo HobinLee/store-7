@@ -1,8 +1,8 @@
 import * as S from "./styles";
-import LogoImage from "../../assets/logo.png";
-import DashboardIcon from "../../assets/dashboard.png";
-import BoxIcon from "../../assets/box.png";
-import ClipboardIcon from "../../assets/clipboard.png";
+import { LogoImage } from "@/assets";
+import { DashboardIcon } from "@/assets";
+import { BoxIcon } from "@/assets";
+import { ClipboardIcon } from "@/assets";
 import { useState } from "react";
 import AdminHome from "./Home";
 import AdminProduct from "./Product";

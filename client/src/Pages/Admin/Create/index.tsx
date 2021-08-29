@@ -1,8 +1,8 @@
 import properties from "@/config/properties";
 import * as S from "./styles";
-import LeftArrowIcon from "../../../assets/left-arrow.png";
-import AddIcon from "../../../assets/add.png";
-import DeleteIcon from "../../../assets/delete.png";
+import { LeftArrowIcon } from "@/assets";
+import { AddIcon } from "@/assets";
+import { DeleteIcon } from "@/assets";
 import { Page } from "..";
 import { ChangeEvent, FC, KeyboardEvent, MouseEvent, useState } from "react";
 import { useEffect } from "react";

@@ -1,8 +1,8 @@
-import GithubSVG from "@/assets/githubLogin.svg";
-import GoogleSVG from "@/assets/googleLogin.svg";
+import { GithubSVG } from "@/assets";
+import { GoogleSVG } from "@/assets";
 import { gap } from "@/styles/theme";
 import styled from "styled-components";
-import ET from "@/assets/et.png";
+import { ET } from "@/assets";
 import APIButton from "@/Components/Common/Button/APIButton";
 import properties from "@/config/properties";
 

@@ -1,5 +1,5 @@
 import * as S from "../styles";
-import SearchIcon from "../../../../assets/search.png";
+import { SearchIcon } from "@/assets";
 import { ChangeEvent, FC, KeyboardEvent, useState } from "react";
 
 interface Props {
