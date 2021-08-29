@@ -12,14 +12,22 @@ import { useRecoilValue } from "recoil";
 import { media } from "@/styles/theme";
 import { loginState } from "@/store/state";
 import { moveTo } from "@/Router";
+import { alert } from "@/Components/Common/Alert";
 
 const MyPage = () => {
   const { location } = useRecoilValue(locationState);
   const isLoggedIn = useRecoilValue(loginState);
   const [current, setCurrent] = useState("order");
   useEffect(() => {
-    if (!isLoggedIn) moveTo("/login");
+    if (!isLoggedIn) {
+      alert("로그인이 필요한 서비스입니다");
+      moveTo("/login");
+    }
   }, []);
+
+  useEffect(() => {
+    if (!isLoggedIn) moveTo("/login");
+  }, [isLoggedIn]);
 
   useEffect(() => {
     const sub = location.split("mypage/")[1];

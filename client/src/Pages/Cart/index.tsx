@@ -21,7 +21,9 @@ const CartPage = () => {
   const { status, data: carts, error, refetch } = useMyCarts();
 
   const [checkItems, setCheckItems] = useState([]);
-
+  useEffect(() => {
+    refetch();
+  }, [isLoggedin]);
   useEffect(() => {
     if (isLoggedin && status !== "loading") {
       setCartItems(carts);

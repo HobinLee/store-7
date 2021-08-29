@@ -23,7 +23,10 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
-    if (isLoggedIn) moveTo("/");
+    if (isLoggedIn) {
+      alert("이미 로그인 중입니다");
+      moveTo("/");
+    }
   }, []);
 
   return (
