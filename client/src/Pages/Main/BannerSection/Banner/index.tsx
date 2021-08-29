@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link } from "@/Router";
 import { ItemBannerType } from "@/shared/type";
 import { gap, media } from "@/styles/theme";
-import Image from "@/Components/Image";
+import Image from "@/Components/Common/Image";
 
 export interface BannerProps {
   banners: ItemBannerType[];

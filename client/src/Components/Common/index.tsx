@@ -5,3 +5,4 @@ export { default as Input } from "./Input";
 export { default as NoData } from "./NoData";
 export { default as NumInput } from "./NumInput";
 export { default as Rating } from "./Rating";
+export { default as Image } from "./Image";

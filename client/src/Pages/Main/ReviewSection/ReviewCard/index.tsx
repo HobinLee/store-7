@@ -79,6 +79,7 @@ const Wrapper = styled.div`
   }
 
   .image-box {
+    width: 100%;
     max-width: 30rem;
     align-self: center;
     .image {

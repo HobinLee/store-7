@@ -59,6 +59,7 @@ const Wrapper = styled(PageWrapper)`
     z-index: 10;
   }
   .products-wrapper {
+    width: 100%;
     max-width: 110rem;
     padding: 0rem;
   }
