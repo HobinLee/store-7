@@ -97,6 +97,7 @@ const Wrapper = styled(PageWrapper)`
     }
   }
   .products-wrapper {
+    width: 100%;
     max-width: 110rem;
   }
   ${media.mobile} {
