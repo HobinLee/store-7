@@ -23,6 +23,11 @@ export default {
     SUCCESS_TO_CREATE_REVIEW: "리뷰 생성 성공",
     SUCCESS_TO_UPDATE_REVIEW: "리뷰 수정 성공",
     SUCCESS_TO_DELETE_REVIEW: "리뷰 삭제 성공",
+
+    // question
+    SUCCESS_TO_CREATE_QUESTION: "문의 생성 성공",
+    SUCCESS_TO_UPDATE_QUESTION: "문의 수정 성공",
+    SUCCESS_TO_DELETE_QUESTION: "문의 삭제 성공",
   },
   failed: {
     // user
@@ -63,5 +68,11 @@ export default {
     FAILED_TO_UPDATE_REVIEW: "리뷰 수정 실패",
     FAILED_TO_DELETE_REVIEW: "리뷰 삭제 실패",
     FAILED_TO_FIND_RECENT_REVIEWS: "최근 리뷰 가져오기 실패",
+
+    // questoin
+    FAILED_TO_FIND_QUESTIONS_BY_PRODUCT_ID: "상품id로 문의 가져오기 실패",
+    FAILED_TO_CREATE_QUESTION: "문의 생성 실패",
+    FAILED_TO_UPDATE_QUESTION: "문의 수정 실패",
+    FAILED_TO_DELETE_QUESTION: "문의 삭제 실패",
   },
 };
