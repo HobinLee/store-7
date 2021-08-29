@@ -40,6 +40,8 @@ export default {
     FAIL_GET_ACCESS_TOKEN: "엑세스 토큰을 얻어오는 데 실패했습니다",
     FAILED_TO_INSERT_ES: "검색 DB에 저장 실패",
     FAILED_TO_DELTE_ES: "검색 DB에 인덱스 삭제 실패",
+    FAILTED_TO_FIND_MY_INFO: "회원 정보를 불러오는데 실패했습니다.",
+    FAILTED_TO_EDIT_MY_INFO: "회원 정보를 수정하는데 실패했습니다.",
 
     //cart
     FAILED_TO_FIND_CARTS_BY_USER_ID: "장바구니 가져오기 실패",
@@ -69,11 +71,27 @@ export default {
     FAILED_TO_UPDATE_REVIEW: "리뷰 수정 실패",
     FAILED_TO_DELETE_REVIEW: "리뷰 삭제 실패",
     FAILED_TO_FIND_RECENT_REVIEWS: "최근 리뷰 가져오기 실패",
+    FAILED_TO_FIND_MY_REVIEW: "나의 리뷰 가져오기 실패",
+    FAILED_TO_FIND_REVIEWS_BY_PROUCY_ID: "상품id로 리뷰 가져오기 실패",
 
     // questoin
     FAILED_TO_FIND_QUESTIONS_BY_PRODUCT_ID: "상품id로 문의 가져오기 실패",
     FAILED_TO_CREATE_QUESTION: "문의 생성 실패",
     FAILED_TO_UPDATE_QUESTION: "문의 수정 실패",
     FAILED_TO_DELETE_QUESTION: "문의 삭제 실패",
+    FAILED_TO_FIND_QUESTIONS_BY_USER_ID: "유저id로 문의 가져오기 실패",
+
+    //wish
+    FAILED_TO_FIND_MY_WISHES: "나의 찜목록 불러오기 실패",
+    FAILED_TO_CREATE_MY_WISH: "상품 찜하기 실패",
+    FAILED_TO_DELETE_MY_WISH: "상품 찜하기 해제 실패",
+
+    //product
+    FAILED_TO_FIND_PRODUCTS_BY_QUERIE: "해당 query에 맞는 상품 조회 실패 ",
+    FAILED_TO_FIND_ALL_PRODUCTS_BY_KEYWORD:
+      "키워드에 해당하는 모든 상품 조회 실패",
+    FAILED_TO_FIND_PRODUCT_BY_ID: "상품id로 상품 정보 조회 실패",
+    FAILED_TO_CREATE_PRODUCT: "상품 등록 실패",
+    FAILED_TO_DELETE_PRODUCT: "상품 삭제 실패",
   },
 };

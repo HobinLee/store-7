@@ -11,18 +11,6 @@ import messages from "@/config/messages";
 export class QuestionService {
   constructor(private readonly questions: Questions) {}
 
-  async getQuestionsByProductId(
-    productId: number
-  ): Promise<QuestionResponse[]> {
-    try {
-      const questions = await this.questions.findQuestionsByProductId(
-        productId
-      );
-      return questions.map(QuestionResponse.of);
-    } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_FIND_QUESTIONS_BY_PRODUCT_ID);
-    }
-  }
   async createQuestion(question: CreateQuestionPostRequest): Promise<string> {
     try {
       await this.questions.createQuestion(question);

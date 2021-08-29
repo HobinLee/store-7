@@ -6,7 +6,6 @@ import {
   Param,
   Post,
   Delete,
-  Query,
   Res,
   All,
   HttpStatus,
@@ -86,15 +85,6 @@ export class MyController {
   @Get("/orders")
   async getMyOrders(@Body("userId") userId: number): Promise<OrderResponse[]> {
     return await this.myService.findMyOrders(userId);
-  }
-
-  @Get("/orders")
-  async getMyOrdersByDateRange(
-    @Body("userId") userId: number,
-    @Query("from") from: Date,
-    @Query("to") to: Date
-  ): Promise<OrderResponse[]> {
-    return await this.myService.findMyOrdersByDateRange(userId, { from, to });
   }
 
   // wishes
