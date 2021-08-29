@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { IsNull, Not, Repository } from "typeorm";
 import { Review } from "@/product/entity/review";
 import {
+  RecentReviewsQuery,
   ReviewPatchReqeust,
   ReviewPostReqeust,
 } from "@/product/dto/review-request";
@@ -43,7 +44,7 @@ export class Reviews {
     });
   }
 
-  async findRecentReviews(query) {
+  async findRecentReviews(query: RecentReviewsQuery) {
     return this.reviewRepository.find({
       relations: ["order", "order.user", "product"],
       order: { createdAt: "DESC" },
