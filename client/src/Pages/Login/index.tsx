@@ -1,46 +1,55 @@
 import { PageWrapper } from "@/shared/styled";
+import { Input, Button } from "@/Components/Common";
 import styled from "styled-components";
-import Input from "@/Components/Common/Input";
-import Button from "@/Components/Common/Button";
 import useInput from "@/hooks/useInput";
 import { gap, media } from "@/styles/theme";
 import LoginSection from "./LoginSection";
 import { Back } from "@/assets";
 import { Link, moveTo } from "@/Router";
+import { loginState } from "@/store/state";
+import { useRecoilValue } from "recoil";
+import { useEffect } from "react";
 
 const LoginPage = () => {
+  const isLoggedIn = useRecoilValue(loginState);
   const orderNum = useInput("");
   const checkLookupable = (): boolean => {
     return orderNum.value.length > 0;
   };
 
+  useEffect(() => {
+    if (isLoggedIn) moveTo("/");
+  }, []);
+
   return (
-    <LoginPageWrapper>
-      <LoginContent>
-        <LoginSection />
-        <Form>
-          <Title>비회원 주문조회 하기</Title>
-          <Input
-            placeholder="주문번호"
-            value={orderNum.value}
-            onChange={orderNum.onChange}
-          />
-          <Button
-            disabled={!checkLookupable()}
-            onClick={() => moveTo(`/result/${orderNum.value}`)}
-          >
-            조회하기
-          </Button>
-          <span>
-            주문번호와 비밀번호를 잊으신 경우, 고객센터로 문의하여 주시기
-            바랍니다.
-          </span>
-        </Form>
-      </LoginContent>
-      <Link to="/">
-        <Back />
-      </Link>
-    </LoginPageWrapper>
+    !isLoggedIn && (
+      <LoginPageWrapper>
+        <LoginContent>
+          <LoginSection />
+          <Form>
+            <Title>비회원 주문조회 하기</Title>
+            <Input
+              placeholder="주문번호"
+              value={orderNum.value}
+              onChange={orderNum.onChange}
+            />
+            <Button
+              disabled={!checkLookupable()}
+              onClick={() => moveTo(`/result/${orderNum.value}`)}
+            >
+              조회하기
+            </Button>
+            <span>
+              주문번호와 비밀번호를 잊으신 경우, 고객센터로 문의하여 주시기
+              바랍니다.
+            </span>
+          </Form>
+        </LoginContent>
+        <Link to="/">
+          <Back />
+        </Link>
+      </LoginPageWrapper>
+    )
   );
 };
 
