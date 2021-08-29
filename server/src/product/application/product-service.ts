@@ -53,7 +53,7 @@ export class ProductService {
     if (product) {
       return ProductResponse.of(product, userId);
     }
-    throw new Error(messages.failed.FAILED_TO_FIND_PRODUCT_BY_ID);
+    throw Error(messages.failed.PRODUCT_NO_EXIST);
   }
 
   async getProductReviews(productId: number, query: ProductReviewsQuery) {
@@ -106,7 +106,7 @@ export class ProductService {
 
   async deleteProduct(id: number) {
     try {
-      this.serachService.deleteProduct(id);
+      //this.serachService.deleteProduct(id);
       await this.products.deleteProduct(id);
     } catch (e) {
       throw new Error(messages.failed.FAILED_TO_DELETE_PRODUCT);

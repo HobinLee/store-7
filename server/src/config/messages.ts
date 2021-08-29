@@ -43,6 +43,8 @@ export default {
     FAILTED_TO_FIND_MY_INFO: "회원 정보를 불러오는데 실패했습니다.",
     FAILTED_TO_EDIT_MY_INFO: "회원 정보를 수정하는데 실패했습니다.",
 
+    EXPIRED_TOKEN: "토큰이 만료되었습니다",
+
     //cart
     FAILED_TO_FIND_CARTS_BY_USER_ID: "장바구니 가져오기 실패",
     FAILED_TO_CREATE_CART: "장바구니 생성 실패",
@@ -93,5 +95,8 @@ export default {
     FAILED_TO_FIND_PRODUCT_BY_ID: "상품id로 상품 정보 조회 실패",
     FAILED_TO_CREATE_PRODUCT: "상품 등록 실패",
     FAILED_TO_DELETE_PRODUCT: "상품 삭제 실패",
+
+    //product
+    PRODUCT_NO_EXIST: "해당 제품을 찾을 수 없습니다",
   },
 };

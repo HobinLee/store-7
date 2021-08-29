@@ -3,15 +3,16 @@ import {
   Controller,
   Delete,
   Get,
+  HttpStatus,
   Param,
   Post,
   Query,
+  Res,
   UploadedFiles,
   UseInterceptors,
 } from "@nestjs/common";
 import { ProductService } from "../application/product-service";
 import { ProductElementResponse } from "../dto/product-element-response";
-import { ProductResponse } from "@/product/dto/product-response";
 import { QuestionResponse } from "@/product/dto/question-response";
 import { FileFieldsInterceptor } from "@nestjs/platform-express";
 import { ProductUploadRequest } from "@/product/dto/product-upload-request";
@@ -23,6 +24,7 @@ import {
 import { ProductReviewsQuery } from "../dto/product-request";
 import { Review } from "../entity/review";
 import { ReviewRate } from "../dto/review-rate";
+import { Response } from "express";
 
 @Controller("/products")
 export class ProductController {
@@ -62,9 +64,15 @@ export class ProductController {
   @Get("/:id")
   async getProduct(
     @Param("id") id: number,
-    @Body("userId") userId: number
-  ): Promise<ProductResponse> {
-    return await this.productService.getProduct(id, userId);
+    @Body("userId") userId: number,
+    @Res({ passthrough: true }) response: Response
+  ) {
+    try {
+      return await this.productService.getProduct(id, userId);
+    } catch (e) {
+      response.status(HttpStatus.NOT_FOUND);
+      return e.message;
+    }
   }
 
   @Get("/:id/reviews")
