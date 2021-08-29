@@ -6,10 +6,15 @@ export default {
     SUCCESS_TO_SIGN_UP: "회원가입 완료",
 
     // cart
-    SUCCESS_TO_FIND_CARTS_BY_USER_ID: "장바구니 가져오기 성공",
     SUCCESS_TO_CREATE_CART: "장바구니 생성 성공",
     SUCCESS_TO_UPDATE_CART: "장바구니 수정 성공",
     SUCCESS_TO_DELETE_CART: "장바구니 삭제 성공",
+
+    // destination
+    SUCCESS_TO_CREATE_DESTINATION: "배송지 생성 성공",
+    SUCCESS_TO_UPDATE_DESTINATION: "배송지 수정 성공",
+    SUCCESS_TO_UPDATE_DEFAULT_DESTINATION: "기본 배송지 수정 성공",
+    SUCCESS_TO_DELETE_DESTINATION: "배송지 삭제 성공",
   },
   failed: {
     // user
@@ -27,5 +32,12 @@ export default {
     FAILED_TO_CREATE_CART: "장바구니 생성 실패",
     FAILED_TO_UPDATE_CART: "장바구니 수정 실패",
     FAILED_TO_DELETE_CART: "장바구니 삭제 실패",
+
+    // destination
+    FAILED_TO_FIND_DESTINATIONS_BY_USER_ID: "유저id로 배송지 가져오기 실패",
+    FAILED_TO_CREATE_DESTINATION: "배송지 생성 실패",
+    FAILED_TO_UPDATE_DESTINATION: "배송지 수정 실패",
+    FAILED_TO_UPDATE_DEFAULT_DESTINATION: "기본 배송지 수정 실패",
+    FAILED_TO_DELETE_DESTINATION: "배송지 삭제 실패",
   },
 };
