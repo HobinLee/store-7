@@ -5,7 +5,7 @@ import { ProductParams } from "./products";
 
 // GET products/keywords/:keyword
 const getKeywords = (keyword: string) =>
-  keyword.length && GET(`/products/keywords/${keyword}`);
+  keyword.length && GET(`/products/keywords?keyword=${keyword}`);
 
 export const useKeywords = (keyword: string) =>
   useQuery(["autoComplete", keyword], () => getKeywords(keyword), {
