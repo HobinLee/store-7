@@ -2,10 +2,7 @@ import { useEffect, useRef } from "react";
 
 const THRESHOLD = 0.05;
 
-export const useLazyLoad = (
-  action: () => void,
-  threshold: number = THRESHOLD
-) => {
+export default (action: () => void, threshold: number = THRESHOLD) => {
   const ref = useRef(null);
 
   useEffect(() => {

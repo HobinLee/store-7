@@ -10,7 +10,7 @@ export const alertState = atom({
 
 export const loginState = atom({
   key: "isLoggedin",
-  default: false,
+  default: null,
 });
 
 export const isMyWishInDetail = atom({

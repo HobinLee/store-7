@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { useLazyLoad } from "@/hooks/useLazyLoad";
+import { useLazyLoad } from "@/hooks";
 
 export interface ImageProps {
   id?: string;

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { selectedCategoryState } from "./store/category";
 import { locationState } from "@/store/history";
 import { decodeParams } from "./utils/location";
+import { loginState } from "./store/state";
 
 export type PageComponentType = () => JSX.Element;
 
@@ -23,6 +24,7 @@ interface HistoryEvent extends Event {
 
 export const Router = ({ children }): ReactElement => {
   const setLocation = useSetRecoilState(locationState);
+  const isLoggedIn = useRecoilValue(loginState);
   const setSelectedCategoryState = useSetRecoilState(selectedCategoryState);
 
   const setCurrentCategory = () => {
@@ -63,7 +65,7 @@ export const Router = ({ children }): ReactElement => {
     addEvents();
   }, []);
 
-  return children;
+  return isLoggedIn !== null && children;
 };
 
 export const Route = ({ exact, path, component: Component }: RouterType) => {

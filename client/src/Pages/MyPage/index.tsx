@@ -10,10 +10,16 @@ import { useMyInfo } from "@/api/my";
 import { locationState } from "@/store/history";
 import { useRecoilValue } from "recoil";
 import { media } from "@/styles/theme";
+import { loginState } from "@/store/state";
+import { moveTo } from "@/Router";
 
 const MyPage = () => {
   const { location } = useRecoilValue(locationState);
+  const isLoggedIn = useRecoilValue(loginState);
   const [current, setCurrent] = useState("order");
+  useEffect(() => {
+    if (!isLoggedIn) moveTo("/login");
+  }, []);
 
   useEffect(() => {
     const sub = location.split("mypage/")[1];
@@ -21,18 +27,20 @@ const MyPage = () => {
   }, [location]);
 
   return (
-    <>
-      <Header />
-      <MyPageWrapper>
-        <Contents>
-          <ContentHeader current={current} />
-          <ContentBody>
-            <ContentArea current={current} />
-          </ContentBody>
-        </Contents>
-        <Footer />
-      </MyPageWrapper>
-    </>
+    isLoggedIn && (
+      <>
+        <Header />
+        <MyPageWrapper>
+          <Contents>
+            <ContentHeader current={current} />
+            <ContentBody>
+              <ContentArea current={current} />
+            </ContentBody>
+          </Contents>
+          <Footer />
+        </MyPageWrapper>
+      </>
+    )
   );
 };
 
