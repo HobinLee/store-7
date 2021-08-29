@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import LoadingSpinner from "@/assets/spinner.png";
+import { LoadingSpinner } from "@/assets";
 import { gap, media } from "@/styles/theme";
 
 export const PageWrapper = styled.div`

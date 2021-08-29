@@ -1,37 +1,45 @@
+// main banneer
 export { default as Banner1 } from "./banner1.gif";
 export { default as Banner2 } from "./banner2.gif";
 export { default as Banner3 } from "./banner3.gif";
-export { default as Logo } from "./logo.png";
-export { default as Close } from "./close.svg";
-export { default as Delete } from "./delete.svg";
-export { default as Back } from "./back.svg";
-export { default as Arrow } from "./arrow.svg";
-export { default as Check } from "./check.svg";
-export { default as WishIcon } from "./wish.svg";
-export { default as Triangle } from "./triangle.svg";
-export { default as SecretpenImg } from "./secretpen.png";
-export { default as TrayImg } from "./tray.png";
-export { default as Search } from "./search.svg";
-export { default as Loading } from "./loading.svg";
-export { default as AddUser } from "./addUser.svg";
-export { default as KakaoPay } from "./kakaopay.png";
-export { default as ETPay } from "./etpay.png";
-export { default as HeaderLogo } from "./header_logo.png";
-export { default as DeleveryIcon } from "./delivery.svg";
-export { default as Info } from "./info.svg";
-export { default as ReviewIcon } from "./review.svg";
-export { default as King } from "./king.svg";
-export { default as ProductIcon } from "./product.svg";
-export { default as ReadyIcon } from "./ready.svg";
-export { default as GoodIcon } from "./good.svg";
-export { default as LeftIcon } from "./left.svg";
-export { default as RightIcon } from "./right.svg";
 
-export { default as Cart } from "./cart.svg";
-export { default as Logout } from "./logout.svg";
-export { default as Login } from "./login.svg";
-export { default as Home } from "./home.svg";
-export { default as MyPage } from "./mypage.svg";
+// svg icon
+export { default as Close } from "./icon/close.svg";
+export { default as Delete } from "./icon/delete.svg";
+export { default as Back } from "./icon/back.svg";
+export { default as Arrow } from "./icon/arrow.svg";
+export { default as Check } from "./icon/check.svg";
+export { default as WishIcon } from "./icon/wish.svg";
+export { default as Triangle } from "./icon/triangle.svg";
+export { default as Search } from "./icon/search.svg";
+export { default as Loading } from "./icon/loading.svg";
+export { default as LeftIcon } from "./icon/left.svg";
+export { default as RightIcon } from "./icon/right.svg";
+export { default as Cart } from "./icon/cart.svg";
+export { default as Logout } from "./icon/logout.svg";
+export { default as Login } from "./icon/login.svg";
+export { default as Home } from "./icon/home.svg";
+export { default as MyPage } from "./icon/mypage.svg";
+export { default as GithubSVG } from "./icon/githubLogin.svg";
+export { default as GoogleSVG } from "./icon/googleLogin.svg";
+
+// png icon
+export { default as AddIcon } from "./png/add.png";
+export { default as BoxIcon } from "./png/box.png";
+export { default as Logo } from "./png/logo.png";
+export { default as SecretpenImg } from "./png/secretpen.png";
+export { default as TrayImg } from "./png/tray.png";
+export { default as KakaoPay } from "./png/kakaopay.png";
+export { default as ETPay } from "./png/etpay.png";
+export { default as HeaderLogo } from "./png/header_logo.png";
+export { default as ClipboardIcon } from "./png/clipboard.png";
+export { default as DashboardIcon } from "./png/dashboard.png";
+export { default as DeleteIcon } from "./png/delete.png";
+export { default as ET } from "./png/et.png";
+export { default as LeftArrowIcon } from "./png/left-arrow.png";
+export { default as LogoImage } from "./png/logo.png";
+export { default as SearchIcon } from "./png/search.png";
+export { default as LoadingSpinner } from "./png/spinner.png";
 
 // caregory banner
 export { default as CategoryBanner0 } from "./banners/0.gif";
