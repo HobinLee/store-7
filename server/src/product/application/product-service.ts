@@ -10,7 +10,6 @@ import { Questions } from "../domain/questions";
 import { Reviews } from "../domain/reviews";
 import { SearchService } from "./search-service";
 import { SearchProduct } from "../dto/product-search-response";
-import { Wishes } from "@/user/domain/wishes";
 import { ProductFindQuery } from "../dto/product-find-query";
 import { ProductAdminResponse } from "../dto/product-admin-response";
 import { ProductReviewsQuery } from "../dto/product-request";

@@ -125,7 +125,8 @@ const ItemWrapper = styled.div`
       ${({ theme }) => theme.font.medium};
       font-weight: 500;
       margin-bottom: 1rem;
-      line-height: 1.4rem;
+      line-height: 2rem;
+      height: 1.7rem;
       overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;
@@ -197,6 +198,7 @@ const WishBox = styled.div`
     }
     &.not-wish {
       fill: #fff;
+      opacity: 0.7;
       &:hover {
         opacity: 1;
         fill: none;
