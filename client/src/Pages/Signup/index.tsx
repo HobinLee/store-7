@@ -1,27 +1,31 @@
-import { PageWrapper } from "@/shared/styled";
-import { useState } from "react";
-import styled from "styled-components";
+import { useState, useEffect } from "react";
 import { Link, moveTo } from "@/Router";
-import Address from "@/Components/Address";
-import useInput from "@/hooks/useInput";
-import InputSection from "@/Components/Common/Input/InputSection";
-import { DestinationType, UserType, AddressType } from "@/shared/type";
-import Button from "@/Components/Common/Button";
-import useValidation from "@/hooks/useValidation";
-import ValidationInput from "@/Components/Common/Input/ValidationInput";
+
+import styled from "styled-components";
+import { PageWrapper } from "@/shared/styled";
+import { gap } from "@/styles/theme";
+
+import { DestinationType, AddressType } from "@/shared/type";
+
 import {
   validateEmail,
   validatePW,
   validatePhoneNumber,
   VALIDATION_ERR_MSG,
 } from "@/utils/validations";
-import { gap } from "@/styles/theme";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { checkEmailExist, signup } from "@/api/users";
-import { loginState } from "@/store/state";
 import { convertToNumber, convertToPhoneNumber } from "@/utils/util";
+
+import { checkEmailExist, signup } from "@/api/users";
+
+import { useInput, useValidation } from "@/hooks";
+import Address from "@/Components/Address";
+import InputSection from "@/Components/Common/Input/InputSection";
+import Button from "@/Components/Common/Button";
+import ValidationInput from "@/Components/Common/Input/ValidationInput";
 import APIButton from "@/Components/Common/Button/APIButton";
-import { useEffect } from "react";
+
+import { useRecoilState } from "recoil";
+import { loginState } from "@/store/state";
 
 const SignupPage = () => {
   const email = useInput("");
