@@ -47,6 +47,7 @@ const MainPage = () => {
 
 const Wrapper = styled(PageWrapper)`
   .main__contents-wrapper {
+    margin-top: 3rem;
     width: 100%;
     height: 100%;
     display: flex;
@@ -64,6 +65,9 @@ const Wrapper = styled(PageWrapper)`
         ${({ theme }) => theme.font.large}
         margin-bottom: 2rem;
       }
+    }
+    ${media.mobile} {
+      padding: 0rem;
     }
   }
   ${media.mobile} {

@@ -11,8 +11,8 @@ export interface BannerProps {
 const Banner = ({ banner }: { banner: ItemBannerType }) => {
   return (
     <BannerWrapper>
-      <div className="banner-content">
-        <Link to={`/detail/${banner.id}`}>
+      <Link to={`/detail/${banner.id}`}>
+        <div className="banner-content">
           <div className="banner__info-wrapper">
             <div className="banner__info">
               <h3 className="banner__title">{banner.title}</h3>
@@ -22,30 +22,36 @@ const Banner = ({ banner }: { banner: ItemBannerType }) => {
               <span>자세히 보기</span>
             </div>
           </div>
-          <Image src={banner.src} />
-        </Link>
-      </div>
+          <div className="banner__image">
+            <Image src={banner.src} />
+          </div>
+        </div>
+      </Link>
     </BannerWrapper>
   );
 };
 
 const BannerWrapper = styled.div`
+  width: 100%;
   margin: 0 auto;
   max-width: 110rem;
-  height: 40rem;
+  flex: 1 0 auto;
 
   .banner-content {
     width: 100%;
-    height: 100%;
     position: relative;
     border-radius: 2rem;
     overflow: hidden;
     ${({ theme }) => theme.flexCenter}
+    .banner__image {
+      width: 100%;
+      & > img {
+        width: 100%;
+      }
+    }
   }
 
   a {
-    width: 100%;
-    height: 100%;
     ${({ theme }) => theme.flexCenter}
   }
 
@@ -71,6 +77,9 @@ const BannerWrapper = styled.div`
     ${({ theme }) => theme.font.xlarge}
     margin-bottom: 1rem;
     text-align: right;
+    ${media[768]} {
+      ${({ theme }) => theme.font.medium}
+    }
   }
 
   .banner__brief {
@@ -80,8 +89,7 @@ const BannerWrapper = styled.div`
   }
 
   img {
-    height: 100%;
-    width: auto;
+    width: 100%;
     transition: transform 0.2s;
   }
 
@@ -108,7 +116,6 @@ const BannerWrapper = styled.div`
 
   ${media.mobile} {
     padding: 0;
-    height: 20rem;
     .banner-content {
       border-radius: 0;
     }
