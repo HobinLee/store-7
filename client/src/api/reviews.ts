@@ -3,9 +3,8 @@ import { useQuery } from "react-query";
 
 // GET /reviews
 
-const getRecentReviews = (size) => GET("/reviews/recent", { size });
-
-export const useRecentReviews = (size) =>
+const getRecentReviews = (size: number) => GET("/reviews/recent", { size });
+export const useRecentReviews = (size: number) =>
   useQuery(["recentReviews", size], () => getRecentReviews(size));
 
 // POST /reviews

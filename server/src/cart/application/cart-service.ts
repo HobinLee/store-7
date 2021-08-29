@@ -9,10 +9,12 @@ export class CartService {
   constructor(private readonly carts: Carts) {}
 
   async findCartsByUserId(userId: number): Promise<CartResponse[]> {
-    const carts = await this.carts.findCartsByUserId(userId);
-    if (!carts)
+    try {
+      const carts = await this.carts.findCartsByUserId(userId);
+      return carts.map(CartResponse.of);
+    } catch (e) {
       throw new Error(messages.failed.FAILED_TO_FIND_CARTS_BY_USER_ID);
-    return carts.map(CartResponse.of);
+    }
   }
 
   createCart(userId: number, cart: CartRequest): string {

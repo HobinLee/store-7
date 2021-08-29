@@ -18,6 +18,11 @@ export default {
 
     // order
     SUCCESS_TO_UPDATE_ORDER_STATUS: "주문 상태 수정 성공",
+
+    // review
+    SUCCESS_TO_CREATE_REVIEW: "리뷰 생성 성공",
+    SUCCESS_TO_UPDATE_REVIEW: "리뷰 수정 성공",
+    SUCCESS_TO_DELETE_REVIEW: "리뷰 삭제 성공",
   },
   failed: {
     // user
@@ -52,5 +57,11 @@ export default {
     FAILED_TO_UPDATE_ORDER: "주문 수정 실패",
     FAILED_TO_UPDATE_ORDER_NUM: "주문번호 수정 실패",
     FAILED_TO_UPDATE_ORDER_STATUS: "주문 상태 수정 실패",
+
+    // review
+    FAILED_TO_CREATE_REVIEW: "리뷰 생성 실패",
+    FAILED_TO_UPDATE_REVIEW: "리뷰 수정 실패",
+    FAILED_TO_DELETE_REVIEW: "리뷰 삭제 실패",
+    FAILED_TO_FIND_RECENT_REVIEWS: "최근 리뷰 가져오기 실패",
   },
 };

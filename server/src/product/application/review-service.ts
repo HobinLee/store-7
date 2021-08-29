@@ -2,40 +2,67 @@ import { Injectable } from "@nestjs/common";
 import { Reviews } from "@/product/domain/reviews";
 import {
   CreateReviewPostRequest,
+  RecentReviewsQuery,
   ReviewPatchReqeust,
   UpdateReviewPatchRequest,
 } from "../dto/review-request";
 import { MyReviewResponse } from "../dto/review-my-response";
+import messages from "@/config/messages";
 
 @Injectable()
 export class ReviewService {
   constructor(private readonly reviews: Reviews) {}
 
-  async createReview(review: CreateReviewPostRequest, image) {
-    const fileName = image ? await this.reviews.addImage(image) : null;
-    await this.reviews.createReview({
-      ...review,
-      image: fileName,
-      order: { id: review.orderId },
-      product: { id: review.productId },
-    });
+  async createReview(review: CreateReviewPostRequest, image): Promise<string> {
+    try {
+      const fileName = image ? await this.reviews.addImage(image) : null;
+      await this.reviews.createReview({
+        ...review,
+        image: fileName,
+        order: { id: review.orderId },
+        product: { id: review.productId },
+      });
+      return messages.success.SUCCESS_TO_CREATE_REVIEW;
+    } catch (e) {
+      throw new Error(messages.failed.FAILED_TO_CREATE_REVIEW);
+    }
   }
 
-  async updateReview(id: number, review: UpdateReviewPatchRequest, image) {
-    const fileName = image ? await this.reviews.addImage(image) : "";
-    const newReview: ReviewPatchReqeust = { ...review };
-    if (fileName) {
-      newReview.image = fileName;
+  async updateReview(
+    id: number,
+    review: UpdateReviewPatchRequest,
+    image
+  ): Promise<string> {
+    try {
+      const fileName = image ? await this.reviews.addImage(image) : "";
+      const newReview: ReviewPatchReqeust = { ...review };
+      if (fileName) {
+        newReview.image = fileName;
+      }
+      await this.reviews.updateReview(id, newReview);
+      return messages.success.SUCCESS_TO_UPDATE_REVIEW;
+    } catch (e) {
+      throw new Error(messages.failed.FAILED_TO_CREATE_REVIEW);
     }
-    await this.reviews.updateReview(id, newReview);
   }
 
   async deletereview(id: number) {
-    await this.reviews.deleteReview(id);
+    try {
+      await this.reviews.deleteReview(id);
+      return messages.success.SUCCESS_TO_DELETE_REVIEW;
+    } catch (e) {
+      throw new Error(messages.failed.FAILED_TO_CREATE_REVIEW);
+    }
   }
 
-  async findRecentReviews(query) {
-    const reviews = await this.reviews.findRecentReviews(query);
-    return reviews.map(MyReviewResponse.of);
+  async findRecentReviews(
+    query: RecentReviewsQuery
+  ): Promise<MyReviewResponse[]> {
+    try {
+      const reviews = await this.reviews.findRecentReviews(query);
+      return reviews.map(MyReviewResponse.of);
+    } catch (e) {
+      throw new Error(messages.failed.FAILED_TO_FIND_RECENT_REVIEWS);
+    }
   }
 }

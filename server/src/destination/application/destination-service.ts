@@ -12,10 +12,12 @@ export class DestinationService {
   constructor(private readonly destinations: Destinations) {}
 
   async findDestinationsByUserId(id: number): Promise<DestinationResponse[]> {
-    const destinations = await this.destinations.findDestinationsByUserId(id);
-    if (!destinations)
+    try {
+      const destinations = await this.destinations.findDestinationsByUserId(id);
+      return destinations.map(DestinationResponse.of);
+    } catch (e) {
       throw new Error(messages.failed.FAILED_TO_FIND_DESTINATIONS_BY_USER_ID);
-    return destinations.map(DestinationResponse.of);
+    }
   }
 
   async createDestination(
