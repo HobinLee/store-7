@@ -22,6 +22,7 @@ import SearchPage from "./Pages/Search";
 import AdminPage from "./Pages/Admin";
 import WelcomePage from "./Pages/Welcome";
 import NotFound from "./Pages/NotFound";
+import LoginProvider from "./Components/LoginProvider";
 
 const routes: RouteSetType[] = [
   ["/", MainPage, true],
@@ -40,39 +41,24 @@ const routes: RouteSetType[] = [
 ];
 
 const App = () => {
-  const setIsLoggedin = useSetRecoilState(loginState);
-
   dayjs.locale("ko");
-
-  const auth = async () => {
-    try {
-      await verifyToken();
-      setIsLoggedin(true);
-    } catch (e) {
-      setIsLoggedin(false);
-    }
-  };
-
-  const init = () => {
-    auth();
-  };
-
-  useEffect(init, []);
 
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
+      <LoginProvider>
+        <Router>
+          {routes.map(([path, component, exact]: RouteSetType) => (
+            <Route
+              path={path}
+              exact={exact ?? false}
+              key={path}
+              component={component}
+            />
+          ))}
+        </Router>
+      </LoginProvider>
 
-      <Router>
-        {routes.map(([path, component, exact]: RouteSetType) => (
-          <Route
-            path={path}
-            exact={exact ?? false}
-            key={path}
-            component={component}
-          />
-        ))}
-      </Router>
       <Alert />
     </ThemeProvider>
   );

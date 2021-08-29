@@ -20,7 +20,7 @@ export default {
   },
   auth: {
     secret: process.env.JWT_SECRET || "",
-    expiresIn: process.env.JWT_EXPIRES_IN || "2h",
+    expiresIn: process.env.JWT_EXPIRES_IN || "10s",
     bearer: "Bearer ",
     saltRounds: 10,
     tokenKey: "token",
