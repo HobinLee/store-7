@@ -98,5 +98,6 @@ export default {
 
     //product
     PRODUCT_NO_EXIST: "해당 제품을 찾을 수 없습니다",
+    NEED_LOGIN: "로그인이 필요한 서비스입니다",
   },
 };

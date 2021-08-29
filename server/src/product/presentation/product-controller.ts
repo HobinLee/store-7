@@ -51,7 +51,6 @@ export class ProductController {
   //search result
   @Get("/keywords")
   async getKeywords(@Query("keyword") keyword: string) {
-    console.log(keyword);
     return this.searchService.findKeywords(keyword);
   }
 

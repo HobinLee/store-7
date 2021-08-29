@@ -23,18 +23,20 @@ import { MyService } from "../application/my-service";
 import { WishRequest } from "../dto/wish-request";
 import { OrderResponse } from "@/order/dto/order-response";
 import { Response } from "express";
+import messages from "@/config/messages";
 
 @Controller("/my")
 export class MyController {
   constructor(private readonly myService: MyService) {}
 
   @All()
-  async isUser(@Body("userId") userId: number, @Res() res: Response) {
+  async isUser(
+    @Body("userId") userId: number,
+    @Res({ passthrough: true }) res: Response
+  ) {
     if (!userId) {
       res.status(HttpStatus.UNAUTHORIZED);
-      return {
-        message: "로그인이 필요한 서비스입니다.",
-      };
+      return messages.failed.NEED_LOGIN;
     }
   }
 
