@@ -18,6 +18,7 @@ import { DestinationResponse } from "@/destination/dto/destination-response";
 import { Wishes } from "../domain/wishes";
 import { WishRequest } from "../dto/wish-request";
 import { OrderResponse } from "@/order/dto/order-response";
+import messages from "@/config/messages";
 
 @Injectable()
 export class MyService {
@@ -33,101 +34,113 @@ export class MyService {
 
   // info
   async getMyInfo(userId) {
-    const user = await this.users.findUserById(userId);
-    return MyInfoResponse.of(user);
+    try {
+      const user = await this.users.findUserById(userId);
+      return MyInfoResponse.of(user);
+    } catch (e) {
+      throw new Error(messages.failed.FAILTED_TO_FIND_MY_INFO);
+    }
   }
 
   async editMyInfo(userId: number, request: MyInfoEditRequest) {
-    await this.users.updateUserInfo(userId, request);
+    try {
+      await this.users.updateUserInfo(userId, request);
+    } catch (e) {
+      throw new Error(messages.failed.FAILTED_TO_EDIT_MY_INFO);
+    }
   }
 
   // carts
   async findMyCarts(userId: number): Promise<MyCartsResponse> {
-    const data = await this.carts.findCartsByUserId(userId);
+    try {
+      const data = await this.carts.findCartsByUserId(userId);
 
-    const totalPrice = data.reduce((sum, cart) => sum + cart.product.price, 0);
-    const totalDelivery = data.reduce(
-      (sum, cart) => sum + cart.product.deliveryCost,
-      0
-    );
-    const totalPayment = totalPrice + totalDelivery;
+      const totalPrice = data.reduce(
+        (sum, cart) => sum + cart.product.price,
+        0
+      );
+      const totalDelivery = data.reduce(
+        (sum, cart) => sum + cart.product.deliveryCost,
+        0
+      );
+      const totalPayment = totalPrice + totalDelivery;
 
-    return {
-      totalPrice,
-      totalDelivery,
-      totalPayment,
-      items: data.map(CartResponse.of),
-    };
+      return {
+        totalPrice,
+        totalDelivery,
+        totalPayment,
+        items: data.map(CartResponse.of),
+      };
+    } catch (e) {
+      throw new Error(messages.failed.FAILED_TO_FIND_CARTS_BY_USER_ID);
+    }
   }
 
   // destinations
   async findMyDestionation(userId) {
-    const destinations = await this.destinations.findDestinationsByUserId(
-      userId
-    );
-    return destinations.map(DestinationResponse.of);
+    try {
+      const destinations = await this.destinations.findDestinationsByUserId(
+        userId
+      );
+      return destinations.map(DestinationResponse.of);
+    } catch (e) {
+      throw new Error(messages.failed.FAILED_TO_FIND_DESTINATIONS_BY_USER_ID);
+    }
   }
 
   // reviews
   async findMyReviews(userId: number) {
-    const reviews = await this.reviews.findReviewsByUserId(userId);
-    return reviews.map(MyReviewResponse.of);
+    try {
+      const reviews = await this.reviews.findReviewsByUserId(userId);
+      return reviews.map(MyReviewResponse.of);
+    } catch (e) {
+      throw new Error(messages.failed.FAILED_TO_FIND_MY_REVIEW);
+    }
   }
 
   // questions
   async findMyQuestions(userId: number) {
-    const questions = await this.questions.findQuestionsByUserId(userId);
-    return questions.map(QuestionResponse.of);
+    try {
+      const questions = await this.questions.findQuestionsByUserId(userId);
+      return questions.map(QuestionResponse.of);
+    } catch (e) {
+      throw new Error(messages.failed.FAILED_TO_FIND_QUESTIONS_BY_USER_ID);
+    }
   }
 
   // orders
   async findMyOrders(userId: number) {
-    const orders = await this.orders.findOrdersByUserId(userId);
-    return orders.map(OrderResponse.of);
-  }
-
-  async findMyOrdersByDateRange(
-    userId: number,
-    range: { from: Date; to: Date }
-  ) {
-    const orders = await this.orders.findOrdersByUserIdByDateRange(
-      userId,
-      range
-    );
-    return orders.map(OrderResponse.of);
-  }
-
-  async findCurrentOrdersByUserId(userId: number): Promise<OrderResponse[]> {
-    const orders = await this.orders.findCurrentOrdersByUserId(userId);
-    return orders.map(OrderResponse.of);
-  }
-
-  async findDeliverdOrdersByUserId(userId: number): Promise<OrderResponse[]> {
-    const orders = await this.orders.findDeliverdOrdersByUserId(userId);
-    return orders.map(OrderResponse.of);
-  }
-
-  async findReviewedOrdersByUserId(userId: number): Promise<OrderResponse[]> {
-    const orders = await this.orders.findReviewedOrdersByUserId(userId);
-    return orders.map(OrderResponse.of);
+    try {
+      const orders = await this.orders.findOrdersByUserId(userId);
+      return orders.map(OrderResponse.of);
+    } catch (e) {
+      throw new Error(messages.failed.FAILED_TO_FIND_ORDERS_BY_USER_ID);
+    }
   }
 
   // wishes
   async findMyWishes(userId: number) {
-    const wishes = await this.wishes.findMyWishesByUserId(userId);
-    return MyWishResponse.of(wishes);
-  }
-
-  async findMyWishByProductId(userId: number, productId: number) {
-    const wish = await this.wishes.findMyWishByProductId(userId, productId);
-    return wish;
+    try {
+      const wishes = await this.wishes.findMyWishesByUserId(userId);
+      return MyWishResponse.of(wishes);
+    } catch (e) {
+      throw new Error(messages.failed.FAILED_TO_FIND_MY_WISHES);
+    }
   }
 
   async createWishProduct(wish: WishRequest) {
-    await this.wishes.createWish(wish);
+    try {
+      await this.wishes.createWish(wish);
+    } catch (e) {
+      throw new Error(messages.failed.FAILED_TO_CREATE_MY_WISH);
+    }
   }
 
   async deleteWishProduct(wish: WishRequest) {
-    return await this.wishes.deleteWish(wish);
+    try {
+      return await this.wishes.deleteWish(wish);
+    } catch (e) {
+      throw new Error(messages.failed.FAILED_TO_DELETE_MY_WISH);
+    }
   }
 }
