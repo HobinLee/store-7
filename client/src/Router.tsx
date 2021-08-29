@@ -2,11 +2,11 @@ import { useEffect, ReactElement } from "react";
 import styled from "styled-components";
 
 import { decodeParams } from "./utils/location";
+import { loginState } from "./store/state";
 
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { selectedCategoryState } from "./store/category";
 import { locationState } from "./store/history";
-import { loginState } from "./store/state";
 
 export type PageComponentType = () => JSX.Element;
 
