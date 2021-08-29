@@ -1,14 +1,19 @@
-import { PageWrapper } from "@/shared/styled";
-import { Input, Button } from "@/Components/Common";
-import styled from "styled-components";
-import useInput from "@/hooks/useInput";
-import { gap, media } from "@/styles/theme";
-import LoginSection from "./LoginSection";
-import { Back } from "@/assets";
+import { useEffect } from "react";
 import { Link, moveTo } from "@/Router";
+
+import styled from "styled-components";
+import { PageWrapper } from "@/shared/styled";
+import { gap, media } from "@/styles/theme";
+
+import { Back } from "@/assets";
+
+import { useInput } from "@/hooks";
+
+import { Input, Button } from "@/Components/Common";
+import LoginSection from "./LoginSection";
+
 import { loginState } from "@/store/state";
 import { useRecoilValue } from "recoil";
-import { useEffect } from "react";
 
 const LoginPage = () => {
   const isLoggedIn = useRecoilValue(loginState);
