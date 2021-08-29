@@ -12,7 +12,7 @@ const getMyInfo = (): Promise<MyInfoType> => GET("/my/info");
 export const useMyInfo = () => useQuery(["userInfo"], () => getMyInfo());
 
 // PATCH /my/info 내 정보 수정
-export const patchMe = (data: { name: string; phoneNumber: string }) =>
+export const patchMyInfo = (data: { name: string; phoneNumber: string }) =>
   PATCH("/my/info", { data });
 
 // GET /my/carts 내 장바구니
@@ -38,16 +38,6 @@ export const useMyQuestions = () =>
 const getMyOrders = (): Promise<MyOrderType[]> => GET(`/my/orders`);
 export const useMyOrders = () =>
   useQuery(["filteredOrders"], () => getMyOrders());
-
-interface DateRange {
-  from: Date;
-  to: Date;
-}
-const getMyOrdersByDateRange = ({ from, to }: DateRange) =>
-  GET(`/my/orders?from=${from}to=${to}`);
-
-export const useMyOrderOfDate = (date: DateRange) =>
-  useQuery(["dateOrders"], () => getMyOrdersByDateRange(date));
 
 // GET /my/wishes 내 찜목록
 const getMyWishes = () => GET("/my/wishes");

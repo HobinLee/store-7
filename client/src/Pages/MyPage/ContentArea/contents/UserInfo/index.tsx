@@ -4,7 +4,7 @@ import InputSection from "@/Components/Common/Input/InputSection";
 import Section from "../../../Section";
 import ValidationInput from "@/Components/Common/Input/ValidationInput";
 import { gap } from "@/styles/theme";
-import { patchMe, useMyDestinations, useMyInfo } from "@/api/my";
+import { patchMyInfo, useMyDestinations, useMyInfo } from "@/api/my";
 import useInput from "@/hooks/useInput";
 import { convertToNumber, convertToPhoneNumber } from "@/utils/util";
 import { validatePhoneNumber, VALIDATION_ERR_MSG } from "@/utils/validations";
@@ -34,7 +34,7 @@ const UserInfo = () => {
   const isEditable = nameValidation.isValid && phoneValidation.isValid;
 
   const handleEditInfo = async () => {
-    await patchMe({
+    await patchMyInfo({
       name: name.value,
       phoneNumber: convertToNumber(phone.value),
     });
