@@ -3,7 +3,7 @@ import { media } from "@/styles/theme";
 import { useState } from "react";
 import { useEffect } from "react";
 import styled, { css } from "styled-components";
-import Image from "@/Components/Image";
+import Image from "@/Components/Common/Image";
 import { CategoryParamType, CategoryType, MainCategoryType } from "../";
 import { useRecoilValue } from "recoil";
 import { selectedCategoryState } from "@/store/category";

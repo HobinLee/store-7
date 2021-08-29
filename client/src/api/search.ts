@@ -8,7 +8,9 @@ const getKeywords = (keyword: string) =>
   keyword.length && GET(`/products/keywords/${keyword}`);
 
 export const useKeywords = (keyword: string) =>
-  useQuery(["autoComplete", keyword], () => getKeywords(keyword));
+  useQuery(["autoComplete", keyword], () => getKeywords(keyword), {
+    keepPreviousData: true,
+  });
 
 export interface SearchParams extends ProductParams {
   keyword: string;

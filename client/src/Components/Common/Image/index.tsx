@@ -3,12 +3,16 @@ import { useState } from "react";
 import { useLazyLoad } from "@/hooks/useLazyLoad";
 
 export interface ImageProps {
+  id?: string;
+  className?: string;
   src: string;
   alt?: string;
   lazyload?: boolean;
 }
 
 const Image = ({
+  id,
+  className,
   src,
   alt = "이미지를 찾을 수 없습니다",
   lazyload,
@@ -26,8 +30,16 @@ const Image = ({
 
   return (
     <>
-      {isLoading && <SkeletonImage ref={ref} />}
-      {imageSrc && <img src={imageSrc} onLoad={handleImageLoaded} alt={alt} />}
+      {isLoading && <SkeletonImage ref={ref} className={className} id={id} />}
+      {imageSrc && (
+        <img
+          className={className}
+          id={isLoading ? undefined : id}
+          src={imageSrc}
+          onLoad={handleImageLoaded}
+          alt={alt}
+        />
+      )}
     </>
   );
 };

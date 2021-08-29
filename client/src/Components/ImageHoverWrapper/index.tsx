@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Image from "@/Components/Image";
+import Image from "@/Components/Common/Image";
 
 const ImageHoverWrapper = ({ src, alt }: { src: string; alt?: string }) => {
   return (

@@ -42,7 +42,8 @@ const Wrapper = styled.div`
     ${gap("0")}
   }
   ${media.mobile} {
-    margin: 0;
+    height: 38rem;
+    padding-bottom: 8rem;
     flex-direction: column;
   }
   b {

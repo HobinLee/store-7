@@ -2,7 +2,7 @@ import { ItemBannerType } from "@/shared/type";
 import { Link } from "@/Router";
 import styled from "styled-components";
 import { gap } from "@/styles/theme";
-import Image from "@/Components/Image";
+import Image from "@/Components/Common/Image";
 
 export interface GiftItemProps {
   item: ItemBannerType;

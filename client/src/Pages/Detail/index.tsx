@@ -23,6 +23,7 @@ import { deleteWishProduct, postWishProduct } from "@/api/my";
 import useDebounce from "@/hooks/useDebounce";
 import { selectedCategoryState } from "@/store/category";
 import { categories } from "@/shared/dummy";
+import { Image } from "@/Components/Common";
 
 const topHeight = innerWidth > 500 ? 700 : 400;
 
@@ -107,10 +108,11 @@ const DetailPage = () => {
                 onMouseLeave={() => setIsZoomOpened(false)}
                 className="img-box"
               >
-                <img
+                <Image
                   id="image"
                   src={properties.imgURL + product.images[0]}
                   className="thumbnail"
+                  lazyload={true}
                 />
                 {isZoomOpened && (
                   <>
