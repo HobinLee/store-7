@@ -91,6 +91,9 @@ const Wrapper = styled(PageWrapper)`
       > :hover {
         opacity: 1;
       }
+      ${media.mobile} {
+        bottom: 9rem;
+      }
     }
   }
   .products-wrapper {
