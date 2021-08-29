@@ -40,6 +40,10 @@ export const filters: FilterType[] = [
 
 const Filter = ({ currentFilter, setFilter }: FilterProps) => {
   const selectedCategory = useRecoilValue(selectedCategoryState);
+  const handleClickFilter = (filter: FilterType) => {
+    scrollTo({ top: 0, behavior: "smooth" });
+    setFilter(filter);
+  };
   const generateButtons = filters.map((filter: FilterType) => (
     <button
       className={`buttons__btn ${
@@ -47,7 +51,7 @@ const Filter = ({ currentFilter, setFilter }: FilterProps) => {
         (currentFilter.name === filter.name && "selected")
       }`}
       key={filter.value}
-      onClick={() => setFilter(filter)}
+      onClick={() => handleClickFilter(filter)}
     >
       {filter.name}
     </button>

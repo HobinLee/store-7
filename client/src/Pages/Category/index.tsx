@@ -1,6 +1,6 @@
 import CategoryBanner from "./Banner";
 import Filter, { filters, FilterType } from "../../Components/Filter";
-
+import { Arrow } from "@/assets";
 import Header from "@/Components/Header";
 import { PageWrapper } from "@/shared/styled";
 import styled from "styled-components";
@@ -31,6 +31,9 @@ export type CategoryParamType = {
 
 const CategoryPage = () => {
   const [productOrder, setProductOrder] = useState<FilterType>(filters[0]);
+  const handleClickTopButton = () => {
+    scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <>
@@ -46,6 +49,9 @@ const CategoryPage = () => {
               order={productOrder.value}
             />
           </div>
+          <button className="top-button" onClick={handleClickTopButton}>
+            <Arrow />
+          </button>
         </div>
         <Footer />
       </Wrapper>
@@ -65,6 +71,27 @@ const Wrapper = styled(PageWrapper)`
     box-sizing: border-box;
     background: white;
     z-index: 10;
+
+    .top-button {
+      background: white;
+      position: fixed;
+      width: 6rem;
+      height: 6rem;
+      cursor: pointer;
+      border: 1px solid ${({ theme }) => theme.color.light_grey1};
+      opacity: 0.8;
+      right: 1rem;
+      bottom: 1rem;
+      border-radius: 3rem;
+      svg {
+        width: 50%;
+        height: 50%;
+        transform: rotate(-90deg);
+      }
+      > :hover {
+        opacity: 1;
+      }
+    }
   }
   .products-wrapper {
     max-width: 110rem;
