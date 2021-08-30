@@ -94,7 +94,7 @@ export class Products {
       const fileName = generateRandomFileName();
       this.s3Repository.putObject(fileName, image);
       this.productDetailImageRepository.insert({
-        name: fileName,
+        id: fileName,
         product,
       });
     });
@@ -121,7 +121,7 @@ export class Products {
         this.s3Repository.deleteObject(image.id);
       });
       product.detailImages.forEach((image) => {
-        this.s3Repository.deleteObject(image.name);
+        this.s3Repository.deleteObject(image.id);
       });
     });
     await this.productRepository.delete(id);
