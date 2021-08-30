@@ -7,7 +7,7 @@ export class ProductElementResponse {
   originPrice: number;
   discountRate: number;
   isWish: boolean;
-  amount: number;
+  stock: number;
   image: string;
   createdAt: Date;
   wishLength: number;
@@ -19,7 +19,7 @@ export class ProductElementResponse {
     this.originPrice = response.originPrice;
     this.discountRate = response.discountRate;
     this.isWish = response.isWish;
-    this.amount = response.amount;
+    this.stock = response.stock;
     this.image = response.image;
     this.createdAt = response.createdAt;
     this.wishLength = response.wishLength;
@@ -30,7 +30,7 @@ export class ProductElementResponse {
       name = product.name,
       originPrice = product.price,
       discountRate = product.discountRate,
-      amount = product.stock,
+      stock = product.stock,
       image = product.getThumbnailImage(),
       price = product.getDiscountedPrice(),
       createdAt = product.createdAt,
@@ -48,7 +48,7 @@ export class ProductElementResponse {
       originPrice,
       discountRate,
       isWish,
-      amount,
+      stock,
       image,
       createdAt,
       wishLength,

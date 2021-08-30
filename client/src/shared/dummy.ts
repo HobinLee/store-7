@@ -272,6 +272,7 @@ export const sampleProducts: ProductElementType[] = [
     image: "",
     isWish: true,
     createdAt: new Date(),
+    wishLength: 5,
   },
   {
     id: 2,
@@ -283,6 +284,7 @@ export const sampleProducts: ProductElementType[] = [
     image: "",
     amount: 1,
     createdAt: new Date(),
+    wishLength: 5,
   },
   {
     id: 3,
@@ -294,6 +296,7 @@ export const sampleProducts: ProductElementType[] = [
     image: "",
     amount: 1,
     createdAt: new Date(),
+    wishLength: 5,
   },
   {
     id: 4,
@@ -305,6 +308,7 @@ export const sampleProducts: ProductElementType[] = [
     image: "",
     amount: 1,
     createdAt: new Date(),
+    wishLength: 5,
   },
   {
     id: 5,
@@ -316,6 +320,7 @@ export const sampleProducts: ProductElementType[] = [
     image: "",
     amount: 1,
     createdAt: new Date(),
+    wishLength: 5,
   },
   {
     id: 6,
@@ -327,6 +332,7 @@ export const sampleProducts: ProductElementType[] = [
     image: "",
     amount: 1,
     createdAt: new Date(),
+    wishLength: 5,
   },
   {
     id: 7,
@@ -338,6 +344,7 @@ export const sampleProducts: ProductElementType[] = [
     image: "",
     amount: 1,
     createdAt: new Date(),
+    wishLength: 5,
   },
   {
     id: 8,
@@ -349,6 +356,7 @@ export const sampleProducts: ProductElementType[] = [
     image: "",
     amount: 1,
     createdAt: new Date(),
+    wishLength: 5,
   },
   {
     id: 9,
@@ -360,6 +368,7 @@ export const sampleProducts: ProductElementType[] = [
     image: "",
     amount: 1,
     createdAt: new Date(),
+    wishLength: 5,
   },
   {
     id: 10,
@@ -371,6 +380,7 @@ export const sampleProducts: ProductElementType[] = [
     image: "",
     amount: 1,
     createdAt: new Date(),
+    wishLength: 5,
   },
   {
     id: 11,
@@ -382,6 +392,7 @@ export const sampleProducts: ProductElementType[] = [
     image: "",
     amount: 1,
     createdAt: new Date(),
+    wishLength: 5,
   },
   {
     id: 12,
@@ -393,6 +404,7 @@ export const sampleProducts: ProductElementType[] = [
     image: "",
     amount: 1,
     createdAt: new Date(),
+    wishLength: 5,
   },
   {
     id: 13,
@@ -404,6 +416,7 @@ export const sampleProducts: ProductElementType[] = [
     image: "",
     amount: 1,
     createdAt: new Date(),
+    wishLength: 5,
   },
 ];
 

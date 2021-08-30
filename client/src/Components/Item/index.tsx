@@ -25,6 +25,7 @@ type ItemType = {
   image: string;
   createdAt: Date;
   wishLength: number;
+  stock: number;
   refetch?: () => Promise<QueryObserverResult<unknown>>;
 };
 
@@ -39,11 +40,12 @@ const Item = ({
   createdAt,
   refetch,
   wishLength,
+  stock,
 }: ItemType) => {
   const [isMyWish, setIsMyWish] = useState(isWish);
   const debounceIsMyWish = useDebounce<boolean>(isMyWish, 300);
   const isLoggedin = useRecoilValue(loginState);
-
+  console.log(stock);
   const tags = useMemo(() => {
     const tags = [];
     if (discountRate) {
@@ -97,6 +99,11 @@ const Item = ({
                 onClick={handleClickWish}
               />
             </WishBox>
+            {stock === 0 && (
+              <div className="thumbnail__sold-out">
+                <span>품절</span>
+              </div>
+            )}
           </div>
           <div className="info">
             <div className="info__name">{name}</div>
@@ -130,6 +137,22 @@ const ItemWrapper = styled.div`
       top: 1rem;
       left: 1rem;
       display: flex;
+    }
+
+    &__sold-out {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      ${({ theme }) => theme.flexCenter}
+      background: rgba(0,0,0,0.7);
+      & > span {
+        color: white;
+        font-size: 6rem;
+        font-weight: bold;
+        font-family: "BMDOHYEON";
+      }
     }
   }
 
@@ -176,6 +199,11 @@ const ItemWrapper = styled.div`
       &__tags {
         flex-direction: column;
       }
+      &__sold-out {
+        & > span {
+          font-size: 3.5rem;
+        }
+      }
     }
   }
 
@@ -196,12 +224,13 @@ const ItemWrapper = styled.div`
     }
 
     .thumbnail {
-      position: static;
-      max-width: 50w;
-      max-height: 40vw;
-      overflow: hidden;
       &__tags {
         flex-direction: row;
+      }
+      &__sold-out {
+        & > span {
+          font-size: 5rem;
+        }
       }
     }
   }

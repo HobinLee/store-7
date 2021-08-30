@@ -90,6 +90,7 @@ export interface ProductElementType {
   image: string;
   createdAt: Date;
   wishLength: number;
+  stock: number;
 }
 
 export interface AdminProductType {

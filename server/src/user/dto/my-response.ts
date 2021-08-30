@@ -44,7 +44,7 @@ export class MyWishResponse {
   originPrice: number;
   discountRate: number;
   isWish: boolean;
-  amount: number;
+  stock: number;
   image: string;
   createdAt: Date;
   wishLength: number;
@@ -66,7 +66,7 @@ export class MyWishResponse {
         name,
         originPrice: price,
         discountRate,
-        amount: stock,
+        stock,
         price: getDiscountedPrice(discountRate, price),
         image: getThumbnailImage(images),
         isWish: true,
