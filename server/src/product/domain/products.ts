@@ -13,12 +13,12 @@ const START_PAGE = 1;
 const PRODUCT_PER_PAGE = 4;
 
 const ORDER_TYPE = {
-  default: { id: "DESC" },
-  hot: { price: "DESC" },
-  new: { createdAt: "DESC" },
-  discount: { discountRate: "DESC" },
-  priceAsc: { price: "ASC" },
-  priceDesc: { price: "DESC" },
+  default: { "product.id": "DESC" },
+  hot: { orderLength: "DESC" },
+  new: { "product.id": "DESC" },
+  discount: { "product.discountRate": "DESC" },
+  priceAsc: { "product.price": "ASC" },
+  priceDesc: { "product.price": "DESC" },
 };
 
 @Injectable()
@@ -36,13 +36,21 @@ export class Products {
   ) {}
 
   async findProductsByQueries(query: ProductFindQuery): Promise<Product[]> {
-    return this.productRepository.find({
-      relations: ["options", "images", "detailImages", "wishes", "wishes.user"],
-      where: generateWhere(query.category, query.subCategory, query.ids),
-      order: ORDER_TYPE[query.order],
-      skip: ((query.page ?? START_PAGE) - 1) * (query.size ?? PRODUCT_PER_PAGE),
-      take: query.size ?? PRODUCT_PER_PAGE,
-    });
+    return this.productRepository
+      .createQueryBuilder("product")
+      .addSelect("COUNT(orders.id) as orderLength")
+      .leftJoinAndSelect("product.options", "options")
+      .leftJoinAndSelect("product.images", "images")
+      .leftJoinAndSelect("product.detailImages", "detailImages")
+      .leftJoinAndSelect("product.wishes", "wishes")
+      .leftJoinAndSelect("wishes.user", "wishes.user")
+      .leftJoinAndSelect("product.orders", "orders")
+      .where(generateWhere(query.category, query.subCategory, query.ids))
+      .groupBy("product.id")
+      .orderBy(ORDER_TYPE[query.order])
+      .skip(((query.page ?? START_PAGE) - 1) * (query.size ?? PRODUCT_PER_PAGE))
+      .take(query.size ?? PRODUCT_PER_PAGE)
+      .getMany();
   }
 
   async findProductById(id: number): Promise<Product> {
