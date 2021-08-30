@@ -1,3 +1,5 @@
+import { css } from "styled-components";
+
 export interface ReviewType {
   id: number;
   rate: number;
@@ -196,6 +198,9 @@ export enum OrderStatus {
 export const CATEGORY = {
   "문구": {
     code: 100,
+    style: css`
+      justify-content: flex-start;
+    `,
     list: [
       {
         id: 101,
