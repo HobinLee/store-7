@@ -42,9 +42,10 @@ const Wrapper = styled.div`
     ${gap("0")}
   }
   ${media.mobile} {
-    height: 38rem;
+    height: 35rem;
     padding-bottom: 8rem;
     flex-direction: column;
+    bottom: 6rem;
   }
   b {
     ${({ theme }) => theme.font.medium};
