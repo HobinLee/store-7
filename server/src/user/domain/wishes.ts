@@ -23,7 +23,7 @@ export class Wishes {
 
   async createWish(wish: WishRequest) {
     this.productRepository.findOne(wish.productId).then((product) => {
-      product.wishLength++;
+      product.wishCount++;
       this.productRepository.save(product);
     });
     await this.wishRepository.insert({
@@ -34,8 +34,8 @@ export class Wishes {
 
   async deleteWish(wish: WishRequest) {
     this.productRepository.findOne(wish.productId).then((product) => {
-      if (product.wishLength > 0) {
-        product.wishLength++;
+      if (product.wishCount > 0) {
+        product.wishCount++;
       }
       this.productRepository.save(product);
     });

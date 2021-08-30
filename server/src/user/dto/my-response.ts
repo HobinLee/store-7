@@ -44,21 +44,34 @@ export class MyWishResponse {
   originPrice: number;
   discountRate: number;
   isWish: boolean;
-  amount: number;
+  stock: number;
   image: string;
+  createdAt: Date;
+  wishCount: number;
 
   static of(wishes: Wish[]): MyWishResponse[] {
     return wishes.map((wish) => {
-      const { id, name, price, stock, discountRate, images } = wish.product;
+      const {
+        id,
+        name,
+        price,
+        stock,
+        discountRate,
+        images,
+        createdAt,
+        wishCount,
+      } = wish.product;
       return {
         id,
         name,
         originPrice: price,
         discountRate,
-        amount: stock,
+        stock,
         price: getDiscountedPrice(discountRate, price),
         image: getThumbnailImage(images),
         isWish: true,
+        createdAt,
+        wishCount,
       };
     });
   }

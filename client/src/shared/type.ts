@@ -88,6 +88,9 @@ export interface ProductElementType {
   isWish: boolean;
   amount: number;
   image: string;
+  createdAt: Date;
+  wishCount: number;
+  stock: number;
 }
 
 export interface AdminProductType {

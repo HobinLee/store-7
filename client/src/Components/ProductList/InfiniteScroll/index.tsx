@@ -101,12 +101,7 @@ const ProductWrapList = styled.ul`
     box-sizing: border-box;
     flex: 0 0 25%;
   }
-  ${media.mobile} {
-    li {
-      padding: 0.5rem;
-      flex: 0 0 50%;
-    }
-  }
+
   .loading-indicator {
     height: 30rem;
     width: 100%;
@@ -118,6 +113,19 @@ const ProductWrapList = styled.ul`
   }
   .lazy-loading {
     height: 30rem;
+  }
+
+  ${media[768]} {
+    li {
+      flex: 0 0 33.3%;
+    }
+  }
+
+  ${media.mobile} {
+    li {
+      padding: 0.5rem;
+      flex: 0 0 50%;
+    }
   }
 `;
 

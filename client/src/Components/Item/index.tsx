@@ -23,6 +23,9 @@ type ItemType = {
   isWish: boolean;
   amount: number;
   image: string;
+  createdAt: Date;
+  wishCount: number;
+  stock: number;
   refetch?: () => Promise<QueryObserverResult<unknown>>;
 };
 
@@ -34,19 +37,28 @@ const Item = ({
   discountRate,
   isWish,
   image,
+  createdAt,
   refetch,
+  wishCount,
+  stock,
 }: ItemType) => {
   const [isMyWish, setIsMyWish] = useState(isWish);
   const debounceIsMyWish = useDebounce<boolean>(isMyWish, 300);
   const isLoggedin = useRecoilValue(loginState);
-
+  stock;
   const tags = useMemo(() => {
     const tags = [];
     if (discountRate) {
       tags.push("sale");
     }
+    if (createdAt && new Date().getDate() - new Date(createdAt).getDate() < 5) {
+      tags.push("new");
+    }
+    if (wishCount > 5) {
+      tags.push("best");
+    }
     return tags;
-  }, [discountRate]);
+  }, [discountRate, createdAt, wishCount]);
 
   const pathname = location.pathname.split("/")[1];
   const handleClickWish = async (e: Event) => {
@@ -87,6 +99,11 @@ const Item = ({
                 onClick={handleClickWish}
               />
             </WishBox>
+            {stock === 0 && (
+              <div className="thumbnail__sold-out">
+                <span>품절</span>
+              </div>
+            )}
           </div>
           <div className="info">
             <div className="info__name">{name}</div>
@@ -120,6 +137,22 @@ const ItemWrapper = styled.div`
       top: 1rem;
       left: 1rem;
       display: flex;
+    }
+
+    &__sold-out {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      ${({ theme }) => theme.flexCenter}
+      background: rgba(0,0,0,0.7);
+      & > span {
+        color: white;
+        font-size: 6rem;
+        font-weight: bold;
+        font-family: "BMDOHYEON";
+      }
     }
   }
 
@@ -161,6 +194,19 @@ const ItemWrapper = styled.div`
       }
     }
   }
+  ${media.tablet} {
+    .thumbnail {
+      &__tags {
+        flex-direction: column;
+      }
+      &__sold-out {
+        & > span {
+          font-size: 3.5rem;
+        }
+      }
+    }
+  }
+
   ${media.mobile} {
     position: relative;
     box-shadow: 0 0 0.4rem 0.2rem rgba(0, 0, 0, 0.08);
@@ -178,10 +224,14 @@ const ItemWrapper = styled.div`
     }
 
     .thumbnail {
-      position: static;
-      max-width: 50w;
-      max-height: 40vw;
-      overflow: hidden;
+      &__tags {
+        flex-direction: row;
+      }
+      &__sold-out {
+        & > span {
+          font-size: 5rem;
+        }
+      }
     }
   }
 `;
@@ -238,6 +288,21 @@ const Tag = styled.div<{
   box-shadow: 2px 2px 5px #7d8181;
   & + & {
     margin-left: 1rem;
+  }
+
+  ${media.tablet} {
+    ${({ theme }) => theme.font.small}
+    padding: 0.4rem 1rem 0.1rem 1rem;
+    & + & {
+      margin-left: 0;
+      margin-top: 1rem;
+    }
+  }
+  ${media.mobile} {
+    & + & {
+      margin-left: 1rem;
+      margin-top: 0;
+    }
   }
 `;
 

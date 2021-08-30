@@ -57,8 +57,7 @@ export class AuthService {
 
   verifyToken(@Req() request: Request) {
     const token = request.cookies[properties.auth.tokenKey];
-    if (!token)
-      throw new ETException(407, messages.failed.FAIL_GET_ACCESS_TOKEN);
+    if (!token) throw new ETException(407);
 
     return !!this.jwtService.verifyAsync(token);
   }

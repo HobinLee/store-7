@@ -122,7 +122,7 @@ export class MyService {
   async findMyOrders(userId: number) {
     try {
       const orders = await this.orders.findOrdersByUserId(userId);
-      return orders.map(OrderResponse.of);
+      return orders.reverse().map(OrderResponse.of);
     } catch (e) {
       throw new ETException(
         404,

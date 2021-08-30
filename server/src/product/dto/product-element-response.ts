@@ -1,4 +1,3 @@
-import { Wishes } from "@/user/domain/wishes";
 import { Product } from "../entity/product";
 
 export class ProductElementResponse {
@@ -8,8 +7,10 @@ export class ProductElementResponse {
   originPrice: number;
   discountRate: number;
   isWish: boolean;
-  amount: number;
+  stock: number;
   image: string;
+  createdAt: Date;
+  wishCount: number;
 
   constructor(response: ProductElementResponse) {
     this.id = response.id;
@@ -18,8 +19,10 @@ export class ProductElementResponse {
     this.originPrice = response.originPrice;
     this.discountRate = response.discountRate;
     this.isWish = response.isWish;
-    this.amount = response.amount;
+    this.stock = response.stock;
     this.image = response.image;
+    this.createdAt = response.createdAt;
+    this.wishCount = response.wishCount;
   }
 
   static of(product: Product, userId: number): ProductElementResponse {
@@ -27,9 +30,11 @@ export class ProductElementResponse {
       name = product.name,
       originPrice = product.price,
       discountRate = product.discountRate,
-      amount = product.stock,
+      stock = product.stock,
       image = product.getThumbnailImage(),
       price = product.getDiscountedPrice(),
+      createdAt = product.createdAt,
+      wishCount = product.wishCount,
       isWish = userId
         ? product.wishes?.filter((wish) => {
             return wish?.user_id === userId;
@@ -43,8 +48,10 @@ export class ProductElementResponse {
       originPrice,
       discountRate,
       isWish,
-      amount,
+      stock,
       image,
+      createdAt,
+      wishCount,
     });
   }
 }
