@@ -8,6 +8,7 @@ interface OrdersContainer {
   orders: MyOrderType[];
   type: OrderStatus;
 }
+
 const OrdersContainer = ({ orders, type }: OrdersContainer) => {
   return (
     <Container>

@@ -67,6 +67,7 @@ export default {
     FAILED_TO_UPDATE_ORDER: "주문 수정 실패",
     FAILED_TO_UPDATE_ORDER_NUM: "주문번호 수정 실패",
     FAILED_TO_UPDATE_ORDER_STATUS: "주문 상태 수정 실패",
+    FAILED_TO_DELETE_ORDER: "주문 삭제 실패",
 
     // review
     FAILED_TO_CREATE_REVIEW: "리뷰 생성 실패",
