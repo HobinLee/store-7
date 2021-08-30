@@ -14,7 +14,7 @@ const PRODUCT_PER_PAGE = 4;
 
 const ORDER_TYPE = {
   default: { "product.id": "DESC" },
-  hot: { orderLength: "DESC" },
+  hot: { wishLength: "DESC" },
   new: { "product.id": "DESC" },
   discount: { "product.discountRate": "DESC" },
   priceAsc: { "product.price": "ASC" },
@@ -36,26 +36,28 @@ export class Products {
   ) {}
 
   async findProductsByQueries(query: ProductFindQuery): Promise<Product[]> {
-    return this.productRepository
-      .createQueryBuilder("product")
-      .addSelect("COUNT(orders.id) as orderLength")
-      .leftJoinAndSelect("product.options", "options")
-      .leftJoinAndSelect("product.images", "images")
-      .leftJoinAndSelect("product.detailImages", "detailImages")
-      .leftJoinAndSelect("product.wishes", "wishes")
-      .leftJoinAndSelect("wishes.user", "wishes.user")
-      .leftJoinAndSelect("product.orders", "orders")
-      .where(generateWhere(query.category, query.subCategory, query.ids))
-      .groupBy("product.id")
-      .orderBy(ORDER_TYPE[query.order])
-      .skip(((query.page ?? START_PAGE) - 1) * (query.size ?? PRODUCT_PER_PAGE))
-      .take(query.size ?? PRODUCT_PER_PAGE)
-      .getMany();
+    return (
+      this.productRepository
+        .createQueryBuilder("product")
+        .addSelect(
+          "(SELECT COUNT(*) FROM wish w where w.product_id=product.id) as wishLength"
+        )
+        .leftJoinAndSelect("product.wishes", "wishes")
+        .leftJoinAndSelect("product.images", "images")
+        .where(generateWhere(query.category, query.subCategory, query.ids))
+        .skip(
+          ((query.page ?? START_PAGE) - 1) * (query.size ?? PRODUCT_PER_PAGE)
+        )
+        .take(query.size ?? PRODUCT_PER_PAGE)
+        // .groupBy("product.id")
+        .orderBy(ORDER_TYPE[query.order])
+        .getMany()
+    );
   }
 
   async findProductById(id: number): Promise<Product> {
     return this.productRepository.findOne(id, {
-      relations: ["options", "images", "detailImages", "wishes", "wishes.user"],
+      relations: ["options", "images", "detailImages", "wishes"],
     });
   }
 
