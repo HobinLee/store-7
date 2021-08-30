@@ -12,6 +12,7 @@ import useDidMountEffect from "@/hooks/useDidMountEffect";
 import { useRecoilValue } from "recoil";
 import { loginState } from "@/store/state";
 import { QueryObserverResult } from "react-query";
+import { useEffect } from "react";
 
 type ItemType = {
   id: number;
@@ -55,6 +56,10 @@ const Item = ({
     }
     setIsMyWish((isMyWish) => !isMyWish);
   };
+
+  useEffect(() => {
+    setIsMyWish(isWish);
+  }, [isWish]);
 
   useDidMountEffect(async () => {
     debounceIsMyWish ? await postWishProduct(id) : await deleteWishProduct(id);
