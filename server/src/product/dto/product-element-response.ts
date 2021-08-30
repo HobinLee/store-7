@@ -1,3 +1,4 @@
+import { Wishes } from "@/user/domain/wishes";
 import { Product } from "../entity/product";
 
 export class ProductElementResponse {
@@ -30,8 +31,9 @@ export class ProductElementResponse {
       image = product.getThumbnailImage(),
       price = product.getDiscountedPrice(),
       isWish = userId
-        ? product.wishes?.filter((wish) => wish?.user?.id === userId).length !==
-          0
+        ? product.wishes?.filter((wish) => {
+            return wish?.user_id === userId;
+          }).length !== 0
         : false;
 
     return new ProductElementResponse({
