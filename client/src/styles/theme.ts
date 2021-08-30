@@ -51,7 +51,7 @@ const tags = {
     color: white;
   `,
   sale: css`
-    background: #e63b3b;
+    background: #f45452;
     color: white;
   `,
   green: css`

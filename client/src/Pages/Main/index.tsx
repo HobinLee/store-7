@@ -70,6 +70,9 @@ const Wrapper = styled(PageWrapper)`
       padding: 0;
     }
   }
+  ${media.mobile} {
+    padding-top: 1.5rem;
+  }
 `;
 
 export default MainPage;

@@ -207,7 +207,7 @@ const WishBox = styled.div`
       &:hover {
         opacity: 1;
         fill: none;
-        stroke: #2ac1bc;
+        stroke: ${({ theme }) => theme.color.primary3};
         stroke-width: 3rem;
       }
     }
@@ -218,7 +218,7 @@ const WishBox = styled.div`
       width: 2.4rem;
       height: 2.4rem;
       fill: none;
-      stroke: #2ac1bc;
+      stroke: ${({ theme }) => theme.color.primary1};
       stroke-width: 3rem;
     }
   }

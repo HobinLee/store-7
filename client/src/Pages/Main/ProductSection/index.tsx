@@ -30,19 +30,6 @@ const ProductSection = ({ title, type }: ProductSectionProps) => {
   );
 };
 
-const SectionWrapper = styled.div<{ title: string }>`
-  .title {
-    position: relative;
-    &::after {
-      content: "${({ title }) => `${title}`}";
-      position: absolute;
-      white-space: nowrap;
-      top: 0.2rem;
-      left: 0.2rem;
-      color: ${({ theme }) => theme.color.primary1};
-      z-index: -1;
-    }
-  }
-`;
+const SectionWrapper = styled.div<{ title: string }>``;
 
 export default ProductSection;
