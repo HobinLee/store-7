@@ -70,7 +70,7 @@ const UserInfo = () => {
                     message={VALIDATION_ERR_MSG.INVALID_NAME}
                   />
                 </InputSection>
-                <InputSection title="이메일">
+                <InputSection title="이메일 또는 고유ID">
                   <input value={myInfo?.email} disabled />
                 </InputSection>
                 <InputSection title="휴대폰 번호">

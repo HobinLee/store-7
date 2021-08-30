@@ -68,6 +68,7 @@ const AlertWrapper = styled.div`
   position: fixed;
   width: 100%;
   bottom: 5vh;
+  pointer-events: none;
   left: 0;
   ${media.mobile} {
     bottom: 9rem;
