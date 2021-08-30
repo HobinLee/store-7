@@ -105,7 +105,7 @@ export class ProductService {
 
   async deleteProduct(id: number) {
     try {
-      //this.serachService.deleteProduct(id);
+      this.serachService.deleteProduct(id);
       await this.products.deleteProduct(id);
     } catch (e) {
       throw new Error(messages.failed.FAILED_TO_DELETE_PRODUCT);
