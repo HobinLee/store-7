@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Footer from "@/Components/Footer";
-import { PageWrapper, Contents } from "@/shared/styled";
+import { Contents, PageWrapper } from "@/shared/styled";
 import Header from "@/Components/Header";
 import Nav from "./Nav";
 import ContentArea from "./ContentArea";
@@ -13,6 +13,7 @@ import { media } from "@/styles/theme";
 import { loginState } from "@/store/state";
 import { moveTo } from "@/Router";
 import { alert } from "@/Components/Common/Alert";
+import contents from "./ContentArea/contents";
 
 const MyPage = () => {
   const { location } = useRecoilValue(locationState);
@@ -31,7 +32,7 @@ const MyPage = () => {
 
   useEffect(() => {
     const sub = location.split("mypage/")[1];
-    setCurrent(sub || "order");
+    setCurrent(contents[sub] ? sub : "order");
   }, [location]);
 
   return (
