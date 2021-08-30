@@ -49,12 +49,12 @@ const DetailPage = () => {
 
   const [isMyWish, setIsMyWish] = useState(product?.isWish);
   const debounceIsMyWish = useDebounce<boolean>(isMyWish, 300);
-  const isLogin = useRecoilValue(loginState);
+  const isLoggedin = useRecoilValue(loginState);
   const numValue = useInput("1");
 
   const handleClickWish = async (e: Event) => {
     e.stopPropagation();
-    if (!isLogin) {
+    if (!isLoggedin) {
       return;
     }
     setIsMyWish((isMyWish) => !isMyWish);

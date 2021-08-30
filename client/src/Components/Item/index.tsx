@@ -37,7 +37,7 @@ const Item = ({
 }: ItemType) => {
   const [isMyWish, setIsMyWish] = useState(isWish);
   const debounceIsMyWish = useDebounce<boolean>(isMyWish, 300);
-  const isLogin = useRecoilValue(loginState);
+  const isLoggedin = useRecoilValue(loginState);
 
   const tags = useMemo(() => {
     const tags = [];
@@ -50,7 +50,7 @@ const Item = ({
   const pathname = location.pathname.split("/")[1];
   const handleClickWish = async (e: Event) => {
     e.stopPropagation();
-    if (!isLogin) {
+    if (!isLoggedin) {
       return;
     }
     setIsMyWish((isMyWish) => !isMyWish);

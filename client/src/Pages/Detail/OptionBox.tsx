@@ -31,7 +31,7 @@ const OptionBox = ({
   const [isCartAlertShown, setIsCartAlertShown] = useState(false);
 
   const productId = product.id;
-  const isLogin = useRecoilValue(loginState);
+  const isLoggedin = useRecoilValue(loginState);
 
   const RenderNumInput = useCallback(() => {
     return (
@@ -51,7 +51,7 @@ const OptionBox = ({
   // 장바구니
   const handlePostCart = async () => {
     try {
-      if (isLogin && status !== "loading") {
+      if (isLoggedin && status !== "loading") {
         await postCart({
           data: {
             product: { id: productId },
