@@ -7,6 +7,7 @@ import {
   Post,
   Delete,
   All,
+  HttpStatus,
 } from "@nestjs/common";
 import {
   MyInfoResponse,
@@ -30,7 +31,10 @@ export class MyController {
   @All()
   async isUser(@Body("userId") userId: number) {
     if (!userId) {
-      throw new ETException(401, messages.failed.NEED_LOGIN);
+      throw new ETException(
+        HttpStatus.UNAUTHORIZED,
+        messages.failed.NEED_LOGIN
+      );
     }
   }
 
