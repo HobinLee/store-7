@@ -21,9 +21,9 @@ const ProductList = ({
         <NoData />
       ))}
     {status === "loading" && (
-      <li className="loading-indicator">
+      <div className="loading-indicator">
         <Loading />
-      </li>
+      </div>
     )}
   </ProductWrapList>
 );
@@ -33,18 +33,17 @@ const ProductWrapList = styled.ul`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  
   li {
     padding: 1rem;
     box-sizing: border-box;
     flex: 0 0 25%;
   }
+
   .loading-indicator {
     height: 30rem;
     width: 100%;
     ${({ theme }) => theme.flexCenter}
-  }
-
-  ${media.tablet} {
   }
 
   ${media[768]} {
@@ -56,12 +55,13 @@ const ProductWrapList = styled.ul`
       display: none;
     }
   }
-  
+
   ${media.custom(600)} {
     li {
       padding: 0.5rem;
       flex: 0 0 50%;
     }
+
     li:nth-last-child(1) {
       display: block;
     }
