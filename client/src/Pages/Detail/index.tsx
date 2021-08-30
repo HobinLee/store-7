@@ -46,8 +46,7 @@ const DetailPage = () => {
     error,
     refetch,
   } = useProduct(parseInt(productId));
-  
-  const [isClicked, setIsClicked] = useState<boolean>(false);
+
   const [isMyWish, setIsMyWish] = useState(product?.isWish);
   const debounceIsMyWish = useDebounce<boolean>(isMyWish, 300);
   const isLogin = useRecoilValue(loginState);
@@ -58,7 +57,6 @@ const DetailPage = () => {
     if (!isLogin) {
       return;
     }
-    setIsClicked(true);
     setIsMyWish((isMyWish) => !isMyWish);
   };
 
@@ -86,11 +84,11 @@ const DetailPage = () => {
   const [isZoomOpened, setIsZoomOpened] = useState(false);
 
   useDidMountEffect(async () => {
-    if (isClicked) {
+    //like를 이미 했는데, undefined -> like처리가 됨
+    if (debounceIsMyWish !== product.isWish) {
       debounceIsMyWish
         ? await postWishProduct(product.id)
         : await deleteWishProduct(product.id);
-      setIsClicked(false);
     }
   }, [debounceIsMyWish]);
 
