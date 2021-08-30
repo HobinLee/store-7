@@ -43,7 +43,7 @@ const Item = ({
   const [isMyWish, setIsMyWish] = useState(isWish);
   const debounceIsMyWish = useDebounce<boolean>(isMyWish, 300);
   const isLoggedin = useRecoilValue(loginState);
-  console.log("wl :", wishLength);
+
   const tags = useMemo(() => {
     const tags = [];
     if (discountRate) {
@@ -171,6 +171,14 @@ const ItemWrapper = styled.div`
       }
     }
   }
+  ${media.tablet} {
+    .thumbnail {
+      &__tags {
+        flex-direction: column;
+      }
+    }
+  }
+
   ${media.mobile} {
     position: relative;
     box-shadow: 0 0 0.4rem 0.2rem rgba(0, 0, 0, 0.08);
@@ -192,6 +200,9 @@ const ItemWrapper = styled.div`
       max-width: 50w;
       max-height: 40vw;
       overflow: hidden;
+      &__tags {
+        flex-direction: row;
+      }
     }
   }
 `;
@@ -248,6 +259,21 @@ const Tag = styled.div<{
   box-shadow: 2px 2px 5px #7d8181;
   & + & {
     margin-left: 1rem;
+  }
+
+  ${media.tablet} {
+    ${({ theme }) => theme.font.small}
+    padding: 0.4rem 1rem 0.1rem 1rem;
+    & + & {
+      margin-left: 0;
+      margin-top: 1rem;
+    }
+  }
+  ${media.mobile} {
+    & + & {
+      margin-left: 1rem;
+      margin-top: 0;
+    }
   }
 `;
 
