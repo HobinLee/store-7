@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { FlattenSimpleInterpolation } from "styled-components";
 import { getSiblingIndex } from "@/utils/node";
 import { Link } from "@/Router";
 import { categories } from "@/shared/dummy";
@@ -15,8 +15,6 @@ const Menu = () => {
   const selected = useRecoilValue(selectedCategoryState);
   const [hovered, setHoveredCategoryState] =
     useRecoilState(hoveredCategoryState);
-
-  const [padding, setPadding] = useRecoilState(categoryPaddingState);
 
   const checkChangeCategory = ({
     target,
@@ -37,14 +35,6 @@ const Menu = () => {
     return true;
   };
 
-  const getPadding = ($li: HTMLElement) => {
-    const left: number = $li.offsetLeft - $li.parentElement.offsetLeft;
-    const width: number = $li.offsetWidth;
-    const barWidth: number = $li.parentElement.offsetWidth;
-
-    setPadding(barWidth - 2 * left - width);
-  };
-
   const setHoveredCategoryId = (id) => {
     setHoveredCategoryState({
       ...hovered,
@@ -61,7 +51,6 @@ const Menu = () => {
 
     if (id !== hovered.categoryId) {
       setHoveredCategoryId(id);
-      getPadding($li);
     }
   };
 
@@ -84,26 +73,13 @@ const Menu = () => {
     </MainCategoryWrapper>
   );
 
-  const getWidth = (list: CategoryType[]): number => {
-    const CHAR_WIDTH = 10; //한 글자당 가로 크기: 10px (대충)
-    const PADDING = 60; //한 버튼당 가로 패딩이: 6rem
-
-    return (
-      list?.reduce(
-        (prev, curr) => prev + curr.name.length * CHAR_WIDTH + PADDING,
-        0
-      ) ?? 0
-    );
-  };
-
   const checkHideSubCategory =
     !categories[highlighted.categoryId / 100]?.subCategories.length &&
     !categories[selected.categoryId / 100]?.subCategories.length;
 
   const generateSubCategory = (
     <SubCategoryWrapper
-      padding={padding}
-      width={getWidth(categories[highlighted.categoryId / 100]?.subCategories)}
+      styleCss={categories[highlighted.categoryId / 100]?.style}
     >
       {categories[highlighted.categoryId / 100]?.subCategories?.map(
         (subCategory: CategoryType) => (
@@ -197,40 +173,15 @@ const MainCategoryWrapper = styled.ul`
   }
 `;
 
-/* Sub 카테고리가 메인 카테고리 가운데 오도록 padding 값을 구하는 함수!
- * 하지만 만약 Sub카테고리의 길이가 길어서 가운데 온다면 전체 영역을 벗어 나기 때문에
- * padding을 적용하지 않고 flex-start, flex-end로 제일 끝에 오도록 반영
- */
-const setPadding = (padding: number, width: number): string => {
-  const PADDING = 100; //100px;
-
-  const barWidth = window.innerWidth - PADDING;
-  const totalWidth = Math.abs(padding) + width;
-
-  // 가운데 위치해도 괜찮은 경우
-  if (totalWidth < barWidth) {
-    return padding > 0
-      ? `padding-right:${padding}px;`
-      : `padding-left:${Math.abs(padding)}px;`;
-  } else {
-    //길이가 길어서 가운데 위치 한다면 가릴 경우
-    return padding > 0
-      ? `justify-content: flex-start;`
-      : `justify-content: flex-end;`;
-  }
-};
-
-const SubCategoryWrapper = styled.ul<{
-  padding: number;
-  width: number;
-}>`
+const SubCategoryWrapper = styled.ul<{ styleCss: FlattenSimpleInterpolation }>`
   box-sizing: border-box;
   display: flex;
   justify-content: center;
   flex-direction: row;
   height: 3.6rem;
 
-  ${({ padding, width }) => setPadding(padding, width)}
+  ${({ styleCss }) => styleCss}
+
   ${media.mobile} {
     width: 100%;
     padding: 0;
