@@ -69,13 +69,14 @@ const InfiniteScroll = ({ productAPI, order }: ProductListProps) => {
 
   return (
     <ProductWrapList>
-      {products?.length > 0 ? (
-        products.map((product: ProductElementType) => (
-          <Item {...product} key={product.id} />
-        ))
-      ) : (
-        <NoData />
-      )}
+      {status === "success" &&
+        (products?.length > 0 ? (
+          products.map((product: ProductElementType) => (
+            <Item {...product} key={product.id} />
+          ))
+        ) : (
+          <NoData />
+        ))}
       {status === "loading" && (
         <div className="loading-indicator">
           <Loading />
