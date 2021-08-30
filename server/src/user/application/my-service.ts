@@ -133,7 +133,6 @@ export class MyService {
 
   async deleteOrder(id: number) {
     try {
-      console.log("-.-----------------.-", id);
       return await this.orders.deleteOrder(id);
     } catch (e) {
       throw new ETException(404, messages.failed.FAILED_TO_DELETE_ORDER);
