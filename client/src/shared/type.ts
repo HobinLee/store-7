@@ -89,6 +89,7 @@ export interface ProductElementType {
   amount: number;
   image: string;
   createdAt: Date;
+  wishLength: number;
 }
 
 export interface AdminProductType {
