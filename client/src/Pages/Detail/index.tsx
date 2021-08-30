@@ -2,7 +2,7 @@ import Header from "@/Components/Header";
 import OptionBox from "./OptionBox";
 import useInput from "@/hooks/useInput";
 import { PageWrapper, Contents } from "@/shared/styled";
-import { useState } from "react";
+import { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import Review from "./Review";
 import Question from "./Question";
@@ -14,15 +14,13 @@ import { gap, media } from "@/styles/theme";
 import { convertToKRW } from "@/utils/util";
 import { useProduct } from "@/api/products";
 import properties from "@/config/properties";
-import { useCallback } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { loginState } from "@/store/state";
 import { deleteWishProduct, postWishProduct } from "@/api/my";
 import { useDebounce, useDidMountEffect } from "@/hooks";
 import { selectedCategoryState } from "@/store/category";
 import { categories } from "@/shared/dummy";
 import { Image } from "@/Components/Common";
-import { useEffect } from "react";
 
 const topHeight = innerWidth > 500 ? 700 : 400;
 
@@ -45,7 +43,6 @@ const DetailPage = () => {
     error,
     refetch,
   } = useProduct(parseInt(productId));
-
   const [isMyWish, setIsMyWish] = useState(product?.isWish);
   const debounceIsMyWish = useDebounce<boolean>(isMyWish, 300);
   const isLoggedin = useRecoilValue(loginState);

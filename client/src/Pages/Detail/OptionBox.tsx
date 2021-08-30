@@ -168,10 +168,18 @@ const OptionBox = ({
 
         <div className="buttons">
           <div>{renderWishIcon()}</div>
-          <Button onClick={handlePostCart}>장바구니</Button>
-          <Button onClick={handleBuyImmediately} primary>
-            바로 구매
-          </Button>
+          {product.stock ? (
+            <div className="buttons__be-stock">
+              <Button onClick={handlePostCart}>장바구니</Button>
+              <Button onClick={handleBuyImmediately} primary>
+                바로 구매
+              </Button>
+            </div>
+          ) : (
+            <Button disabled className="buttons__sold-out">
+              품절된 상품입니다.
+            </Button>
+          )}
         </div>
       </Wrapper>
       {isCartAlertShown && (
@@ -270,6 +278,15 @@ const Wrapper = styled.div`
       stroke: ${({ theme }) => theme.color.primary1};
       fill: transparent;
       stroke-width: 2rem;
+    }
+    &__be-stock {
+      display: flex;
+      justify-content: flex-end;
+      ${gap("1rem")}
+    }
+    &__sold-out {
+      background: ${({ theme }) => theme.color.light_grey1};
+      height: 100%;
     }
   }
 `;
