@@ -33,7 +33,7 @@ export const Router = ({ children }): ReactElement => {
     const params = decodeParams();
 
     setSelectedCategoryState({
-      categoryId: params.category ? parseInt(params.category) : 0,
+      categoryId: params.category ? parseInt(params.category) : -1,
       subCategoryId: params.subCategory && parseInt(params.subCategory),
     });
   };

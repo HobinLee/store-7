@@ -12,6 +12,7 @@ import {
   CategoryBanner8,
   CategoryBanner9,
 } from "@/assets";
+import { css } from "styled-components";
 
 export const IMAGE_DUMMY =
   "https://store.baemin.com/data/board/upload/goodsreview/eea0b21ff31b55a0";
@@ -21,7 +22,9 @@ export const categories: MainCategoryType[] = [
     id: 0,
     name: "전체",
     brief: "",
-    fontColor: "#333",
+    style: css`
+      color: #333;
+    `,
     backgroundImg: CategoryBanner0,
     subCategories: [],
   },
@@ -30,6 +33,9 @@ export const categories: MainCategoryType[] = [
     name: "문구",
     brief: "세상 하나뿐인 필통을 위해",
     fontColor: "#333",
+    style: css`
+      justify-content: flex-start;
+    `,
     backgroundImg: CategoryBanner1,
     subCategories: [
       {
@@ -51,6 +57,9 @@ export const categories: MainCategoryType[] = [
     name: "리빙",
     brief: "날 안 사고 살 수 있겠어?",
     fontColor: "#333",
+    style: css`
+      justify-content: flex-start;
+    `,
     backgroundImg: CategoryBanner2,
     subCategories: [
       {
@@ -75,6 +84,10 @@ export const categories: MainCategoryType[] = [
     id: 300,
     name: "책",
     brief: "쌓인만큼 교양이 쌓인다",
+    style: css`
+      padding-right: 550px;
+      justify-content: flex-center;
+    `,
     backgroundImg: CategoryBanner3,
     subCategories: [
       {
@@ -91,7 +104,10 @@ export const categories: MainCategoryType[] = [
     id: 400,
     name: "배민그린",
     brief: "내가 그린 지구 그림",
-    fontColor: "#32BF9A",
+    fontColor: "#32bf9a",
+    style: css`
+      padding-right: 338px;
+    `,
     backgroundImg: CategoryBanner4,
     subCategories: [
       {
@@ -116,8 +132,11 @@ export const categories: MainCategoryType[] = [
     id: 500,
     name: "ㅋㅋ에디션",
     brief: "즐겁게 살자구ㅋㅋ",
-    fontColor: "#555",
     font: "BMKIRANGHAERANG",
+    fontColor: "#555",
+    style: css`
+      padding-right: 108px;
+    `,
     backgroundImg: CategoryBanner5,
     subCategories: [
       {
@@ -148,6 +167,9 @@ export const categories: MainCategoryType[] = [
     brief: "여기는 영원히 아날로그야",
     font: "BMEULJIRO",
     fontColor: "#333",
+    style: css`
+      padding-left: 180px;
+    `,
     backgroundImg: CategoryBanner6,
     subCategories: [
       {
@@ -173,6 +195,9 @@ export const categories: MainCategoryType[] = [
     name: "배달이 친구들",
     brief: "만나서 반가워",
     fontColor: "#32BF9A",
+    style: css`
+      padding-left: 460px;
+    `,
     backgroundImg: CategoryBanner7,
     subCategories: [
       {

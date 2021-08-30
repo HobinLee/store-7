@@ -8,7 +8,6 @@ import { moveTo } from "@/Router";
 import { categories } from "@/shared/dummy";
 import { MainCategoryType } from "@/Pages/Category";
 import { Delete, Arrow } from "@/assets";
-import { media } from "@/styles/theme";
 
 const LS_SEARCH = "search";
 
@@ -131,6 +130,7 @@ const SearchWrapper = styled.form`
     cursor: pointer;
 
     & > div {
+      width: calc(100% - 1rem);
       display: none;
       box-shadow: none;
       border: 1px solid ${({ theme }) => theme.color.primary1};
@@ -190,8 +190,8 @@ const SearchBox = styled.div`
   ${({ theme }) => theme.font.small}
   position: absolute;
   box-sizing: border-box;
-  width: 34rem;
   padding: 1rem;
+  max-width: calc(100% - 1rem);
   border: 1px solid ${({ theme }) => theme.color.light_grey2};
   background: ${({ theme }) => theme.color.white};
   .search-list__title {

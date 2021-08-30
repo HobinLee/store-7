@@ -3,24 +3,23 @@ import { media } from "@/styles/theme";
 import { useState } from "react";
 import { useEffect } from "react";
 import styled, { css } from "styled-components";
-import Image from "@/Components/Common/Image";
-import { CategoryParamType, CategoryType, MainCategoryType } from "../";
+import { CategoryType, MainCategoryType } from "../";
 import { useRecoilValue } from "recoil";
 import { selectedCategoryState } from "@/store/category";
+import { moveTo } from "@/Router";
 
 interface CategoryInfo extends MainCategoryType {
   subCategoryName?: string;
 }
+
+const DEFAULT_CATEGORY_PATH = "/category?category=0";
 
 export const currentCategoryInfo = ({
   categoryId,
   subCategoryId,
 }): CategoryInfo => {
   const category: MainCategoryType = categories.find(
-    (category: MainCategoryType) => {
-      const result = category.id === categoryId;
-      return result;
-    }
+    (category: MainCategoryType) => category.id === categoryId
   );
 
   const subCategoryName = category?.subCategories.find(
@@ -37,7 +36,12 @@ const CategoryBanner = () => {
   const category = useRecoilValue(selectedCategoryState);
   const [info, setInfo] = useState(currentCategoryInfo(category));
   useEffect(() => {
-    setInfo(currentCategoryInfo(category));
+    const currentCategory = currentCategoryInfo(category);
+    if (currentCategory.name) {
+      setInfo(currentCategory);
+    } else {
+      moveTo(DEFAULT_CATEGORY_PATH);
+    }
   }, [category]);
 
   return (

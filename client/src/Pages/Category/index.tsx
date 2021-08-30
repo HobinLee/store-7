@@ -3,9 +3,9 @@ import Filter, { filters, FilterType } from "../../Components/Filter";
 import { Arrow } from "@/assets";
 import Header from "@/Components/Header";
 import { PageWrapper } from "@/shared/styled";
-import styled from "styled-components";
+import styled, { FlattenSimpleInterpolation } from "styled-components";
 import Footer from "@/Components/Footer";
-import { getProducts, useProducts } from "@/api/products";
+import { getProducts } from "@/api/products";
 import InfiniteScroll from "@/Components/ProductList/InfiniteScroll";
 import { media } from "@/styles/theme";
 import { useState } from "react";
@@ -21,6 +21,7 @@ export interface MainCategoryType extends CategoryType {
   fontColor?: string;
   font?: string;
   subCategories?: CategoryType[];
+  style?: FlattenSimpleInterpolation;
 }
 
 export type CategoryParamType = {
