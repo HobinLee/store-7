@@ -8,7 +8,7 @@
   <img src='./client/src/assets/welcome/welcome.gif' width='500'/>
 </div>
 
-## Tech Stack
+## `Tech Stack`
 
 ### Front
 
@@ -29,11 +29,110 @@
 
 <br/>
 
-## Infra Architecture
+## `Infra Architecture`
 
 ![IMG_0185](https://user-images.githubusercontent.com/50590192/131365745-6201da03-ffb2-4537-98b4-ddf06c920bd0.PNG)
 
 <br/>
+
+
+## `Install & Execute`
+
+### client/env/.env
+- dev용은 client/env/dev.env
+```
+BASE_URL = api endpoint
+IMG_URL = image api endpoint
+DEMO_EMAIL = test@test.test
+DEMO_PW = test@test.test
+```
+### server/.env
+```
+MYSQL_HOST = db host
+MYSQL_PASSWORD = db pw
+MYSQL_DATABASE = db name
+SERVER_PORT = server psort
+MYSQL_PORT = db port
+MYSQL_USERNAME = db username
+
+ELASTIC_NODE = elastic endpoint
+ELASTIC_USERNAME = elastic username
+ELASTIC_PASSWORD = elastic pw
+
+S3_ACCESS_KEY = s3 access key
+S3_SECRET_KEY = s3 secret key
+S3_REGION = s3 region
+S3_BUCKET = s3 bucket
+
+KAKAO_KEY = kakaypay api key
+JWT_SECRET = jwt secret
+
+GITHUB_REDIRECT_URI = github oauth redirect uri
+GITHUB_CLIENT_SECRET = github oauth client secret
+GITHUB_CLIENT_ID = github oauth client id
+
+GOOGLE_REDIRECT_URI = google oauth redirect uri
+GOOGLE_CLIENT_SECRET = google oauth client secret
+GOOGLE_CLIENT_ID = google oauth client id
+
+CLIENT = client dev origin
+```
+
+<br/>
+
+## `DEV mode Scripts`
+
+### server
+
+`npm i` 이후 `npm run start:dev`
+
+### client
+
+`yarn` 이후 `yarn dev`
+
+<br/>
+
+## `Structure`
+
+```
+client
+├── __mocks__                       # jest mock
+├── config                          # webpack config
+└── src
+    ├── api                         # api 관련 함수 및 훅
+    ├── assets                      # resoucres
+    │   └── Components
+    │       └── ${name}
+    │            ├── index.tsx
+    │            └── name.test.tsx  # test code    
+    │            
+    └── config                        
+    │   └── properties.ts           # docker용 환경변수
+    ├── hooks                       # custom hooks
+    ├── Pages                       # 페이지
+    │   └── ${name}       
+    │        ├── index.tsx
+    │        ├── name.test.tsx
+    │        └── ${name}            # 하위 컴포넌트
+    │             ├── index.tsx
+    │             └── name.test.tsx
+    ├── shared                      # 공용 dummy, styled, type
+    ├── store                       # recoil atom
+    ├── styles                      # globall-style, theme
+    └── utils                       # 유틸 함수들
+
+server
+├── src
+│   └── ${domain}
+│       ├── application             # service
+│       ├── domain                  
+│       ├── dto                     
+│       ├── entity
+│       ├── infrastructure          # 인증, 사진 업로드
+│       └── presentation            # congtroller
+└── test                            # test code
+```
+
 
 ## Contributors
 
