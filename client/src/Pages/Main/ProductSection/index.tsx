@@ -5,7 +5,6 @@ import { useProducts } from "@/api/products";
 import { useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { loginState } from "@/store/state";
-import { useCallback } from "react";
 
 export interface ProductSectionProps extends SectionType {}
 
