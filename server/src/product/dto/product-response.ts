@@ -5,8 +5,9 @@ export class ProductResponse {
   id: number;
   name: string;
   price: number;
-  deliveryCost: number;
+  originPrice: number;
   discountRate: number;
+  deliveryCost: number;
   stock: number;
   category: string;
   subCategory: string;
@@ -19,6 +20,7 @@ export class ProductResponse {
   static of(product: Product, userId: number): ProductResponse {
     const id = product.id,
       name = product.name,
+      originPrice = product.price,
       price = product.getDiscountedPrice(),
       deliveryCost = product.deliveryCost,
       discountRate = product.discountRate,
@@ -43,6 +45,7 @@ export class ProductResponse {
     return {
       id,
       name,
+      originPrice,
       price,
       deliveryCost,
       discountRate,

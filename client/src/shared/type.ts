@@ -110,6 +110,7 @@ export interface ProductType {
   id: number;
   name: string;
   price: number;
+  originPrice: number;
   deliveryCost: number;
   discountRate: number;
   stock: number;

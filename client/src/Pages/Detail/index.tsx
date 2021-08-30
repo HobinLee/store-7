@@ -141,6 +141,16 @@ const DetailPage = () => {
                       <div className="list__item--title">판매가격</div>
                       <div className="list__item--content price">
                         {convertToKRW(product.price)}
+                        {product.discountRate !== 0 && (
+                          <div className="list__item--sale">
+                            <div className="before-price">
+                              {convertToKRW(product.originPrice)}
+                            </div>
+                            <div className="discount-rate">
+                              {product.discountRate}%
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -285,6 +295,23 @@ const Info = styled.div`
         margin-left: 3rem;
         &.price {
           ${({ theme }) => theme.font.large}
+          display: flex;
+        }
+      }
+      &--sale {
+        display: flex;
+        align-items: flex-end;
+        margin-left: 0.5rem;
+
+        .before-price {
+          ${({ theme }) => theme.font.medium};
+          text-decoration: line-through;
+        }
+        .discount-rate {
+          color: ${({ theme }) => theme.color.red};
+          ${({ theme }) => theme.font.large};
+          font-weight: 700;
+          margin-left: 0.5rem;
         }
       }
     }
