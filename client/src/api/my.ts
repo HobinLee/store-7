@@ -39,6 +39,8 @@ const getMyOrders = (): Promise<MyOrderType[]> => GET(`/my/orders`);
 export const useMyOrders = () =>
   useQuery(["filteredOrders"], () => getMyOrders());
 
+export const deleteOrder = ({ id }) => DELETE(`/my/orders/${id}`);
+
 // GET /my/wishes 내 찜목록
 const getMyWishes = () => GET("/my/wishes");
 export const useMyWishes = () => useQuery(["wishes"], () => getMyWishes());

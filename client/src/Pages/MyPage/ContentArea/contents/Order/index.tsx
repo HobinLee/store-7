@@ -8,7 +8,7 @@ import MobileOrderContainer from "./mobile/MobileOrderContainer";
 import { media } from "@/styles/theme";
 
 const Order = () => {
-  const { status: ordersStatus, data: orders } = useMyOrders();
+  const { status: ordersStatus, data: orders, refetch } = useMyOrders();
   const { status: myInfoStatus, data: myInfo } = useMyInfo();
   const { prepare, delivered, arrival } = classifyOrders(orders);
 

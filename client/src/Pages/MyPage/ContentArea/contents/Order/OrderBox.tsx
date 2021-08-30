@@ -7,22 +7,23 @@ import { useState } from "react";
 import styled, { css } from "styled-components";
 import { Back } from "@/assets";
 import { gap } from "@/styles/theme";
+import { deleteOrder, useMyOrders } from "@/api/my";
 
 const OrderBox = ({
   id,
   productId,
   reviewId,
   createdAt,
-  productOptionId,
   amount,
   price,
-  destination,
-  addressee,
   image,
   type,
   productName,
 }: MyOrderType & { type: string }) => {
   const [isModalOpened, setIsModalOpened] = useState(false);
+
+  const { refetch } = useMyOrders();
+
   const handleModalOpen = (val: boolean, justClose = false) => {
     if (justClose) {
       setIsModalOpened(false);
@@ -34,6 +35,14 @@ const OrderBox = ({
       );
       if (submit) setIsModalOpened(val);
     } else setIsModalOpened(val);
+  };
+
+  const handleCancelOrder = async () => {
+    const confirm = window.confirm("주문을 취소하시겠습니까?");
+    if (confirm) {
+      await deleteOrder({ id });
+      refetch();
+    }
   };
   return (
     <Container>
@@ -68,14 +77,21 @@ const OrderBox = ({
         (reviewId ? (
           <div className="review-badge">리뷰완료</div>
         ) : (
-          <ReviewTag
+          <TagButton
             isReviewed={reviewId !== 0}
             onClick={() => handleModalOpen(true)}
+            color="primary1"
           >
             <div>리뷰쓰기</div>
             <Back className="next-btn" />
-          </ReviewTag>
+          </TagButton>
         ))}
+      {type === OrderStatus.Prepare && (
+        <TagButton color="error_color" onClick={handleCancelOrder}>
+          <div>주문 취소</div>
+          <Back className="next-btn" />
+        </TagButton>
+      )}
     </Container>
   );
 };
@@ -164,11 +180,11 @@ const Wrapper = styled.div<{ type: string }>`
   }
 `;
 
-const ReviewTag = styled.div<{ isReviewed: boolean }>`
+const TagButton = styled.div<{ color: string; isReviewed?: boolean }>`
   ${theme.flexCenter}
   justify-content: flex-end;
   cursor: pointer;
-  color: ${({ theme }) => theme.color.primary1};
+  color: ${({ theme, color }) => theme.color[color]};
   ${({ theme }) => theme.font.medium};
   ${gap("1rem")}
   padding-top: 0.7rem;
@@ -181,7 +197,7 @@ const ReviewTag = styled.div<{ isReviewed: boolean }>`
   .next-btn {
     transform: rotate(180deg);
   }
-  fill: ${({ theme }) => theme.color.primary1};
+  fill: ${({ theme, color }) => theme.color[color]};
 
   &:hover {
     color: ${({ theme }) => theme.color.primary3};

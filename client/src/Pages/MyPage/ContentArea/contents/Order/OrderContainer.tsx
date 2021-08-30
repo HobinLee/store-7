@@ -3,11 +3,13 @@ import OrderBox from "./OrderBox";
 import { MyOrderType, OrderStatus } from "@/shared/type";
 import { gap } from "@/styles/theme";
 import NoData from "@/Components/Common/NoData";
+import { QueryObserverResult } from "react-query";
 
 interface OrdersContainer {
   orders: MyOrderType[];
   type: OrderStatus;
 }
+
 const OrdersContainer = ({ orders, type }: OrdersContainer) => {
   return (
     <Container>
