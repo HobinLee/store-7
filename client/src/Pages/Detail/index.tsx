@@ -141,6 +141,16 @@ const DetailPage = () => {
                       <div className="list__item--title">판매가격</div>
                       <div className="list__item--content price">
                         {convertToKRW(product.price)}
+                        {product.discountRate !== 0 && (
+                          <div className="list__item--sale">
+                            <div className="before-price">
+                              {convertToKRW(product.originPrice)}
+                            </div>
+                            <div className="discount-rate">
+                              {product.discountRate}%
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -239,14 +249,18 @@ const InfoBox = styled.div`
   height: 50rem;
   box-sizing: border-box;
   ${gap("5rem")}
+  ${media.mobile} {
+    ${gap("0")}
+  }
   .thumbnail {
     width: 100%;
     max-height: 50rem;
     object-fit: cover;
     background-color: lightgray;
     border-radius: 2rem;
-    ${media.tablet} {
-      max-height: 43.5rem;
+    ${media.mobile} {
+      max-height: 40rem;
+      margin-bottom: 2rem;
     }
   }
   .img-box {
@@ -254,8 +268,12 @@ const InfoBox = styled.div`
     position: relative;
   }
   ${media.tablet} {
-    height: 40rem;
     padding: 0 2rem;
+  }
+  ${media.mobile} {
+    height: 90rem;
+    flex-direction: column;
+    align-items: center;
   }
 `;
 
@@ -285,6 +303,23 @@ const Info = styled.div`
         margin-left: 3rem;
         &.price {
           ${({ theme }) => theme.font.large}
+          display: flex;
+        }
+      }
+      &--sale {
+        display: flex;
+        align-items: flex-end;
+        margin-left: 0.5rem;
+
+        .before-price {
+          ${({ theme }) => theme.font.medium};
+          text-decoration: line-through;
+        }
+        .discount-rate {
+          color: ${({ theme }) => theme.color.red};
+          ${({ theme }) => theme.font.large};
+          font-weight: 700;
+          margin-left: 0.5rem;
         }
       }
     }
@@ -320,13 +355,7 @@ const Scroll = styled.div<{ selectedTab: string }>`
   .option-box {
     ${media.mobile} {
       display: none;
-    }
-    ${media.tablet} {
-      button {
-        ${({ theme }) => theme.font.small};
-        ${({ theme }) => theme.borderRadius.small};
-        padding: 1rem 1.5rem;
-      }
+      width: 30rem;
     }
   }
 `;

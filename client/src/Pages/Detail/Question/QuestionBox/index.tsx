@@ -115,7 +115,7 @@ const Wrapper = styled.div<{ isAnswered: boolean }>`
     & > div {
       flex: 1;
     }
-    ${media.mobile} {
+    ${media.tablet} {
       flex-direction: column;
     }
   }
@@ -151,7 +151,7 @@ const Wrapper = styled.div<{ isAnswered: boolean }>`
   .content + .content {
     border-left: 0.1rem solid ${({ theme }) => theme.color.light_grey2};
     padding-left: 2rem;
-    ${media.mobile} {
+    ${media.tablet} {
       margin-top: 1rem;
       border-left: 0;
     }

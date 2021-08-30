@@ -27,7 +27,7 @@ const Progress = ({
 }: ProgressProps) => {
   const CustomLinearProgress = withStyles(() => ({
     root: {
-      width: "20rem",
+      width: "15rem",
       height: "0.8rem",
       borderRadius: "1.5rem",
     },

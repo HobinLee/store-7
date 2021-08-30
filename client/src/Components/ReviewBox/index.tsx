@@ -138,7 +138,7 @@ const Wrapper = styled.div`
     .image {
       padding-left: 2rem;
       border-left: 0.1rem solid ${({ theme }) => theme.color.light_grey2};
-      ${media.mobile} {
+      ${media.tablet} {
         border: none;
       }
       img {

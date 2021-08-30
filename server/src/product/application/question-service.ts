@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import { Questions } from "@/product/domain/questions";
-import { QuestionResponse } from "@/product/dto/question-response";
 import {
   CreateQuestionPostRequest,
   QuestionPatchRequest,
