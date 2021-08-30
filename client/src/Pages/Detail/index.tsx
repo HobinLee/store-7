@@ -284,6 +284,11 @@ const Info = styled.div`
   height: 100%;
   align-items: flex-start;
   justify-content: space-between;
+  ${media.mobile} {
+    width: 100%;
+    padding: 0 2rem;
+    box-sizing: border-box;
+  }
   & > * {
     width: 100%;
   }
@@ -328,9 +333,6 @@ const Info = styled.div`
 
 const Scroll = styled.div<{ selectedTab: string }>`
   width: 100%;
-  ${media.mobile} {
-    padding: 0;
-  }
   box-sizing: border-box;
   margin-top: 5rem;
   background: #fff;
@@ -355,7 +357,6 @@ const Scroll = styled.div<{ selectedTab: string }>`
   .option-box {
     ${media.mobile} {
       display: none;
-      width: 30rem;
     }
   }
 `;
