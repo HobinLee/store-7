@@ -9,7 +9,7 @@ import { Response } from "express";
 export class ETException extends HttpException {
   statusCode: number;
   message: string;
-  constructor(statusCode: number, message: string) {
+  constructor(statusCode: number, message?: string) {
     super(message, statusCode);
     this.statusCode = statusCode;
     this.message = message;
@@ -23,7 +23,9 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const status = exception.getStatus();
 
-    console.error(exception.stack);
-    response.status(status).send(exception.message);
+    exception.message && console.error(exception.stack);
+    exception.message
+      ? response.status(status).send(exception.message)
+      : response.sendStatus(status);
   }
 }

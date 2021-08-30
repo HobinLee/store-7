@@ -45,7 +45,7 @@ const Item = ({
   const [isMyWish, setIsMyWish] = useState(isWish);
   const debounceIsMyWish = useDebounce<boolean>(isMyWish, 300);
   const isLoggedin = useRecoilValue(loginState);
-  console.log(stock);
+  (stock);
   const tags = useMemo(() => {
     const tags = [];
     if (discountRate) {
