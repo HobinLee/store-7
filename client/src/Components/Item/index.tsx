@@ -37,7 +37,7 @@ const Item = ({
 }: ItemType) => {
   const [isMyWish, setIsMyWish] = useState(isWish);
   const debounceIsMyWish = useDebounce<boolean>(isMyWish, 300);
-  const isLogin = useRecoilValue(loginState);
+  const isLoggedin = useRecoilValue(loginState);
 
   const tags = useMemo(() => {
     const tags = [];
@@ -45,11 +45,12 @@ const Item = ({
       tags.push("sale");
     }
     return tags;
-  }, []);
+  }, [discountRate]);
+
   const pathname = location.pathname.split("/")[1];
   const handleClickWish = async (e: Event) => {
     e.stopPropagation();
-    if (!isLogin) {
+    if (!isLoggedin) {
       return;
     }
     setIsMyWish((isMyWish) => !isMyWish);
@@ -125,7 +126,8 @@ const ItemWrapper = styled.div`
       ${({ theme }) => theme.font.medium};
       font-weight: 500;
       margin-bottom: 1rem;
-      line-height: 1.4rem;
+      line-height: 2rem;
+      height: 1.7rem;
       overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;
@@ -197,6 +199,7 @@ const WishBox = styled.div`
     }
     &.not-wish {
       fill: #fff;
+      opacity: 0.7;
       &:hover {
         opacity: 1;
         fill: none;
