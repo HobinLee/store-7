@@ -1,4 +1,3 @@
-import { Wishes } from "@/user/domain/wishes";
 import { Product } from "../entity/product";
 
 export class ProductElementResponse {
@@ -10,6 +9,7 @@ export class ProductElementResponse {
   isWish: boolean;
   amount: number;
   image: string;
+  createdAt: Date;
 
   constructor(response: ProductElementResponse) {
     this.id = response.id;
@@ -20,6 +20,7 @@ export class ProductElementResponse {
     this.isWish = response.isWish;
     this.amount = response.amount;
     this.image = response.image;
+    this.createdAt = response.createdAt;
   }
 
   static of(product: Product, userId: number): ProductElementResponse {
@@ -30,6 +31,7 @@ export class ProductElementResponse {
       amount = product.stock,
       image = product.getThumbnailImage(),
       price = product.getDiscountedPrice(),
+      createdAt = product.createdAt,
       isWish = userId
         ? product.wishes?.filter((wish) => {
             return wish?.user_id === userId;
@@ -45,6 +47,7 @@ export class ProductElementResponse {
       isWish,
       amount,
       image,
+      createdAt,
     });
   }
 }

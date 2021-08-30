@@ -271,6 +271,7 @@ export const sampleProducts: ProductElementType[] = [
     amount: 100,
     image: "",
     isWish: true,
+    createdAt: new Date(),
   },
   {
     id: 2,
@@ -281,6 +282,7 @@ export const sampleProducts: ProductElementType[] = [
     originPrice: 260000,
     image: "",
     amount: 1,
+    createdAt: new Date(),
   },
   {
     id: 3,
@@ -291,6 +293,7 @@ export const sampleProducts: ProductElementType[] = [
     originPrice: 260000,
     image: "",
     amount: 1,
+    createdAt: new Date(),
   },
   {
     id: 4,
@@ -301,6 +304,7 @@ export const sampleProducts: ProductElementType[] = [
     originPrice: 260000,
     image: "",
     amount: 1,
+    createdAt: new Date(),
   },
   {
     id: 5,
@@ -311,6 +315,7 @@ export const sampleProducts: ProductElementType[] = [
     originPrice: 260000,
     image: "",
     amount: 1,
+    createdAt: new Date(),
   },
   {
     id: 6,
@@ -321,6 +326,7 @@ export const sampleProducts: ProductElementType[] = [
     originPrice: 260000,
     image: "",
     amount: 1,
+    createdAt: new Date(),
   },
   {
     id: 7,
@@ -331,6 +337,7 @@ export const sampleProducts: ProductElementType[] = [
     originPrice: 260000,
     image: "",
     amount: 1,
+    createdAt: new Date(),
   },
   {
     id: 8,
@@ -341,6 +348,7 @@ export const sampleProducts: ProductElementType[] = [
     originPrice: 260000,
     image: "",
     amount: 1,
+    createdAt: new Date(),
   },
   {
     id: 9,
@@ -351,6 +359,7 @@ export const sampleProducts: ProductElementType[] = [
     originPrice: 260000,
     image: "",
     amount: 1,
+    createdAt: new Date(),
   },
   {
     id: 10,
@@ -361,6 +370,7 @@ export const sampleProducts: ProductElementType[] = [
     originPrice: 260000,
     image: "",
     amount: 1,
+    createdAt: new Date(),
   },
   {
     id: 11,
@@ -371,6 +381,7 @@ export const sampleProducts: ProductElementType[] = [
     originPrice: 260000,
     image: "",
     amount: 1,
+    createdAt: new Date(),
   },
   {
     id: 12,
@@ -381,6 +392,7 @@ export const sampleProducts: ProductElementType[] = [
     originPrice: 260000,
     image: "",
     amount: 1,
+    createdAt: new Date(),
   },
   {
     id: 13,
@@ -391,6 +403,7 @@ export const sampleProducts: ProductElementType[] = [
     originPrice: 260000,
     image: "",
     amount: 1,
+    createdAt: new Date(),
   },
 ];
 
