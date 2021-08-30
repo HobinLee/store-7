@@ -66,6 +66,10 @@ const Wrapper = styled(PageWrapper)`
         margin-bottom: 2rem;
       }
     }
+    ${media.mobile} {
+      padding: 0;
+    }
+  }
 `;
 
 export default MainPage;
