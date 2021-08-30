@@ -116,21 +116,26 @@ const Wrapper = styled.div`
   display: flex;
   padding: 1.5rem 0;
   align-items: center;
+  select {
+    width: 100%;
+    text-overflow: ellipsis;
+  }
   ${media.mobile} {
     flex-direction: column;
     align-items: flex-start;
     padding: 1rem 0;
-    select {
-      width: 100%;
-      text-overflow: ellipsis;
-    }
   }
   .amount {
     ${({ theme }) => theme.flexCenter};
     ${gap("2rem")}
+    justify-content: start;
+    width: 12rem;
   }
   .num-input {
     background: ${({ theme }) => theme.color.background};
+  }
+  .select-option {
+    white-space: nowrap;
   }
 `;
 

@@ -171,6 +171,7 @@ const Wrapper = styled.div`
     }
     &__amount {
       margin-top: 3rem;
+      width: 10rem;
     }
     &__option {
       font-weight: 800;
