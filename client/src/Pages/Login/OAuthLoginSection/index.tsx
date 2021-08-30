@@ -26,7 +26,12 @@ const OAuthLoginSection = ({
       <APIButton api={handleGoogleLogin} className="google-login">
         <GoogleSVG height="100%" />
       </APIButton>
-      <APIButton api={handleETLogin} className={"et-login"} primary={true}>
+      <APIButton
+        api={handleETLogin}
+        className={"et-login"}
+        primary={true}
+        isDestroyed={true}
+      >
         <img className="et-icon" src={ET} alt="et-icon" />
       </APIButton>
     </Wrapper>

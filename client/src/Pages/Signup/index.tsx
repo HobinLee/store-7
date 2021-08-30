@@ -178,6 +178,7 @@ const SignupPage = () => {
               primary
               api={handleSubmit}
               disabled={!isSubmittable}
+              isDestroyed={true}
             >
               회원가입
             </APIButton>

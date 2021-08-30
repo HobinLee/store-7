@@ -51,6 +51,7 @@ const LoginSection = () => {
         api={() => handleSignin(false)}
         primary
         disabled={!checkSignupable()}
+        isDestroyed={true}
       >
         로그인
       </APIButton>

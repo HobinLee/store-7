@@ -142,6 +142,7 @@ const ReviewModal = ({
           primary
           className="submit-btn"
           disabled={!isSubmitable}
+          isDestroyed={true}
         >
           완료
         </APIButton>
