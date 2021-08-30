@@ -29,23 +29,15 @@ export class Wishes {
   }
   async createWish(wish: WishRequest) {
     await this.wishRepository.insert({
-      user: {
-        id: wish.userId,
-      },
-      product: {
-        id: wish.productId,
-      },
+      user_id: wish.userId,
+      product_id: wish.productId,
     });
   }
 
   async deleteWish(wish: WishRequest) {
     return await this.wishRepository.delete({
-      user: {
-        id: wish.userId,
-      },
-      product: {
-        id: wish.productId,
-      },
+      user_id: wish.userId,
+      product_id: wish.productId,
     });
   }
 }
