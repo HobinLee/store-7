@@ -164,7 +164,7 @@ const AdminProductCreate: FC<Props> = ({ setPage }) => {
   };
 
   const addProduct = () => {
-    if (name && category && subCategory) {
+    if (name && category) {
       if (optionName) {
         const optionValid = options.reduce((acc, cur) => {
           if (cur.name) return acc && true;
