@@ -249,14 +249,18 @@ const InfoBox = styled.div`
   height: 50rem;
   box-sizing: border-box;
   ${gap("5rem")}
+  ${media.mobile} {
+    ${gap("0")}
+  }
   .thumbnail {
     width: 100%;
     max-height: 50rem;
     object-fit: cover;
     background-color: lightgray;
     border-radius: 2rem;
-    ${media.tablet} {
-      max-height: 43.5rem;
+    ${media.mobile} {
+      max-height: 40rem;
+      margin-bottom: 2rem;
     }
   }
   .img-box {
@@ -264,8 +268,12 @@ const InfoBox = styled.div`
     position: relative;
   }
   ${media.tablet} {
-    height: 40rem;
     padding: 0 2rem;
+  }
+  ${media.mobile} {
+    height: 90rem;
+    flex-direction: column;
+    align-items: center;
   }
 `;
 
@@ -347,13 +355,7 @@ const Scroll = styled.div<{ selectedTab: string }>`
   .option-box {
     ${media.mobile} {
       display: none;
-    }
-    ${media.tablet} {
-      button {
-        ${({ theme }) => theme.font.small};
-        ${({ theme }) => theme.borderRadius.small};
-        padding: 1rem 1.5rem;
-      }
+      width: 30rem;
     }
   }
 `;
