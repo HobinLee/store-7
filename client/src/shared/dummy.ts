@@ -272,7 +272,7 @@ export const sampleProducts: ProductElementType[] = [
     image: "",
     isWish: true,
     createdAt: new Date(),
-    wishLength: 5,
+    wishCount: 5,
     stock: 1,
   },
   {
@@ -285,7 +285,7 @@ export const sampleProducts: ProductElementType[] = [
     image: "",
     amount: 1,
     createdAt: new Date(),
-    wishLength: 5,
+    wishCount: 5,
     stock: 1,
   },
   {
@@ -298,7 +298,7 @@ export const sampleProducts: ProductElementType[] = [
     image: "",
     amount: 1,
     createdAt: new Date(),
-    wishLength: 5,
+    wishCount: 5,
     stock: 1,
   },
   {
@@ -311,7 +311,7 @@ export const sampleProducts: ProductElementType[] = [
     image: "",
     amount: 1,
     createdAt: new Date(),
-    wishLength: 5,
+    wishCount: 5,
     stock: 1,
   },
   {
@@ -324,7 +324,7 @@ export const sampleProducts: ProductElementType[] = [
     image: "",
     amount: 1,
     createdAt: new Date(),
-    wishLength: 5,
+    wishCount: 5,
     stock: 1,
   },
   {
@@ -337,7 +337,7 @@ export const sampleProducts: ProductElementType[] = [
     image: "",
     amount: 1,
     createdAt: new Date(),
-    wishLength: 5,
+    wishCount: 5,
     stock: 1,
   },
   {
@@ -350,7 +350,7 @@ export const sampleProducts: ProductElementType[] = [
     image: "",
     amount: 1,
     createdAt: new Date(),
-    wishLength: 5,
+    wishCount: 5,
     stock: 1,
   },
   {
@@ -363,7 +363,7 @@ export const sampleProducts: ProductElementType[] = [
     image: "",
     amount: 1,
     createdAt: new Date(),
-    wishLength: 5,
+    wishCount: 5,
     stock: 1,
   },
   {
@@ -376,7 +376,7 @@ export const sampleProducts: ProductElementType[] = [
     image: "",
     amount: 1,
     createdAt: new Date(),
-    wishLength: 5,
+    wishCount: 5,
     stock: 1,
   },
   {
@@ -389,7 +389,7 @@ export const sampleProducts: ProductElementType[] = [
     image: "",
     amount: 1,
     createdAt: new Date(),
-    wishLength: 5,
+    wishCount: 5,
     stock: 1,
   },
   {
@@ -402,7 +402,7 @@ export const sampleProducts: ProductElementType[] = [
     image: "",
     amount: 1,
     createdAt: new Date(),
-    wishLength: 5,
+    wishCount: 5,
     stock: 1,
   },
   {
@@ -415,7 +415,7 @@ export const sampleProducts: ProductElementType[] = [
     image: "",
     amount: 1,
     createdAt: new Date(),
-    wishLength: 5,
+    wishCount: 5,
     stock: 1,
   },
   {
@@ -428,7 +428,7 @@ export const sampleProducts: ProductElementType[] = [
     image: "",
     amount: 1,
     createdAt: new Date(),
-    wishLength: 5,
+    wishCount: 5,
     stock: 1,
   },
 ];

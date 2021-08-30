@@ -89,7 +89,7 @@ export interface ProductElementType {
   amount: number;
   image: string;
   createdAt: Date;
-  wishLength: number;
+  wishCount: number;
   stock: number;
 }
 

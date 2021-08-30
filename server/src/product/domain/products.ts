@@ -14,7 +14,7 @@ const PRODUCT_PER_PAGE = 4;
 
 const ORDER_TYPE = {
   default: { "product.id": "DESC" },
-  hot: { "product.wishLength": "DESC" },
+  hot: { "product.wishCount": "DESC" },
   new: { "product.id": "DESC" },
   discount: { "product.discountRate": "DESC" },
   priceAsc: { "product.price": "ASC" },

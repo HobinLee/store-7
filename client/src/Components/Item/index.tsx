@@ -24,7 +24,7 @@ type ItemType = {
   amount: number;
   image: string;
   createdAt: Date;
-  wishLength: number;
+  wishCount: number;
   stock: number;
   refetch?: () => Promise<QueryObserverResult<unknown>>;
 };
@@ -39,13 +39,13 @@ const Item = ({
   image,
   createdAt,
   refetch,
-  wishLength,
+  wishCount,
   stock,
 }: ItemType) => {
   const [isMyWish, setIsMyWish] = useState(isWish);
   const debounceIsMyWish = useDebounce<boolean>(isMyWish, 300);
   const isLoggedin = useRecoilValue(loginState);
-  (stock);
+  stock;
   const tags = useMemo(() => {
     const tags = [];
     if (discountRate) {
@@ -54,11 +54,11 @@ const Item = ({
     if (createdAt && new Date().getDate() - new Date(createdAt).getDate() < 5) {
       tags.push("new");
     }
-    if (wishLength > 5) {
+    if (wishCount > 5) {
       tags.push("best");
     }
     return tags;
-  }, [discountRate, createdAt, wishLength]);
+  }, [discountRate, createdAt, wishCount]);
 
   const pathname = location.pathname.split("/")[1];
   const handleClickWish = async (e: Event) => {
