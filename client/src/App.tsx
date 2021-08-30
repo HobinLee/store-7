@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import MainPage from "@/Pages/Main";
 import LoginPage from "@/Pages/Login";
 import { Router, Route, RouteSetType } from "./Router";
@@ -14,10 +13,7 @@ import { GlobalStyle } from "./styles/global-style";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import SignupPage from "@/Pages/Signup";
-import { useSetRecoilState } from "recoil";
-import { loginState } from "./store/state";
 import Alert from "./Components/Common/Alert";
-import { verifyToken } from "./api/auth";
 import SearchPage from "./Pages/Search";
 import AdminPage from "./Pages/Admin";
 import WelcomePage from "./Pages/Welcome";

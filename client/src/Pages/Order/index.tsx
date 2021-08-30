@@ -14,12 +14,22 @@ import { DestinationType, ICart, PartialCart } from "@/shared/type";
 import { postOrder, postOrderNum } from "@/api/orders";
 import { InputType } from "@/hooks/useInput";
 import { moveTo } from "@/Router";
+import { alert } from "@/Components/Common/Alert";
+
+const KAKAOPAY_MIN = 2000;
+const KAKAOPAY_MAX = 10000000;
 
 // 카카오페이
 export const handleKakaoPay = async (
   handlePostOrder: Function,
   items: Partial<ICart>[]
 ) => {
+  const total = items.reduce((sum, cart) => sum + cart.price, 0);
+  if (total < KAKAOPAY_MIN || total > KAKAOPAY_MAX) {
+    alert("카카오페이로 결제할 수 없는 금액입니다");
+    return;
+  }
+
   const res = await postPaymentReady({
     cid: "TC0ONETIME",
     item_name:
