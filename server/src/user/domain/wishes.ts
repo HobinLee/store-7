@@ -1,3 +1,4 @@
+import { Product } from "@/product/entity/product";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
@@ -8,7 +9,9 @@ import { Wish } from "../entity/wish";
 export class Wishes {
   constructor(
     @InjectRepository(Wish)
-    private readonly wishRepository: Repository<Wish>
+    private readonly wishRepository: Repository<Wish>,
+    @InjectRepository(Product)
+    private readonly productRepository: Repository<Product>
   ) {}
 
   async findMyWishesByUserId(userId: number): Promise<Wish[]> {
@@ -17,7 +20,12 @@ export class Wishes {
       where: { user_id: userId },
     });
   }
+
   async createWish(wish: WishRequest) {
+    this.productRepository.findOne(wish.productId).then((product) => {
+      product.wishLength++;
+      this.productRepository.save(product);
+    });
     await this.wishRepository.insert({
       user_id: wish.userId,
       product_id: wish.productId,
@@ -25,6 +33,12 @@ export class Wishes {
   }
 
   async deleteWish(wish: WishRequest) {
+    this.productRepository.findOne(wish.productId).then((product) => {
+      if (product.wishLength > 0) {
+        product.wishLength++;
+      }
+      this.productRepository.save(product);
+    });
     return await this.wishRepository.delete({
       user_id: wish.userId,
       product_id: wish.productId,
