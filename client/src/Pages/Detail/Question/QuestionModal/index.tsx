@@ -117,6 +117,7 @@ const QuestionModal = ({
           primary
           className="submit-btn"
           disabled={!questionValidation.isValid}
+          isDestroyed={true}
         >
           완료
         </APIButton>

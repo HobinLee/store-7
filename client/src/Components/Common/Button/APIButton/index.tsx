@@ -11,6 +11,7 @@ interface APIButtonProps {
   type?: "button" | "submit" | "reset";
   primary?: boolean;
   size?: "small" | "medium" | "large";
+  isDestroyed?: boolean;
 }
 
 const APIButton = ({
@@ -21,6 +22,7 @@ const APIButton = ({
   disabled,
   primary = false,
   size = "medium",
+  isDestroyed = false,
 }: APIButtonProps) => {
   const [isAPICalling, setIsAPICalling] = useState(false);
 
@@ -28,7 +30,8 @@ const APIButton = ({
     try {
       setIsAPICalling(true);
       await api(e);
-    } finally {
+      !isDestroyed && setIsAPICalling(false);
+    } catch (error) {
       setIsAPICalling(false);
     }
   };
