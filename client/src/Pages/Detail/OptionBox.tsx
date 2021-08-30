@@ -1,5 +1,5 @@
 import Button from "@/Components/Common/Button";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import styled from "styled-components";
 import ModalWrapper from "@/Components/ModalWrapper";
 import { WishIcon } from "@/assets";
@@ -7,18 +7,18 @@ import { convertToKRW } from "@/utils/util";
 import { gap } from "@/styles/theme";
 import { postCart } from "@/api/carts";
 import { moveTo } from "@/Router";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { isMyWishInDetail, loginState } from "@/store/state";
 import { CartType, ProductType } from "@/shared/type";
 import { InputType } from "@/hooks/useInput";
-import { useCallback } from "react";
 import NumInput from "@/Components/Common/NumInput";
+import { useRecoilValue } from "recoil";
+import { loginState } from "@/store/state";
 
 type OptionBoxProps = {
   numValue: InputType;
   handleClickNumVal: Function;
   product: ProductType;
   isMyWish: boolean;
+  handleClickWish: (e: Event) => void;
 };
 
 const OptionBox = ({
@@ -26,16 +26,12 @@ const OptionBox = ({
   handleClickNumVal,
   product,
   isMyWish,
+  handleClickWish,
 }: OptionBoxProps) => {
   const [isCartAlertShown, setIsCartAlertShown] = useState(false);
-  const setIsMyWish = useSetRecoilState(isMyWishInDetail);
 
   const productId = product.id;
   const isLoggedin = useRecoilValue(loginState);
-
-  const handleClickWish = async () => {
-    setIsMyWish((isMyWish) => !isMyWish);
-  };
 
   const RenderNumInput = useCallback(() => {
     return (
@@ -92,7 +88,14 @@ const OptionBox = ({
       setIsCartAlertShown(true);
     }
   };
-
+  const renderWishIcon = useCallback(() => {
+    return (
+      <WishIcon
+        onClick={handleClickWish}
+        className={isMyWish ? "is-wish" : "not-wish"}
+      />
+    );
+  }, [isMyWish]);
   // 바로구매
   const handleBuyImmediately = () => {
     localStorage.setItem(
@@ -114,7 +117,6 @@ const OptionBox = ({
         totalCount: parseInt(numValue.value),
       })
     );
-
     moveTo("/order");
   };
 
@@ -165,12 +167,7 @@ const OptionBox = ({
         </div>
 
         <div className="buttons">
-          <div>
-            <WishIcon
-              onClick={handleClickWish}
-              className={isMyWish ? "is-wish" : "not-wish"}
-            />
-          </div>
+          <div>{renderWishIcon()}</div>
           <Button onClick={handlePostCart}>장바구니</Button>
           <Button onClick={handleBuyImmediately} primary>
             바로 구매
