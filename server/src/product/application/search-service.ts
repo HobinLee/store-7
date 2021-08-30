@@ -34,10 +34,11 @@ export class SearchService {
     try {
       await this.searchService.deleteByQuery({
         index: this.index,
+        type: this.type,
         body: {
           query: {
             match: {
-              id: id.toString(),
+              productId: id,
             },
           },
         },
