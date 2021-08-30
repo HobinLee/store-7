@@ -87,6 +87,11 @@ export class MyController {
     return await this.myService.findMyOrders(userId);
   }
 
+  @Delete("/orders/:id")
+  async deleteOrder(@Param("id") id: number) {
+    return await this.myService.deleteOrder(id);
+  }
+
   // wishes
   @Get("/wishes")
   async getMyWishes(@Body("userId") userId: number): Promise<MyWishResponse[]> {
