@@ -8,6 +8,7 @@ import {
 } from "../dto/review-request";
 import { MyReviewResponse } from "../dto/review-my-response";
 import messages from "@/config/messages";
+import { ETException } from "@/config/filter/exception-handler";
 
 @Injectable()
 export class ReviewService {
@@ -24,7 +25,7 @@ export class ReviewService {
       });
       return messages.success.SUCCESS_TO_CREATE_REVIEW;
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_CREATE_REVIEW);
+      throw new ETException(400, messages.failed.FAILED_TO_CREATE_REVIEW);
     }
   }
 
@@ -42,7 +43,7 @@ export class ReviewService {
       await this.reviews.updateReview(id, newReview);
       return messages.success.SUCCESS_TO_UPDATE_REVIEW;
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_CREATE_REVIEW);
+      throw new ETException(400, messages.failed.FAILED_TO_CREATE_REVIEW);
     }
   }
 
@@ -51,7 +52,7 @@ export class ReviewService {
       await this.reviews.deleteReview(id);
       return messages.success.SUCCESS_TO_DELETE_REVIEW;
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_CREATE_REVIEW);
+      throw new ETException(404, messages.failed.FAILED_TO_CREATE_REVIEW);
     }
   }
 
@@ -62,7 +63,7 @@ export class ReviewService {
       const reviews = await this.reviews.findRecentReviews(query);
       return reviews.map(MyReviewResponse.of);
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_FIND_RECENT_REVIEWS);
+      throw new ETException(404, messages.failed.FAILED_TO_FIND_RECENT_REVIEWS);
     }
   }
 }

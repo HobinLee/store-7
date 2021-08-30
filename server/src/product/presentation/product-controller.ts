@@ -24,7 +24,6 @@ import {
 import { ProductReviewsQuery } from "../dto/product-request";
 import { Review } from "../entity/review";
 import { ReviewRate } from "../dto/review-rate";
-import { Response } from "express";
 
 @Controller("/products")
 export class ProductController {
@@ -61,17 +60,8 @@ export class ProductController {
   // }
 
   @Get("/:id")
-  async getProduct(
-    @Param("id") id: number,
-    @Body("userId") userId: number,
-    @Res({ passthrough: true }) response: Response
-  ) {
-    try {
-      return await this.productService.getProduct(id, userId);
-    } catch (e) {
-      response.status(HttpStatus.NOT_FOUND);
-      return e.message;
-    }
+  async getProduct(@Param("id") id: number, @Body("userId") userId: number) {
+    return await this.productService.getProduct(id, userId);
   }
 
   @Get("/:id/reviews")

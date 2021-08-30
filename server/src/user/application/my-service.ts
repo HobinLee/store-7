@@ -19,6 +19,7 @@ import { Wishes } from "../domain/wishes";
 import { WishRequest } from "../dto/wish-request";
 import { OrderResponse } from "@/order/dto/order-response";
 import messages from "@/config/messages";
+import { ETException } from "@/config/filter/exception-handler";
 
 @Injectable()
 export class MyService {
@@ -38,7 +39,7 @@ export class MyService {
       const user = await this.users.findUserById(userId);
       return MyInfoResponse.of(user);
     } catch (e) {
-      throw new Error(messages.failed.FAILTED_TO_FIND_MY_INFO);
+      throw new ETException(400, messages.failed.FAILTED_TO_FIND_MY_INFO);
     }
   }
 
@@ -46,7 +47,7 @@ export class MyService {
     try {
       await this.users.updateUserInfo(userId, request);
     } catch (e) {
-      throw new Error(messages.failed.FAILTED_TO_EDIT_MY_INFO);
+      throw new ETException(400, messages.failed.FAILTED_TO_EDIT_MY_INFO);
     }
   }
 
@@ -72,7 +73,10 @@ export class MyService {
         items: data.map(CartResponse.of),
       };
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_FIND_CARTS_BY_USER_ID);
+      throw new ETException(
+        404,
+        messages.failed.FAILED_TO_FIND_CARTS_BY_USER_ID
+      );
     }
   }
 
@@ -84,7 +88,10 @@ export class MyService {
       );
       return destinations.map(DestinationResponse.of);
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_FIND_DESTINATIONS_BY_USER_ID);
+      throw new ETException(
+        404,
+        messages.failed.FAILED_TO_FIND_DESTINATIONS_BY_USER_ID
+      );
     }
   }
 
@@ -94,7 +101,7 @@ export class MyService {
       const reviews = await this.reviews.findReviewsByUserId(userId);
       return reviews.map(MyReviewResponse.of);
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_FIND_MY_REVIEW);
+      throw new ETException(404, messages.failed.FAILED_TO_FIND_MY_REVIEW);
     }
   }
 
@@ -104,7 +111,10 @@ export class MyService {
       const questions = await this.questions.findQuestionsByUserId(userId);
       return questions.map(QuestionResponse.of);
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_FIND_QUESTIONS_BY_USER_ID);
+      throw new ETException(
+        404,
+        messages.failed.FAILED_TO_FIND_QUESTIONS_BY_USER_ID
+      );
     }
   }
 
@@ -114,7 +124,10 @@ export class MyService {
       const orders = await this.orders.findOrdersByUserId(userId);
       return orders.map(OrderResponse.of);
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_FIND_ORDERS_BY_USER_ID);
+      throw new ETException(
+        404,
+        messages.failed.FAILED_TO_FIND_ORDERS_BY_USER_ID
+      );
     }
   }
 
@@ -124,7 +137,7 @@ export class MyService {
       const wishes = await this.wishes.findMyWishesByUserId(userId);
       return MyWishResponse.of(wishes);
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_FIND_MY_WISHES);
+      throw new ETException(404, messages.failed.FAILED_TO_FIND_MY_WISHES);
     }
   }
 
@@ -132,7 +145,7 @@ export class MyService {
     try {
       await this.wishes.createWish(wish);
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_CREATE_MY_WISH);
+      throw new ETException(400, messages.failed.FAILED_TO_CREATE_MY_WISH);
     }
   }
 
@@ -140,7 +153,7 @@ export class MyService {
     try {
       return await this.wishes.deleteWish(wish);
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_DELETE_MY_WISH);
+      throw new ETException(404, messages.failed.FAILED_TO_DELETE_MY_WISH);
     }
   }
 }

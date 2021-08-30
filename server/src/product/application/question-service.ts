@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { Questions } from "@/product/domain/questions";
-import { QuestionResponse } from "@/product/dto/question-response";
 import {
   CreateQuestionPostRequest,
   QuestionPatchRequest,
 } from "../dto/question-request";
 import messages from "@/config/messages";
+import { ETException } from "@/config/filter/exception-handler";
 
 @Injectable()
 export class QuestionService {
@@ -16,7 +16,7 @@ export class QuestionService {
       await this.questions.createQuestion(question);
       return messages.success.SUCCESS_TO_CREATE_QUESTION;
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_CREATE_QUESTION);
+      throw new ETException(400, messages.failed.FAILED_TO_CREATE_QUESTION);
     }
   }
   async updateQuestion(
@@ -27,7 +27,7 @@ export class QuestionService {
       await this.questions.updateQuestion(id, question);
       return messages.success.SUCCESS_TO_UPDATE_QUESTION;
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_UPDATE_QUESTION);
+      throw new ETException(400, messages.failed.FAILED_TO_UPDATE_QUESTION);
     }
   }
   async deleteQuestion(id: number): Promise<string> {
@@ -35,7 +35,7 @@ export class QuestionService {
       await this.questions.deleteQuestion(id);
       return messages.success.SUCCESS_TO_DELETE_QUESTION;
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_DELETE_QUESTION);
+      throw new ETException(404, messages.failed.FAILED_TO_DELETE_QUESTION);
     }
   }
 }

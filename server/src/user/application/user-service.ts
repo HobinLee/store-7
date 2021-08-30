@@ -13,6 +13,7 @@ import {
   FirstDestinationDTO,
 } from "../dto/create-address";
 import messages from "@/config/messages";
+import { ETException } from "@/config/filter/exception-handler";
 @Injectable()
 export class UserService {
   constructor(
@@ -25,21 +26,26 @@ export class UserService {
     { address, ...user }: SignupRequest,
     @Res({ passthrough: true }) signupResponse: Response
   ): Promise<string | Error> {
-    const userId = await this.createNewUser(user);
-    if (!userId) throw new Error(messages.failed.FAILED_TO_SIGN_UP);
+    try {
+      const userId = await this.createNewUser(user);
+      if (!userId) throw new Error(messages.failed.FAILED_TO_SIGN_UP);
 
-    const newAddress = await this.createNewAddress(
-      { ...address, addressee: user.name, phoneNumber: user.phoneNumber },
-      userId
-    );
-    if (!newAddress) throw new Error(messages.failed.FAILED_TO_ADD_DESTINATION);
+      const newAddress = await this.createNewAddress(
+        { ...address, addressee: user.name, phoneNumber: user.phoneNumber },
+        userId
+      );
+      if (!newAddress)
+        throw new Error(messages.failed.FAILED_TO_ADD_DESTINATION);
 
-    const token: string = await this.jwtService.signAsync({ userId });
-    if (!token) throw new Error(messages.failed.FAILED_TO_GEN_JWT);
+      const token: string = await this.jwtService.signAsync({ userId });
+      if (!token) throw new Error(messages.failed.FAILED_TO_GEN_JWT);
 
-    signupResponse.cookie(properties.auth.tokenKey, token);
+      signupResponse.cookie(properties.auth.tokenKey, token);
 
-    return messages.success.SUCCESS_TO_SIGN_UP;
+      return messages.success.SUCCESS_TO_SIGN_UP;
+    } catch (e) {
+      throw new ETException(400, e.message);
+    }
   }
 
   async createNewUser(user: CreateUserDTO): Promise<number> {
@@ -50,7 +56,7 @@ export class UserService {
       return await this.users.createAndGetUserId(user);
     } catch (error) {
       console.error(error);
-      throw Error(messages.failed.FAILED_TO_SIGN_UP);
+      throw new ETException(400, messages.failed.FAILED_TO_SIGN_UP);
     }
   }
 
@@ -61,15 +67,15 @@ export class UserService {
         createFirstDestination(address)
       );
     } catch (error) {
-      throw Error(error);
+      throw new ETException(400, error);
     }
   }
 
   async checkEmailExist(email: string): Promise<CheckEmailResponse | Error> {
     try {
       return { isExist: !!(await this.users.findUserByEmail(email)) };
-    } catch (error) {
-      throw Error(error);
+    } catch (e) {
+      throw new ETException(400, e.message);
     }
   }
 }

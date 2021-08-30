@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { S3Repository } from "@/product/infrastructure/s3-repository";
+import { ETException } from "@/config/filter/exception-handler";
 
 @Injectable()
 export class ImageService {
@@ -10,5 +11,6 @@ export class ImageService {
     if (s3Result) {
       return s3Result.Body;
     }
+    throw new ETException(404, "Image not found");
   }
 }

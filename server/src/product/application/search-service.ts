@@ -1,3 +1,4 @@
+import { ETException } from "@/config/filter/exception-handler";
 import messages from "@/config/messages";
 import { Injectable } from "@nestjs/common";
 import { ElasticsearchService } from "@nestjs/elasticsearch";
@@ -26,7 +27,7 @@ export class SearchService {
       });
     } catch (e) {
       console.error(e);
-      throw Error(messages.failed.FAILED_TO_INSERT_ES);
+      throw new ETException(400, messages.failed.FAILED_TO_INSERT_ES);
     }
   }
 
@@ -45,7 +46,7 @@ export class SearchService {
       });
     } catch (e) {
       console.error(e);
-      throw Error(messages.failed.FAILED_TO_INSERT_ES);
+      throw new ETException(404, messages.failed.FAILED_TO_INSERT_ES);
     }
   }
 

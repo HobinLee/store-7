@@ -15,6 +15,7 @@ import {
   getGoogleAccessToken,
   getGoogleUserInfo,
 } from "../infrastructure/google-login";
+import { ETException } from "@/config/filter/exception-handler";
 
 @Injectable()
 export class AuthService {
@@ -29,16 +30,16 @@ export class AuthService {
   ): Promise<string | Error> {
     const { email, password } = signinRequest;
     const user = await this.users.findUserByEmail(email);
-    if (!user) throw Error(messages.failed.FAILED_TO_SIGN_IN);
+    if (!user) throw new ETException(406, messages.failed.FAILED_TO_SIGN_IN);
 
     const { id: userId, password: userPW } = user;
 
     if (!userPW || !PasswordEncoder.check(password, userPW)) {
-      throw Error(messages.failed.FAILED_TO_SIGN_IN);
+      throw new ETException(406, messages.failed.FAILED_TO_SIGN_IN);
     }
 
     const token: string = await this.jwtService.signAsync({ userId });
-    if (!token) throw Error(messages.failed.FAILED_TO_GEN_JWT);
+    if (!token) throw new ETException(406, messages.failed.FAILED_TO_GEN_JWT);
 
     signinResponse.cookie(properties.auth.tokenKey, token);
 
@@ -46,13 +47,18 @@ export class AuthService {
   }
 
   signOut(@Res({ passthrough: true }) signoutResponse: Response) {
-    signoutResponse.clearCookie(properties.auth.tokenKey);
-    return messages.success.SUCCESS_TO_SIGN_OUT;
+    try {
+      signoutResponse.clearCookie(properties.auth.tokenKey);
+      return messages.success.SUCCESS_TO_SIGN_OUT;
+    } catch (e) {
+      throw new ETException(400, messages.failed.FAILED_TO_SIGN_OUT);
+    }
   }
 
   verifyToken(@Req() request: Request) {
     const token = request.cookies[properties.auth.tokenKey];
-    if (!token) return false;
+    if (!token)
+      throw new ETException(407, messages.failed.FAIL_GET_ACCESS_TOKEN);
 
     return !!this.jwtService.verifyAsync(token);
   }
@@ -62,17 +68,18 @@ export class AuthService {
   async githubLogin(code: string, @Res() res: Response) {
     try {
       const accessToken = await getGithubAccessToken(code);
-      if (!accessToken) throw Error(messages.failed.FAIL_GET_ACCESS_TOKEN);
+      if (!accessToken)
+        throw new ETException(400, messages.failed.FAIL_GET_ACCESS_TOKEN);
 
       const info = await getGithubUserInfo(accessToken);
       const userId = await this.getGithubUserId(info);
 
       const token: string = await this.jwtService.signAsync({ userId });
-      if (!token) throw Error(messages.failed.FAILED_TO_GEN_JWT);
+      if (!token) throw new ETException(400, messages.failed.FAILED_TO_GEN_JWT);
 
       res.cookie(properties.auth.tokenKey, token);
     } catch (e) {
-      throw Error(e);
+      throw new ETException(400, e.message);
     }
   }
 
@@ -95,18 +102,20 @@ export class AuthService {
   async googleLogin(code: string, @Res() res: Response) {
     try {
       const accessToken = await getGoogleAccessToken(code);
-      if (!accessToken) throw Error(messages.failed.FAIL_GET_ACCESS_TOKEN);
+      if (!accessToken)
+        throw new ETException(400, messages.failed.FAIL_GET_ACCESS_TOKEN);
 
       const info = await getGoogleUserInfo(accessToken);
       const userId = await this.getGoogleUserId(info);
-      if (!userId) throw Error(messages.failed.FAILED_TO_SIGN_IN);
+      if (!userId)
+        throw new ETException(400, messages.failed.FAILED_TO_SIGN_IN);
 
       const token: string = await this.jwtService.signAsync({ userId });
-      if (!token) throw Error(messages.failed.FAILED_TO_GEN_JWT);
+      if (!token) throw new ETException(400, messages.failed.FAILED_TO_GEN_JWT);
 
       res.cookie(properties.auth.tokenKey, token);
     } catch (e) {
-      throw Error(e);
+      throw new ETException(400, e.message);
     }
   }
 
