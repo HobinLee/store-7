@@ -2,7 +2,7 @@
 <h2 align='center'>ESTP 이정민 임용성 / 이호빈 홍영준 ENTJ</h2>
 <h2 align='center'>https://store-7.woowahan-techcamp.shop/welcome</h2>
 
-<img src='./client/src/assets/welcome/welcome.gif'/>
+<img src='./client/src/assets/welcome/welcome.gif' width='500'/>
 
 ## Tech Stack
 
@@ -27,7 +27,7 @@
 
 ## Infra Architecture
 
-![IMG_0184](https://user-images.githubusercontent.com/50590192/131365132-6fab68ce-8110-483c-aab3-9bb899a431e1.PNG)
+![IMG_0185](https://user-images.githubusercontent.com/50590192/131365745-6201da03-ffb2-4537-98b4-ddf06c920bd0.PNG)
 
 <br/>
 
