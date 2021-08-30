@@ -6,7 +6,7 @@ import ProductList from "@/Components/ProductList";
 
 const Wish = () => {
   const myWishes = useMyWishes();
-
+  console.log(myWishes.data);
   return (
     <Wrapper data-testid="test__wishlist">
       <Section

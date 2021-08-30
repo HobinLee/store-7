@@ -59,6 +59,7 @@ const Container = styled.div`
     max-height: 50vh;
     box-sizing: border-box;
     padding: 1rem;
+
     .nodata {
       background: #fff;
       width: 100%;
