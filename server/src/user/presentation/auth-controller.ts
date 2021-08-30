@@ -24,14 +24,8 @@ export class AuthController {
     @Body() signinRequest: SigninRequest,
     @Res({ passthrough: true }) signinResponse: Response
   ) {
-    try {
-      await this.authService.signIn(signinRequest, signinResponse);
-      signinResponse.status(HttpStatus.OK);
-      return { message: messages.success.SUCCESS_TO_SIGN_IN };
-    } catch (e) {
-      signinResponse.status(HttpStatus.NOT_ACCEPTABLE);
-      return e.message;
-    }
+    await this.authService.signIn(signinRequest, signinResponse);
+    return { message: messages.success.SUCCESS_TO_SIGN_IN };
   }
 
   @Delete()
@@ -39,14 +33,8 @@ export class AuthController {
     @Res({ passthrough: true }) signoutResponse: Response,
     @Res({ passthrough: true }) res: Response
   ) {
-    try {
-      await this.authService.signOut(signoutResponse);
-      res.status(HttpStatus.OK);
-      return { message: messages.success.SUCCESS_TO_SIGN_OUT };
-    } catch (e) {
-      res.status(HttpStatus.BAD_REQUEST);
-      return messages.failed.FAILED_TO_SIGN_OUT;
-    }
+    await this.authService.signOut(signoutResponse);
+    return { message: messages.success.SUCCESS_TO_SIGN_OUT };
   }
 
   @Get("/githubLogin")
@@ -61,14 +49,10 @@ export class AuthController {
     @Query("code") code: string,
     @Res({ passthrough: true }) response: Response
   ) {
-    try {
-      await this.authService.githubLogin(code, response);
-      response.redirect(properties.client);
-    } catch (e) {
-      console.error(e);
-      return e.message;
-    }
+    await this.authService.githubLogin(code, response);
+    response.redirect(properties.client);
   }
+
   @Get("/googleLogin")
   async redirectToGoogleSignin(@Res({ passthrough: true }) response: Response) {
     const url = `https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=${properties.google.redirect}&client_id=${properties.google.id}&response_type=code&include_granted_scopes=true&scope=profile`;
@@ -81,23 +65,12 @@ export class AuthController {
     @Query("code") code: string,
     @Res({ passthrough: true }) response: Response
   ) {
-    try {
-      await this.authService.googleLogin(code, response);
-      response.redirect(properties.client);
-    } catch (e) {
-      console.error(e);
-      return e.message;
-    }
+    await this.authService.googleLogin(code, response);
+    response.redirect(properties.client);
   }
 
   @Get()
-  async verifyToken(
-    @Req() req: Request,
-    @Res({ passthrough: true }) response: Response
-  ) {
-    (await this.authService.verifyToken(req))
-      ? response.status(HttpStatus.OK)
-      : response.status(HttpStatus.PROXY_AUTHENTICATION_REQUIRED);
-    return;
+  async verifyToken(@Req() req: Request) {
+    await this.authService.verifyToken(req);
   }
 }

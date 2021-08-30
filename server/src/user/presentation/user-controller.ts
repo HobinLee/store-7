@@ -22,14 +22,8 @@ export class UserController {
     @Body() signupRequest: SignupRequest,
     @Res({ passthrough: true }) signupResponse: Response
   ) {
-    try {
-      await this.userService.signUp(signupRequest, signupResponse);
-      signupResponse.status(HttpStatus.OK);
-      return { message: messages.success.SUCCESS_TO_SIGN_UP };
-    } catch (e) {
-      signupResponse.status(HttpStatus.BAD_REQUEST);
-      return e.message;
-    }
+    await this.userService.signUp(signupRequest, signupResponse);
+    return { message: messages.success.SUCCESS_TO_SIGN_UP };
   }
 
   @Get()

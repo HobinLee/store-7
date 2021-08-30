@@ -4,6 +4,7 @@ import { OrderRequest } from "../dto/order-request";
 import { OrderResponse } from "../dto/order-response";
 import { OrderStatus } from "@/order/entity/order";
 import messages from "@/config/messages";
+import { ETException } from "@/config/filter/exception-handler";
 
 @Injectable()
 export class OrderService {
@@ -14,7 +15,7 @@ export class OrderService {
       const orders = await this.orders.findOrderById(id);
       return OrderResponse.of(orders);
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_FIND_ORDER_BY_ID);
+      throw new ETException(404, messages.failed.FAILED_TO_FIND_ORDER_BY_ID);
     }
   }
 
@@ -23,7 +24,10 @@ export class OrderService {
       const orders = await this.orders.findOrderByOrderNum(orderNum);
       return orders.map(OrderResponse.of);
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_FIND_ORDER_BY_ORDER_NUM);
+      throw new ETException(
+        404,
+        messages.failed.FAILED_TO_FIND_ORDER_BY_ORDER_NUM
+      );
     }
   }
 
@@ -32,7 +36,7 @@ export class OrderService {
       const orders = await this.orders.findOrders();
       return orders.map(OrderResponse.of);
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_FIND_ORDERS);
+      throw new ETException(400, messages.failed.FAILED_TO_FIND_ORDERS);
     }
   }
 
@@ -41,7 +45,10 @@ export class OrderService {
       const orders = await this.orders.findOrdersByUserId(userId);
       return orders.map(OrderResponse.of);
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_FIND_ORDERS_BY_USER_ID);
+      throw new ETException(
+        404,
+        messages.failed.FAILED_TO_FIND_ORDERS_BY_USER_ID
+      );
     }
   }
 
@@ -58,7 +65,7 @@ export class OrderService {
       });
       return orderId;
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_CREATE_ORDER);
+      throw new ETException(400, messages.failed.FAILED_TO_CREATE_ORDER);
     }
   }
 
@@ -67,7 +74,7 @@ export class OrderService {
       await this.orders.updateOrderNum(id, orderNum);
       return orderNum;
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_UPDATE_ORDER_NUM);
+      throw new ETException(400, messages.failed.FAILED_TO_UPDATE_ORDER_NUM);
     }
   }
 
@@ -76,7 +83,7 @@ export class OrderService {
       this.orders.updateOrderStatus(id, status);
       return messages.success.SUCCESS_TO_UPDATE_ORDER_STATUS;
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_UPDATE_ORDER_STATUS);
+      throw new ETException(400, messages.failed.FAILED_TO_UPDATE_ORDER_STATUS);
     }
   }
 }

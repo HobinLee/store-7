@@ -1,3 +1,4 @@
+import { ETException } from "@/config/filter/exception-handler";
 import messages from "@/config/messages";
 import { Injectable } from "@nestjs/common";
 import { Destinations } from "../domain/destinations";
@@ -16,7 +17,10 @@ export class DestinationService {
       const destinations = await this.destinations.findDestinationsByUserId(id);
       return destinations.map(DestinationResponse.of);
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_FIND_DESTINATIONS_BY_USER_ID);
+      throw new ETException(
+        404,
+        messages.failed.FAILED_TO_FIND_DESTINATIONS_BY_USER_ID
+      );
     }
   }
 
@@ -31,7 +35,7 @@ export class DestinationService {
         isDefault: destination.isDefault ? 1 : 0,
       });
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_CREATE_DESTINATION);
+      throw new ETException(400, messages.failed.FAILED_TO_CREATE_DESTINATION);
     }
     return messages.success.SUCCESS_TO_CREATE_DESTINATION;
   }
@@ -43,7 +47,7 @@ export class DestinationService {
     try {
       await this.destinations.updateDestination(id, destinationModifyRequest);
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_UPDATE_DESTINATION);
+      throw new ETException(400, messages.failed.FAILED_TO_UPDATE_DESTINATION);
     }
     return messages.success.SUCCESS_TO_UPDATE_DESTINATION;
   }
@@ -59,7 +63,10 @@ export class DestinationService {
       });
       await this.destinations.updateDestinationIsDefault(id, true);
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_UPDATE_DEFAULT_DESTINATION);
+      throw new ETException(
+        400,
+        messages.failed.FAILED_TO_UPDATE_DEFAULT_DESTINATION
+      );
     }
     return messages.success.SUCCESS_TO_UPDATE_DEFAULT_DESTINATION;
   }
@@ -68,7 +75,7 @@ export class DestinationService {
     try {
       await this.destinations.deleteDestination(id);
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_DELETE_DESTINATION);
+      throw new ETException(404, messages.failed.FAILED_TO_DELETE_DESTINATION);
     }
     return messages.success.SUCCESS_TO_DELETE_DESTINATION;
   }

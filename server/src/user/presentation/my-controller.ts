@@ -6,9 +6,7 @@ import {
   Param,
   Post,
   Delete,
-  Res,
   All,
-  HttpStatus,
 } from "@nestjs/common";
 import {
   MyInfoResponse,
@@ -22,21 +20,17 @@ import { DestinationResponse } from "@/destination/dto/destination-response";
 import { MyService } from "../application/my-service";
 import { WishRequest } from "../dto/wish-request";
 import { OrderResponse } from "@/order/dto/order-response";
-import { Response } from "express";
 import messages from "@/config/messages";
+import { ETException } from "@/config/filter/exception-handler";
 
 @Controller("/my")
 export class MyController {
   constructor(private readonly myService: MyService) {}
 
   @All()
-  async isUser(
-    @Body("userId") userId: number,
-    @Res({ passthrough: true }) res: Response
-  ) {
+  async isUser(@Body("userId") userId: number) {
     if (!userId) {
-      res.status(HttpStatus.UNAUTHORIZED);
-      return messages.failed.NEED_LOGIN;
+      throw new ETException(401, messages.failed.NEED_LOGIN);
     }
   }
 
@@ -106,15 +100,9 @@ export class MyController {
     @Body("userId")
     userId: number
   ) {
-    try {
-      await this.myService.deleteWishProduct({
-        userId,
-        productId,
-      });
-    } catch (e) {
-      console.error(e);
-    } finally {
-      return;
-    }
+    await this.myService.deleteWishProduct({
+      userId,
+      productId,
+    });
   }
 }

@@ -14,6 +14,7 @@ import { ProductFindQuery } from "../dto/product-find-query";
 import { ProductAdminResponse } from "../dto/product-admin-response";
 import { ProductReviewsQuery } from "../dto/product-request";
 import messages from "@/config/messages";
+import { ETException } from "@/config/filter/exception-handler";
 
 @Injectable()
 export class ProductService {
@@ -34,7 +35,10 @@ export class ProductService {
         ProductElementResponse.of(product, userId)
       );
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_FIND_PRODUCTS_BY_QUERIE);
+      throw new ETException(
+        404,
+        messages.failed.FAILED_TO_FIND_PRODUCTS_BY_QUERIE
+      );
     }
   }
 
@@ -43,7 +47,10 @@ export class ProductService {
       const products = await this.products.findAllProductsByKeyword(keyword);
       return products.map(ProductAdminResponse.of);
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_FIND_ALL_PRODUCTS_BY_KEYWORD);
+      throw new ETException(
+        400,
+        messages.failed.FAILED_TO_FIND_ALL_PRODUCTS_BY_KEYWORD
+      );
     }
   }
 
@@ -52,7 +59,7 @@ export class ProductService {
     if (product) {
       return ProductResponse.of(product, userId);
     }
-    throw Error(messages.failed.PRODUCT_NO_EXIST);
+    throw new ETException(404, messages.failed.PRODUCT_NO_EXIST);
   }
 
   async getProductReviews(productId: number, query: ProductReviewsQuery) {
@@ -82,7 +89,10 @@ export class ProductService {
         length: result.reviews.length,
       };
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_FIND_REVIEWS_BY_PROUCY_ID);
+      throw new ETException(
+        400,
+        messages.failed.FAILED_TO_FIND_REVIEWS_BY_PROUCY_ID
+      );
     }
   }
 
@@ -99,7 +109,7 @@ export class ProductService {
       }
       return product.id;
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_CREATE_PRODUCT);
+      throw new ETException(400, messages.failed.FAILED_TO_CREATE_PRODUCT);
     }
   }
 
@@ -108,7 +118,7 @@ export class ProductService {
       this.serachService.deleteProduct(id);
       await this.products.deleteProduct(id);
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_DELETE_PRODUCT);
+      throw new ETException(404, messages.failed.FAILED_TO_DELETE_PRODUCT);
     }
   }
 
@@ -119,7 +129,10 @@ export class ProductService {
       );
       return questions.map(QuestionResponse.of);
     } catch (e) {
-      throw new Error(messages.failed.FAILED_TO_FIND_QUESTIONS_BY_PRODUCT_ID);
+      throw new ETException(
+        400,
+        messages.failed.FAILED_TO_FIND_QUESTIONS_BY_PRODUCT_ID
+      );
     }
   }
 }
