@@ -5,6 +5,7 @@ import { useProducts } from "@/api/products";
 import { useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { loginState } from "@/store/state";
+import { useCallback } from "react";
 
 export interface ProductSectionProps extends SectionType {}
 
@@ -17,9 +18,11 @@ const ProductSection = ({ title, type }: ProductSectionProps) => {
     size: MAIN_PAGE_PRODUCTS_SIZE,
     page: 1,
   });
+
   useEffect(() => {
     product.refetch();
   }, [isLoggedIn]);
+
   return (
     <SectionWrapper {...{ title }}>
       <div className="title">{title}</div>
