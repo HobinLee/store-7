@@ -8,6 +8,7 @@ import {
 } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { NextFunction, Request, Response } from "express";
+import messages from "./config/messages";
 import properties from "./config/properties/properties";
 
 @Injectable()
@@ -21,12 +22,11 @@ export class LoggerMiddleware implements NestMiddleware {
         if (!result) throw Error("token expired");
         req.body.userId = this.jwtService.decode(token)["userId"];
       }
+      next();
     } catch (e) {
       res.clearCookie(properties.auth.tokenKey);
       res.status(HttpStatus.PRECONDITION_FAILED);
-      return { message: "토큰이 만료되었습니다" };
-    } finally {
-      next();
+      res.send(messages.failed.EXPIRED_TOKEN);
     }
   }
 }

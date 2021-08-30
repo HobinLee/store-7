@@ -6,7 +6,7 @@ import { Loading } from "@/shared/styled";
 import { useState } from "react";
 import { useEffect } from "react";
 import NoData from "@/Components/Common/NoData";
-import { useLazyLoad } from "@/hooks/useLazyLoad";
+import { useLazyLoad } from "@/hooks";
 import { useRecoilValue } from "recoil";
 import { LocaitionStateType, locationState } from "@/store/history";
 import { ProductParams } from "@/api/products";

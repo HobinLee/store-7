@@ -22,13 +22,21 @@ interface HttpError extends Error {
   response: ErrorResponse;
 }
 
+const handleExpiredToken = () => {
+  const alertEvent = new CustomEvent("token-expired");
+
+  window.dispatchEvent(alertEvent);
+};
+
 export const handleHttpError = (error: HttpError) => {
   error.response.data && alert(error.response.data);
 
-  switch (error.status) {
+  switch (error.response.status) {
     case HttpStatus.UNAUTHORIZED:
-    case HttpStatus.PRECONDITION_FAILED:
       moveTo("/login");
+      break;
+    case HttpStatus.PRECONDITION_FAILED:
+      handleExpiredToken();
       break;
     case HttpStatus.NOT_FOUND:
       moveTo("/404");
