@@ -83,7 +83,6 @@ const DetailPage = () => {
   const [isZoomOpened, setIsZoomOpened] = useState(false);
 
   useDidMountEffect(async () => {
-    //like를 이미 했는데, undefined -> like처리가 됨
     if (debounceIsMyWish !== product.isWish) {
       debounceIsMyWish
         ? await postWishProduct(product.id)

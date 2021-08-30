@@ -12,7 +12,8 @@ const ImageHoverWrapper = ({ src, alt }: { src: string; alt?: string }) => {
 const Wrapper = styled.div`
   overflow: hidden;
   ${({ theme }) => theme.borderRadius.medium}
-  height: 100%;
+  height: 0;
+  padding-bottom: 100%;
 
   & > img {
     display: block;
