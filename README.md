@@ -4,7 +4,7 @@
 
 <img src='./client/src/assets/welcome/welcome.gif'/>
 
-## Tect Stack
+## Tech Stack
 
 ### Front
 
@@ -23,6 +23,13 @@
 [![elasticsearch Badge](https://img.shields.io/badge/elasticsearch-005571?style=flat-square&logo=elasticsearch&logoColor=white)]()
 [![typeorm Badge](https://img.shields.io/badge/typeorm-000?style=flat-square&logo=typeorm&logoColor=white)]()
 
+<br/>
+
+## Infra Architecture
+
+![IMG_0184](https://user-images.githubusercontent.com/50590192/131365132-6fab68ce-8110-483c-aab3-9bb899a431e1.PNG)
+
+<br/>
 
 ## Contributors
 
