@@ -11,20 +11,10 @@ export class Wishes {
     private readonly wishRepository: Repository<Wish>
   ) {}
 
-  async findMyWishByProductId(
-    userId: number,
-    productId: number
-  ): Promise<Wish> {
-    return await this.wishRepository.findOne({
-      relations: ["product", "user"],
-      where: { user: { id: userId }, product: { id: productId } },
-    });
-  }
-
   async findMyWishesByUserId(userId: number): Promise<Wish[]> {
     return await this.wishRepository.find({
       relations: ["product", "product.images", "user"],
-      where: { user: { id: userId } },
+      where: { user_id: userId },
     });
   }
   async createWish(wish: WishRequest) {
