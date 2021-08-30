@@ -115,7 +115,7 @@ export class Product {
   }
 
   getDetailImagesAsString() {
-    return this.detailImages.map((image) => image.id);
+    return this.detailImages.map((image) => image.name);
   }
 
   getWaitOrdersCount() {
