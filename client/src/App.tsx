@@ -20,7 +20,7 @@ import WelcomePage from "./Pages/Welcome";
 import NotFound from "./Pages/NotFound";
 import LoginProvider from "./Components/LoginProvider";
 
-const routes: RouteSetType[] = [
+export const routes: RouteSetType[] = [
   ["/", MainPage, true],
   ["/welcome", WelcomePage, true],
   ["/login", LoginPage, true],

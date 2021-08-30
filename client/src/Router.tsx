@@ -7,6 +7,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { selectedCategoryState } from "./store/category";
 import { locationState } from "./store/history";
 import { loginState } from "./store/state";
+import { routes } from "./App";
 
 export type PageComponentType = () => JSX.Element;
 
@@ -23,6 +24,20 @@ interface HistoryEvent extends Event {
     pathname: string;
   };
 }
+
+const NOT_FOUND = "/404";
+
+const checkPath = (
+  targetPath: string,
+  currPath: string,
+  exact: boolean
+): boolean => {
+  if (exact) {
+    return targetPath === currPath;
+  } else {
+    return currPath.match(new RegExp(targetPath, "i"))?.index === 0;
+  }
+};
 
 export const Router = ({ children }): ReactElement => {
   const setLocation = useSetRecoilState(locationState);
@@ -63,8 +78,17 @@ export const Router = ({ children }): ReactElement => {
     window.addEventListener("popstate", handlePopState);
   };
 
+  const checkPathValidation = () => {
+    const exist = routes.find(([path, component, exact]: RouteSetType) =>
+      checkPath(path, window.location.pathname, exact)
+    );
+
+    !exist && moveTo(NOT_FOUND);
+  };
+
   useEffect(() => {
     addEvents();
+    checkPathValidation();
   }, []);
 
   return isLoggedIn !== null && children;
@@ -73,15 +97,7 @@ export const Router = ({ children }): ReactElement => {
 export const Route = ({ exact, path, component: Component }: RouterType) => {
   const { location } = useRecoilValue(locationState);
 
-  const checkPath = (): boolean => {
-    if (exact) {
-      return path === location;
-    } else {
-      return location.match(new RegExp(path, "i"))?.index === 0;
-    }
-  };
-
-  return checkPath() ? <Component /> : null;
+  return checkPath(path, location, exact) ? <Component /> : null;
 };
 
 export const moveTo = (path: string) => {
