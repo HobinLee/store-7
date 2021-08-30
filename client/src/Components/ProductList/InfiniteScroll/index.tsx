@@ -44,6 +44,7 @@ const InfiniteScroll = ({ productAPI, order }: ProductListProps) => {
   const addProduct = async () => {
     setStatus("loading");
     const newProducts = await productAPI(productParam);
+
     setStatus(!newProducts ? "error" : "success");
 
     if (productParam.page === START_PAGE) {
@@ -69,14 +70,11 @@ const InfiniteScroll = ({ productAPI, order }: ProductListProps) => {
 
   return (
     <ProductWrapList>
-      {status === "success" &&
-        (products?.length > 0 ? (
-          products.map((product: ProductElementType) => (
+      {products?.length > 0
+        ? products.map((product: ProductElementType) => (
             <Item {...product} key={product.id} />
           ))
-        ) : (
-          <NoData />
-        ))}
+        : status === "success" && <NoData />}
       {status === "loading" && (
         <div className="loading-indicator">
           <Loading />
