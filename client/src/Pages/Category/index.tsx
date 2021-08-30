@@ -61,6 +61,9 @@ const CategoryPage = () => {
 
 const Wrapper = styled(PageWrapper)`
   padding-top: 10rem;
+  ${media.mobile} {
+    padding-top: 0;
+  }
   .page-contents {
     padding: 0 5rem;
     position: relative;
