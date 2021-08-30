@@ -1,8 +1,12 @@
 <h1 align='center'>ET들</h1>
-<h2 align='center'>ESTP 이정민 임용성 / 이호빈 홍영준 ENTJ</h2>
-<h2 align='center'>https://store-7.woowahan-techcamp.shop/welcome</h2>
 
-<img src='./client/src/assets/welcome/welcome.gif' width='500'/>
+<h4 align='center'>Website https://store-7.woowahan-techcamp.shop/welcome</h4>
+<h4 align='center'>Youtube https://www.youtube.com/watch?v=3ZnELv6jqxk</h4>
+<h4 align='center'>PPT https://drive.google.com/file/d/11wWUoLeXw68vZTG88NxNVSDj5g6X7m2J/view?usp=sharing</h4>
+
+<div align='center'>
+  <img src='./client/src/assets/welcome/welcome.gif' width='500'/>
+</div>
 
 ## Tech Stack
 
