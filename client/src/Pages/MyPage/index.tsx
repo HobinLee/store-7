@@ -32,7 +32,6 @@ const MyPage = () => {
 
   useEffect(() => {
     const sub = location.split("mypage/")[1];
-    console.log(contents[sub]);
     setCurrent(contents[sub] ? sub : "order");
   }, [location]);
 
