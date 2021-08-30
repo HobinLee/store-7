@@ -32,42 +32,8 @@ export class Orders {
     });
   }
 
-  async findCurrentOrdersByUserId(userId: number) {
-    return await this.orderRepository.find({
-      relations: ["user", "product", "product.images"],
-      where: { user: { id: userId }, status: "배송중" },
-    });
-  }
-
-  async findDeliverdOrdersByUserId(userId: number) {
-    return await this.orderRepository.find({
-      relations: ["user", "product", "product.images"],
-      where: { user: { id: userId }, status: "배송완료" },
-    });
-  }
-
-  async findReviewedOrdersByUserId(userId: number) {
-    return await this.orderRepository.find({
-      relations: ["user", "product", "product.images"],
-      where: { user: { id: userId }, status: "구매확정" },
-    });
-  }
-
   async findOrderById(id: number) {
     return await this.orderRepository.findOne({ where: { id } });
-  }
-
-  async findOrdersByUserIdByDateRange(
-    userId: number,
-    range: {
-      from: Date;
-      to: Date;
-    }
-  ) {
-    return await this.orderRepository.find({
-      relations: ["user"],
-      where: { user: { id: userId }, createdAt: Between(range.from, range.to) },
-    });
   }
 
   async createOrder(order: CreateOrderRequest) {
@@ -81,5 +47,9 @@ export class Orders {
 
   async updateOrderNum(id: number, orderNum: string) {
     await this.orderRepository.update({ id }, { orderNum });
+  }
+
+  async deleteOrder(id: number) {
+    await this.orderRepository.delete({ id });
   }
 }
