@@ -47,11 +47,20 @@ export class MyWishResponse {
   amount: number;
   image: string;
   createdAt: Date;
+  wishLength: number;
 
   static of(wishes: Wish[]): MyWishResponse[] {
     return wishes.map((wish) => {
-      const { id, name, price, stock, discountRate, images, createdAt } =
-        wish.product;
+      const {
+        id,
+        name,
+        price,
+        stock,
+        discountRate,
+        images,
+        createdAt,
+        wishLength,
+      } = wish.product;
       return {
         id,
         name,
@@ -62,6 +71,7 @@ export class MyWishResponse {
         image: getThumbnailImage(images),
         isWish: true,
         createdAt,
+        wishLength,
       };
     });
   }

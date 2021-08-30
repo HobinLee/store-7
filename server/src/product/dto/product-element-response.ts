@@ -10,6 +10,7 @@ export class ProductElementResponse {
   amount: number;
   image: string;
   createdAt: Date;
+  wishLength: number;
 
   constructor(response: ProductElementResponse) {
     this.id = response.id;
@@ -21,6 +22,7 @@ export class ProductElementResponse {
     this.amount = response.amount;
     this.image = response.image;
     this.createdAt = response.createdAt;
+    this.wishLength = response.wishLength;
   }
 
   static of(product: Product, userId: number): ProductElementResponse {
@@ -32,6 +34,7 @@ export class ProductElementResponse {
       image = product.getThumbnailImage(),
       price = product.getDiscountedPrice(),
       createdAt = product.createdAt,
+      wishLength = product.wishLength,
       isWish = userId
         ? product.wishes?.filter((wish) => {
             return wish?.user_id === userId;
@@ -48,6 +51,7 @@ export class ProductElementResponse {
       amount,
       image,
       createdAt,
+      wishLength,
     });
   }
 }
