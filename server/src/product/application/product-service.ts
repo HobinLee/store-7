@@ -30,7 +30,10 @@ export class ProductService {
     userId: number
   ): Promise<ProductElementResponse[]> {
     try {
-      const products = await this.products.findProductsByQueries(findQuery);
+      const products = await this.products.findProductsByQueries(
+        findQuery,
+        userId
+      );
       return products.map((product) =>
         ProductElementResponse.of(product, userId)
       );
