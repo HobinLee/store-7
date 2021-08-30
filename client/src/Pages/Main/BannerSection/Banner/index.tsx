@@ -114,11 +114,8 @@ const BannerWrapper = styled.div`
     }
   }
 
-  ${media.mobile} {
+  ${media[768]} {
     padding: 0;
-    .banner-content {
-      border-radius: 0;
-    }
 
     .banner__info-wrapper {
       padding: 2rem;

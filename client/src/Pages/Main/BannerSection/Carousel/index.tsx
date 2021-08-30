@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import styled, { css } from "styled-components";
 import { LeftIcon, RightIcon } from "@/assets";
+import { media } from "@/styles/theme";
 
 interface Carousel {
   children: React.ReactNode;
@@ -133,6 +134,12 @@ const CarouselWrapper = styled.div`
     &:hover {
       fill: ${({ theme }) => theme.color.primary1};
       opacity: 1;
+    }
+    ${media[768]} {
+      width: 4rem;
+      height: 4rem;
+    }
+    ${media.mobile} {
     }
   }
 `;
