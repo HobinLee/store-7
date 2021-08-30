@@ -42,6 +42,9 @@ export class Product {
   @Column({ name: "sub_category" })
   subCategory: string;
 
+  @Column({ name: "wishLength", default: 0 })
+  wishLength: number;
+
   @Column({ length: 16, nullable: true })
   option: string;
 

@@ -14,7 +14,7 @@ const PRODUCT_PER_PAGE = 4;
 
 const ORDER_TYPE = {
   default: { "product.id": "DESC" },
-  hot: { wishLength: "DESC" },
+  hot: { "product.wishLength": "DESC" },
   new: { "product.id": "DESC" },
   discount: { "product.discountRate": "DESC" },
   priceAsc: { "product.price": "ASC" },
@@ -35,24 +35,21 @@ export class Products {
     private readonly s3Repository: S3Repository
   ) {}
 
-  async findProductsByQueries(query: ProductFindQuery): Promise<Product[]> {
-    return (
-      this.productRepository
-        .createQueryBuilder("product")
-        .addSelect(
-          "(SELECT COUNT(*) FROM wish w where w.product_id=product.id) as wishLength"
-        )
-        .leftJoinAndSelect("product.wishes", "wishes")
-        .leftJoinAndSelect("product.images", "images")
-        .where(generateWhere(query.category, query.subCategory, query.ids))
-        .skip(
-          ((query.page ?? START_PAGE) - 1) * (query.size ?? PRODUCT_PER_PAGE)
-        )
-        .take(query.size ?? PRODUCT_PER_PAGE)
-        // .groupBy("product.id")
-        .orderBy(ORDER_TYPE[query.order])
-        .getMany()
-    );
+  async findProductsByQueries(
+    query: ProductFindQuery,
+    userId?: number
+  ): Promise<Product[]> {
+    const queryBuilder = this.productRepository
+      .createQueryBuilder("product")
+      .leftJoinAndSelect("product.images", "images")
+      .where(generateWhere(query.category, query.subCategory, query.ids))
+      .skip(((query.page ?? START_PAGE) - 1) * (query.size ?? PRODUCT_PER_PAGE))
+      .take(query.size ?? PRODUCT_PER_PAGE)
+      .orderBy(ORDER_TYPE[query.order]);
+
+    return userId
+      ? queryBuilder.leftJoinAndSelect("product.wishes", "wishes").getMany()
+      : queryBuilder.getMany();
   }
 
   async findProductById(id: number): Promise<Product> {
