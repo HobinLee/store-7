@@ -5,10 +5,14 @@ import { OrderResponse } from "../dto/order-response";
 import { OrderStatus } from "@/order/entity/order";
 import messages from "@/config/messages";
 import { ETException } from "@/config/filter/exception-handler";
+import { ProductService } from "@/product/application/product-service";
 
 @Injectable()
 export class OrderService {
-  constructor(private readonly orders: Orders) {}
+  constructor(
+    private readonly orders: Orders,
+    private readonly productService: ProductService
+  ) {}
 
   async findOrderById(id: number): Promise<OrderResponse> {
     try {
@@ -62,6 +66,11 @@ export class OrderService {
           id: userId ?? 7,
         },
         status: OrderStatus.Prepare,
+      });
+      await this.productService.reduceProductStock({
+        id: order.productId,
+        stock: order.amount,
+        optionId: order.productOptionId,
       });
       return orderId;
     } catch (e) {
