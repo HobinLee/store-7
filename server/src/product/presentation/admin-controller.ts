@@ -9,4 +9,14 @@ export class AdminController {
   async getProducts(@Query("keyword") keyword: string) {
     return await this.productService.getAllProductsByKeyword(keyword);
   }
+
+  @Get("/category-stock")
+  async getCategoryStocks() {
+    return await this.productService.getCategoryStocks();
+  }
+
+  @Get("/category-hot")
+  async getHotCategory() {
+    return await this.productService.getHotCategory();
+  }
 }

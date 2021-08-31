@@ -57,6 +57,14 @@ export class ProductService {
     }
   }
 
+  async getCategoryStocks() {
+    return this.products.getCategoryStocks();
+  }
+
+  async getHotCategory() {
+    return this.products.getHotCategory();
+  }
+
   async getProduct(id: number, userId: number) {
     const product = await this.products.findProductById(id);
     if (product) {
