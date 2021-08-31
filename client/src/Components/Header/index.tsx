@@ -12,7 +12,7 @@ const Header = () => {
   );
 };
 
-const TopWrapper = styled.div`
+const TopWrapper = styled.header`
   box-shadow: 0 0 1rem 0.2rem rgba(0, 0, 0, 0.2);
   position: fixed;
   top: 0;
