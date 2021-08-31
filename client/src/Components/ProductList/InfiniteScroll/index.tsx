@@ -9,22 +9,21 @@ import NoData from "@/Components/Common/NoData";
 import { useLazyLoad } from "@/hooks";
 import { useRecoilValue } from "recoil";
 import { LocaitionStateType, locationState } from "@/store/history";
-import { ProductParams } from "@/api/products";
+import { ProductParams, useProducts } from "@/api/products";
+import { UseQueryResult } from "react-query";
 
 const START_PAGE = 1;
 const PRODUCT_PER_PAGE = 12;
 
 interface ProductListProps {
-  productAPI: (params: any) => Promise<ProductElementType[]>;
+  useProductsQuery: (
+    params: ProductParams
+  ) => UseQueryResult<ProductElementType[], unknown>;
   order?: string;
 }
 
-let i = 0;
-
-const InfiniteScroll = ({ productAPI, order }: ProductListProps) => {
-  i++;
+const InfiniteScroll = ({ useProductsQuery, order }: ProductListProps) => {
   const [products, setProducts] = useState<ProductElementType[]>([]);
-  const [isEndPage, setIsEndPage] = useState(false);
   const { params: urlParams }: LocaitionStateType =
     useRecoilValue(locationState);
   const [productParam, setProductParam] = useState<ProductParams>({
@@ -32,35 +31,29 @@ const InfiniteScroll = ({ productAPI, order }: ProductListProps) => {
     order,
     page: START_PAGE,
   });
-  const [status, setStatus] = useState<"loading" | "success" | "error">(
-    "success"
-  );
+  const { data: newProducts, status } = useProductsQuery(productParam);
 
   useEffect(() => {
-    setIsEndPage(false);
+    setProducts([]);
     setProductParam({ ...urlParams, order, page: START_PAGE });
   }, [urlParams, order]);
 
-  const addProduct = async () => {
-    setStatus("loading");
-    const newProducts = await productAPI(productParam);
-
-    setStatus(!newProducts ? "error" : "success");
+  const addProduct = () => {
+    if (status !== "success") return;
 
     if (productParam.page === START_PAGE) {
       setProducts([...newProducts]);
     } else {
       setProducts([...products, ...newProducts]);
     }
-
-    if (newProducts?.length < PRODUCT_PER_PAGE) {
-      setIsEndPage(true);
-    }
   };
 
   useEffect(() => {
-    addProduct();
-  }, [productParam]);
+    const func = addProduct();
+    return () => {
+      func;
+    };
+  }, [newProducts]);
 
   const nextPage = () => {
     setProductParam({ ...urlParams, order, page: productParam.page + 1 });
@@ -70,7 +63,7 @@ const InfiniteScroll = ({ productAPI, order }: ProductListProps) => {
 
   return (
     <ProductWrapList>
-      {products?.length > 0
+      {(products?.length ?? 0) > 0
         ? products.map((product: ProductElementType) => (
             <Item {...product} key={product.id} />
           ))
@@ -80,7 +73,7 @@ const InfiniteScroll = ({ productAPI, order }: ProductListProps) => {
           <Loading />
         </div>
       )}
-      {status === "success" && !isEndPage && (
+      {status === "success" && (newProducts?.length ?? 0) === PRODUCT_PER_PAGE && (
         <div className="loading-indicator" ref={ref}>
           <Loading />
         </div>

@@ -7,7 +7,7 @@ import Filter, { filters } from "../../Components/Filter";
 import InfiniteScroll from "@/Components/ProductList/InfiniteScroll";
 import { LocaitionStateType, locationState } from "@/store/history";
 import { useState } from "react";
-import { getSearchedProducts } from "@/api/search";
+import { getSearchedProducts, useSearchProducts } from "@/api/search";
 import { media } from "@/styles/theme";
 
 const SearchPage = () => {
@@ -24,7 +24,7 @@ const SearchPage = () => {
               <span>{params?.keyword}</span>검색결과
             </div>
             <InfiniteScroll
-              productAPI={getSearchedProducts}
+              useProductsQuery={useSearchProducts}
               order={filter.value}
             />
           </div>

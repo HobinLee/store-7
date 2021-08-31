@@ -5,7 +5,7 @@ import Header from "@/Components/Header";
 import { PageWrapper } from "@/shared/styled";
 import styled, { FlattenSimpleInterpolation } from "styled-components";
 import Footer from "@/Components/Footer";
-import { getProducts } from "@/api/products";
+import { getProducts, useProducts } from "@/api/products";
 import InfiniteScroll from "@/Components/ProductList/InfiniteScroll";
 import { media } from "@/styles/theme";
 import { useState } from "react";
@@ -46,7 +46,7 @@ const CategoryPage = () => {
           <div className="products-wrapper">
             <Filter setFilter={setProductOrder} currentFilter={productOrder} />
             <InfiniteScroll
-              productAPI={getProducts}
+              useProductsQuery={useProducts}
               order={productOrder.value}
             />
           </div>
