@@ -8,6 +8,8 @@ import { ProductSearchQuery } from "../dto/product-find-query";
 import { SearchProduct } from "../dto/product-search-response";
 import { Product } from "../entity/product";
 
+const MAX_SIZE = 500;
+
 @Injectable()
 export class SearchService {
   index = "products";
@@ -63,6 +65,7 @@ export class SearchService {
           match: { name },
         },
       },
+      size: MAX_SIZE,
     });
 
     return result.body?.hits?.hits ?? [];
@@ -79,7 +82,8 @@ export class SearchService {
   }
 
   async searchProducts(
-    searchQuery: ProductSearchQuery
+    searchQuery: ProductSearchQuery,
+    userId: number
   ): Promise<ProductElementResponse[]> {
     const productIds: number[] = await this.searchProductIds(
       searchQuery.keyword
@@ -87,10 +91,13 @@ export class SearchService {
 
     if (!productIds.length) return [];
 
-    const products: Product[] = await this.products.findProductsByQueries({
-      ...searchQuery,
-      ids: productIds,
-    });
+    const products: Product[] = await this.products.findProductsByQueries(
+      {
+        ...searchQuery,
+        ids: productIds,
+      },
+      userId
+    );
 
     return products.map(ProductElementResponse.of) ?? [];
   }
