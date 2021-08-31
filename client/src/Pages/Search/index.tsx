@@ -1,14 +1,18 @@
-import Header from "@/Components/Header";
-import { PageWrapper, Contents } from "@/shared/styled";
-import styled from "styled-components";
-import Footer from "@/Components/Footer";
-import { useRecoilValue } from "recoil";
-import Filter, { filters } from "../../Components/Filter";
-import InfiniteScroll from "@/Components/ProductList/InfiniteScroll";
-import { LocaitionStateType, locationState } from "@/store/history";
 import { useState } from "react";
-import { getSearchedProducts, useSearchProducts } from "@/api/search";
+
+import styled from "styled-components";
+import { PageWrapper, Contents } from "@/shared/styled";
 import { media } from "@/styles/theme";
+
+import Header from "@/Components/Header";
+import Footer from "@/Components/Footer";
+import Filter, { filters } from "@/Components/Filter";
+import InfiniteScroll from "@/Components/ProductList/InfiniteScroll";
+
+import { useRecoilValue } from "recoil";
+import { LocaitionStateType, locationState } from "@/store/history";
+
+import { useSearchProducts } from "@/api/search";
 
 const SearchPage = () => {
   const { params }: LocaitionStateType = useRecoilValue(locationState);

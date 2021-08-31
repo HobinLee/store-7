@@ -1,16 +1,20 @@
-import { ProductElementType } from "@/shared/type";
-import Item from "@/Components/Item";
+import { useState, useEffect } from "react";
+
 import styled from "styled-components";
-import { media } from "@/styles/theme";
 import { Loading } from "@/shared/styled";
-import { useState } from "react";
-import { useEffect } from "react";
+import { media } from "@/styles/theme";
+
+import Item from "@/Components/Item";
 import NoData from "@/Components/Common/NoData";
+
 import { useLazyLoad } from "@/hooks";
+import { UseQueryResult } from "react-query";
+
 import { useRecoilValue } from "recoil";
 import { LocaitionStateType, locationState } from "@/store/history";
-import { ProductParams, useProducts } from "@/api/products";
-import { UseQueryResult } from "react-query";
+
+import { ProductElementType } from "@/shared/type";
+import { ProductParams } from "@/api/products";
 
 const START_PAGE = 1;
 const PRODUCT_PER_PAGE = 12;
