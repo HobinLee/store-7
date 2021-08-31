@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOperator, In, Like, Repository } from "typeorm";
+import { FindOperator, getConnection, In, Like, Repository } from "typeorm";
 import { Product } from "@/product/entity/product";
 import { S3Repository } from "@/product/infrastructure/s3-repository";
 import { ProductImage } from "@/product/entity/product-image";
@@ -75,6 +75,35 @@ export class Products {
   async createProduct(product: Product): Promise<Product> {
     const result = await this.productRepository.insert(product);
     return await this.findProductById(result.raw.insertId);
+  }
+
+  async getCategoryStocks() {
+    const result = [];
+    for (let i = 100; i <= 900; i += 100) {
+      result.push({
+        category: i,
+        stock: await this.productRepository.count({
+          where: {
+            category: Like(`%${i}%`),
+          },
+        }),
+      });
+    }
+    return result;
+  }
+
+  async getHotCategory() {
+    const result = [];
+    for (let i = 100; i <= 900; i += 100) {
+      const data = await this.productRepository.query(
+        `select * from product p join \`order\` o where o.product_id=p.id and p.category like '%${i}%'`
+      );
+      result.push({
+        category: i,
+        stock: data.length,
+      });
+    }
+    return result;
   }
 
   addImages(images, product) {
