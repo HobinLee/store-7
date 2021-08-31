@@ -125,6 +125,31 @@ export class ProductService {
     }
   }
 
+  async reduceProductStock({
+    id,
+    stock,
+    optionId,
+  }: {
+    id: number;
+    stock: number;
+    optionId: number;
+  }) {
+    try {
+      const product = await this.products.findProductById(id);
+      const before = product.stock;
+
+      if (optionId) {
+        const before = product.options.find(
+          (option) => option.id === optionId
+        ).stock;
+        await this.products.updateOptionStock(optionId, before - stock);
+      }
+      await this.products.updateProductStock(id, before - stock);
+    } catch (e) {
+      throw new ETException(404, messages.failed.FAILED_TO_DELETE_PRODUCT);
+    }
+  }
+
   async getProductQuestions(productId: number) {
     try {
       const questions = await this.questions.findQuestionsByProductId(

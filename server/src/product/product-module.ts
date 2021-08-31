@@ -61,6 +61,6 @@ const elasticsearchConfig = properties.elastic;
     QuestionService,
     Wishes,
   ],
-  exports: [Products, ElasticsearchModule, SearchService],
+  exports: [Products, ElasticsearchModule, SearchService, ProductService],
 })
 export class ProductModule {}
