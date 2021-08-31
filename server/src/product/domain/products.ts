@@ -138,9 +138,17 @@ export class Products {
     });
   }
 
+  async updateOptionStock(id, stock) {
+    await this.productOptionRepository.update({ id }, { stock });
+  }
+
   async updateProduct(product: Product): Promise<Product> {
     const result = await this.productRepository.update(product.id, product);
     return await this.findProductById(result.raw.insertId);
+  }
+
+  async updateProductStock(id: number, stock: number) {
+    await this.productRepository.update({ id }, { stock });
   }
 
   async deleteProduct(id: number) {

@@ -108,7 +108,7 @@ const Carousel = ({ children, infinity = false }: Carousel) => {
   );
 };
 
-const CarouselWrapper = styled.div`
+const CarouselWrapper = styled.section`
   width: 100%;
   position: relative;
   overflow: hidden;

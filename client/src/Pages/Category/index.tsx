@@ -1,14 +1,17 @@
-import CategoryBanner from "./Banner";
-import Filter, { filters, FilterType } from "../../Components/Filter";
-import { Arrow } from "@/assets";
-import Header from "@/Components/Header";
-import { PageWrapper } from "@/shared/styled";
-import styled, { FlattenSimpleInterpolation } from "styled-components";
-import Footer from "@/Components/Footer";
-import { getProducts } from "@/api/products";
-import InfiniteScroll from "@/Components/ProductList/InfiniteScroll";
-import { media } from "@/styles/theme";
 import { useState } from "react";
+import styled, { FlattenSimpleInterpolation } from "styled-components";
+import { PageWrapper } from "@/shared/styled";
+import { media } from "@/styles/theme";
+
+import CategoryBanner from "./Banner";
+import Filter, { filters, FilterType } from "@/Components/Filter";
+import Header from "@/Components/Header";
+import Footer from "@/Components/Footer";
+import InfiniteScroll from "@/Components/ProductList/InfiniteScroll";
+
+import { useProducts } from "@/api/products";
+
+import { Arrow } from "@/assets";
 
 export interface CategoryType {
   id: number;
@@ -46,7 +49,7 @@ const CategoryPage = () => {
           <div className="products-wrapper">
             <Filter setFilter={setProductOrder} currentFilter={productOrder} />
             <InfiniteScroll
-              productAPI={getProducts}
+              useProductsQuery={useProducts}
               order={productOrder.value}
             />
           </div>

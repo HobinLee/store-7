@@ -27,6 +27,6 @@ const GiftSection = () => (
   </SectionWrapper>
 );
 
-const SectionWrapper = styled.div``;
+const SectionWrapper = styled.section``;
 
 export default GiftSection;

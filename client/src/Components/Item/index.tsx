@@ -131,6 +131,8 @@ const ItemWrapper = styled.div`
 
   .thumbnail {
     position: relative;
+    ${({ theme }) => theme.borderRadius.medium}
+    overflow: hidden;
 
     &__tags {
       position: absolute;

@@ -49,7 +49,11 @@ const CategoryBanner = () => {
       <BGWrapper>
         <img src={info.backgroundImg} alt="배경 이미지" />
       </BGWrapper>
-      <Wrapper fontColor={info.fontColor} font={info.font}>
+      <Wrapper
+        fontColor={info.fontColor}
+        font={info.font}
+        img={info.backgroundImg}
+      >
         <div className="category-info">
           <h2 className="category-name">{info.name}</h2>
           <div className="category-info-side">
@@ -84,7 +88,7 @@ const BGWrapper = styled.div`
   }
 `;
 
-const Wrapper = styled.div<{ fontColor?: string; font?: string }>`
+const Wrapper = styled.div<{ fontColor?: string; font?: string; img?: string }>`
   width: 100vw;
   height: 30rem;
   overflow: hidden;
@@ -146,6 +150,13 @@ const Wrapper = styled.div<{ fontColor?: string; font?: string }>`
   }
   ${media.mobile} {
     height: 17rem;
+    ${({ img }) =>
+      img &&
+      css`
+        background-image: url(${img});
+      `};
+    background-position-x: 60%;
+    background-size: cover;
 
     .category-info {
       padding: 2rem 3rem;
