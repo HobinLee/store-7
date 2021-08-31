@@ -8,6 +8,8 @@ import { ProductSearchQuery } from "../dto/product-find-query";
 import { SearchProduct } from "../dto/product-search-response";
 import { Product } from "../entity/product";
 
+const MAX_SIZE = 500;
+
 @Injectable()
 export class SearchService {
   index = "products";
@@ -63,6 +65,7 @@ export class SearchService {
           match: { name },
         },
       },
+      size: MAX_SIZE,
     });
 
     return result.body?.hits?.hits ?? [];
