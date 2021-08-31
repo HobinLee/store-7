@@ -6,6 +6,7 @@ import { gap } from "@/styles/theme";
 import { useState } from "react";
 import ReviewModal from "@/Pages/Detail/Review/ReviewModal";
 import NoData from "@/Components/Common/NoData";
+import { Loading } from "@/shared/styled";
 
 export interface ReviewForm {
   id?: number;
@@ -53,7 +54,9 @@ const Review = () => {
               <NoData />
             )
           ) : (
-            <div>스켈레톤 UI</div>
+            <div className="skelton">
+              <Loading />
+            </div>
           )}
         </ReviewsWrapper>
         {isModalOpened && (
