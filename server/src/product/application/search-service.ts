@@ -79,7 +79,8 @@ export class SearchService {
   }
 
   async searchProducts(
-    searchQuery: ProductSearchQuery
+    searchQuery: ProductSearchQuery,
+    userId: number
   ): Promise<ProductElementResponse[]> {
     const productIds: number[] = await this.searchProductIds(
       searchQuery.keyword
@@ -87,10 +88,13 @@ export class SearchService {
 
     if (!productIds.length) return [];
 
-    const products: Product[] = await this.products.findProductsByQueries({
-      ...searchQuery,
-      ids: productIds,
-    });
+    const products: Product[] = await this.products.findProductsByQueries(
+      {
+        ...searchQuery,
+        ids: productIds,
+      },
+      userId
+    );
 
     return products.map(ProductElementResponse.of) ?? [];
   }
