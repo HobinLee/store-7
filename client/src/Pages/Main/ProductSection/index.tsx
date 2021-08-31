@@ -30,6 +30,6 @@ const ProductSection = ({ title, type }: ProductSectionProps) => {
   );
 };
 
-const SectionWrapper = styled.div<{ title: string }>``;
+const SectionWrapper = styled.section<{ title: string }>``;
 
 export default ProductSection;

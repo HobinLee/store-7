@@ -17,7 +17,7 @@ const ReviewSection = () => {
   );
 };
 
-const SectionWrapper = styled.div`
+const SectionWrapper = styled.section`
   ${media.custom(600)} {
     overflow-x: scroll;
   }
