@@ -55,7 +55,7 @@ const Wrapper = styled(PageWrapper)`
     padding: 5rem;
     ${gap("8rem", "column")}
 
-    & > div {
+    & > section {
       ${({ theme }) => theme.flexCenter}
       flex-direction: column;
       width: 100%;

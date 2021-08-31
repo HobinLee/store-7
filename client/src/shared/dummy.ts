@@ -22,9 +22,7 @@ export const categories: MainCategoryType[] = [
     id: 0,
     name: "전체",
     brief: "",
-    style: css`
-      color: #333;
-    `,
+    fontColor: "#333",
     backgroundImg: CategoryBanner0,
     subCategories: [],
   },
