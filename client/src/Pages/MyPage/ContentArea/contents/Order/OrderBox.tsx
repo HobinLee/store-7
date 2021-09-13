@@ -8,6 +8,7 @@ import styled, { css } from "styled-components";
 import { Back } from "@/assets";
 import { gap } from "@/styles/theme";
 import { deleteOrder, useMyOrders } from "@/api/my";
+import properties from "@/config/properties";
 
 const OrderBox = ({
   id,
@@ -51,7 +52,7 @@ const OrderBox = ({
           <Link to={`/detail/${productId}`}>
             <div className="image">
               <img
-                src={`https://api.store-7.woowahan-techcamp.shop/images/${image}`}
+                src={`${properties.imgURL}${image}`}
               />
             </div>
           </Link>

@@ -1,5 +1,5 @@
 export default {
-  baseURL: process.env.BASE_URL || "https://store.leehov.in",
+  baseURL: process.env.BASE_URL || "https://store.leehov.in/api",
   imgURL:
     process.env.IMG_URL || "https://store.leehov.in/api/images/",
   demo: {
