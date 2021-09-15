@@ -25,7 +25,6 @@ const AdminHome = () => {
       setCategoryStocks(response);
     });
     getCategoryStock(getStocksOfHotCategories, "주문량").then((response) => {
-      console.log(response);
       setHotCategoryStock(response);
     });
   }, []);
