@@ -29,9 +29,9 @@ const handleExpiredToken = () => {
 };
 
 export const handleHttpError = (error: HttpError) => {
-  error.response.data && alert(error.response.data);
+  error?.response?.data && alert(error.response.data);
 
-  switch (error.response.status) {
+  switch (error.response?.status) {
     case HttpStatus.UNAUTHORIZED:
       moveTo("/login");
       break;
@@ -44,5 +44,6 @@ export const handleHttpError = (error: HttpError) => {
     default:
       break;
   }
-  throw Error(error.response.data || error.message);
+  
+  throw Error(error.response?.data || error.message);
 };
