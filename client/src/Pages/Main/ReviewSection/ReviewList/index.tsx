@@ -2,15 +2,12 @@ import styled from "styled-components";
 import { ReviewType } from "@/shared/type";
 import { gap, media } from "@/styles/theme";
 import ReviewCard from "@/Pages/Main/ReviewSection/ReviewCard";
-import { NoData } from "@/assets";
+import NoData from "@/Components/Common/NoData";
 
 export interface ReviewListProps {
   reviews: ReviewType[];
 }
-/*
 
-        }
-*/
 const ReviewList = ({ reviews }: ReviewListProps) => (
   <ReviewListWrapper>
     {reviews?.length > 0 ? (
@@ -18,9 +15,7 @@ const ReviewList = ({ reviews }: ReviewListProps) => (
         <li key={idx}>
           <ReviewCard {...{ review }} key={review.id} />
         </li>
-      ))) : (
-      <NoData />
-    )}
+      ))) : <NoData />}
   </ReviewListWrapper>
 );
 const ReviewListWrapper = styled.ul`
