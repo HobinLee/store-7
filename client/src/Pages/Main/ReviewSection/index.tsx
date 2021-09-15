@@ -1,8 +1,8 @@
-import { ReviewType } from "@/shared/type";
 import styled from "styled-components";
 import ReviewList from "./ReviewList";
 import { media } from "@/styles/theme";
 import { useRecentReviews } from "@/api/reviews";
+import { Loading } from "@/assets";
 
 const REVIEW_PER_MAINPAGE = 3;
 
@@ -12,6 +12,12 @@ const ReviewSection = () => {
   return (
     <SectionWrapper>
       <div className="title">유저들의 상품 후기</div>
+      {status === "success" && <ReviewList reviews={reviews} />}
+      {status === "loading" && (
+        <div className="loading-indicator">
+          <Loading />
+        </div>
+      )}
       {status !== "loading" && <ReviewList reviews={reviews} />}
     </SectionWrapper>
   );
