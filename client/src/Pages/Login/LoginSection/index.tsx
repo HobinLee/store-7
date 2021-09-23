@@ -43,7 +43,7 @@ const LoginSection = () => {
         className="login-input"
         placeholder="비밀번호 입력"
         value={password.value}
-        type="new-password"
+        type="password"
         onChange={password.onChange}
       />
       <APIButton

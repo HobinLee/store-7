@@ -134,7 +134,7 @@ const SignupPage = () => {
               input={pw}
               validation={pwValidation}
               placeholder="비밀번호"
-              type="new-password"
+              type="password"
               message={VALIDATION_ERR_MSG.INVALID_PW}
             />
           </InputSection>
@@ -143,7 +143,7 @@ const SignupPage = () => {
               input={pwConfirm}
               validation={confirmValidation}
               placeholder="비밀번호 확인"
-              type="new-password"
+              type="password"
               message={VALIDATION_ERR_MSG.INVALID_CONFIRM}
             />
           </InputSection>
